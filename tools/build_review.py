@@ -15,7 +15,7 @@ s=(ROOT/'src/assets/assessment/app.mjs').read_text().replace('function render(){
 shutil.copy2(ROOT/'tools/review/api.mjs',assets/'api.mjs')
 # Copy only assessment views. Other navigation goes to original main website/modules.
 originals=['beranda-mentee','beranda-pengurus','catat-sesi','chat','event','file-manager','index','kalender','kelola-event','kelompok','keuangan','monitoring-progres','pengaturan','pengumuman','proker','super-admin','template']
-for name in ['penilaian','poc','abc','progres','raport','observer','kelompok-penilaian']:
+for name in ['penilaian','poc','abc','progres','raport','observer','kelompok-penilaian','mentoring','hasil-kpi']:
  html=(ROOT/f'docs/app/{name}.html').read_text()
  html=re.sub(r'<dc-import name="Navbar"[^>]*>', '<dc-import name="Navbar" role="{{previewNavRole}}" active="{{previewNavActive}}">', html)
  html=html.replace('renderVals(){return {};}',"renderVals(){const q=new URLSearchParams(location.search),r=q.get('peran')||'mentee';return {previewNavRole:r==='program'?'pengurus':r,previewNavActive:['asmen','mentor'].includes(r)?'kelompok':'program'};}")

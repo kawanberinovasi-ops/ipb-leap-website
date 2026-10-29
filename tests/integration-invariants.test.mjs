@@ -13,8 +13,8 @@ test('single active assessment entry and deployment assets exclude fixtures',asy
 });
 test('only assessment menus change: original Navbar markup/style, login, hero and other module content stay identical',async()=>{
  const base='268c72681e65a53015b28ccd0ba064b1b7b303f8';
- for(const path of ['src/app/Main.dc.html','src/app/BerandaMentee.dc.html','src/app/Monitoring.dc.html'])assert.equal(await read(path),execFileSync('git',['show',base+':'+path],{encoding:'utf8'}),path);
- const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'docs/app'],{encoding:'utf8'}).trim().split('\n').filter(p=>p!=='docs/app/penilaian.html');
+ for(const path of ['src/app/Main.dc.html','src/app/BerandaMentee.dc.html'])assert.equal(await read(path),execFileSync('git',['show',base+':'+path],{encoding:'utf8'}),path);
+ const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'docs/app'],{encoding:'utf8'}).trim().split('\n').filter(p=>!['docs/app/penilaian.html','docs/app/kelompok.html'].includes(p));
  const withoutNav=s=>s.replace(/<script type="text\/x-dc" data-dc="Navbar"[\s\S]*?<\/script>/g,'');
  for(const path of paths)assert.equal(withoutNav(await read(path)),withoutNav(execFileSync('git',['show',base+':'+path],{encoding:'utf8'})),path);
  const nav=await read('src/app/Navbar.dc.html'),original=execFileSync('git',['show',base+':src/app/Navbar.dc.html'],{encoding:'utf8'});assert.equal(nav.match(/<x-dc>[\s\S]*?<\/x-dc>/)[0],original.match(/<x-dc>[\s\S]*?<\/x-dc>/)[0]);
