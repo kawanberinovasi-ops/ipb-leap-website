@@ -16,9 +16,11 @@ test('Program/Kelompok menus route each role to their own tasks, preserving orig
  const source=await read('src/app/Navbar.dc.html'),logic=source.match(/<script type="text\/x-dc"[^>]*>([\s\S]*?)<\/script>/)[1];
  for(const role of ['mentee','asmen','mentor']){const dom=new JSDOM('',{url:'https://example.test/review-penilaian/app/penilaian.html',runScripts:'outside-only'});class Base{constructor(props){this.props=props;}}
  const C=new dom.window.Function('DCLogic',logic+';return Component;')(Base),component=new C({role}),values=component.renderVals(),labels=values.items.flatMap(x=>(x.children||[]).map(c=>c.label));
- if(role==='mentee'){assert.ok(labels.includes('Worksheet ABC'));assert.ok(labels.includes('Raport saya'));assert.ok(!labels.includes('Review capaian'));}
- if(role==='asmen'){assert.ok(labels.includes('Periksa Worksheet ABC'));assert.ok(labels.includes('Tindak lanjut komitmen'));assert.ok(!labels.includes('Review capaian'));}
- if(role==='mentor'){assert.ok(labels.includes('Sepakati POC'));assert.ok(labels.includes('Review capaian'));}
+ if(role==='mentee'){assert.ok(labels.includes('Mentoring'));assert.ok(labels.includes('Raport'));assert.ok(!labels.includes('Review capaian'));}
+ if(role==='asmen'){assert.ok(labels.includes('Review'));assert.ok(labels.includes('Monitoring'));assert.ok(!labels.includes('Review capaian'));}
+ if(role==='mentor'){assert.ok(labels.includes('Review'));assert.ok(labels.includes('Penilaian'));}
  for(const item of values.items)for(const child of item.children||[])if(/(?:abc|poc|penilaian|progres|raport)\.html/.test(child.href))assert.equal(new URL(child.href,dom.window.location).searchParams.get('peran'),role);
  dom.window.close();}
 });
+
+test('Mentoring reuses existing record fields and English 360 names do not change stored competencies',async()=>{const v=await preview('mentee','mentoring');for(const name of ['linkedSession','sessionDetails.topic','priority','insight','decision','action','deadline','evidencePlan'])assert.ok(v.d.querySelector('[name="'+name+'"]'),name);assert.equal(v.d.querySelector('#record-form').dataset.kind,'mentoring');assert.equal(v.d.querySelector('[name=awareness]'),null);v.dom.window.close();const r=await preview('mentor','penilaian');for(const label of ['Self-Awareness','Critical Thinking','Communication','Collaboration','Execution','Ethics'])assert.ok(r.d.body.textContent.includes(label));assert.equal(domain.COMPETENCIES[0],'Mengenal diri');r.dom.window.close();});

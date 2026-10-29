@@ -46,7 +46,7 @@ body{margin:0}
 <template data-dc="Monitoring">
 <div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
   <div style="position: sticky; top: 0; z-index: 50">
-    <dc-import name="Navbar" role="asmen" active="beranda" hint-size="100%,73px"></dc-import>
+    <dc-import name="Navbar" role="{{navRole}}" active="kelompok" hint-size="100%,73px"></dc-import>
   </div>
 
   <main style="max-width: 1360px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 24px">
@@ -62,7 +62,7 @@ body{margin:0}
           <button type="button" onClick="{{asAsmen}}" aria-pressed="{{asmenPressed}}" style="{{asmenTab}}">Asmen</button>
           <button type="button" onClick="{{asMentor}}" aria-pressed="{{mentorPressed}}" style="{{mentorTab}}">Mentor</button>
         </div>
-        <a class="btn" href="penilaian.html" style="height: 46px; padding: 0 18px; border-radius: 14px; background: #FFFFFF; border: 1px solid #D5DAEA; font-weight: 700; font-size: 14px; color: #0D0D1A; text-decoration: none; display: flex; align-items: center">Penilaian Oktober</a>
+        <a class="btn" href="kelompok-penilaian.html?view=penilaian" style="height: 46px; padding: 0 18px; border-radius: 14px; background: #FFFFFF; border: 1px solid #D5DAEA; font-weight: 700; font-size: 14px; color: #0D0D1A; text-decoration: none; display: flex; align-items: center">Penilaian mentee</a>
         <a class="btn" href="monitoring-progres.html" style="height: 46px; padding: 0 18px; border-radius: 14px; background: #FFFFFF; border: 1px solid #D5DAEA; font-weight: 700; font-size: 14px; color: #0D0D1A; text-decoration: none; display: flex; align-items: center">Monitoring progres</a>
         <a class="btn" href="catat-sesi.html" style="height: 46px; padding: 0 18px; border-radius: 14px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center">+ Catat sesi mentoring</a>
       </div>
@@ -280,6 +280,7 @@ class Component extends DCLogic {
       mentorTab: st.view === 'mentor' ? tabOn : tabOff,
       asmenPressed: st.view === 'asmen' ? 'true' : 'false',
       mentorPressed: st.view === 'mentor' ? 'true' : 'false',
+      navRole: st.view,
       asAsmen: () => this.setState({ view: 'asmen' }),
       asMentor: () => this.setState({ view: 'mentor' }),
       reviewLabel: done ? '✓ Ditinjau' : 'Kirim & tandai ditinjau',
@@ -317,18 +318,16 @@ class Component extends DCLogic {
     kel.pop();
     const assessmentLink=(label,desc,href,short,tint='#E4EBF8')=>({label,desc,href,short,tint});
     const asmenFlow=[
-      assessmentLink('Pilih mentee','Buka ruang pemeriksaan mentee dampingan','kelompok-penilaian.html','KL'),
-      assessmentLink('Periksa Worksheet ABC','Kejelasan dan kelengkapan, tanpa mengubah jawaban','abc.html','AB'),
-      assessmentLink('Tindak lanjut komitmen','Tindakan aktual, hasil, hambatan dan dukungan','abc.html?view=komitmen','TK'),
-      assessmentLink('Periksa proses & bukti','Check-in Green/Yellow/Red dan kekuatan bukti','progres.html','PB'),
-      assessmentLink('Raport mentee','Hasil yang telah diterbitkan penilai','raport.html','RP','#EEFFB8')
+      assessmentLink('Mentoring','Catat detail sesi, kehadiran dan tindak lanjut','catat-sesi.html','MT'),
+      assessmentLink('Review','Periksa ABC dan catatan hasil mentoring mentee','kelompok-penilaian.html?view=review','RV'),
+      assessmentLink('Monitoring','Check-in, komitmen, proses dan bukti','kelompok-penilaian.html?view=monitoring','MO'),
+      assessmentLink('Penilaian','Proses, bukti dan 360-Degree Assessment','kelompok-penilaian.html?view=penilaian','PN','#EEFFB8')
     ];
     const mentorFlow=[
-      assessmentLink('Pilih mentee','Buka ruang review mentee dampingan','kelompok-penilaian.html','KL'),
-      assessmentLink('Sepakati POC','Baca outcome, baseline dan patokan KPI','poc.html','PO'),
-      assessmentLink('Baca ABC & bukti','Sumber refleksi, tindakan dan hasil aktual','progres.html','PB'),
-      assessmentLink('Review capaian','Tetapkan KPI M3/M6/M9 dan kompetensi M6','penilaian.html?period=6','PN','#EEFFB8'),
-      assessmentLink('Raport mentee','Baca hasil dan riwayat publikasi','raport.html','RP','#EEFFB8')
+      assessmentLink('Mentoring','Baca dan konfirmasi hasil mentoring mentee','kelompok-penilaian.html?view=mentoring','MT'),
+      assessmentLink('Review','Tinjau dan sepakati Personal Outcome Contract','kelompok-penilaian.html?view=review','RV'),
+      assessmentLink('Monitoring','Pantau tindakan, hasil dan bukti mentee','kelompok-penilaian.html?view=monitoring','MO'),
+      assessmentLink('Penilaian','Capaian KPI dan 360-Degree Assessment','kelompok-penilaian.html?view=penilaian','PN','#EEFFB8')
     ];
     const programP = { key: 'program', label: 'Program', children: [
       { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
@@ -350,16 +349,16 @@ class Component extends DCLogic {
       mentee: [
         { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
         { key: 'program', label: 'Program', children: [
-          assessmentLink('Personal Outcome Contract','Susun outcome, baseline dan target KPI','poc.html','PO'),
-          assessmentLink('Worksheet ABC','Refleksi dan komitmen; boleh sebelum POC','abc.html','AB'),
-          assessmentLink('Tindakan & Bukti','Isi hasil aktual, check-in dan portofolio','progres.html','PB'),
-          assessmentLink('Raport saya','Baca hasil yang sudah diterbitkan','raport.html','RP','#EEFFB8'),
-          assessmentLink('Project & Task','Kembali ke proyek dan tugas pada beranda','beranda-mentee.html','PK')
+          assessmentLink('Progres','Check-in dua mingguan, tindakan dan bukti','progres.html','PR'),
+          assessmentLink('Mentoring','Detail sesi dan hasil mentoring dalam Worksheet ABC','mentoring.html','MT'),
+          assessmentLink('Personal Outcome Contract','Outcome dan KPI sesuai track, pathway serta baseline','poc.html','PO'),
+          assessmentLink('Hasil KPI','Ajukan hasil aktual M3/M6/M9/M12 dan portfolio','hasil-kpi.html','HK'),
+          assessmentLink('Raport','Hasil penilaian yang sudah diterbitkan','raport.html','RP','#EEFFB8')
         ] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
         { key: 'beranda', label: 'Beranda', href: 'kelompok.html' },
-        { key: 'kelompok', label: 'Kelompok', children: asmenFlow.concat(kel) }
+        { key: 'kelompok', label: 'Kelompok', children: asmenFlow }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'kelompok.html' }]),
       pengurus: [
         { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
@@ -378,7 +377,7 @@ class Component extends DCLogic {
         { key: 'audit', label: 'Audit Log', href: 'super-admin.html' }
       ]
     };
-    menus.mentor = [menus.asmen[0],{key:'kelompok',label:'Kelompok',children:mentorFlow.concat(kel)}].concat(tail,[menus.asmen.at(-1)]);
+    menus.mentor = [menus.asmen[0],{key:'kelompok',label:'Kelompok',children:mentorFlow}].concat(tail,[menus.asmen.at(-1)]);
     const people = {
       mentee: { name: 'Nabila Putri', subtitle: 'Mentee · Kelompok Rajawali', initials: 'NP', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
       asmen: { name: 'Raka Pratama', subtitle: 'Asmen · Kelompok Rajawali', initials: 'RP', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
@@ -388,7 +387,7 @@ class Component extends DCLogic {
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
     };
     const p = people[role] || people.mentee;
-    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:poc|abc|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
+    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
       const current=new URLSearchParams(location.search);for(const key of ['cohort','mentee','group','period','record','source'])if(current.has(key)&&!u.searchParams.has(key))u.searchParams.set(key,current.get(key));
       if(location.pathname.includes('/review-penilaian/'))u.searchParams.set('peran',role==='pengurus'?'program':role);
       return u.pathname+u.search;}return href;};
