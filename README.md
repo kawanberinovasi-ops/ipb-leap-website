@@ -20,17 +20,11 @@ Website publik **IPB LEAP (Leadership Acceleration Program)**, program Himpunan 
 
 ## IPB Leap Management System (prototype)
 
-Dibuka lewat tombol **Masuk** di website, atau langsung di `app/`. Halaman masuk memakai email/kata sandi Supabase dan aktivasi akun. Pilihan peran simulasi telah dihapus; hak akses berasal dari server.
+Dibuka lewat tombol **Masuk** di website, atau langsung di `app/`. Di halaman masuk ada pilihan *Masuk sebagai* (Mentee, Asmen, Mentor, Pengurus, Bendahara, Super Admin).
 
 `app/index` (Masuk & Daftar) · `beranda-mentee` · `penilaian` · `kelompok` · `monitoring-progres` · `catat-sesi` · `beranda-pengurus` · `pengumuman` · `kelola-event` · `proker` · `template` · `file-manager` · `keuangan` · `kalender` · `event` · `chat` · `pengaturan` · `super-admin`
 
-Modul penilaian telah diintegrasikan pada branch pengembangan melalui layanan Supabase IPB LEAP yang sudah ada. Modul ERP lain masih prototype dengan contoh desain. Perubahan backend tambahan belum diterapkan dan belum ada deployment dari branch ini. Lihat [catatan integrasi](INTEGRASI-PENILAIAN.md) untuk batas verifikasi dan urutan aktivasi. Halaman `app/` diberi `noindex` supaya tidak muncul di Google.
-
-## Pengembangan penilaian
-
-`npm ci` → `npm test` → `npm run build`. Tes database memakai PostgreSQL PGlite di memori; tidak menghubungi Supabase. `tests/fixtures/` bukan data operasional dan tidak ikut build.
-
-Rute baru: `app/poc.html`, `app/abc.html`, `app/progres.html`, `app/penilaian.html`, `app/raport.html`, `app/kelompok-penilaian.html`, `app/observer.html`.
+Semua data di sini masih contoh dan belum tersambung ke database/login sungguhan. Halaman `app/` diberi `noindex` supaya tidak muncul di Google.
 
 ## Mengubah konten
 
@@ -52,3 +46,9 @@ Cek lokal: `cd docs && python3 -m http.server 8000` lalu buka http://localhost:8
 
 - Foto kegiatan, prestasi, mentor, asmen, mentee, dan kata pengantar masih placeholder.
 - Kontak: mentoringleaderhaipb@gmail.com · 0855-5907-0165 (M. Fauzan Ramdani).
+
+## Review penilaian
+
+Preview kosong dan tanpa backend tersedia pada `review-penilaian/`. Build dengan `python3 tools/build.py` lalu `python3 tools/build_review.py`. Topbar, login umum, hero dan seluruh modul selain isi penilaian tetap versi asli.
+
+Integrasi operasional ada pada branch `integrate/assessment-20261029`; akses akun khusus penilaian berada di `app/akses-penilaian.html`, terpisah dari login prototype. SQL tambahan dan Edge belum diterapkan. Lihat `INTEGRASI-PENILAIAN.md`.

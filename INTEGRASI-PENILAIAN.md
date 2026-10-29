@@ -1,12 +1,18 @@
 # Integrasi penilaian IPB LEAP — 29 Oktober 2026 (WIB)
 
-Status: perubahan source pada branch `integrate/assessment-20261029`. Tidak di-merge, tidak di-deploy, tidak ada SQL yang diterapkan pada database aktif. Pengujian lintas peran dilakukan di database PostgreSQL lokal terisolasi, bukan dengan akun produksi.
+Status integrasi operasional: perubahan source pada branch `integrate/assessment-20261029`. Tidak di-merge, tidak di-deploy, tidak ada SQL yang diterapkan pada database aktif. Pengujian lintas peran dilakukan di database PostgreSQL lokal terisolasi, bukan dengan akun produksi.
+
+## Update ruang lingkup review
+
+Preview statis terisolasi di `docs/review-penilaian/` disiapkan untuk GitHub Pages. Hanya isi penilaian yang baru; Navbar memakai komponen asli tanpa perubahan. Formulir kosong dapat ditinjau dan diketik, tetapi tombol simpan/terbit tidak aktif. Preview tidak memuat config/kunci/Supabase SDK, tidak membaca akun atau jawaban, dan tidak mengirim permintaan ke backend. Semua tautan modul lain menuju halaman asli.
+
+Penerbitan preview tidak menggabungkan integrasi operasional: hanya folder review tambahan yang ditaruh pada versi GitHub Pages. Database dan Edge tetap tidak berubah.
 
 ## Dasar dan pemetaan proyek
 
 Dasar tampilan: commit `268c72681e65a53015b28ccd0ba064b1b7b303f8`, bukan kerangka ERP lama dari ZIP. `src/public` adalah website publik; `src/app` berisi komponen desain DC; `tools/build.py` menghasilkan `docs`. Navbar dan runtime template tetap digunakan. Semua halaman publik dipertahankan byte demi byte. Seluruh rute ERP lama tetap tersedia.
 
-Sebelum integrasi, penilaian hanya prototype `Penilaian.dc.html`: angka contoh, gabungan 50/50 Asmen–Mentor, rentang dan asumsi anonimitas berbeda, serta tombol yang hanya mengubah state tampilan. Tidak ada penyimpanan 360 yang dapat digunakan kembali. Kerangka visual/form pattern disesuaikan; rumus dan asumsi lama tidak dipakai. Rute yang sama kini membuka penilaian P1–P4; tidak ada dua formulir aktif. Kartu nilai bulanan mentee sebelumnya juga berisi angka contoh; struktur kartu, grafik, hero dan motion tetap ada, dengan nilai kosong dan penjelasan bahwa review triwulan adalah sumber terpisah.
+Sebelum integrasi, penilaian hanya prototype `Penilaian.dc.html`: angka contoh, gabungan 50/50 Asmen–Mentor, rentang dan asumsi anonimitas berbeda, serta tombol yang hanya mengubah state tampilan. Tidak ada penyimpanan 360 yang dapat digunakan kembali. Kerangka visual/form pattern disesuaikan; rumus dan asumsi lama tidak dipakai. Rute yang sama kini membuka penilaian P1–P4; tidak ada dua formulir aktif. Kartu nilai bulanan mentee, grafik, hero, login umum, monitoring dan Navbar dikembalikan persis ke source aslinya sesuai arahan terakhir. Kartu bulanan lama tetap bagian prototype dan tidak dialihkan menjadi hasil P1–P4.
 
 Repo semula tidak memiliki konfigurasi backend. Pemeriksaan read-only melalui koneksi Supabase menemukan proyek bernama IPB LEAP ERP, tabel `erp_*`, RPC workspace/revision/commit, dan Edge `erp-records`/`erp-account` yang sudah aktif. Konfigurasi frontend memakai URL dan publishable key proyek tersebut. Tidak ada akun, kata sandi, token aktivasi, maupun service key yang disalin. Akun, penugasan, cohort dan data aktif tidak diubah.
 
@@ -27,7 +33,7 @@ Konteks cohort, kelompok, mentee, periode dan referensi sumber diteruskan melalu
 ## Fungsi yang tersambung pada source
 
 - `src/assets/assessment/app.mjs`: POC, ABC, progres, pemeriksaan, keputusan capaian dan raport memakai kontrak RPC/Edge yang sama dari ZIP. Modul dipasang dalam shell/Navbar proyek yang sekarang; halaman home/sistem/keuangan dari ZIP tidak digunakan untuk mengganti ERP.
-- `api.mjs`, `login.mjs`, `session.mjs`: autentikasi akun dan aktivasi memakai Supabase yang ada. Berhasil login tidak berasal dari memilih peran di browser. OAuth/OTP/email yang belum tersambung tidak ditampilkan sebagai layanan aktif.
+- `api.mjs` dan `login.mjs`: autentikasi penilaian memakai halaman baru `akses-penilaian.html`. Login umum prototype tidak diubah. Peran/identitas terverifikasi dikelola di isi penilaian; Navbar asli tidak diganti.
 - `domain.mjs` frontend/backend identik dengan sumber paket. Bobot, ambang, pembulatan dan persyaratan M3/M6/M9/M12 tidak berubah. ABC tanpa skor dan tanpa kewajiban referensi POC. Green/Yellow/Red, status catatan, status komitmen, dan level KPI terpisah.
 - Penyimpanan versi, pemeriksa, sumber POC/ABC/kegiatan/bukti, dan publikasi memakai tabel/backend yang ada. Waktu ditampilkan WIB. ID catatan dan request tetap sama saat mengulang permintaan identik yang gagal; konflik tidak menghapus isian.
 - `sources.mjs` menambahkan pemeriksaan versi sumber yang juga menangkap perubahan proses, jadwal, pembatalan dan publikasi M6 untuk M9. Ini lapisan versi, bukan rumus baru. Edge menghitung ulang dan memvalidasi envelope sebelum publikasi; revision/cohort locking tetap digunakan.

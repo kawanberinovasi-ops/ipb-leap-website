@@ -19,7 +19,7 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
 </style>
 
 <link rel="stylesheet" href="../assets/assessment/app.css"></helmet><div style="min-height:100vh;background:#F5F7FC;font-family:'Plus Jakarta Sans',sans-serif;color:#0D0D1A">
-<div style="position:sticky;top:0;z-index:50"><dc-import name="Navbar" active="program"></dc-import></div>
+<div style="position:sticky;top:0;z-index:50"><dc-import name="Navbar" role="asmen" active="kelompok"></dc-import></div>
 <section id="assessment"><main id="content" class="wrap" tabindex="-1"><p class="loading">Memeriksa akun dan ruang akses…</p></main>
 <dialog id="activation-dialog"><h2>Tautan aktivasi pribadi</h2><p id="activation-details"></p><input id="activation-link" readonly><button id="copy-activation">Salin</button><button id="close-activation">Tutup</button></dialog>
 <dialog id="copy-dialog"><h2>Salin teks ABC</h2><textarea id="copy-text" rows="12" readonly></textarea><button id="close-copy">Tutup</button></dialog></section></div></x-dc><script type="text/x-dc" data-dc-script>class Component extends DCLogic {componentDidMount(){const url=new URL('../assets/assessment/app.mjs',location.href);import(url.href).then(m=>m.mount()).catch(()=>{document.querySelector('#content').textContent='Modul belum dapat dimuat. Muat ulang untuk mencoba kembali.';});} renderVals(){return {};}}</script></body></html>

@@ -149,6 +149,10 @@
         },
         "Observer": {
           "out": "app/observer.html"
+        },
+        "AksesPenilaian": {
+          "out": "app/akses-penilaian.html",
+          "title": "Akses Penilaian · IPB LEAP"
         }
       }
     }

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Akses Penilaian · IPB LEAP</title>
+<meta name="description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Akses Penilaian · IPB LEAP">
+<meta property="og:description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/app/akses-penilaian.html">
+<meta property="og:image" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/assets/logo-color.png">
+<meta name="theme-color" content="#32306F">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+[data-dc-host]{display:contents}
+html{scroll-behavior:smooth}
+
+[hidden]{display:none!important}body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dash{0%{transform:translateX(-30%);opacity:0}30%{opacity:1}100%{transform:translateX(60%);opacity:0}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(-3deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,255,58,.55)}50%{box-shadow:0 0 0 10px rgba(212,255,58,0)}}
+.rise{animation:rise .55s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}
+.speed{animation:dash 2.6s ease-in-out infinite}
+.s2{animation-delay:.5s}.s3{animation-delay:1s}.s4{animation-delay:1.5s}
+.floaty{animation:floaty 4s ease-in-out infinite}
+.pulse{animation:pulse 2s infinite}
+.btn{transition:transform .18s, box-shadow .18s, background .18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(49,87,165,.8)}
+.field:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px rgba(49,87,165,.14)}
+.chip{transition:all .18s}
+.chip:hover{border-color:#3157A5 !important}
+@media (max-width: 900px){.split{flex-direction:column !important}.hero{min-height:420px !important}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
+<div style="position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center"><span style="padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800">PROTOTYPE</span><span>IPB Leap Management System · semua data masih contoh</span><a href="../index.html" style="color:#A3D6E6;font-weight:800;text-decoration:none">← Kembali ke website</a></div>
+<div id="app" data-page="AksesPenilaian"></div>
+<template data-dc="AksesPenilaian">
+<div class="split" style="display: flex; min-height: 100vh; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; background: #F5F7FC">
+
+  <section class="hero" style="flex: 1 1 52%; position: relative; overflow: hidden; background: linear-gradient(135deg, #32306F 0%, #3157A5 100%); color: #FFFFFF; padding: 48px 56px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box">
+    <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(600px 400px at 85% 10%, rgba(163,214,230,.35), transparent 60%), radial-gradient(500px 360px at 10% 95%, rgba(212,255,58,.14), transparent 60%)"></div>
+    <div aria-hidden="true" style="position: absolute; left: -40px; top: 46%; width: 70%; display: flex; flex-direction: column; gap: 14px">
+      <div class="speed" style="height: 6px; width: 60%; border-radius: 6px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.5))"></div>
+      <div class="speed s2" style="height: 6px; width: 80%; border-radius: 6px; background: linear-gradient(90deg, transparent, rgba(163,214,230,.6))"></div>
+      <div class="speed s3" style="height: 6px; width: 45%; border-radius: 6px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.4))"></div>
+      <div class="speed s4" style="height: 6px; width: 70%; border-radius: 6px; background: linear-gradient(90deg, transparent, rgba(212,255,58,.6))"></div>
+    </div>
+
+    <div style="position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px">
+      <img src="../assets/logo-white.png" alt="IPB LEAP" style="height: 64px; width: auto">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25)">Management System</span>
+    </div>
+
+    <div style="position: relative; max-width: 620px; padding: 48px 0">
+      <span class="floaty" style="display: inline-block; font-size: 14px; font-weight: 800; color: #0D0D1A; background: #D4FF3A; padding: 8px 16px; border-radius: 999px; margin-bottom: 24px">Workspace</span>
+      <h1 class="rise" style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 84px; line-height: .95; letter-spacing: -.02em">Make Your Leap</h1>
+      <p class="rise d1" style="margin: 24px 0 0; font-size: 20px; line-height: 1.5; font-weight: 600; color: rgba(255,255,255,.9); max-width: 500px">The Catalyst for IPB's Future Leaders</p>
+      <div class="rise d2" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px">
+        <span style="font-size: 15px; font-weight: 700; padding: 11px 20px; border-radius: 14px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22)">Learn</span>
+        <span style="font-size: 15px; font-weight: 700; padding: 11px 20px; border-radius: 14px; background: rgba(163,214,230,.22); border: 1px solid rgba(163,214,230,.5)">Connect</span>
+        <span style="font-size: 15px; font-weight: 800; padding: 11px 20px; border-radius: 14px; background: #D4FF3A; color: #0D0D1A">Grow</span>
+      </div>
+    </div>
+
+    <p style="position: relative; margin: 0; font-size: 13px; color: rgba(255,255,255,.7)">Powered by Himpunan Alumni IPB</p>
+  </section>
+
+  <section style="flex: 1 1 48%; display: flex; align-items: center; justify-content: center; padding: 48px 24px; box-sizing: border-box">
+    <div class="rise d1" style="width: 100%; max-width: 460px">
+
+      <h2 style="margin:0;font-size:32px;color:#32306F">Hai, selamat datang lagi</h2>
+      <p style="color:#55577A">Masuk dengan akun yang sudah diaktifkan pengelola. Peran mengikuti penugasan akun.</p>
+      <div id="auth-message" role="status" aria-live="polite" style="margin:16px 0;color:#3157A5"></div>
+      <form id="leap-login" style="display:grid;gap:16px">
+      <label>Email<input class="field" name="email" type="email" autocomplete="username" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
+      <label>Kata sandi<input class="field" name="password" type="password" autocomplete="current-password" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
+      <button class="btn" style="padding:16px;border:0;border-radius:16px;background:linear-gradient(135deg,#32306F,#3157A5);color:white;font:inherit;font-weight:700;font-size:16px;cursor:pointer">Masuk</button>
+      </form>
+      <form id="leap-activate" hidden style="display:grid;gap:16px">
+      <p id="activation-identity"></p>
+      <label id="setup-name" hidden>Nama lengkap<input name="name" autocomplete="name"></label>
+      <label>Kata sandi baru<input name="password" type="password" autocomplete="new-password" minlength="12" required></label>
+      <label>Ulangi kata sandi<input name="confirm" type="password" autocomplete="new-password" minlength="12" required></label>
+      <button>Aktifkan akun</button></form>
+      <p style="font-size:13px;color:#6B6D8C;margin-top:24px">Belum punya akses atau lupa kata sandi? Hubungi pengelola untuk tautan aktivasi. Tidak ada email otomatis dari halaman ini.</p>
+    </div>
+  </section>
+</div>
+</template>
+<script type="text/x-dc" data-dc="AksesPenilaian" data-props='{}'>
+class Component extends DCLogic {componentDidMount(){import(new URL('../assets/assessment/login.mjs',location.href).href).then(m=>m.mount());}renderVals(){return {};}}
+</script>
+<script src="../assets/leap-runtime.js"></script>
+</body>
+</html>
