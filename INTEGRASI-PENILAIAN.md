@@ -1,3 +1,15 @@
+## Pembaruan alur per peran — 29 Oktober 2026
+
+Sumber: keputusan pengguna di chat 9 Oktober dan 29 Oktober, materi POC/ABC, dan playbook Asisten Mentor yang ditemukan melalui penelusuran konteks percakapan. Halaman publik ipbleap.com saat diperiksa masih Segera Hadir; isi ERP di balik login tidak diperiksa dengan akun pengguna.
+
+Preview kini memiliki pemilih peran Mentee / Asisten Mentor / Mentor / Tim Penilaian M12. Mentee mengisi; Asmen memeriksa kelengkapan ABC, komitmen, proses dan bukti; Mentor membaca sumber, menyepakati POC dan menetapkan KPI M3/M6/M9 serta P3 M6; Tim Penilaian menetapkan M12. Tidak ada perubahan rumus atau bobot. P1 dan P4 ditampilkan hanya baca pada keputusan Mentor agar pemeriksaan tidak diulang. 360 tetap bahan pertimbangan satu P3.
+
+Atas instruksi terbaru pengguna, isi menu Program/Kelompok disesuaikan per tugas. Markup topbar, CSS, warna, logo, font dan komponen visual tetap persis asli. Modul lain tetap tersedia. URL pilihan peran hanya digunakan untuk preview; peran operasional diambil dari actor terverifikasi dan seluruh tindakan tetap diperiksa server.
+
+39 tes lokal lulus, termasuk pengisian mentee, pembatasan pemeriksaan Asmen, keputusan Mentor, pembatasan M12 serta menu sesuai peran. Preview tetap kosong dan tidak menyimpan atau menerbitkan data.
+
+---
+
 # Integrasi penilaian IPB LEAP — 29 Oktober 2026 (WIB)
 
 Status integrasi operasional: perubahan source pada branch `integrate/assessment-20261029`. Tidak di-merge, tidak di-deploy, tidak ada SQL yang diterapkan pada database aktif. Pengujian lintas peran dilakukan di database PostgreSQL lokal terisolasi, bukan dengan akun produksi.

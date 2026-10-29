@@ -11,11 +11,13 @@ test('single active assessment entry and deployment assets exclude fixtures',asy
  const page=await read('docs/app/penilaian.html');assert.ok(!page.includes('Mentor belum mengisi. Jika sampai'));assert.ok(!page.includes('Skor kamu (Asmen) × 50%'));assert.ok(page.includes('assessment/app.mjs'));assert.ok(!page.includes('justSent'));
  const assets=await readdir(new URL('../docs/assets/assessment',import.meta.url));assert.ok(!assets.some(f=>/fixture|test|mock/.test(f)));
 });
-test('only assessment content changes: original Navbar, login, hero and other ERP modules are byte-identical',async()=>{
+test('only assessment menus change: original Navbar markup/style, login, hero and other module content stay identical',async()=>{
  const base='268c72681e65a53015b28ccd0ba064b1b7b303f8';
- for(const path of ['src/app/Navbar.dc.html','src/app/Main.dc.html','src/app/BerandaMentee.dc.html','src/app/Monitoring.dc.html'])assert.equal(await read(path),execFileSync('git',['show',base+':'+path],{encoding:'utf8'}),path);
+ for(const path of ['src/app/Main.dc.html','src/app/BerandaMentee.dc.html','src/app/Monitoring.dc.html'])assert.equal(await read(path),execFileSync('git',['show',base+':'+path],{encoding:'utf8'}),path);
  const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'docs/app'],{encoding:'utf8'}).trim().split('\n').filter(p=>p!=='docs/app/penilaian.html');
- for(const path of paths)assert.equal(await read(path),execFileSync('git',['show',base+':'+path],{encoding:'utf8'}),path);
+ const withoutNav=s=>s.replace(/<script type="text\/x-dc" data-dc="Navbar"[\s\S]*?<\/script>/g,'');
+ for(const path of paths)assert.equal(withoutNav(await read(path)),withoutNav(execFileSync('git',['show',base+':'+path],{encoding:'utf8'})),path);
+ const nav=await read('src/app/Navbar.dc.html'),original=execFileSync('git',['show',base+':src/app/Navbar.dc.html'],{encoding:'utf8'});assert.equal(nav.match(/<x-dc>[\s\S]*?<\/x-dc>/)[0],original.match(/<x-dc>[\s\S]*?<\/x-dc>/)[0]);
 });
 test('review is isolated, empty, cannot save, and excludes Supabase credentials/SDK',async()=>{
  const files=await readdir(new URL('../docs/review-penilaian/assets/assessment/',import.meta.url));assert.ok(!files.includes('config.mjs'));assert.ok(!files.includes('vendor-supabase.mjs'));
