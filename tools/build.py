@@ -11,6 +11,7 @@ import os
 import posixpath
 import re
 import sys
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -126,8 +127,11 @@ def build_page(name, meta):
         templates.append(f'<template data-dc="{cname}">\n{c["body"]}\n</template>')
         scripts.append(f"<script type=\"text/x-dc\" data-dc=\"{cname}\" data-props='{c['props']}'>{c['script']}</script>")
     banner = section.get('banner', '')
+    if name in {'Main','Penilaian','POC','ABC','Progres','Raport','KelompokPenilaian','Observer'}:
+        banner = '<div style="padding:8px 16px;background:#0D0D1A;color:white;text-align:center;font:600 12px/1.4 system-ui">VERSI PENGEMBANGAN · Penilaian menggunakan akun dan layanan IPB LEAP. Modul ERP lain masih prototype.</div>'
     if banner:
         banner = banner.replace('{home}', rel('index.html', out))
+    session_script = f'\n<script type="module" src="{rel("assets/assessment/session.mjs", out)}"></script>' if section['id']=='app' and name not in {'Main','Penilaian','POC','ABC','Progres','Raport','KelompokPenilaian','Observer'} else ''
     html = f'''<!doctype html>
 <html lang="id">
 <head>
@@ -156,7 +160,7 @@ html{{scroll-behavior:smooth}}
 {banner}<div id="app" data-page="{name}"></div>
 {chr(10).join(templates)}
 {chr(10).join(scripts)}
-<script src="{rel('assets/leap-runtime.js', out)}"></script>
+<script src="{rel('assets/leap-runtime.js', out)}"></script>{session_script}
 </body>
 </html>
 '''
@@ -168,6 +172,7 @@ html{{scroll-behavior:smooth}}
 
 def main():
     DIST.mkdir(exist_ok=True)
+    shutil.copytree(SRC / "assets", DIST / "assets", dirs_exist_ok=True)
     out = [build_page(n, m) for n, m in PAGES.items()]
     (DIST / '404.html').write_text((DIST / 'index.html').read_text(encoding='utf-8'), encoding='utf-8')
     if CONFIG['site'].get('cname'):

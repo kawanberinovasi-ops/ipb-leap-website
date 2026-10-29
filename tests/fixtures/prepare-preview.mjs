@@ -1,0 +1,6 @@
+// Generates an ignored, isolated static fixture preview. Does not modify docs or connect to services.
+import{cp,writeFile}from'node:fs/promises';
+await cp(new URL('../../docs/',import.meta.url),new URL('../../.qa/',import.meta.url),{recursive:true});
+await cp(new URL('./preview-api.mjs',import.meta.url),new URL('../../.qa/assets/assessment/api.mjs',import.meta.url));
+await writeFile(new URL('../../.qa/qa.html',import.meta.url),`<!doctype html><html lang="id"><meta charset="utf-8"><title>QA lokal — data uji terisolasi</title><style>body{margin:16px;font:14px system-ui;background:#e8edf7}iframe{border:1px solid #a5afc8;background:white}a{display:inline-block;margin:12px}</style><h1>QA lokal — data uji terisolasi</h1><p>Viewport 360 px. Tidak terhubung akun, jawaban atau database nyata.</p><a href="app/abc.html?period=6">ABC desktop</a><a href="app/penilaian.html?qa_role=mentor&period=6">Penilaian desktop</a><iframe title="QA HP 360 px" width="360" height="960" src="app/abc.html?period=6"></iframe><iframe title="QA penilaian 360 px" width="360" height="960" src="app/penilaian.html?qa_role=mentor&period=6"></iframe></html>`);
+console.log('Isolated fixtures written to .qa/; never deploy this directory.');

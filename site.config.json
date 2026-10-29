@@ -131,6 +131,24 @@
         },
         "SuperAdmin": {
           "out": "app/super-admin.html"
+        },
+        "POC": {
+          "out": "app/poc.html"
+        },
+        "ABC": {
+          "out": "app/abc.html"
+        },
+        "Progres": {
+          "out": "app/progres.html"
+        },
+        "Raport": {
+          "out": "app/raport.html"
+        },
+        "KelompokPenilaian": {
+          "out": "app/kelompok-penilaian.html"
+        },
+        "Observer": {
+          "out": "app/observer.html"
         }
       }
     }

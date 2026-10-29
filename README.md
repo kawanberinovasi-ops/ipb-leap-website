@@ -20,11 +20,17 @@ Website publik **IPB LEAP (Leadership Acceleration Program)**, program Himpunan 
 
 ## IPB Leap Management System (prototype)
 
-Dibuka lewat tombol **Masuk** di website, atau langsung di `app/`. Di halaman masuk ada pilihan *Masuk sebagai* (Mentee, Asmen, Mentor, Pengurus, Bendahara, Super Admin).
+Dibuka lewat tombol **Masuk** di website, atau langsung di `app/`. Halaman masuk memakai email/kata sandi Supabase dan aktivasi akun. Pilihan peran simulasi telah dihapus; hak akses berasal dari server.
 
 `app/index` (Masuk & Daftar) · `beranda-mentee` · `penilaian` · `kelompok` · `monitoring-progres` · `catat-sesi` · `beranda-pengurus` · `pengumuman` · `kelola-event` · `proker` · `template` · `file-manager` · `keuangan` · `kalender` · `event` · `chat` · `pengaturan` · `super-admin`
 
-Semua data di sini masih contoh dan belum tersambung ke database/login sungguhan. Halaman `app/` diberi `noindex` supaya tidak muncul di Google.
+Modul penilaian telah diintegrasikan pada branch pengembangan melalui layanan Supabase IPB LEAP yang sudah ada. Modul ERP lain masih prototype dengan contoh desain. Perubahan backend tambahan belum diterapkan dan belum ada deployment dari branch ini. Lihat [catatan integrasi](INTEGRASI-PENILAIAN.md) untuk batas verifikasi dan urutan aktivasi. Halaman `app/` diberi `noindex` supaya tidak muncul di Google.
+
+## Pengembangan penilaian
+
+`npm ci` → `npm test` → `npm run build`. Tes database memakai PostgreSQL PGlite di memori; tidak menghubungi Supabase. `tests/fixtures/` bukan data operasional dan tidak ikut build.
+
+Rute baru: `app/poc.html`, `app/abc.html`, `app/progres.html`, `app/penilaian.html`, `app/raport.html`, `app/kelompok-penilaian.html`, `app/observer.html`.
 
 ## Mengubah konten
 

@@ -61,26 +61,27 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
 
       <section class="rise d1 lift" style="flex: 1 1 340px; min-width: 0; border-radius: 32px; padding: 28px; background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFF 100%); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -28px rgba(50,48,111,.45); display: flex; flex-direction: column; gap: 16px">
         <div style="display: flex; justify-content: space-between; align-items: center">
-          <span style="font-size: 14px; font-weight: 700; color: #55577A">Nilai bulanan · September</span>
-          <a href="Penilaian.dc.html" style="font-size: 13px; font-weight: 700">Raport →</a>
+          <span style="font-size: 14px; font-weight: 700; color: #55577A">Nilai bulanan · contoh desain</span>
+          <a href="Raport.dc.html" style="font-size: 13px; font-weight: 700">Raport →</a>
         </div>
         <div style="display: flex; align-items: flex-end; gap: 12px">
           <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 72px; line-height: .9; color: #32306F; letter-spacing: -.03em">{{score}}</span>
-          <span style="margin-bottom: 8px; font-size: 14px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #EEFFB8; color: #3A4A00">A · Sangat Baik</span>
+          <span style="margin-bottom: 8px; font-size: 14px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #EEFFB8; color: #3A4A00">Belum tersedia</span>
         </div>
-        <svg role="img" aria-label="Tren nilai Juli 78, Agustus 82, September 86,4" viewBox="0 0 300 90" style="width: 100%; height: 90px">
+        <svg role="img" aria-label="Tren nilai bulanan belum tersedia" viewBox="0 0 300 90" style="width: 100%; height: 90px">
           <defs><linearGradient id="trend" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3157A5" stop-opacity=".25"></stop><stop offset="1" stop-color="#3157A5" stop-opacity="0"></stop></linearGradient></defs>
-          <path d="M10 64 L150 46 L290 22 L290 90 L10 90 Z" fill="url(#trend)"></path>
-          <path d="M10 64 L150 46 L290 22" fill="none" stroke="#3157A5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-          <circle cx="10" cy="64" r="5" fill="#FFFFFF" stroke="#3157A5" stroke-width="2.5"></circle>
-          <circle cx="150" cy="46" r="5" fill="#FFFFFF" stroke="#3157A5" stroke-width="2.5"></circle>
-          <circle cx="290" cy="22" r="7" fill="#D4FF3A" stroke="#32306F" stroke-width="2.5"></circle>
+          <path d="M10 75 L290 75" fill="url(#trend)"></path>
+          <path d="M10 75 L290 75" fill="none" stroke="#3157A5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="10" cy="75" r="5" fill="#FFFFFF" stroke="#3157A5" stroke-width="2.5"></circle>
+          <circle cx="150" cy="75" r="5" fill="#FFFFFF" stroke="#3157A5" stroke-width="2.5"></circle>
+          <circle cx="290" cy="75" r="7" fill="#D4FF3A" stroke="#32306F" stroke-width="2.5"></circle>
         </svg>
-        <div style="display: flex; justify-content: space-between; font-size: 12.5px; color: #6B6D8C; font-weight: 600; margin-top: -8px"><span>Jul · 78</span><span>Agu · 82</span><span style="color: #32306F; font-weight: 800">Sep · 86,4</span></div>
+        <div style="display: flex; justify-content: space-between; font-size: 12.5px; color: #6B6D8C; font-weight: 600; margin-top: -8px"><span>Jul · —</span><span>Agu · —</span><span style="color: #32306F; font-weight: 800">Sep · —</span></div>
         <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
-          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Dari Mentor</div><div style="font-size: 20px; font-weight: 800; color: #32306F">88,0</div></div>
-          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Dari Asmen</div><div style="font-size: 20px; font-weight: 800; color: #32306F">84,8</div></div>
+          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Dari Mentor</div><div style="font-size: 20px; font-weight: 800; color: #32306F">—</div></div>
+          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Dari Asmen</div><div style="font-size: 20px; font-weight: 800; color: #32306F">—</div></div>
         </div>
+        <p style="font-size:13px;color:#6B6D8C">Kartu bulanan lama belum memiliki sumber nilai operasional. Hasil P1–P4 per M3/M6/M9/M12 tersedia terpisah di Raport setelah diterbitkan.</p>
       </section>
     </div>
 
@@ -231,7 +232,7 @@ class Component extends DCLogic {
     const defs = [
       { id: 't1', title: 'RSVP Sesi Mentoring #6', meta: 'Sab, 18 Okt', tag: 'Event', tagBg: '#E4EBF8', tagInk: '#3157A5' },
       { id: 't2', title: 'Update progres Oktober', meta: 'Tenggat 31 Okt', tag: 'Wajib', tagBg: '#FEF3C7', tagInk: '#92400E' },
-      { id: 't3', title: 'Feedback 360° untuk Asmen & Mentor', meta: 'Dibuka 25 Okt', tag: 'Penilaian', tagBg: '#EEFFB8', tagInk: '#3A4A00' },
+      { id: 't3', title: 'Baca panduan enam kompetensi', meta: '360 menunggu keputusan kebijakan', tag: 'Penilaian', tagBg: '#EEFFB8', tagInk: '#3A4A00' },
       { id: 't4', title: 'Unggah draft proposal final project', meta: 'Tenggat 15 Nov', tag: 'Project', tagBg: '#E7E6F3', tagInk: '#32306F' }
     ];
     const done = this.state.done;
@@ -247,13 +248,13 @@ class Component extends DCLogic {
       });
     });
     return {
-      score: '86,4',
+      score: '—',
       tasks: tasks,
       doneCount: tasks.filter((t) => done[t.id]).length,
       updateOpen: this.state.update,
       sent: this.state.sent,
       notSent: !this.state.sent,
-      openUpdate: () => this.setState({ update: true, sent: false }),
+      openUpdate: () => { location.href='Progres.dc.html'; },
       closeUpdate: () => this.setState({ update: false, sent: false }),
       sendUpdate: () => { const n = Object.assign({}, this.state.done); n.t2 = true; this.setState({ sent: true, done: n }); }
     };
