@@ -4,27 +4,140 @@
     "cname": "",
     "description": "IPB LEAP (Leadership Acceleration Program) — program akselerasi kepemimpinan Himpunan Alumni IPB. Pemimpin Melahirkan Pemimpin. Make Your Leap."
   },
-  "pages": {
-    "PubHome":         { "out": "index.html",         "title": "IPB LEAP · Pemimpin Melahirkan Pemimpin" },
-    "PubTentang":      { "out": "tentang.html",       "title": "Tentang IPB LEAP · Program Framework" },
-    "PubMentor":       { "out": "mentor.html",        "title": "Our Mentor · IPB LEAP" },
-    "PubMentorDetail": { "out": "mentor-profil.html", "title": "Profil Mentor · IPB LEAP" },
-    "PubAsmen":        { "out": "asmen.html",         "title": "Our Asmen · IPB LEAP" },
-    "PubAsmenDetail":  { "out": "asmen-profil.html",  "title": "Profil Asmen · IPB LEAP" },
-    "PubMentee":       { "out": "mentee.html",        "title": "Our Mentee · IPB LEAP" },
-    "PubMenteeDetail": { "out": "mentee-profil.html", "title": "Profil Mentee · IPB LEAP" },
-    "PubKegiatan":     { "out": "kegiatan.html",      "title": "Kegiatan · IPB LEAP" },
-    "PubShowcase":     { "out": "showcase.html",      "title": "Leap Showcase · IPB LEAP" },
-    "PubPrestasi":     { "out": "prestasi.html",      "title": "Prestasi · IPB LEAP" },
-    "PubEvent":        { "out": "event.html",         "title": "Event · IPB LEAP" },
-    "PubKontak":       { "out": "kontak.html",        "title": "Kontak · IPB LEAP" }
-  },
-  "components": ["PubNav", "PubFooter"],
+  "sections": [
+    {
+      "id": "public",
+      "src": "public",
+      "components": [
+        "PubNav",
+        "PubFooter"
+      ],
+      "pages": {
+        "PubHome": {
+          "out": "index.html",
+          "title": "IPB LEAP · Pemimpin Melahirkan Pemimpin"
+        },
+        "PubTentang": {
+          "out": "tentang.html",
+          "title": "Tentang IPB LEAP · Program Framework"
+        },
+        "PubMentor": {
+          "out": "mentor.html",
+          "title": "Our Mentor · IPB LEAP"
+        },
+        "PubMentorDetail": {
+          "out": "mentor-profil.html",
+          "title": "Profil Mentor · IPB LEAP"
+        },
+        "PubAsmen": {
+          "out": "asmen.html",
+          "title": "Our Asmen · IPB LEAP"
+        },
+        "PubAsmenDetail": {
+          "out": "asmen-profil.html",
+          "title": "Profil Asmen · IPB LEAP"
+        },
+        "PubMentee": {
+          "out": "mentee.html",
+          "title": "Our Mentee · IPB LEAP"
+        },
+        "PubMenteeDetail": {
+          "out": "mentee-profil.html",
+          "title": "Profil Mentee · IPB LEAP"
+        },
+        "PubKegiatan": {
+          "out": "kegiatan.html",
+          "title": "Kegiatan · IPB LEAP"
+        },
+        "PubShowcase": {
+          "out": "showcase.html",
+          "title": "Leap Showcase · IPB LEAP"
+        },
+        "PubPrestasi": {
+          "out": "prestasi.html",
+          "title": "Prestasi · IPB LEAP"
+        },
+        "PubEvent": {
+          "out": "event.html",
+          "title": "Event · IPB LEAP"
+        },
+        "PubKontak": {
+          "out": "kontak.html",
+          "title": "Kontak · IPB LEAP"
+        }
+      }
+    },
+    {
+      "id": "app",
+      "src": "app",
+      "components": [
+        "Navbar"
+      ],
+      "noindex": true,
+      "description": "Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.",
+      "banner": "<div style=\"position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center\"><span style=\"padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800\">PROTOTYPE</span><span>IPB Leap Management System · semua data masih contoh</span><a href=\"{home}\" style=\"color:#A3D6E6;font-weight:800;text-decoration:none\">← Kembali ke website</a></div>\n",
+      "pages": {
+        "Main": {
+          "out": "app/index.html",
+          "title": "Masuk · IPB Leap Management System"
+        },
+        "BerandaMentee": {
+          "out": "app/beranda-mentee.html"
+        },
+        "Penilaian": {
+          "out": "app/penilaian.html"
+        },
+        "Monitoring": {
+          "out": "app/kelompok.html"
+        },
+        "MonitoringProgres": {
+          "out": "app/monitoring-progres.html"
+        },
+        "CatatSesi": {
+          "out": "app/catat-sesi.html"
+        },
+        "BerandaPengurus": {
+          "out": "app/beranda-pengurus.html"
+        },
+        "Pengumuman": {
+          "out": "app/pengumuman.html"
+        },
+        "KelolaEvent": {
+          "out": "app/kelola-event.html"
+        },
+        "Proker": {
+          "out": "app/proker.html"
+        },
+        "Template": {
+          "out": "app/template.html"
+        },
+        "FileManager": {
+          "out": "app/file-manager.html"
+        },
+        "Keuangan": {
+          "out": "app/keuangan.html"
+        },
+        "Kalender": {
+          "out": "app/kalender.html"
+        },
+        "Event": {
+          "out": "app/event.html"
+        },
+        "Chat": {
+          "out": "app/chat.html"
+        },
+        "Settings": {
+          "out": "app/pengaturan.html"
+        },
+        "SuperAdmin": {
+          "out": "app/super-admin.html"
+        }
+      }
+    }
+  ],
   "assets": {
     "/_blob/d1185905fce3a282f8c2d64c19416648": "assets/logo-color.png",
     "/_blob/3b740a84164b3fb26a17e9dc369c700e": "assets/logo-white.png"
   },
-  "links": {
-    "Main.dc.html": "#masuk"
-  }
+  "links": {}
 }

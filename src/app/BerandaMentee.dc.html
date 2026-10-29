@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Beranda Mentee · IPB Leap Management System</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes dash{0%{transform:translateX(-30%);opacity:0}30%{opacity:1}100%{transform:translateX(70%);opacity:0}}
+@keyframes hop{0%{transform:translateY(0) rotate(0)}35%{transform:translateY(-22px) rotate(-8deg)}70%{transform:translateY(0) rotate(0)}85%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+.rise{animation:rise .55s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.24s}
+.lift{transition:transform .18s, box-shadow .18s}
+.lift:hover{transform:translateY(-4px);box-shadow:0 22px 44px -22px rgba(50,48,111,.5) !important}
+.marquee{animation:marquee 28s linear infinite}
+.speed{animation:dash 2.8s ease-in-out infinite}.s2{animation-delay:.7s}.s3{animation-delay:1.4s}
+.hop{animation:hop .9s cubic-bezier(.3,1.4,.5,1) both}
+.btn{transition:transform .18s, box-shadow .18s}
+.btn:hover{transform:translateY(-2px)}
+textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px rgba(49,87,165,.14)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="mentee" active="beranda" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 24px">
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px">
+      <section class="rise" style="flex: 999 1 640px; min-width: 0; position: relative; overflow: hidden; border-radius: 32px; padding: 36px 40px; color: #FFFFFF; background: linear-gradient(135deg, #32306F 0%, #3157A5 100%); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 30px 60px -36px rgba(50,48,111,.9)">
+        <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(420px 260px at 90% 0%, rgba(163,214,230,.38), transparent 65%)"></div>
+        <div aria-hidden="true" style="position: absolute; right: -20px; bottom: 36px; width: 46%; display: flex; flex-direction: column; gap: 12px">
+          <div class="speed" style="height: 5px; width: 70%; border-radius: 5px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.55))"></div>
+          <div class="speed s2" style="height: 5px; width: 90%; border-radius: 5px; background: linear-gradient(90deg, transparent, rgba(212,255,58,.7))"></div>
+          <div class="speed s3" style="height: 5px; width: 55%; border-radius: 5px; background: linear-gradient(90deg, transparent, rgba(163,214,230,.7))"></div>
+        </div>
+        <div style="position: relative">
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px">
+            <span style="font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.26)">Batch 2026</span>
+            <span style="font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.26)">Kelompok Rajawali</span>
+            <span style="font-size: 12.5px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #16A34A"></span>On track</span>
+          </div>
+          <h1 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 58px; line-height: .98; letter-spacing: -.02em">Halo, Nabila.</h1>
+          <p style="margin: 14px 0 0; font-size: 17px; line-height: 1.6; color: rgba(255,255,255,.88); max-width: 520px">Update progres Oktober jatuh tempo <strong style="color: #FFFFFF">31 Okt</strong>. Satu menit aja, terus kamu bebas lanjut.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px">
+            <button class="btn" type="button" onClick="{{openUpdate}}" style="height: 50px; padding: 0 22px; border: 0; border-radius: 16px; background: #FFFFFF; color: #32306F; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 12px 24px -12px rgba(0,0,0,.5)">Kirim update progres</button>
+            <a class="btn" href="Chat.dc.html" style="height: 50px; padding: 0 20px; border-radius: 16px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); color: #FFFFFF; font-weight: 700; font-size: 15px; display: flex; align-items: center; text-decoration: none">Buka grup Rajawali</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="rise d1 lift" style="flex: 1 1 340px; min-width: 0; border-radius: 32px; padding: 28px; background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFF 100%); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -28px rgba(50,48,111,.45); display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <span style="font-size: 14px; font-weight: 700; color: #55577A">Nilai bulanan · September</span>
+          <a href="Penilaian.dc.html" style="font-size: 13px; font-weight: 700">Raport →</a>
+        </div>
+        <div style="display: flex; align-items: flex-end; gap: 12px">
+          <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 72px; line-height: .9; color: #32306F; letter-spacing: -.03em">{{score}}</span>
+          <span style="margin-bottom: 8px; font-size: 14px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #EEFFB8; color: #3A4A00">A · Sangat Baik</span>
+        </div>
+        <svg role="img" aria-label="Tren nilai Juli 78, Agustus 82, September 86,4" viewBox="0 0 300 90" style="width: 100%; height: 90px">
+          <defs><linearGradient id="trend" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3157A5" stop-opacity=".25"></stop><stop offset="1" stop-color="#3157A5" stop-opacity="0"></stop></linearGradient></defs>
+          <path d="M10 64 L150 46 L290 22 L290 90 L10 90 Z" fill="url(#trend)"></path>
+          <path d="M10 64 L150 46 L290 22" fill="none" stroke="#3157A5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+          <circle cx="10" cy="64" r="5" fill="#FFFFFF" stroke="#3157A5" stroke-width="2.5"></circle>
+          <circle cx="150" cy="46" r="5" fill="#FFFFFF" stroke="#3157A5" stroke-width="2.5"></circle>
+          <circle cx="290" cy="22" r="7" fill="#D4FF3A" stroke="#32306F" stroke-width="2.5"></circle>
+        </svg>
+        <div style="display: flex; justify-content: space-between; font-size: 12.5px; color: #6B6D8C; font-weight: 600; margin-top: -8px"><span>Jul · 78</span><span>Agu · 82</span><span style="color: #32306F; font-weight: 800">Sep · 86,4</span></div>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Dari Mentor</div><div style="font-size: 20px; font-weight: 800; color: #32306F">88,0</div></div>
+          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Dari Asmen</div><div style="font-size: 20px; font-weight: 800; color: #32306F">84,8</div></div>
+        </div>
+      </section>
+    </div>
+
+    <sc-if value="{{updateOpen}}" hint-placeholder-val="{{ false }}">
+      <section class="rise" style="border-radius: 28px; padding: 28px; background: #FFFFFF; border: 1.5px solid #3157A5; box-shadow: 0 24px 50px -30px rgba(49,87,165,.7)">
+        <sc-if value="{{notSent}}" hint-placeholder-val="{{ true }}">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px">
+              <div><h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #32306F">Update progres · Oktober 2026</h2><p style="margin: 4px 0 0; font-size: 14px; color: #6B6D8C">Dibaca Asmen Raka &amp; Mentor Dian. Tiga isian, singkat aja.</p></div>
+              <button type="button" onClick="{{closeUpdate}}" aria-label="Tutup" style="width: 40px; height: 40px; border-radius: 12px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-size: 18px; color: #55577A">×</button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+              <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 700">Capaian bulan ini
+                <textarea rows="4" placeholder="Contoh: menyelesaikan draft proposal final project" style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
+              </label>
+              <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 700">Kendala
+                <textarea rows="4" placeholder="Apa yang menghambat?" style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
+              </label>
+              <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 700">Rencana bulan depan
+                <textarea rows="4" placeholder="Langkah berikutnya" style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
+              </label>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px">
+              <button type="button" style="height: 44px; padding: 0 16px; border-radius: 14px; border: 1.5px dashed #A3B4DA; background: transparent; font: inherit; font-weight: 700; font-size: 14px; color: #3157A5; cursor: pointer">+ Lampiran (foto, file, tautan)</button>
+              <button class="btn" type="button" onClick="{{sendUpdate}}" style="height: 50px; padding: 0 26px; border: 0; border-radius: 16px; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Kirim update</button>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 20px; padding: 8px 0">
+            <div class="hop" aria-hidden="true" style="width: 72px; height: 72px; flex: none; border-radius: 24px; background: #D4FF3A; display: flex; align-items: center; justify-content: center">
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#0D0D1A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5M9 5h10v10"></path></svg>
+            </div>
+            <div style="flex: 1"><h2 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 30px; color: #32306F">Leap! Update terkirim.</h2><p style="margin: 6px 0 0; font-size: 15px; color: #55577A">Asmen Raka bakal kasih tanggapan. Statusmu tetap Hijau.</p></div>
+            <button type="button" onClick="{{closeUpdate}}" style="height: 44px; padding: 0 18px; border-radius: 14px; border: 1px solid #E3E7F2; background: #FFFFFF; font: inherit; font-weight: 700; cursor: pointer">Tutup</button>
+          </div>
+        </sc-if>
+      </section>
+    </sc-if>
+
+    <div aria-label="Pengumuman" style="overflow: hidden; border-radius: 20px; background: #0D0D1A; color: #FFFFFF">
+      <div class="marquee" style="display: flex; gap: 48px; width: max-content; padding: 14px 0; font-size: 14px; font-weight: 600; white-space: nowrap">
+        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #D4FF3A; font-weight: 800">PENGUMUMAN</span> Periode penilaian Oktober dibuka 25 Okt – 5 Nov</span>
+        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #A3D6E6; font-weight: 800">EVENT</span> Pendaftaran Leadership Camp ditutup 2 Nov</span>
+        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #D4FF3A; font-weight: 800">PROJECT</span> Milestone Proposal final project: 15 Nov</span>
+        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #A3D6E6; font-weight: 800">MATERI</span> Tema Oktober: Komunikasi &amp; Influence</span>
+        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #D4FF3A; font-weight: 800">PENGUMUMAN</span> Periode penilaian Oktober dibuka 25 Okt – 5 Nov</span>
+        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #A3D6E6; font-weight: 800">EVENT</span> Pendaftaran Leadership Camp ditutup 2 Nov</span>
+        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #D4FF3A; font-weight: 800">PROJECT</span> Milestone Proposal final project: 15 Nov</span>
+        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #A3D6E6; font-weight: 800">MATERI</span> Tema Oktober: Komunikasi &amp; Influence</span>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px">
+
+      <section id="tugas" class="rise d2" style="border-radius: 28px; padding: 26px; background: linear-gradient(180deg, #FFFFFF, #F9FAFE); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -30px rgba(50,48,111,.45)">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px">
+          <h2 style="margin: 0; font-size: 19px; font-weight: 800">Yang perlu kamu lakukan</h2>
+          <span style="font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: #F1F4FB; color: #32306F">{{doneCount}}/4</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <sc-for list="{{tasks}}" as="t" hint-placeholder-count="4">
+            <button type="button" onClick="{{t.toggle}}" aria-pressed="{{t.pressed}}" style="{{t.rowStyle}}">
+              <span style="{{t.boxStyle}}">{{t.mark}}</span>
+              <span style="display: flex; flex-direction: column; gap: 2px; text-align: left; flex: 1"><span style="{{t.titleStyle}}">{{t.title}}</span><span style="font-size: 12.5px; color: #6B6D8C; font-weight: 500">{{t.meta}}</span></span>
+              <span style="font-size: 11.5px; font-weight: 800; padding: 4px 8px; border-radius: 8px; background: {{t.tagBg}}; color: {{t.tagInk}}">{{t.tag}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </section>
+
+      <section class="rise d3" style="border-radius: 28px; padding: 26px; background: linear-gradient(180deg, #FFFFFF, #F9FAFE); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -30px rgba(50,48,111,.45)">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px">
+          <h2 style="margin: 0; font-size: 19px; font-weight: 800">Jadwal terdekat</h2>
+          <a href="Kalender.dc.html" style="font-size: 13px; font-weight: 700">Kalender →</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; gap: 14px; align-items: center">
+            <div style="width: 58px; height: 62px; flex: none; border-radius: 18px; background: #32306F; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 11px; font-weight: 700; opacity: .8">SAB</span><span style="font-size: 22px; font-weight: 800; line-height: 1">18</span></div>
+            <div style="flex: 1; min-width: 0"><div style="font-weight: 700; font-size: 15px">Sesi Mentoring #6 · Rajawali</div><div style="font-size: 13px; color: #6B6D8C">09.00–11.00 · Google Meet</div></div>
+            <span style="font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: #DCFCE7; color: #166534">Hadir</span>
+          </div>
+          <div style="display: flex; gap: 14px; align-items: center">
+            <div style="width: 58px; height: 62px; flex: none; border-radius: 18px; background: #E4EBF8; color: #3157A5; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 11px; font-weight: 700">RAB</span><span style="font-size: 22px; font-weight: 800; line-height: 1">22</span></div>
+            <div style="flex: 1; min-width: 0"><div style="font-weight: 700; font-size: 15px">Kelas: Komunikasi &amp; Influence</div><div style="font-size: 13px; color: #6B6D8C">19.00–21.00 · Zoom Program</div></div>
+            <span style="font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: #FEF3C7; color: #92400E">RSVP?</span>
+          </div>
+          <div style="display: flex; gap: 14px; align-items: center">
+            <div style="width: 58px; height: 62px; flex: none; border-radius: 18px; background: #E3F3F8; color: #1F5566; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 11px; font-weight: 700">JUM</span><span style="font-size: 22px; font-weight: 800; line-height: 1">31</span></div>
+            <div style="flex: 1; min-width: 0"><div style="font-weight: 700; font-size: 15px">Batas update progres Oktober</div><div style="font-size: 13px; color: #6B6D8C">23.59 · pengingat otomatis H-2</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rise d4" style="border-radius: 28px; padding: 26px; background: linear-gradient(180deg, #FFFFFF, #F9FAFE); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -30px rgba(50,48,111,.45)">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
+          <h2 style="margin: 0; font-size: 19px; font-weight: 800">Kelompok Rajawali</h2>
+          <a href="Chat.dc.html" style="font-size: 13px; font-weight: 700">Grup chat →</a>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; align-items: center; gap: 12px"><span style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#0D0D1A,#32306F); color: #FFFFFF; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center">DH</span><span style="flex: 1"><span style="display: block; font-weight: 700">Dian Hapsari</span><span style="font-size: 13px; color: #6B6D8C">Mentor · Head of People, perusahaan agribisnis</span></span></div>
+          <div style="display: flex; align-items: center; gap: 12px"><span style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center">RP</span><span style="flex: 1"><span style="display: block; font-weight: 700">Raka Pratama</span><span style="font-size: 13px; color: #6B6D8C">Asmen</span></span></div>
+          <div style="display: flex; align-items: center; gap: 0; padding-top: 6px">
+            <span style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#3157A5,#A3D6E6); color: #FFFFFF; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFFFFF">NP</span>
+            <span style="width: 40px; height: 40px; margin-left: -10px; border-radius: 50%; background: #A3D6E6; color: #1F5566; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFFFFF">FA</span>
+            <span style="width: 40px; height: 40px; margin-left: -10px; border-radius: 50%; background: #D4FF3A; color: #0D0D1A; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFFFFF">GW</span>
+            <span style="width: 40px; height: 40px; margin-left: -10px; border-radius: 50%; background: #32306F; color: #FFFFFF; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFFFFF">YS</span>
+            <span style="margin-left: 12px; font-size: 13px; color: #6B6D8C; font-weight: 600">4 mentee</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px">
+      <section style="flex: 999 1 600px; min-width: 0; border-radius: 28px; padding: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45)">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 22px">
+          <div><span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Final project</span><h2 style="margin: 4px 0 0; font-size: 22px; font-weight: 800; color: #32306F">Pasar Tani Digital untuk Desa Cibanteng</h2></div>
+          <span style="font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #E4EBF8; color: #3157A5">Milestone 2 dari 3</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+          <div style="padding: 16px; border-radius: 20px; background: #F0FDF4; border: 1px solid #BBF7D0"><div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #166534; font-size: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #16A34A; color: #FFFFFF; font-size: 12px; display: flex; align-items: center; justify-content: center">✓</span>Ide &amp; tim</div><div style="font-size: 13px; color: #3F6B4F; margin-top: 6px">Disetujui · 30 Sep</div></div>
+          <div style="padding: 16px; border-radius: 20px; background: #EEF2FC; border: 1.5px solid #3157A5"><div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #32306F; font-size: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #3157A5; color: #FFFFFF; font-size: 12px; display: flex; align-items: center; justify-content: center">2</span>Proposal</div><div style="font-size: 13px; color: #55577A; margin-top: 6px">Tenggat 15 Nov · draft 60%</div><div style="height: 6px; border-radius: 6px; background: #D5DAEA; margin-top: 10px; overflow: hidden"><div style="width: 60%; height: 100%; background: linear-gradient(90deg,#3157A5,#A3D6E6)"></div></div></div>
+          <div style="padding: 16px; border-radius: 20px; background: #F5F7FC; border: 1px dashed #C9CFE2"><div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #6B6D8C; font-size: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #E3E7F2; color: #6B6D8C; font-size: 12px; display: flex; align-items: center; justify-content: center">3</span>Presentasi akhir</div><div style="font-size: 13px; color: #8A8CA8; margin-top: 6px">Desember</div></div>
+        </div>
+      </section>
+
+      <section style="flex: 1 1 320px; min-width: 0; border-radius: 28px; padding: 28px; background: #E3F3F8; border: 1px solid rgba(31,85,102,.12)">
+        <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #1F5566">Materi Oktober</span>
+        <h2 style="margin: 4px 0 14px; font-size: 22px; font-weight: 800; color: #0D0D1A">Komunikasi &amp; Influence</h2>
+        <div style="display: flex; align-items: center; gap: 14px">
+          <div style="flex: 1; height: 12px; border-radius: 12px; background: rgba(255,255,255,.8); overflow: hidden"><div style="width: 66%; height: 100%; border-radius: 12px; background: #32306F"></div></div>
+          <span style="font-weight: 800; color: #32306F">2/3</span>
+        </div>
+        <p style="margin: 14px 0 0; font-size: 14px; color: #1F5566; line-height: 1.5">Sisa: video "Storytelling untuk pemimpin muda" (18 menit).</p>
+      </section>
+    </div>
+
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1620}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { update: false, sent: false, done: { t1: true } };
+  }
+  renderVals() {
+    const defs = [
+      { id: 't1', title: 'RSVP Sesi Mentoring #6', meta: 'Sab, 18 Okt', tag: 'Event', tagBg: '#E4EBF8', tagInk: '#3157A5' },
+      { id: 't2', title: 'Update progres Oktober', meta: 'Tenggat 31 Okt', tag: 'Wajib', tagBg: '#FEF3C7', tagInk: '#92400E' },
+      { id: 't3', title: 'Feedback 360° untuk Asmen & Mentor', meta: 'Dibuka 25 Okt', tag: 'Penilaian', tagBg: '#EEFFB8', tagInk: '#3A4A00' },
+      { id: 't4', title: 'Unggah draft proposal final project', meta: 'Tenggat 15 Nov', tag: 'Project', tagBg: '#E7E6F3', tagInk: '#32306F' }
+    ];
+    const done = this.state.done;
+    const tasks = defs.map((d) => {
+      const on = !!done[d.id];
+      return Object.assign({}, d, {
+        pressed: on ? 'true' : 'false',
+        mark: on ? '✓' : '',
+        rowStyle: 'display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px; border-radius: 16px; border: 1px solid ' + (on ? '#E3E7F2' : '#EEF0F7') + '; background: ' + (on ? '#F7F8FC' : '#FFFFFF') + '; font: inherit; cursor: pointer; color: #0D0D1A',
+        boxStyle: 'width: 24px; height: 24px; flex: none; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #0D0D1A; ' + (on ? 'background: #D4FF3A; border: 2px solid #D4FF3A' : 'background: #FFFFFF; border: 2px solid #C9CFE2'),
+        titleStyle: 'font-size: 14.5px; font-weight: 700; ' + (on ? 'text-decoration: line-through; color: #8A8CA8' : ''),
+        toggle: () => { const n = Object.assign({}, this.state.done); n[d.id] = !on; this.setState({ done: n }); }
+      });
+    });
+    return {
+      score: '86,4',
+      tasks: tasks,
+      doneCount: tasks.filter((t) => done[t.id]).length,
+      updateOpen: this.state.update,
+      sent: this.state.sent,
+      notSent: !this.state.sent,
+      openUpdate: () => this.setState({ update: true, sent: false }),
+      closeUpdate: () => this.setState({ update: false, sent: false }),
+      sendUpdate: () => { const n = Object.assign({}, this.state.done); n.t2 = true; this.setState({ sent: true, done: n }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

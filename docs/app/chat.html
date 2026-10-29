@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat · IPB Leap Management System</title>
+<meta name="description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Chat · IPB Leap Management System">
+<meta property="og:description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/app/chat.html">
+<meta property="og:image" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/assets/logo-color.png">
+<meta name="theme-color" content="#32306F">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+[data-dc-host]{display:contents}
+html{scroll-behavior:smooth}
+
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes msg{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes wave{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+@keyframes banner{0%{opacity:0;transform:translateY(-16px)}12%,88%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-8px)}}
+@keyframes pop{0%{opacity:0;transform:scale(.96) translateY(6px)}100%{opacity:1;transform:none}}
+@keyframes typing{0%,100%{opacity:.3}50%{opacity:1}}
+.msg{animation:msg .3s cubic-bezier(.2,.9,.3,1.2) both}
+.wave span{animation:wave 1.1s ease-in-out infinite;transform-origin:center}
+.wave span:nth-child(2n){animation-delay:.15s}.wave span:nth-child(3n){animation-delay:.3s}
+.banner{animation:banner 3.2s ease both}
+.pop{animation:pop .22s cubic-bezier(.2,.9,.3,1.2) both}
+.dot{animation:typing 1s infinite}.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+.room:hover{background:#F1F4FB}
+.sugg:hover{background:#EEF2FC}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+input:focus{outline:none;border-color:#3157A5 !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+
+body{margin:0}
+
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
+<div style="position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center"><span style="padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800">PROTOTYPE</span><span>IPB Leap Management System · semua data masih contoh</span><a href="../index.html" style="color:#A3D6E6;font-weight:800;text-decoration:none">← Kembali ke website</a></div>
+<div id="app" data-page="Chat"></div>
+<template data-dc="Chat">
+<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="mentee" active="chat" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1400px; margin: 0 auto; padding: 20px 24px 32px">
+    <div style="display: flex; flex-wrap: wrap; gap: 16px; height: 820px">
+
+      <aside style="flex: 1 1 260px; max-width: 300px; min-width: 0; height: 100%; display: flex; flex-direction: column; padding: 16px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-sizing: border-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px">
+          <h1 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 26px; color: #32306F">Chat</h1>
+          <button type="button" aria-label="Grup baru" title="Grup baru atau chat pribadi" style="width: 36px; height: 36px; border-radius: 11px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 18px; cursor: pointer">+</button>
+        </div>
+        <input type="search" aria-label="Cari chat" placeholder="Cari grup, orang, pesan" style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 13px; margin-bottom: 12px">
+        <div style="flex: 1; overflow: auto; display: flex; flex-direction: column; gap: 2px">
+          <sc-for list="{{rooms}}" as="r" hint-placeholder-count="6">
+            <button class="room" type="button" onClick="{{r.pick}}" aria-pressed="{{r.pressed}}" style="{{r.style}}">
+              <span style="width: 44px; height: 44px; flex: none; border-radius: {{r.radius}}; background: {{r.bg}}; color: {{r.ink}}; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center">{{r.initials}}</span>
+              <span style="flex: 1; min-width: 0; text-align: left"><span style="display: flex; justify-content: space-between; gap: 6px"><span style="font-weight: 800; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.name}}</span><span style="font-size: 11.5px; color: #8A8CA8; flex: none">{{r.time}}</span></span><span style="display: flex; justify-content: space-between; gap: 6px; align-items: center"><span style="font-size: 12.5px; color: #6B6D8C; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.last}}</span><sc-if value="{{r.hasUnread}}" hint-placeholder-val="{{ false }}"><span style="min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 10px; background: #3157A5; color: #FFFFFF; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{r.unread}}</span></sc-if></span></span>
+            </button>
+          </sc-for>
+        </div>
+      </aside>
+
+      <section style="position: relative; flex: 999 1 520px; min-width: 0; height: 100%; display: flex; flex-direction: column; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); overflow: hidden; box-shadow: 0 18px 40px -30px rgba(50,48,111,.45)">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 1px solid #EEF0F7">
+          <span style="width: 42px; height: 42px; border-radius: 14px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center">RJ</span>
+          <span style="flex: 1"><strong style="display: block; font-size: 15.5px">Kelompok Rajawali</strong><span style="font-size: 12.5px; color: #6B6D8C">6 anggota · ketik @ untuk tag orang atau kerjaan</span></span>
+          <button class="btn" type="button" onClick="{{makeEvent}}" style="height: 40px; padding: 0 14px; border-radius: 12px; border: 0; background: #D4FF3A; color: #0D0D1A; font: inherit; font-weight: 800; font-size: 13.5px; cursor: pointer; display: flex; align-items: center; gap: 8px">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"></rect><path d="M8 3v4M16 3v4M3 10h18"></path></svg>Buat Event
+          </button>
+          <button type="button" onClick="{{toggleSound}}" aria-pressed="{{soundPressed}}" aria-label="{{soundAria}}" title="{{soundAria}}" style="{{soundStyle}}">
+            <sc-if value="{{soundOn}}" hint-placeholder-val="{{ true }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"></path></svg></sc-if>
+            <sc-if value="{{soundOff}}" hint-placeholder-val="{{ false }}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="m16 9 6 6M22 9l-6 6"></path></svg></sc-if>
+          </button>
+        </div>
+
+        <sc-if value="{{banner}}" hint-placeholder-val="{{ false }}">
+          <div class="banner" role="status" style="position: absolute; top: 76px; right: 16px; z-index: 5; width: 300px; display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 18px; background: rgba(13,13,26,.92); color: #FFFFFF; box-shadow: 0 20px 40px -20px rgba(0,0,0,.7)">
+            <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: #3157A5; font-size: 11.5px; font-weight: 800; display: flex; align-items: center; justify-content: center">RP</span>
+            <span style="font-size: 13px; line-height: 1.4"><strong style="display: block">Raka menyebut kamu</strong>{{bannerText}}</span>
+          </div>
+        </sc-if>
+
+        <div style="flex: 1; overflow: auto; padding: 20px 18px; display: flex; flex-direction: column; gap: 14px; background: radial-gradient(500px 300px at 100% 0%, rgba(163,214,230,.18), transparent 70%), #FBFCFF">
+          <div style="align-self: center; font-size: 11.5px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: #EEF0F7; color: #6B6D8C">Senin, 12 Okt</div>
+
+          <div style="display: flex; gap: 10px; max-width: 78%">
+            <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: #3157A5; color: #FFFFFF; font-weight: 800; font-size: 11.5px; display: flex; align-items: center; justify-content: center">RP</span>
+            <div>
+              <span style="font-size: 12px; font-weight: 800; color: #3157A5">Raka · Asmen</span>
+              <div style="margin-top: 4px; padding: 12px 14px; border-radius: 4px 18px 18px 18px; background: #FFFFFF; border: 1px solid #EEF0F7; font-size: 14px; line-height: 1.6">Update progres Oktober ditunggu sampai 31 Okt ya. <span style="font-weight: 800; color: #3157A5; background: #E4EBF8; padding: 1px 6px; border-radius: 6px">@Gita Wulandari</span> semangat! Jangan lupa <span style="font-weight: 800; color: #3A4A00; background: #EEFFB8; padding: 1px 6px; border-radius: 6px">▣ Final Project: Proposal</span> tenggat 15 Nov.</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; max-width: 78%">
+            <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: #D4FF3A; color: #0D0D1A; font-weight: 800; font-size: 11.5px; display: flex; align-items: center; justify-content: center">GW</span>
+            <div>
+              <span style="font-size: 12px; font-weight: 800; color: #55577A">Gita</span>
+              <div style="margin-top: 4px; padding: 10px 14px; border-radius: 4px 18px 18px 18px; background: #FFFFFF; border: 1px solid #EEF0F7; display: flex; align-items: center; gap: 12px">
+                <span style="width: 32px; height: 32px; border-radius: 50%; background: #32306F; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 11px">▶</span>
+                <span class="wave" aria-hidden="true" style="display: flex; gap: 3px; align-items: center; height: 24px"><span style="width: 3px; height: 14px; border-radius: 2px; background: #3157A5"></span><span style="width: 3px; height: 22px; border-radius: 2px; background: #3157A5"></span><span style="width: 3px; height: 10px; border-radius: 2px; background: #3157A5"></span><span style="width: 3px; height: 18px; border-radius: 2px; background: #3157A5"></span><span style="width: 3px; height: 24px; border-radius: 2px; background: #3157A5"></span><span style="width: 3px; height: 12px; border-radius: 2px; background: #3157A5"></span><span style="width: 3px; height: 20px; border-radius: 2px; background: #3157A5"></span><span style="width: 3px; height: 16px; border-radius: 2px; background: #3157A5"></span></span>
+                <span style="font-size: 12px; font-weight: 700; color: #6B6D8C">0:18</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; max-width: 78%">
+            <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: linear-gradient(135deg,#0D0D1A,#32306F); color: #FFFFFF; font-weight: 800; font-size: 11.5px; display: flex; align-items: center; justify-content: center">DH</span>
+            <div>
+              <span style="font-size: 12px; font-weight: 800; color: #32306F">Dian · Mentor</span>
+              <button type="button" onClick="{{openFile1}}" style="display: flex; align-items: center; gap: 12px; margin-top: 4px; padding: 12px 14px; border-radius: 4px 18px 18px 18px; background: #FFFFFF; border: 1px solid #EEF0F7; font: inherit; cursor: pointer; text-align: left">
+                <span style="width: 40px; height: 48px; border-radius: 6px 12px 6px 6px; background: #E5484D; color: #FFFFFF; font-size: 10.5px; font-weight: 900; display: flex; align-items: center; justify-content: center">PDF</span>
+                <span><strong style="display: block; font-size: 14px">materi-sesi-6.pdf</strong><span style="font-size: 12px; color: #6B6D8C">2,4 MB · klik untuk preview</span></span>
+              </button>
+            </div>
+          </div>
+
+          <div style="align-self: center; font-size: 11.5px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: #EEF0F7; color: #6B6D8C">Hari ini</div>
+
+          <sc-for list="{{messages}}" as="m" hint-placeholder-count="1">
+            <div class="msg" style="{{m.wrap}}">
+              <sc-if value="{{m.isOther}}" hint-placeholder-val="{{ false }}">
+                <span style="width: 34px; height: 34px; flex: none; border-radius: 50%; background: #3157A5; color: #FFFFFF; font-weight: 800; font-size: 11.5px; display: flex; align-items: center; justify-content: center">RP</span>
+              </sc-if>
+              <div style="display: flex; flex-direction: column; align-items: {{m.align}}">
+                <sc-if value="{{m.isText}}" hint-placeholder-val="{{ true }}">
+                  <div style="{{m.bubble}}"><sc-for list="{{m.parts}}" as="p" hint-placeholder-count="1"><span style="{{p.style}}">{{p.t}}</span></sc-for></div>
+                </sc-if>
+                <sc-if value="{{m.isEvent}}" hint-placeholder-val="{{ false }}">
+                  <div style="width: 320px; border-radius: 20px; overflow: hidden; background: #FFFFFF; border: 1.5px solid #3157A5; box-shadow: 0 16px 30px -20px rgba(49,87,165,.8)">
+                    <div style="padding: 14px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF"><span style="font-size: 11px; font-weight: 800; letter-spacing: .08em; color: #D4FF3A">EVENT · KALENDER RAJAWALI</span><strong style="display: block; font-size: 16px; margin-top: 4px">Belajar bareng: review proposal</strong><span style="font-size: 12.5px; opacity: .85">Kam, 29 Okt · 16.00–17.30 · Google Meet</span></div>
+                    <div style="padding: 12px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+                      <sc-for list="{{m.rsvp}}" as="r" hint-placeholder-count="3">
+                        <button type="button" onClick="{{r.pick}}" aria-pressed="{{r.pressed}}" style="{{r.style}}">{{r.label}}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+                <span style="font-size: 11px; color: #8A8CA8; margin-top: 4px; font-weight: 600">{{m.meta}}</span>
+              </div>
+            </div>
+          </sc-for>
+
+          <sc-if value="{{typing}}" hint-placeholder-val="{{ false }}">
+            <div style="display: flex; gap: 8px; align-items: center; font-size: 12.5px; color: #6B6D8C"><span style="display: flex; gap: 3px; padding: 10px 12px; border-radius: 14px; background: #FFFFFF; border: 1px solid #EEF0F7"><span class="dot" style="width: 6px; height: 6px; border-radius: 50%; background: #3157A5"></span><span class="dot" style="width: 6px; height: 6px; border-radius: 50%; background: #3157A5"></span><span class="dot" style="width: 6px; height: 6px; border-radius: 50%; background: #3157A5"></span></span>Raka sedang mengetik…</div>
+          </sc-if>
+        </div>
+
+        <div style="position: relative; display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-top: 1px solid #EEF0F7">
+          <sc-if value="{{showSugg}}" hint-placeholder-val="{{ false }}">
+            <div class="pop" role="listbox" aria-label="Saran tag" style="position: absolute; left: 62px; bottom: 66px; width: 340px; max-height: 320px; overflow: auto; padding: 8px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2; box-shadow: 0 24px 50px -20px rgba(13,13,26,.45); z-index: 6">
+              <sc-if value="{{hasPeople}}" hint-placeholder-val="{{ true }}"><span style="display: block; padding: 6px 10px; font-size: 11.5px; font-weight: 800; letter-spacing: .08em; color: #8A8CA8">ORANG</span></sc-if>
+              <sc-for list="{{suggPeople}}" as="s" hint-placeholder-count="3">
+                <button class="sugg" type="button" role="option" onClick="{{s.pick}}" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border-radius: 12px; border: 0; background: transparent; font: inherit; cursor: pointer; text-align: left; color: #0D0D1A">
+                  <span style="width: 30px; height: 30px; border-radius: 50%; background: {{s.bg}}; color: {{s.ink}}; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{s.initials}}</span>
+                  <span><strong style="display: block; font-size: 13.5px">{{s.name}}</strong><span style="font-size: 12px; color: #6B6D8C">{{s.role}}</span></span>
+                </button>
+              </sc-for>
+              <sc-if value="{{hasWork}}" hint-placeholder-val="{{ true }}"><span style="display: block; padding: 10px 10px 6px; font-size: 11.5px; font-weight: 800; letter-spacing: .08em; color: #8A8CA8">KERJAAN &amp; PROJECT</span></sc-if>
+              <sc-for list="{{suggWork}}" as="s" hint-placeholder-count="2">
+                <button class="sugg" type="button" role="option" onClick="{{s.pick}}" style="display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px; border-radius: 12px; border: 0; background: transparent; font: inherit; cursor: pointer; text-align: left; color: #0D0D1A">
+                  <span style="width: 30px; height: 30px; border-radius: 9px; background: #EEFFB8; color: #3A4A00; font-size: 13px; font-weight: 900; display: flex; align-items: center; justify-content: center">▣</span>
+                  <span><strong style="display: block; font-size: 13.5px">{{s.name}}</strong><span style="font-size: 12px; color: #6B6D8C">{{s.meta}}</span></span>
+                </button>
+              </sc-for>
+            </div>
+          </sc-if>
+          <button type="button" aria-label="Lampirkan file" style="width: 42px; height: 42px; border-radius: 13px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; color: #55577A; font-size: 18px; font-weight: 700">+</button>
+          <input type="text" aria-label="Tulis pesan" value="{{draft}}" onChange="{{onDraft}}" placeholder="Tulis pesan, ketik @ untuk tag orang atau kerjaan" style="flex: 1; height: 46px; padding: 0 16px; border-radius: 15px; border: 1.5px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 14px">
+          <button class="btn" type="button" onClick="{{send}}" aria-label="Kirim" style="width: 46px; height: 46px; border-radius: 15px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center">
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </button>
+        </div>
+      </section>
+
+      <aside style="flex: 1 1 280px; max-width: 320px; min-width: 0; height: 100%; display: flex; flex-direction: column; padding: 16px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-sizing: border-box">
+        <div role="tablist" aria-label="Info grup" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 13px; background: #E9EDF7; margin-bottom: 14px">
+          <sc-for list="{{sideTabs}}" as="t" hint-placeholder-count="3">
+            <button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+          </sc-for>
+        </div>
+        <sc-if value="{{tabKal}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <sc-for list="{{groupEvents}}" as="g" hint-placeholder-count="3">
+              <div style="display: flex; gap: 12px; align-items: center; padding: 10px; border-radius: 16px; background: {{g.bg}}">
+                <span style="width: 46px; height: 50px; flex: none; border-radius: 14px; background: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 10px; font-weight: 800; color: #6B6D8C">{{g.day}}</span><span style="font-size: 18px; font-weight: 800; color: #32306F; line-height: 1">{{g.date}}</span></span>
+                <span style="flex: 1; min-width: 0"><strong style="display: block; font-size: 13.5px">{{g.title}}</strong><span style="font-size: 12px; color: #55577A">{{g.time}}</span></span>
+              </div>
+            </sc-for>
+            <a href="kalender.html" style="font-size: 13px; font-weight: 700; text-align: center; padding: 8px">Buka di Kalender →</a>
+          </div>
+        </sc-if>
+        <sc-if value="{{tabFile}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <sc-for list="{{files}}" as="f" hint-placeholder-count="4">
+              <div style="padding: 12px; border-radius: 16px; border: 1px solid #EEF0F7">
+                <div style="display: flex; gap: 10px; align-items: center">
+                  <span style="width: 34px; height: 40px; flex: none; border-radius: 5px 10px 5px 5px; background: {{f.color}}; color: #FFFFFF; font-size: 9.5px; font-weight: 900; display: flex; align-items: center; justify-content: center">{{f.ext}}</span>
+                  <span style="flex: 1; min-width: 0"><strong style="display: block; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{f.name}}</strong><span style="font-size: 12px; color: #6B6D8C">{{f.by}} · {{f.size}}</span></span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 10px">
+                  <button type="button" onClick="{{f.preview}}" style="height: 32px; border-radius: 9px; border: 0; background: #0D0D1A; color: #FFFFFF; font: inherit; font-size: 12px; font-weight: 800; cursor: pointer">Preview</button>
+                  <a href="{{f.url}}" target="_blank" rel="noopener" style="height: 32px; border-radius: 9px; border: 1px solid #D5DAEA; font-size: 12px; font-weight: 700; color: #0D0D1A; text-decoration: none; display: flex; align-items: center; justify-content: center">Tab baru ↗</a>
+                  <button type="button" style="height: 32px; border-radius: 9px; border: 1px solid #D5DAEA; background: #FFFFFF; font: inherit; font-size: 12px; font-weight: 700; cursor: pointer">Unduh</button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{tabMember}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13.5px">
+            <sc-for list="{{people}}" as="p" hint-placeholder-count="6">
+              <div style="display: flex; align-items: center; gap: 10px"><span style="width: 30px; height: 30px; border-radius: 50%; background: {{p.bg}}; color: {{p.ink}}; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{p.initials}}</span><strong style="flex: 1">{{p.name}}</strong><span style="font-size: 11.5px; font-weight: 700; color: #6B6D8C">{{p.role}}</span></div>
+            </sc-for>
+            <button type="button" style="margin-top: 6px; height: 40px; border-radius: 12px; border: 1.5px dashed #A3B4DA; background: transparent; font: inherit; font-weight: 700; font-size: 13px; color: #3157A5; cursor: pointer">Salin tautan undangan</button>
+          </div>
+        </sc-if>
+      </aside>
+    </div>
+  </main>
+
+  <sc-if value="{{hasPreview}}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 80; background: rgba(13,13,26,.55); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px">
+      <div class="pop" role="dialog" aria-label="Preview file" style="width: 100%; max-width: 760px; max-height: 92vh; overflow: auto; border-radius: 28px; background: #FFFFFF; box-shadow: 0 40px 80px -30px rgba(13,13,26,.6)">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid #EEF0F7">
+          <span style="width: 32px; height: 38px; border-radius: 5px 10px 5px 5px; background: {{pv.color}}; color: #FFFFFF; font-size: 9.5px; font-weight: 900; display: flex; align-items: center; justify-content: center">{{pv.ext}}</span>
+          <span style="flex: 1"><strong style="display: block; font-size: 15px">{{pv.name}}</strong><span style="font-size: 12px; color: #6B6D8C">{{pv.by}} · {{pv.size}}</span></span>
+          <a href="{{pv.url}}" target="_blank" rel="noopener" style="height: 38px; padding: 0 12px; border-radius: 11px; border: 1px solid #D5DAEA; font-size: 13px; font-weight: 700; color: #0D0D1A; text-decoration: none; display: flex; align-items: center">Buka di tab baru ↗</a>
+          <button type="button" style="height: 38px; padding: 0 12px; border-radius: 11px; border: 0; background: #0D0D1A; color: #FFFFFF; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer">Unduh</button>
+          <button type="button" onClick="{{closePreview}}" aria-label="Tutup" style="width: 38px; height: 38px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer">×</button>
+        </div>
+        <div style="padding: 24px; background: #E9EDF7; display: flex; justify-content: center">
+          <div style="width: 100%; max-width: 520px; aspect-ratio: 210 / 297; background: #FFFFFF; border-radius: 6px; box-shadow: 0 20px 40px -20px rgba(13,13,26,.45); padding: 36px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px">
+            <span style="height: 14px; width: 60%; border-radius: 6px; background: {{pv.color}}"></span>
+            <span style="height: 8px; width: 40%; border-radius: 4px; background: #D5DAEA"></span>
+            <span style="height: 120px; border-radius: 10px; background: linear-gradient(135deg,#E4EBF8,#E3F3F8); margin: 10px 0"></span>
+            <span style="height: 7px; width: 95%; border-radius: 4px; background: #E3E7F2"></span>
+            <span style="height: 7px; width: 88%; border-radius: 4px; background: #E3E7F2"></span>
+            <span style="height: 7px; width: 92%; border-radius: 4px; background: #E3E7F2"></span>
+            <span style="height: 7px; width: 70%; border-radius: 4px; background: #E3E7F2"></span>
+            <span style="margin-top: auto; font-size: 11px; color: #8A8CA8; text-align: center">Halaman 1 dari 12</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</template>
+<template data-dc="Navbar">
+<header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: {{c.ink}}; background: {{c.bar}}; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid {{c.line}}; box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
+  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px">
+
+    <div style="display: flex; align-items: center; gap: 12px">
+      <a href="{{homeHref}}" aria-label="Beranda IPB Leap Management System" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+        <img src="{{c.logo}}" alt="" style="height: 38px; width: auto">
+        <span style="display: flex; flex-direction: column; line-height: 1.05"><span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; color: {{c.brand}}; letter-spacing: -.01em">LEAP</span><span style="font-size: 10.5px; font-weight: 700; color: {{c.muted}}; letter-spacing: .06em; text-transform: uppercase">Management System</span></span>
+      </a>
+      <button type="button" style="height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; font: inherit; font-size: 12.5px; font-weight: 700; color: {{c.brand}}; display: flex; align-items: center; gap: 6px; cursor: pointer">Batch 2026
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+    </div>
+
+    <nav aria-label="Menu utama" style="flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px">
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="6">
+        <div style="position: relative">
+          <sc-if value="{{it.isLink}}" hint-placeholder-val="{{ true }}">
+            <a href="{{it.href}}" aria-current="{{it.current}}" style="{{it.style}}">{{it.label}}</a>
+          </sc-if>
+          <sc-if value="{{it.hasChildren}}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{it.toggle}}" aria-expanded="{{it.expanded}}" style="{{it.style}}">{{it.label}}
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <sc-if value="{{it.open}}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 310px; padding: 8px; border-radius: 20px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column; gap: 2px">
+                <sc-for list="{{it.children}}" as="ch" hint-placeholder-count="3">
+                  <a href="{{ch.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; text-decoration: none; color: {{c.ink}}">
+                    <span style="width: 34px; height: 34px; flex: none; border-radius: 11px; background: {{ch.tint}}; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800; color: #32306F">{{ch.short}}</span>
+                    <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{ch.label}}</span><span style="font-size: 12.5px; color: {{c.muted}}; line-height: 1.4">{{ch.desc}}</span></span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 8px; position: relative">
+      <button type="button" aria-label="Cari (Ctrl K)" style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <span>Cari</span><span style="font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: {{c.chip}}; border: 1px solid {{c.line2}}">⌘K</span>
+      </button>
+      <button type="button" aria-label="Tambah cepat" title="Task, note, atau event baru" style="width: 40px; height: 40px; border-radius: 12px; border: 0; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.3)">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+      </button>
+      <a href="chat.html" aria-label="Chat, 5 pesan baru" style="position: relative; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {{c.icon}}">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>
+        <span style="position: absolute; top: 4px; right: 3px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 9px; background: #3157A5; color: #FFFFFF; font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid {{c.ring}}">5</span>
+      </a>
+      <button type="button" onClick="{{toggleNotif}}" aria-label="Notifikasi, 3 belum dibaca" aria-expanded="{{notifExpanded}}" style="position: relative; width: 40px; height: 40px; border-radius: 12px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: {{c.icon}}; cursor: pointer">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>
+        <span style="position: absolute; top: 6px; right: 7px; width: 10px; height: 10px; border-radius: 50%; background: #D4FF3A; border: 2px solid #32306F"></span>
+      </button>
+      <button type="button" onClick="{{toggleMe}}" aria-expanded="{{meExpanded}}" aria-label="Menu akun" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 6px 0 4px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; cursor: pointer; font: inherit">
+        <span style="width: 34px; height: 34px; border-radius: 50%; background: {{avatarBg}}; color: #FFFFFF; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{initials}}</span>
+        <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; background: {{roleBg}}; color: {{roleInk}}">{{roleLabel}}</span>
+      </button>
+
+      <sc-if value="{{notifOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 40px; width: 360px; padding: 16px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><strong style="font-size: 15px">Notifikasi</strong><span style="font-size: 12.5px; font-weight: 700; color: {{c.link}}">Tandai dibaca</span></div>
+          <div style="display: flex; flex-direction: column">
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Periode penilaian Oktober ditutup <strong>H-3</strong>. Masih ada 2 form.<br><span style="color: {{c.muted}}; font-size: 12px">10 menit lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Kamu diundang ke <strong>Sesi Mentoring #6</strong>, Sab 18 Okt 09.00.<br><span style="color: {{c.muted}}; font-size: 12px">1 jam lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Pendaftaran <strong>Leadership Camp</strong> dibuka hari ini.<br><span style="color: {{c.muted}}; font-size: 12px">3 jam lalu</span></span></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{meOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 0; width: 270px; padding: 8px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column">
+          <div style="padding: 12px; border-bottom: 1px solid {{c.line}}; margin-bottom: 4px"><div style="font-weight: 800; font-size: 14.5px">{{name}}</div><div style="font-size: 12.5px; color: {{c.muted}}">{{subtitle}}</div></div>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Profil &amp; ID Card</a>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Pengaturan</a>
+          <a href="index.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; color: #E5484D; text-decoration: none">Keluar</a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</header>
+</template>
+<script type="text/x-dc" data-dc="Chat" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { room: 'rj', tab: 'file', draft: '', msgs: [{ id: 1, from: 'me', type: 'text', text: 'Siap kak, punyaku udah masuk tadi pagi.', time: '08.12' }], rsvp: {}, eventAdded: false, sound: true, typing: false, banner: null, preview: null };
+  }
+  componentWillUnmount() { clearTimeout(this._t1); clearTimeout(this._t2); }
+  chime() {
+    if (!this.state.sound) return;
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      const ctx = this._ac || (this._ac = new AC());
+      if (ctx.state === 'suspended') ctx.resume();
+      const now = ctx.currentTime;
+      [[660, 0, .1], [990, .09, .2]].forEach((n) => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = 'sine'; o.frequency.setValueAtTime(n[0], now + n[1]);
+        g.gain.setValueAtTime(0.0001, now + n[1]);
+        g.gain.exponentialRampToValueAtTime(0.22, now + n[1] + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + n[1] + n[2]);
+        o.connect(g); g.connect(ctx.destination); o.start(now + n[1]); o.stop(now + n[1] + n[2] + 0.02);
+      });
+    } catch (e) {}
+  }
+  renderVals() {
+    const st = this.state;
+    const people = [
+      { name: 'Dian Hapsari', initials: 'DH', role: 'Mentor', bg: 'linear-gradient(135deg,#0D0D1A,#32306F)', ink: '#FFFFFF' },
+      { name: 'Raka Pratama', initials: 'RP', role: 'Asmen', bg: '#3157A5', ink: '#FFFFFF' },
+      { name: 'Nabila Putri', initials: 'NP', role: 'Mentee · kamu', bg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', ink: '#FFFFFF' },
+      { name: 'Fajar Akbar', initials: 'FA', role: 'Mentee', bg: '#A3D6E6', ink: '#1F5566' },
+      { name: 'Gita Wulandari', initials: 'GW', role: 'Mentee', bg: '#D4FF3A', ink: '#0D0D1A' },
+      { name: 'Yusuf Saputra', initials: 'YS', role: 'Mentee', bg: '#32306F', ink: '#FFFFFF' }
+    ];
+    const work = [
+      { name: 'Final Project: Proposal', meta: 'Milestone 2 · tenggat 15 Nov' },
+      { name: 'Task: Hitung margin petani', meta: 'Ditugaskan ke Nabila · 25 Okt' },
+      { name: 'Task: Latihan pitch 3 menit', meta: 'Semua mentee · 25 Okt' },
+      { name: 'Proker: Leadership Camp', meta: 'Event · 14–16 Nov' }
+    ];
+    const m = st.draft.match(/@([^@]*)$/);
+    const q = m ? m[1].toLowerCase().trim() : null;
+    const insert = (label) => { const base = st.draft.replace(/@([^@]*)$/, ''); this.setState({ draft: base + '@' + label + ' ' }); };
+    const suggPeople = q === null ? [] : people.filter((p) => p.name.toLowerCase().indexOf(q) >= 0 && p.initials !== 'NP').map((p) => Object.assign({}, p, { pick: () => insert(p.name) }));
+    const suggWork = q === null ? [] : work.filter((w) => w.name.toLowerCase().indexOf(q) >= 0).map((w) => Object.assign({}, w, { pick: () => insert(w.name) }));
+    const tokens = people.map((p) => ({ t: '@' + p.name, kind: 'p' })).concat(work.map((w) => ({ t: '@' + w.name, kind: 'w' })));
+    const parse = (text, mine) => {
+      const parts = [];
+      let rest = text;
+      while (rest.length) {
+        let best = null;
+        tokens.forEach((tk) => { const i = rest.indexOf(tk.t); if (i >= 0 && (!best || i < best.i)) best = { i: i, tk: tk }; });
+        if (!best) { parts.push({ t: rest, style: '' }); break; }
+        if (best.i > 0) parts.push({ t: rest.slice(0, best.i), style: '' });
+        const isW = best.tk.kind === 'w';
+        parts.push({ t: isW ? '▣ ' + best.tk.t.slice(1) : best.tk.t, style: 'font-weight: 800; padding: 1px 6px; border-radius: 6px; ' + (isW ? 'background: #EEFFB8; color: #3A4A00' : (mine ? 'background: rgba(255,255,255,.2); color: #D4FF3A' : 'background: #E4EBF8; color: #3157A5')) });
+        rest = rest.slice(best.i + best.tk.t.length);
+      }
+      return parts;
+    };
+    const messages = st.msgs.map((x) => {
+      const mine = x.from === 'me', my = st.rsvp[x.id];
+      return Object.assign({}, x, {
+        isText: x.type === 'text', isEvent: x.type === 'event', isOther: !mine,
+        wrap: 'display: flex; gap: 10px; max-width: 78%; align-self: ' + (mine ? 'flex-end' : 'flex-start'),
+        align: mine ? 'flex-end' : 'flex-start',
+        bubble: 'padding: 12px 14px; font-size: 14px; line-height: 1.6; ' + (mine ? 'border-radius: 18px 4px 18px 18px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; box-shadow: inset 0 1px 0 rgba(255,255,255,.2)' : 'border-radius: 4px 18px 18px 18px; background: #FFFFFF; border: 1px solid #EEF0F7; color: #0D0D1A'),
+        parts: x.type === 'text' ? parse(x.text, mine) : [],
+        meta: x.time + (mine ? ' · dibaca 4' : ' · Raka'),
+        rsvp: [['ya', 'Hadir'], ['mungkin', 'Mungkin'], ['tidak', 'Tidak']].map((r) => ({
+          label: r[1], pressed: my === r[0] ? 'true' : 'false',
+          style: 'height: 36px; border-radius: 11px; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; ' + (my === r[0] ? 'background: #D4FF3A; color: #0D0D1A; border: 1.5px solid #0D0D1A' : 'background: #FFFFFF; color: #55577A; border: 1.5px solid #D5DAEA'),
+          pick: () => { const y = Object.assign({}, st.rsvp); y[x.id] = r[0]; this.setState({ rsvp: y }); }
+        }))
+      });
+    });
+    const roomDefs = [
+      { id: 'rj', name: 'Kelompok Rajawali', initials: 'RJ', last: 'Raka: update progres ditunggu…', time: '08.30', unread: 2, bg: 'linear-gradient(135deg,#32306F,#3157A5)', ink: '#FFFFFF', radius: '14px' },
+      { id: 'mt', name: 'Mentee Batch 2026', initials: 'MB', last: 'Info Leadership Camp sudah…', time: '07.55', unread: 12, bg: '#A3D6E6', ink: '#1F5566', radius: '14px' },
+      { id: 'pr', name: 'Tim Final Project', initials: 'FP', last: 'Fajar: aku ambil bagian RAB', time: 'Kemarin', unread: 0, bg: '#D4FF3A', ink: '#0D0D1A', radius: '14px' },
+      { id: 'rk', name: 'Raka Pratama', initials: 'RP', last: 'Oke, besok kita 1-on-1 ya', time: 'Kemarin', unread: 0, bg: '#3157A5', ink: '#FFFFFF', radius: '50%' },
+      { id: 'dh', name: 'Dian Hapsari', initials: 'DH', last: 'Artikel ini relevan buat kamu', time: 'Sen', unread: 0, bg: 'linear-gradient(135deg,#0D0D1A,#32306F)', ink: '#FFFFFF', radius: '50%' },
+      { id: 'ip', name: 'Pengumuman IPB LEAP', initials: 'IL', last: 'Periode penilaian Oktober…', time: 'Sen', unread: 1, bg: '#E7E6F3', ink: '#32306F', radius: '14px' }
+    ];
+    const rooms = roomDefs.map((r) => {
+      const on = st.room === r.id;
+      return Object.assign({}, r, { hasUnread: r.unread > 0 && !on, pressed: on ? 'true' : 'false', style: 'display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px; border-radius: 16px; border: 0; font: inherit; cursor: pointer; color: #0D0D1A; background: ' + (on ? '#EEF2FC' : 'transparent'), pick: () => this.setState({ room: r.id }) });
+    });
+    const fdefs = [
+      { id: 'f1', name: 'materi-sesi-6.pdf', ext: 'PDF', color: '#E5484D', by: 'Dian', size: '2,4 MB', url: 'https://drive.google.com' },
+      { id: 'f2', name: 'draft-proposal', ext: 'DOC', color: '#3B78E7', by: 'Nabila', size: 'Google Docs', url: 'https://docs.google.com/document' },
+      { id: 'f3', name: 'foto-wawancara.jpg', ext: 'JPG', color: '#2FA3C7', by: 'Nabila', size: '1,1 MB', url: 'https://drive.google.com' },
+      { id: 'f4', name: 'RAB-final-project', ext: 'XLS', color: '#169C55', by: 'Fajar', size: 'Google Sheets', url: 'https://docs.google.com/spreadsheets' }
+    ];
+    const files = fdefs.map((f) => Object.assign({}, f, { preview: () => this.setState({ preview: f.id }) }));
+    const pv = fdefs.find((f) => f.id === st.preview);
+    const sideTabs = [['kal', 'Kalender'], ['file', 'File'], ['mem', 'Anggota']].map((t) => ({
+      label: t[1], selected: st.tab === t[0] ? 'true' : 'false',
+      style: 'height: 34px; border-radius: 10px; border: 0; font: inherit; font-size: 12.5px; cursor: pointer; ' + (st.tab === t[0] ? 'background: #FFFFFF; color: #32306F; font-weight: 800; box-shadow: 0 4px 10px -6px rgba(50,48,111,.5)' : 'background: transparent; color: #6B6D8C; font-weight: 700'),
+      pick: () => this.setState({ tab: t[0] })
+    }));
+    const ge = [
+      { day: 'SAB', date: '18', title: 'Sesi Mentoring #6', time: '09.00 · Google Meet', bg: '#E4EBF8' },
+      { day: 'SEL', date: '27', title: '1-on-1 dengan Raka', time: '16.00 · Kantin Sapta', bg: '#F5F7FC' }
+    ];
+    if (st.eventAdded) ge.push({ day: 'KAM', date: '29', title: 'Belajar bareng: review proposal', time: '16.00 · baru dibuat', bg: '#EEFFB8' });
+    const now = '08.' + String(20 + st.msgs.length).padStart(2, '0');
+    return {
+      rooms: rooms, messages: messages, sideTabs: sideTabs, groupEvents: ge, files: files, people: people,
+      tabKal: st.tab === 'kal', tabFile: st.tab === 'file', tabMember: st.tab === 'mem',
+      draft: st.draft,
+      onDraft: (e) => this.setState({ draft: e.target.value }),
+      showSugg: q !== null && (suggPeople.length + suggWork.length) > 0,
+      hasPeople: suggPeople.length > 0, hasWork: suggWork.length > 0,
+      suggPeople: suggPeople, suggWork: suggWork,
+      typing: st.typing,
+      send: () => {
+        const t = st.draft.trim() || 'Noted kak, makasih!';
+        this.setState({ msgs: st.msgs.concat([{ id: Date.now(), from: 'me', type: 'text', text: t, time: now }]), draft: '', typing: true });
+        clearTimeout(this._t1); clearTimeout(this._t2);
+        this._t1 = setTimeout(() => {
+          const reply = '@Nabila Putri mantap! Jangan lupa cek @Task: Hitung margin petani ya.';
+          this.setState({ typing: false, banner: 'Jangan lupa cek task margin petani ya.', msgs: this.state.msgs.concat([{ id: Date.now(), from: 'raka', type: 'text', text: reply, time: now }]) });
+          this.chime();
+          this._t2 = setTimeout(() => this.setState({ banner: null }), 3200);
+        }, 1600);
+      },
+      banner: !!st.banner, bannerText: st.banner || '',
+      soundOn: st.sound, soundOff: !st.sound,
+      soundPressed: st.sound ? 'true' : 'false',
+      soundAria: st.sound ? 'Suara notifikasi aktif' : 'Suara notifikasi mati',
+      soundStyle: 'width: 40px; height: 40px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; ' + (st.sound ? 'border: 1.5px solid #3157A5; background: #EEF2FC; color: #3157A5' : 'border: 1px solid #E3E7F2; background: #FFFFFF; color: #8A8CA8'),
+      toggleSound: () => { const on = !st.sound; this.setState({ sound: on }); if (on) setTimeout(() => this.chime(), 0); },
+      makeEvent: () => this.setState({ msgs: st.msgs.concat([{ id: Date.now(), from: 'me', type: 'event', time: now }]), eventAdded: true, tab: 'kal' }),
+      openFile1: () => this.setState({ preview: 'f1' }),
+      hasPreview: !!pv, pv: pv || {},
+      closePreview: () => this.setState({ preview: null })
+    };
+  }
+}
+</script>
+<script type="text/x-dc" data-dc="Navbar" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: null, notif: false, me: false };
+  }
+  renderVals() {
+    const role = this.props.role ?? 'mentee';
+    const active = this.props.active ?? 'beranda';
+    const dark = (this.props.theme ?? 'light') === 'dark';
+    const c = dark ? {
+      bar: 'rgba(14,13,43,.82)', ink: '#ECEEFF', muted: '#9C9EC4', brand: '#C9D6F0', line: 'rgba(255,255,255,.08)', line2: 'rgba(255,255,255,.14)', chip: 'rgba(255,255,255,.06)', field: 'rgba(255,255,255,.06)', pop: '#1A1940', icon: '#C9D6F0', ring: '#0E0D2B', link: '#A3D6E6', navInk: '#C9CBEA', navOnBg: '#D4FF3A', navOnInk: '#0D0D1A',
+      logo: '../assets/logo-white.png'
+    } : {
+      bar: 'rgba(255,255,255,.78)', ink: '#0D0D1A', muted: '#6B6D8C', brand: '#32306F', line: '#F0F2F8', line2: '#E3E7F2', chip: '#FFFFFF', field: '#F5F7FC', pop: '#FFFFFF', icon: '#32306F', ring: '#FFFFFF', link: '#3157A5', navInk: '#33355A', navOnBg: '#32306F', navOnInk: '#FFFFFF',
+      logo: '../assets/logo-color.png'
+    };
+    const kel = [
+      { label: 'Ringkasan kelompok', desc: 'Anggota, status lampu, update terbaru', href: 'kelompok.html', short: 'KL', tint: '#E3F3F8' },
+      { label: 'Monitoring progres', desc: 'Riwayat update & kehadiran per bulan', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Catat sesi mentoring', desc: 'Kehadiran, topik, tindak lanjut', href: 'catat-sesi.html', short: 'CS', tint: '#E7E6F3' },
+      { label: 'Penilaian 360°', desc: 'Form bulanan & raport kelompok', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' }
+    ];
+    const programP = { key: 'program', label: 'Program', children: [
+      { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Penilaian & rubric', desc: 'Indikator, bobot, periode', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' },
+      { label: 'Kelola event', desc: 'Buat event & pendaftaran', href: 'kelola-event.html', short: 'EV', tint: '#E3F3F8' },
+      { label: 'Pengumuman', desc: 'Kirim ke role, kelompok, orang', href: 'pengumuman.html', short: 'PG', tint: '#E7E6F3' }
+    ] };
+    const wsBase = [
+      { label: 'Proker & Task', desc: 'Project, to-do, notulensi, Google apps', href: 'proker.html', short: 'PK', tint: '#E4EBF8' },
+      { label: 'File Manager', desc: 'Drive IPB LEAP: lihat, pindah, edit', href: 'file-manager.html', short: 'FM', tint: '#E3F3F8' },
+      { label: 'Pusat Template', desc: 'Preview, unduh, generate', href: 'template.html', short: 'TP', tint: '#E7E6F3' }
+    ];
+    const tail = [
+      { key: 'kalender', label: 'Kalender', href: 'kalender.html' },
+      { key: 'event', label: 'Event', href: 'event.html' },
+      { key: 'chat', label: 'Chat', href: 'chat.html' }
+    ];
+    const menus = {
+      mentee: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
+        { key: 'program', label: 'Program', children: [
+          { label: 'Progres & Project', desc: 'Update bulanan dan final project', href: 'beranda-mentee.html', short: 'PR', tint: '#E3F3F8' },
+          { label: 'Raport', desc: 'Nilai bulanan dan feedback 360°', href: 'penilaian.html', short: 'RP', tint: '#EEFFB8' }
+        ] }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
+      asmen: [
+        { key: 'beranda', label: 'Beranda', href: 'kelompok.html' },
+        { key: 'kelompok', label: 'Kelompok', children: kel }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'kelompok.html' }]),
+      pengurus: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      bendahara: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase.concat([{ label: 'Keuangan', desc: 'Khusus Bendahara: cashflow & RAB', href: 'keuangan.html', short: 'Rp', tint: '#EEFFB8' }]) }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      superadmin: [
+        { key: 'beranda', label: 'Sistem', href: 'super-admin.html' },
+        { key: 'pengguna', label: 'Pengguna & Role', href: 'super-admin.html' },
+        { key: 'data', label: 'Data & Batch', href: 'super-admin.html' },
+        { key: 'audit', label: 'Audit Log', href: 'super-admin.html' }
+      ]
+    };
+    menus.mentor = menus.asmen;
+    const people = {
+      mentee: { name: 'Nabila Putri', subtitle: 'Mentee · Kelompok Rajawali', initials: 'NP', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
+      asmen: { name: 'Raka Pratama', subtitle: 'Asmen · Kelompok Rajawali', initials: 'RP', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
+      mentor: { name: 'Dian Hapsari', subtitle: 'Mentor · Kelompok Rajawali', initials: 'DH', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
+      pengurus: { name: 'Head of Operations', subtitle: 'Steering Team IPB Leap 2026', initials: 'HO', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Pengurus', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      bendahara: { name: 'Bendahara', subtitle: 'Steering Team IPB Leap 2026', initials: 'BD', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Bendahara', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
+    };
+    const p = people[role] || people.mentee;
+    const items = (menus[role] || menus.mentee).map((m) => {
+      const on = m.key === active;
+      const open = this.state.open === m.key;
+      return Object.assign({}, m, {
+        isLink: !m.children,
+        hasChildren: !!m.children,
+        open: open,
+        expanded: open ? 'true' : 'false',
+        current: on ? 'page' : 'false',
+        style: 'display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 12px; border: 0; font: inherit; font-size: 14.5px; cursor: pointer; text-decoration: none; ' + (on ? 'background: ' + c.navOnBg + '; color: ' + c.navOnInk + '; font-weight: 700; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 8px 18px -10px rgba(50,48,111,.8)' : 'background: transparent; color: ' + c.navInk + '; font-weight: 600'),
+        toggle: () => this.setState({ open: open ? null : m.key, notif: false, me: false })
+      });
+    });
+    return Object.assign({}, p, {
+      c: c,
+      items: items,
+      homeHref: items[0].href,
+      notifOpen: this.state.notif,
+      meOpen: this.state.me,
+      notifExpanded: this.state.notif ? 'true' : 'false',
+      meExpanded: this.state.me ? 'true' : 'false',
+      toggleNotif: () => this.setState({ notif: !this.state.notif, me: false, open: null }),
+      toggleMe: () => this.setState({ me: !this.state.me, notif: false, open: null })
+    });
+  }
+}
+</script>
+<script src="../assets/leap-runtime.js"></script>
+</body>
+</html>

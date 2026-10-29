@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Masuk · IPB Leap Management System</title>
+<meta name="description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Masuk · IPB Leap Management System">
+<meta property="og:description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/app/index.html">
+<meta property="og:image" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/assets/logo-color.png">
+<meta name="theme-color" content="#32306F">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+[data-dc-host]{display:contents}
+html{scroll-behavior:smooth}
+
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dash{0%{transform:translateX(-30%);opacity:0}30%{opacity:1}100%{transform:translateX(60%);opacity:0}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(-3deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,255,58,.55)}50%{box-shadow:0 0 0 10px rgba(212,255,58,0)}}
+.rise{animation:rise .55s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}
+.speed{animation:dash 2.6s ease-in-out infinite}
+.s2{animation-delay:.5s}.s3{animation-delay:1s}.s4{animation-delay:1.5s}
+.floaty{animation:floaty 4s ease-in-out infinite}
+.pulse{animation:pulse 2s infinite}
+.btn{transition:transform .18s, box-shadow .18s, background .18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(49,87,165,.8)}
+.field:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px rgba(49,87,165,.14)}
+.chip{transition:all .18s}
+.chip:hover{border-color:#3157A5 !important}
+@media (max-width: 900px){.split{flex-direction:column !important}.hero{min-height:420px !important}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
+<div style="position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center"><span style="padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800">PROTOTYPE</span><span>IPB Leap Management System · semua data masih contoh</span><a href="../index.html" style="color:#A3D6E6;font-weight:800;text-decoration:none">← Kembali ke website</a></div>
+<div id="app" data-page="Main"></div>
+<template data-dc="Main">
+<div class="split" style="display: flex; min-height: 100vh; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; background: #F5F7FC">
+
+  <section class="hero" style="flex: 1 1 52%; position: relative; overflow: hidden; background: linear-gradient(135deg, #32306F 0%, #3157A5 100%); color: #FFFFFF; padding: 48px 56px; display: flex; flex-direction: column; justify-content: space-between; box-sizing: border-box">
+    <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(600px 400px at 85% 10%, rgba(163,214,230,.35), transparent 60%), radial-gradient(500px 360px at 10% 95%, rgba(212,255,58,.14), transparent 60%)"></div>
+    <div aria-hidden="true" style="position: absolute; left: -40px; top: 46%; width: 70%; display: flex; flex-direction: column; gap: 14px">
+      <div class="speed" style="height: 6px; width: 60%; border-radius: 6px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.5))"></div>
+      <div class="speed s2" style="height: 6px; width: 80%; border-radius: 6px; background: linear-gradient(90deg, transparent, rgba(163,214,230,.6))"></div>
+      <div class="speed s3" style="height: 6px; width: 45%; border-radius: 6px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.4))"></div>
+      <div class="speed s4" style="height: 6px; width: 70%; border-radius: 6px; background: linear-gradient(90deg, transparent, rgba(212,255,58,.6))"></div>
+    </div>
+
+    <div style="position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px">
+      <img src="../assets/logo-white.png" alt="IPB LEAP" style="height: 64px; width: auto">
+      <span style="font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25)">Management System</span>
+    </div>
+
+    <div style="position: relative; max-width: 620px; padding: 48px 0">
+      <span class="floaty" style="display: inline-block; font-size: 14px; font-weight: 800; color: #0D0D1A; background: #D4FF3A; padding: 8px 16px; border-radius: 999px; margin-bottom: 24px">Workspace</span>
+      <h1 class="rise" style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 84px; line-height: .95; letter-spacing: -.02em">Make Your Leap</h1>
+      <p class="rise d1" style="margin: 24px 0 0; font-size: 20px; line-height: 1.5; font-weight: 600; color: rgba(255,255,255,.9); max-width: 500px">The Catalyst for IPB's Future Leaders</p>
+      <div class="rise d2" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px">
+        <span style="font-size: 15px; font-weight: 700; padding: 11px 20px; border-radius: 14px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.22)">Learn</span>
+        <span style="font-size: 15px; font-weight: 700; padding: 11px 20px; border-radius: 14px; background: rgba(163,214,230,.22); border: 1px solid rgba(163,214,230,.5)">Connect</span>
+        <span style="font-size: 15px; font-weight: 800; padding: 11px 20px; border-radius: 14px; background: #D4FF3A; color: #0D0D1A">Grow</span>
+      </div>
+    </div>
+
+    <p style="position: relative; margin: 0; font-size: 13px; color: rgba(255,255,255,.7)">Powered by Himpunan Alumni IPB</p>
+  </section>
+
+  <section style="flex: 1 1 48%; display: flex; align-items: center; justify-content: center; padding: 48px 24px; box-sizing: border-box">
+    <div class="rise d1" style="width: 100%; max-width: 460px">
+
+      <sc-if value="{{showTabs}}" hint-placeholder-val="{{ true }}">
+        <div role="tablist" aria-label="Masuk atau daftar" style="display: flex; padding: 6px; gap: 6px; border-radius: 18px; background: #E9EDF7; margin-bottom: 28px">
+          <button type="button" onClick="{{goLogin}}" style="{{tabLoginStyle}}">Masuk</button>
+          <button type="button" onClick="{{goDaftar}}" style="{{tabDaftarStyle}}">Daftar</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isLogin}}" hint-placeholder-val="{{ true }}">
+        <div>
+          <h2 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -.02em; color: #32306F">Hai, selamat datang lagi</h2>
+          <p style="margin: 8px 0 28px; font-size: 15px; color: #55577A">Masuk ke IPB Leap Management System.</p>
+          <div style="display: flex; flex-direction: column; gap: 16px">
+            <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 600">Email
+              <input class="field" type="email" placeholder="nama@apps.ipb.ac.id" style="height: 52px; padding: 0 16px; border-radius: 14px; border: 1.5px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 500; font-size: 15px">
+            </label>
+            <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 600">Password
+              <input class="field" type="password" placeholder="••••••••" style="height: 52px; padding: 0 16px; border-radius: 14px; border: 1.5px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 500; font-size: 15px">
+            </label>
+            <div style="display: flex; justify-content: space-between; font-size: 14px">
+              <label style="display: flex; gap: 8px; align-items: center; color: #55577A"><input type="checkbox" checked=""> Ingat saya 30 hari</label>
+              <a href="#" style="font-weight: 600">Lupa password?</a>
+            </div>
+            <a class="btn" href="beranda-mentee.html" style="display: flex; align-items: center; justify-content: center; height: 54px; border-radius: 16px; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.25)">Masuk</a>
+            <div style="display: flex; align-items: center; gap: 12px; color: #8A8CA8; font-size: 13px"><span style="flex: 1; height: 1px; background: #D5DAEA"></span>atau<span style="flex: 1; height: 1px; background: #D5DAEA"></span></div>
+            <button class="btn" type="button" style="height: 52px; border-radius: 16px; border: 1.5px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 700; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer; color: #0D0D1A">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3157A5" stroke-width="2.4"><circle cx="12" cy="12" r="9"></circle><path d="M12 12h8"></path></svg>
+              Lanjutkan dengan Google
+            </button>
+            <button class="btn" type="button" onClick="{{goOtpLogin}}" style="height: 52px; border-radius: 16px; border: 1.5px dashed #A3B4DA; background: transparent; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer; color: #3157A5">Masuk pakai kode OTP email</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isDaftar}}" hint-placeholder-val="{{ false }}">
+        <div>
+          <h2 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -.02em; color: #32306F">Gabung IPB LEAP</h2>
+          <p style="margin: 8px 0 24px; font-size: 15px; color: #55577A">Isi sekali, dipakai di ID card, event, dan raport kamu.</p>
+          <div style="display: flex; flex-direction: column; gap: 14px">
+            <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 600">Nama lengkap
+              <input class="field" type="text" placeholder="Nama sesuai KTM / KTP" style="height: 50px; padding: 0 16px; border-radius: 14px; border: 1.5px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 500; font-size: 15px">
+            </label>
+            <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 600">Email
+              <input class="field" type="email" placeholder="nama@apps.ipb.ac.id" style="height: 50px; padding: 0 16px; border-radius: 14px; border: 1.5px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 500; font-size: 15px">
+            </label>
+            <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 600">Password
+              <input class="field" type="password" placeholder="Minimal 8 karakter" style="height: 50px; padding: 0 16px; border-radius: 14px; border: 1.5px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 500; font-size: 15px">
+            </label>
+            <fieldset style="border: 0; padding: 0; margin: 4px 0 0">
+              <legend style="font-size: 14px; font-weight: 600; margin-bottom: 10px">Daftar sebagai</legend>
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+                <sc-for list="{{roles}}" as="r" hint-placeholder-count="4">
+                  <button class="chip" type="button" onClick="{{r.pick}}" aria-pressed="{{r.pressed}}" style="{{r.style}}">
+                    <span style="width: 10px; height: 10px; border-radius: 50%; background: {{r.color}}; flex: none"></span>
+                    <span style="display: flex; flex-direction: column; align-items: flex-start; gap: 2px"><span style="font-weight: 700">{{r.label}}</span><span style="font-size: 12px; color: #6B6D8C; font-weight: 500">{{r.hint}}</span></span>
+                  </button>
+                </sc-for>
+              </div>
+            </fieldset>
+            <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: #55577A; line-height: 1.5"><input type="checkbox" style="margin-top: 3px"> Saya setuju data saya diproses sesuai UU Pelindungan Data Pribadi untuk keperluan program.</label>
+            <button class="btn" type="button" onClick="{{goOtp}}" style="height: 54px; border: 0; border-radius: 16px; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; font: inherit; font-weight: 700; font-size: 16px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25)">Kirim kode OTP ke email</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isOtp}}" hint-placeholder-val="{{ false }}">
+        <div>
+          <button type="button" onClick="{{goBack}}" style="border: 0; background: none; font: inherit; color: #3157A5; font-weight: 700; font-size: 14px; cursor: pointer; padding: 0; margin-bottom: 20px">← Ganti email</button>
+          <div aria-hidden="true" style="width: 64px; height: 64px; border-radius: 20px; background: #D4FF3A; display: flex; align-items: center; justify-content: center; margin-bottom: 20px">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0D0D1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="m3 7 9 6 9-6"></path></svg>
+          </div>
+          <h2 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -.02em; color: #32306F">Cek email kamu</h2>
+          <p style="margin: 8px 0 28px; font-size: 15px; color: #55577A; line-height: 1.6">Kami kirim kode 6 digit ke <strong style="color: #0D0D1A">nama@apps.ipb.ac.id</strong>. Kode berlaku 10 menit.</p>
+          <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px">
+            <input class="field" aria-label="Digit 1" maxlength="1" inputmode="numeric" value="4" style="height: 64px; text-align: center; border-radius: 16px; border: 1.5px solid #3157A5; background: #FFFFFF; font: inherit; font-size: 26px; font-weight: 800; color: #32306F; min-width: 0">
+            <input class="field" aria-label="Digit 2" maxlength="1" inputmode="numeric" value="8" style="height: 64px; text-align: center; border-radius: 16px; border: 1.5px solid #3157A5; background: #FFFFFF; font: inherit; font-size: 26px; font-weight: 800; color: #32306F; min-width: 0">
+            <input class="field" aria-label="Digit 3" maxlength="1" inputmode="numeric" value="2" style="height: 64px; text-align: center; border-radius: 16px; border: 1.5px solid #3157A5; background: #FFFFFF; font: inherit; font-size: 26px; font-weight: 800; color: #32306F; min-width: 0">
+            <input class="field" aria-label="Digit 4" maxlength="1" inputmode="numeric" style="height: 64px; text-align: center; border-radius: 16px; border: 1.5px solid #D5DAEA; background: #FFFFFF; font: inherit; font-size: 26px; font-weight: 800; color: #32306F; min-width: 0">
+            <input class="field" aria-label="Digit 5" maxlength="1" inputmode="numeric" style="height: 64px; text-align: center; border-radius: 16px; border: 1.5px solid #D5DAEA; background: #FFFFFF; font: inherit; font-size: 26px; font-weight: 800; color: #32306F; min-width: 0">
+            <input class="field" aria-label="Digit 6" maxlength="1" inputmode="numeric" style="height: 64px; text-align: center; border-radius: 16px; border: 1.5px solid #D5DAEA; background: #FFFFFF; font: inherit; font-size: 26px; font-weight: 800; color: #32306F; min-width: 0">
+          </div>
+          <p style="margin: 16px 0 24px; font-size: 14px; color: #6B6D8C">Belum dapat kode? <span style="font-weight: 700; color: #3157A5">Kirim ulang dalam 0:48</span></p>
+          <button class="btn" type="button" onClick="{{goVerify}}" style="width: 100%; height: 54px; border: 0; border-radius: 16px; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; font: inherit; font-weight: 700; font-size: 16px; cursor: pointer">Verifikasi</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{isPending}}" hint-placeholder-val="{{ false }}">
+        <div style="text-align: center">
+          <div class="pulse" aria-hidden="true" style="width: 88px; height: 88px; margin: 0 auto 24px; border-radius: 28px; background: #D4FF3A; display: flex; align-items: center; justify-content: center; transform: rotate(-6deg)">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#0D0D1A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          </div>
+          <h2 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -.02em; color: #32306F">Email terverifikasi!</h2>
+          <p style="margin: 10px auto 24px; font-size: 15px; color: #55577A; line-height: 1.6; max-width: 380px">Akunmu sekarang <strong style="color: #0D0D1A">Menunggu verifikasi</strong> pengurus sebagai <strong style="color: #0D0D1A">{{roleLabel}}</strong>. Kami kabari lewat email begitu disetujui.</p>
+          <div style="text-align: left; padding: 20px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2; display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px">
+            <div style="display: flex; gap: 12px; align-items: center; font-size: 14px"><span style="width: 26px; height: 26px; border-radius: 50%; background: #16A34A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px">✓</span> Email terverifikasi</div>
+            <div style="display: flex; gap: 12px; align-items: center; font-size: 14px"><span style="width: 26px; height: 26px; border-radius: 50%; background: #F59E0B; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px">2</span> Approval role oleh pengurus</div>
+            <div style="display: flex; gap: 12px; align-items: center; font-size: 14px; color: #8A8CA8"><span style="width: 26px; height: 26px; border-radius: 50%; background: #E3E7F2; color: #6B6D8C; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px">3</span> Lengkapi profil &amp; foto untuk ID card</div>
+          </div>
+          <a class="btn" href="event.html" style="display: flex; align-items: center; justify-content: center; height: 54px; border-radius: 16px; background: #0D0D1A; color: #FFFFFF; font-weight: 700; font-size: 15px; text-decoration: none">Sambil nunggu, lihat Upcoming Event</a>
+        </div>
+      </sc-if>
+
+      <div style="margin-top: 32px; padding: 16px; border-radius: 18px; background: #FFFFFF; border: 1px dashed #A3B4DA">
+        <p style="margin: 0 0 10px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Prototype · masuk sebagai</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <a href="beranda-mentee.html" style="font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; background: #E3F3F8; color: #1F5566; text-decoration: none">Mentee</a>
+          <a href="kelompok.html" style="font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; background: #E4EBF8; color: #3157A5; text-decoration: none">Asmen</a>
+          <a href="kelompok.html" style="font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; background: #E7E6F3; color: #32306F; text-decoration: none">Mentor</a>
+          <a href="beranda-pengurus.html" style="font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; background: #EEFFB8; color: #3A4A00; text-decoration: none">Pengurus</a>
+          <a href="keuangan.html" style="font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; background: #EEFFB8; color: #3A4A00; text-decoration: none">Bendahara</a>
+          <a href="super-admin.html" style="font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; background: #0D0D1A; color: #D4FF3A; text-decoration: none">Super Admin</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</template>
+<script type="text/x-dc" data-dc="Main" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 'login', role: 'mentee' };
+  }
+  renderVals() {
+    const s = this.state.step;
+    const tabOn = 'flex: 1; height: 44px; border: 0; border-radius: 14px; background: #FFFFFF; color: #32306F; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 6px 16px -8px rgba(50,48,111,.4)';
+    const tabOff = 'flex: 1; height: 44px; border: 0; border-radius: 14px; background: transparent; color: #6B6D8C; font: inherit; font-weight: 700; font-size: 15px; cursor: pointer';
+    const defs = [
+      { id: 'mentee', label: 'Mentee', hint: 'Peserta program', color: '#A3D6E6' },
+      { id: 'asmen', label: 'Asmen', hint: 'Associate Mentor', color: '#3157A5' },
+      { id: 'mentor', label: 'Mentor', hint: 'Alumni profesional', color: '#32306F' },
+      { id: 'pengurus', label: 'Pengurus', hint: 'Steering Team', color: '#B8E000' }
+    ];
+    const roles = defs.map((d) => {
+      const on = this.state.role === d.id;
+      return Object.assign({}, d, {
+        pressed: on ? 'true' : 'false',
+        style: 'display: flex; gap: 10px; align-items: center; text-align: left; padding: 12px 14px; border-radius: 14px; font: inherit; font-size: 14px; cursor: pointer; color: #0D0D1A; background: ' + (on ? '#EEF2FC' : '#FFFFFF') + '; border: 1.5px solid ' + (on ? '#3157A5' : '#D5DAEA'),
+        pick: () => this.setState({ role: d.id })
+      });
+    });
+    const roleLabel = defs.find((d) => d.id === this.state.role).label;
+    return {
+      showTabs: s === 'login' || s === 'daftar',
+      isLogin: s === 'login',
+      isDaftar: s === 'daftar',
+      isOtp: s === 'otp',
+      isPending: s === 'pending',
+      tabLoginStyle: s === 'login' ? tabOn : tabOff,
+      tabDaftarStyle: s === 'daftar' ? tabOn : tabOff,
+      roles: roles,
+      roleLabel: roleLabel,
+      goLogin: () => this.setState({ step: 'login' }),
+      goDaftar: () => this.setState({ step: 'daftar' }),
+      goOtp: () => this.setState({ step: 'otp' }),
+      goOtpLogin: () => this.setState({ step: 'otp' }),
+      goBack: () => this.setState({ step: 'daftar' }),
+      goVerify: () => this.setState({ step: 'pending' })
+    };
+  }
+}
+</script>
+<script src="../assets/leap-runtime.js"></script>
+</body>
+</html>

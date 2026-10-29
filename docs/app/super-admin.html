@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Admin · IPB Leap Management System</title>
+<meta name="description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Super Admin · IPB Leap Management System">
+<meta property="og:description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/app/super-admin.html">
+<meta property="og:image" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/assets/logo-color.png">
+<meta name="theme-color" content="#32306F">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+[data-dc-host]{display:contents}
+html{scroll-behavior:smooth}
+
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes bar{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+.rise{animation:rise .45s cubic-bezier(.2,.9,.3,1.15) both}
+.blink{animation:blink 1.6s ease-in-out infinite}
+.loading{animation:bar 1.1s ease-in-out infinite}
+.row:hover{background:#F7F9FF}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+
+body{margin:0}
+
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
+<div style="position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center"><span style="padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800">PROTOTYPE</span><span>IPB Leap Management System · semua data masih contoh</span><a href="../index.html" style="color:#A3D6E6;font-weight:800;text-decoration:none">← Kembali ke website</a></div>
+<div id="app" data-page="SuperAdmin"></div>
+<template data-dc="SuperAdmin">
+<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="superadmin" active="beranda" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 22px">
+
+    <section class="rise" style="position: relative; overflow: hidden; border-radius: 30px; padding: 28px 32px; background: #0D0D1A; color: #FFFFFF; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px">
+      <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(420px 240px at 100% 0%, rgba(49,87,165,.5), transparent 70%), radial-gradient(300px 200px at 0% 100%, rgba(212,255,58,.14), transparent 70%)"></div>
+      <div style="position: relative">
+        <span style="font-size: 12px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">KONSOL SUPER ADMIN</span>
+        <h1 style="margin: 8px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">{{headline}}</h1>
+        <p style="margin: 10px 0 0; font-size: 15px; color: rgba(255,255,255,.78); max-width: 560px">Jaga data, server, dan hak akses semua role. Super Admin tidak mengurus konten program.</p>
+      </div>
+      <div style="position: relative; display: flex; flex-wrap: wrap; gap: 10px">
+        <button class="btn" type="button" onClick="{{toggleMaint}}" aria-pressed="{{maintPressed}}" style="{{maintStyle}}">{{maintLabel}}</button>
+      </div>
+    </section>
+
+    <div role="tablist" aria-label="Bagian konsol" style="display: flex; flex-wrap: wrap; gap: 4px; padding: 6px; border-radius: 16px; background: #E9EDF7; align-self: flex-start">
+      <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+        <button type="button" role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+      </sc-for>
+    </div>
+
+    <sc-if value="{{isSistem}}" hint-placeholder-val="{{ true }}">
+      <div class="rise" style="display: flex; flex-direction: column; gap: 20px">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px">
+          <sc-for list="{{services}}" as="s" hint-placeholder-count="7">
+            <div style="padding: 18px; border-radius: 22px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+              <div style="display: flex; justify-content: space-between; align-items: center"><strong style="font-size: 14.5px">{{s.name}}</strong><span class="{{s.cls}}" style="display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; color: {{s.ink}}"><span style="width: 9px; height: 9px; border-radius: 50%; background: {{s.dot}}"></span>{{s.status}}</span></div>
+              <div style="font-size: 12.5px; color: #6B6D8C; margin-top: 6px">{{s.meta}}</div>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+          <section style="flex: 1 1 420px; min-width: 0; padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+            <h2 style="margin: 0 0 16px; font-size: 18px; font-weight: 800">Kapasitas</h2>
+            <div style="display: flex; flex-direction: column; gap: 16px; font-size: 13.5px">
+              <sc-for list="{{quotas}}" as="q" hint-placeholder-count="4">
+                <div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 6px"><span style="font-weight: 700">{{q.name}}</span><span style="color: #55577A"><strong style="color: #0D0D1A">{{q.used}}</strong> / {{q.max}}</span></div>
+                  <div style="height: 10px; border-radius: 10px; background: #EDF0F7; overflow: hidden"><div style="height: 100%; width: {{q.pct}}%; border-radius: 10px; background: {{q.color}}"></div></div>
+                </div>
+              </sc-for>
+            </div>
+          </section>
+
+          <section style="flex: 1 1 420px; min-width: 0; padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px"><h2 style="margin: 0; font-size: 18px; font-weight: 800">Backup &amp; pemulihan</h2>
+              <button class="btn" type="button" onClick="{{runBackup}}" disabled="{{backupBusy}}" style="height: 40px; padding: 0 14px; border-radius: 12px; border: 0; background: #0D0D1A; color: #FFFFFF; font: inherit; font-weight: 800; font-size: 13px; cursor: pointer">{{backupLabel}}</button>
+            </div>
+            <sc-if value="{{backupBusy}}" hint-placeholder-val="{{ false }}">
+              <div style="height: 6px; border-radius: 6px; background: #EDF0F7; overflow: hidden; margin-bottom: 12px"><div class="loading" style="width: 40%; height: 100%; border-radius: 6px; background: #3157A5"></div></div>
+            </sc-if>
+            <div style="display: flex; flex-direction: column; font-size: 13.5px">
+              <sc-for list="{{backups}}" as="b" hint-placeholder-count="4">
+                <div style="display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid #F0F2F8"><span><strong>{{b.when}}</strong><br><span style="color: #6B6D8C; font-size: 12.5px">{{b.kind}} · {{b.size}}</span></span><span style="font-size: 12px; font-weight: 800; color: #166534; align-self: center">{{b.status}}</span></div>
+              </sc-for>
+            </div>
+            <p style="margin: 12px 0 0; font-size: 12.5px; color: #6B6D8C">Backup harian 02.00 WIB, disimpan 30 hari. Uji pemulihan terakhir: 1 Agu 2026 (awal Batch).</p>
+          </section>
+        </div>
+
+        <section style="padding: 24px; border-radius: 28px; background: #FFF7ED; border: 1px solid #FED7AA">
+          <h2 style="margin: 0 0 12px; font-size: 18px; font-weight: 800">Peringatan keamanan</h2>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 14px; border-radius: 14px; background: #FFFFFF"><span><strong>9 percobaan login gagal</strong> untuk satu akun mentee dalam 10 menit · dikunci otomatis 15 menit</span><button type="button" style="height: 32px; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7F2; background: #FFFFFF; font: inherit; font-weight: 700; font-size: 12.5px; cursor: pointer">Lihat</button></div>
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 14px; border-radius: 14px; background: #FFFFFF"><span><strong>Token Google Drive</strong> akun Workspace IPB LEAP kedaluwarsa 21 hari lagi</span><button type="button" style="height: 32px; padding: 0 12px; border-radius: 10px; border: 1px solid #E3E7F2; background: #FFFFFF; font: inherit; font-weight: 700; font-size: 12.5px; cursor: pointer">Perbarui</button></div>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isUsers}}" hint-placeholder-val="{{ false }}">
+      <div class="rise" style="display: flex; flex-direction: column; gap: 18px">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px">
+          <div style="padding: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2"><span style="font-size: 12.5px; color: #6B6D8C; font-weight: 700">Mentee</span><div style="font-size: 26px; font-weight: 800; color: #32306F">128</div></div>
+          <div style="padding: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2"><span style="font-size: 12.5px; color: #6B6D8C; font-weight: 700">Asmen</span><div style="font-size: 26px; font-weight: 800; color: #32306F">31</div></div>
+          <div style="padding: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2"><span style="font-size: 12.5px; color: #6B6D8C; font-weight: 700">Mentor</span><div style="font-size: 26px; font-weight: 800; color: #32306F">31</div></div>
+          <div style="padding: 16px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2"><span style="font-size: 12.5px; color: #6B6D8C; font-weight: 700">Pengurus</span><div style="font-size: 26px; font-weight: 800; color: #32306F">21</div></div>
+          <div style="padding: 16px; border-radius: 20px; background: #FEF3C7; border: 1px solid #FDE68A"><span style="font-size: 12.5px; color: #92400E; font-weight: 700">Menunggu verifikasi</span><div style="font-size: 26px; font-weight: 800; color: #0D0D1A">12</div></div>
+        </div>
+
+        <section style="padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px">
+            <div><h2 style="margin: 0; font-size: 18px; font-weight: 800">Hak akses khusus</h2><p style="margin: 2px 0 0; font-size: 13px; color: #6B6D8C">Role dasar tetap (Mentee, Asmen, Mentor, Pengurus). Hak khusus ditambahkan per orang.</p></div>
+            <input type="search" aria-label="Cari pengguna" placeholder="Cari nama atau email" style="height: 40px; width: 240px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 13px">
+          </div>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 900px">
+              <thead><tr style="text-align: left; color: #6B6D8C; font-size: 12.5px"><th style="padding: 10px 12px; font-weight: 700">Pengguna</th><th style="padding: 10px 12px; font-weight: 700">Role · jabatan</th><th style="padding: 10px 12px; font-weight: 700; text-align: center">PIC Verifikasi</th><th style="padding: 10px 12px; font-weight: 700; text-align: center">Akses Keuangan</th><th style="padding: 10px 12px; font-weight: 700; text-align: center">Super Admin</th><th style="padding: 10px 12px; font-weight: 700">Status</th><th style="padding: 10px 12px"></th></tr></thead>
+              <tbody>
+                <sc-for list="{{users}}" as="u" hint-placeholder-count="6">
+                  <tr class="row" style="border-top: 1px solid #F0F2F8">
+                    <td style="padding: 12px"><strong>{{u.name}}</strong><br><span style="font-size: 12.5px; color: #6B6D8C">{{u.email}}</span></td>
+                    <td style="padding: 12px; color: #33355A">{{u.role}}</td>
+                    <td style="padding: 12px; text-align: center"><button type="button" role="switch" aria-checked="{{u.p0.checked}}" aria-label="PIC Verifikasi untuk {{u.name}}" onClick="{{u.p0.toggle}}" style="{{u.p0.track}}"><span style="{{u.p0.knob}}"></span></button></td>
+                    <td style="padding: 12px; text-align: center"><button type="button" role="switch" aria-checked="{{u.p1.checked}}" aria-label="Akses Keuangan untuk {{u.name}}" onClick="{{u.p1.toggle}}" style="{{u.p1.track}}"><span style="{{u.p1.knob}}"></span></button></td>
+                    <td style="padding: 12px; text-align: center"><button type="button" role="switch" aria-checked="{{u.p2.checked}}" aria-label="Super Admin untuk {{u.name}}" onClick="{{u.p2.toggle}}" style="{{u.p2.track}}"><span style="{{u.p2.knob}}"></span></button></td>
+                    <td style="padding: 12px"><span style="font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 8px; background: {{u.sBg}}; color: {{u.sInk}}">{{u.status}}</span></td>
+                    <td style="padding: 12px; white-space: nowrap"><button type="button" onClick="{{u.toggleActive}}" style="height: 32px; padding: 0 10px; border-radius: 10px; border: 1px solid #E3E7F2; background: #FFFFFF; font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer">{{u.activeLabel}}</button></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+          <p style="margin: 12px 0 0; font-size: 12.5px; color: #6B6D8C">Setiap perubahan hak akses tercatat di Audit Log dan dikabari ke pengguna lewat email.</p>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isData}}" hint-placeholder-val="{{ false }}">
+      <div class="rise" style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+        <section style="flex: 1 1 420px; min-width: 0; padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+          <h2 style="margin: 0 0 14px; font-size: 18px; font-weight: 800">Batch</h2>
+          <div style="display: flex; flex-direction: column; gap: 10px">
+            <sc-for list="{{batches}}" as="b" hint-placeholder-count="3">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 14px; border-radius: 18px; background: {{b.bg}}; border: 1px solid {{b.border}}">
+                <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 26px; color: #32306F">{{b.year}}</span>
+                <span style="flex: 1; font-size: 13px; color: #55577A">{{b.meta}}</span>
+                <span style="font-size: 12px; font-weight: 800; padding: 4px 9px; border-radius: 8px; background: {{b.sBg}}; color: {{b.sInk}}">{{b.status}}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px">
+            <button type="button" style="height: 40px; padding: 0 14px; border-radius: 12px; border: 1px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 700; font-size: 13px; cursor: pointer">Arsipkan Batch 2026</button>
+            <button type="button" style="height: 40px; padding: 0 14px; border-radius: 12px; border: 1px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 700; font-size: 13px; cursor: pointer">Export semua data (Excel)</button>
+          </div>
+        </section>
+
+        <section style="flex: 999 1 520px; min-width: 0; padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1.5px solid #3157A5; box-shadow: 0 20px 44px -30px rgba(49,87,165,.8)">
+          <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #3157A5">CLONE BATCH</span>
+          <h2 style="margin: 4px 0 6px; font-size: 22px; font-weight: 800; color: #32306F">Siapkan Batch 2027 dari pengaturan 2026</h2>
+          <p style="margin: 0 0 16px; font-size: 13.5px; color: #55577A; line-height: 1.55">Yang disalin hanya pengaturan. Data peserta, nilai, chat, dan transaksi tidak ikut, jadi Batch baru mulai bersih.</p>
+          <sc-if value="{{notCloned}}" hint-placeholder-val="{{ true }}">
+            <div>
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px">
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Salin dari<select style="height: 44px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Batch 2026</option><option>Batch 2025</option></select></label>
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Nama batch baru<input type="text" value="Batch 2027" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px">
+                <sc-for list="{{cloneItems}}" as="c" hint-placeholder-count="6">
+                  <button type="button" role="checkbox" aria-checked="{{c.checked}}" onClick="{{c.toggle}}" style="{{c.style}}"><span style="{{c.box}}">{{c.mark}}</span><span style="text-align: left"><strong style="display: block; font-size: 13.5px">{{c.label}}</strong><span style="font-size: 12px; color: #6B6D8C">{{c.desc}}</span></span></button>
+                </sc-for>
+              </div>
+              <button class="btn" type="button" onClick="{{doClone}}" style="margin-top: 16px; width: 100%; height: 52px; border-radius: 16px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Buat Batch 2027 ({{cloneCount}} pengaturan)</button>
+            </div>
+          </sc-if>
+          <sc-if value="{{cloned}}" hint-placeholder-val="{{ false }}">
+            <div style="padding: 18px; border-radius: 20px; background: #EEFFB8; display: flex; gap: 14px; align-items: center">
+              <span aria-hidden="true" style="width: 48px; height: 48px; flex: none; border-radius: 16px; background: #D4FF3A; border: 2px solid #0D0D1A; display: flex; align-items: center; justify-content: center; font-weight: 900">✓</span>
+              <span style="font-size: 14px; line-height: 1.5; color: #2B3600"><strong style="display: block; color: #0D0D1A">Batch 2027 dibuat (status: Persiapan)</strong>{{cloneCount}} pengaturan tersalin. Aktifkan saat rekrutmen dibuka; Batch 2026 tetap aktif sampai diarsipkan.</span>
+            </div>
+          </sc-if>
+        </section>
+
+        <section style="flex: 1 1 100%; padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+          <h2 style="margin: 0 0 4px; font-size: 18px; font-weight: 800">Permintaan data pribadi (UU PDP)</h2>
+          <p style="margin: 0 0 14px; font-size: 13px; color: #6B6D8C">Dikirim pengguna dari Pengaturan › Privasi.</p>
+          <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px">
+            <sc-for list="{{pdp}}" as="r" hint-placeholder-count="2">
+              <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 16px; background: #F8F9FD">
+                <span style="flex: 1; min-width: 220px"><strong>{{r.who}}</strong> · {{r.kind}}<br><span style="font-size: 12.5px; color: #6B6D8C">{{r.when}}</span></span>
+                <sc-if value="{{r.pending}}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{r.done}}" style="height: 34px; padding: 0 12px; border-radius: 10px; border: 0; background: #32306F; color: #FFFFFF; font: inherit; font-weight: 800; font-size: 12.5px; cursor: pointer">{{r.action}}</button></sc-if>
+                <sc-if value="{{r.isDone}}" hint-placeholder-val="{{ false }}"><span style="font-size: 12.5px; font-weight: 800; color: #166534">✓ Selesai</span></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{isAudit}}" hint-placeholder-val="{{ false }}">
+      <section class="rise" style="padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px">
+          <h2 style="margin: 0; font-size: 18px; font-weight: 800">Audit log</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px">
+            <sc-for list="{{auditFilters}}" as="f" hint-placeholder-count="5">
+              <button type="button" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="{{f.style}}">{{f.label}}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 760px">
+            <thead><tr style="text-align: left; color: #6B6D8C; font-size: 12.5px"><th style="padding: 10px 12px; font-weight: 700">Waktu</th><th style="padding: 10px 12px; font-weight: 700">Aktor</th><th style="padding: 10px 12px; font-weight: 700">Aksi</th><th style="padding: 10px 12px; font-weight: 700">Kategori</th><th style="padding: 10px 12px; font-weight: 700">IP</th></tr></thead>
+            <tbody>
+              <sc-for list="{{logs}}" as="l" hint-placeholder-count="8">
+                <tr class="row" style="border-top: 1px solid #F0F2F8"><td style="padding: 11px 12px; color: #55577A; white-space: nowrap">{{l.when}}</td><td style="padding: 11px 12px; font-weight: 700">{{l.who}}</td><td style="padding: 11px 12px">{{l.what}}</td><td style="padding: 11px 12px"><span style="font-size: 12px; font-weight: 800; padding: 3px 8px; border-radius: 7px; background: {{l.cBg}}; color: {{l.cInk}}">{{l.cat}}</span></td><td style="padding: 11px 12px; color: #8A8CA8; font-family: ui-monospace, monospace; font-size: 12.5px">{{l.ip}}</td></tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </sc-if>
+  </main>
+</div>
+</template>
+<template data-dc="Navbar">
+<header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: {{c.ink}}; background: {{c.bar}}; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid {{c.line}}; box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
+  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px">
+
+    <div style="display: flex; align-items: center; gap: 12px">
+      <a href="{{homeHref}}" aria-label="Beranda IPB Leap Management System" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+        <img src="{{c.logo}}" alt="" style="height: 38px; width: auto">
+        <span style="display: flex; flex-direction: column; line-height: 1.05"><span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; color: {{c.brand}}; letter-spacing: -.01em">LEAP</span><span style="font-size: 10.5px; font-weight: 700; color: {{c.muted}}; letter-spacing: .06em; text-transform: uppercase">Management System</span></span>
+      </a>
+      <button type="button" style="height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; font: inherit; font-size: 12.5px; font-weight: 700; color: {{c.brand}}; display: flex; align-items: center; gap: 6px; cursor: pointer">Batch 2026
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+    </div>
+
+    <nav aria-label="Menu utama" style="flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px">
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="6">
+        <div style="position: relative">
+          <sc-if value="{{it.isLink}}" hint-placeholder-val="{{ true }}">
+            <a href="{{it.href}}" aria-current="{{it.current}}" style="{{it.style}}">{{it.label}}</a>
+          </sc-if>
+          <sc-if value="{{it.hasChildren}}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{it.toggle}}" aria-expanded="{{it.expanded}}" style="{{it.style}}">{{it.label}}
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <sc-if value="{{it.open}}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 310px; padding: 8px; border-radius: 20px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column; gap: 2px">
+                <sc-for list="{{it.children}}" as="ch" hint-placeholder-count="3">
+                  <a href="{{ch.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; text-decoration: none; color: {{c.ink}}">
+                    <span style="width: 34px; height: 34px; flex: none; border-radius: 11px; background: {{ch.tint}}; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800; color: #32306F">{{ch.short}}</span>
+                    <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{ch.label}}</span><span style="font-size: 12.5px; color: {{c.muted}}; line-height: 1.4">{{ch.desc}}</span></span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 8px; position: relative">
+      <button type="button" aria-label="Cari (Ctrl K)" style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <span>Cari</span><span style="font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: {{c.chip}}; border: 1px solid {{c.line2}}">⌘K</span>
+      </button>
+      <button type="button" aria-label="Tambah cepat" title="Task, note, atau event baru" style="width: 40px; height: 40px; border-radius: 12px; border: 0; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.3)">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+      </button>
+      <a href="chat.html" aria-label="Chat, 5 pesan baru" style="position: relative; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {{c.icon}}">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>
+        <span style="position: absolute; top: 4px; right: 3px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 9px; background: #3157A5; color: #FFFFFF; font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid {{c.ring}}">5</span>
+      </a>
+      <button type="button" onClick="{{toggleNotif}}" aria-label="Notifikasi, 3 belum dibaca" aria-expanded="{{notifExpanded}}" style="position: relative; width: 40px; height: 40px; border-radius: 12px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: {{c.icon}}; cursor: pointer">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>
+        <span style="position: absolute; top: 6px; right: 7px; width: 10px; height: 10px; border-radius: 50%; background: #D4FF3A; border: 2px solid #32306F"></span>
+      </button>
+      <button type="button" onClick="{{toggleMe}}" aria-expanded="{{meExpanded}}" aria-label="Menu akun" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 6px 0 4px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; cursor: pointer; font: inherit">
+        <span style="width: 34px; height: 34px; border-radius: 50%; background: {{avatarBg}}; color: #FFFFFF; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{initials}}</span>
+        <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; background: {{roleBg}}; color: {{roleInk}}">{{roleLabel}}</span>
+      </button>
+
+      <sc-if value="{{notifOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 40px; width: 360px; padding: 16px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><strong style="font-size: 15px">Notifikasi</strong><span style="font-size: 12.5px; font-weight: 700; color: {{c.link}}">Tandai dibaca</span></div>
+          <div style="display: flex; flex-direction: column">
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Periode penilaian Oktober ditutup <strong>H-3</strong>. Masih ada 2 form.<br><span style="color: {{c.muted}}; font-size: 12px">10 menit lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Kamu diundang ke <strong>Sesi Mentoring #6</strong>, Sab 18 Okt 09.00.<br><span style="color: {{c.muted}}; font-size: 12px">1 jam lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Pendaftaran <strong>Leadership Camp</strong> dibuka hari ini.<br><span style="color: {{c.muted}}; font-size: 12px">3 jam lalu</span></span></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{meOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 0; width: 270px; padding: 8px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column">
+          <div style="padding: 12px; border-bottom: 1px solid {{c.line}}; margin-bottom: 4px"><div style="font-weight: 800; font-size: 14.5px">{{name}}</div><div style="font-size: 12.5px; color: {{c.muted}}">{{subtitle}}</div></div>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Profil &amp; ID Card</a>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Pengaturan</a>
+          <a href="index.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; color: #E5484D; text-decoration: none">Keluar</a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</header>
+</template>
+<script type="text/x-dc" data-dc="SuperAdmin" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tab: 'sistem', maint: false, busy: false, extraBackup: false,
+      perms: { u1: [true, false, false], u2: [false, true, false], u3: [true, false, false], u4: [false, false, false], u5: [false, false, false], u6: [false, false, true] },
+      inactive: {},
+      clone: { rubric: true, template: true, divisi: true, kategori: true, kalender: true, kurikulum: false },
+      cloned: false, pdpDone: {}, audit: 'semua'
+    };
+  }
+  componentWillUnmount() { if (this.timer) clearTimeout(this.timer); }
+  renderVals() {
+    const st = this.state;
+    const tabs = [['sistem', 'Sistem & server'], ['users', 'Pengguna & hak akses'], ['data', 'Data & Batch'], ['audit', 'Audit log']].map((t) => ({
+      label: t[1], selected: st.tab === t[0] ? 'true' : 'false',
+      style: 'height: 40px; padding: 0 16px; border-radius: 12px; border: 0; font: inherit; font-size: 14px; cursor: pointer; ' + (st.tab === t[0] ? 'background: #0D0D1A; color: #D4FF3A; font-weight: 800' : 'background: transparent; color: #55577A; font-weight: 700'),
+      pick: () => this.setState({ tab: t[0] })
+    }));
+    const ok = { status: 'Normal', dot: '#16A34A', ink: '#166534', cls: '' };
+    const services = [
+      Object.assign({ name: 'Web app', meta: 'Uptime 30 hari 99,96%' }, ok),
+      Object.assign({ name: 'Database', meta: 'Respons rata-rata 38 ms' }, ok),
+      Object.assign({ name: 'Login & OTP email', meta: 'OTP terkirim < 20 detik' }, ok),
+      Object.assign({ name: 'Penyimpanan file', meta: 'Foto, bukti, lampiran' }, ok),
+      Object.assign({ name: 'Chat real-time', meta: '64 koneksi aktif' }, ok),
+      { name: 'Sinkron Google', meta: 'Calendar & Drive · 3 gagal, dicoba ulang', status: 'Perhatian', dot: '#F59E0B', ink: '#92400E', cls: 'blink' },
+      Object.assign({ name: 'Email & push', meta: 'Antrean kosong' }, ok)
+    ];
+    if (st.maint) services.unshift({ name: 'Mode maintenance', meta: 'Pengguna melihat halaman pemeliharaan', status: 'Aktif', dot: '#E5484D', ink: '#991B1B', cls: 'blink' });
+    const quotas = [
+      { name: 'Database', used: '1,2 GB', max: '8 GB', pct: 15, color: '#3157A5' },
+      { name: 'Penyimpanan file', used: '18,4 GB', max: '100 GB', pct: 18, color: '#3157A5' },
+      { name: 'Email terkirim bulan ini', used: '4.812', max: '50.000', pct: 10, color: '#3157A5' },
+      { name: 'Kuota Google API hari ini', used: '7.920', max: '10.000', pct: 79, color: '#F59E0B' }
+    ];
+    const backups = [
+      { when: '14 Okt 2026 · 02.00', kind: 'Otomatis', size: '1,21 GB', status: '✓ Berhasil' },
+      { when: '13 Okt 2026 · 02.00', kind: 'Otomatis', size: '1,20 GB', status: '✓ Berhasil' },
+      { when: '12 Okt 2026 · 02.00', kind: 'Otomatis', size: '1,20 GB', status: '✓ Berhasil' }
+    ];
+    if (st.extraBackup) backups.unshift({ when: '14 Okt 2026 · baru saja', kind: 'Manual', size: '1,21 GB', status: '✓ Berhasil' });
+    const permLabels = ['PIC Verifikasi', 'Akses Keuangan', 'Super Admin'];
+    const userDefs = [
+      { id: 'u1', name: 'Mentee Development Lead', email: 'menteedev@ipbleap.id', role: 'Pengurus · Program Development' },
+      { id: 'u2', name: 'Bendahara', email: 'bendahara@ipbleap.id', role: 'Pengurus · Pimpinan' },
+      { id: 'u3', name: 'Mentor Development Lead', email: 'mentordev@ipbleap.id', role: 'Pengurus · Program Development' },
+      { id: 'u4', name: 'Head of Operations', email: 'operations@ipbleap.id', role: 'Pengurus · Operations & Community' },
+      { id: 'u5', name: 'Raka Pratama', email: 'raka.p@apps.ipb.ac.id', role: 'Asmen · Rajawali' },
+      { id: 'u6', name: 'Managing Director', email: 'md@ipbleap.id', role: 'Pengurus · Pimpinan' }
+    ];
+    const sw = (on) => ({
+      track: 'position: relative; width: 44px; height: 26px; border-radius: 13px; border: 0; cursor: pointer; padding: 0; transition: background .2s; background: ' + (on ? '#32306F' : '#D5DAEA'),
+      knob: 'position: absolute; top: 3px; left: ' + (on ? '21px' : '3px') + '; width: 20px; height: 20px; border-radius: 50%; background: ' + (on ? '#D4FF3A' : '#FFFFFF') + '; transition: left .2s; box-shadow: 0 2px 4px rgba(0,0,0,.2)'
+    });
+    const users = userDefs.map((u) => {
+      const off = !!st.inactive[u.id];
+      return Object.assign({}, u, {
+        status: off ? 'Nonaktif' : 'Aktif', sBg: off ? '#F3F4F6' : '#DCFCE7', sInk: off ? '#6B7280' : '#166534',
+        activeLabel: off ? 'Aktifkan' : 'Nonaktifkan',
+        toggleActive: () => { const x = Object.assign({}, st.inactive); x[u.id] = !off; this.setState({ inactive: x }); },
+        perms: null
+      });
+    }).map((u) => {
+      const ps = st.perms[u.id].map((on, i) => Object.assign({ label: permLabels[i], checked: on ? 'true' : 'false', toggle: () => { const p = Object.assign({}, st.perms); p[u.id] = p[u.id].slice(); p[u.id][i] = !on; this.setState({ perms: p }); } }, sw(on)));
+      return Object.assign({}, u, { p0: ps[0], p1: ps[1], p2: ps[2] });
+    });
+    const batches = [
+      { year: '2027', meta: 'Persiapan · hasil Clone Batch', status: 'Persiapan', sBg: '#E4EBF8', sInk: '#3157A5', bg: '#F7F9FF', border: '#C9D6F0', show: st.cloned },
+      { year: '2026', meta: '128 mentee · 31 kelompok', status: 'Aktif', sBg: '#DCFCE7', sInk: '#166534', bg: '#FFFFFF', border: '#BBF7D0', show: true },
+      { year: '2025', meta: '142 mentee · read-only', status: 'Arsip', sBg: '#F1F2F6', sInk: '#55577A', bg: '#FAFBFD', border: '#EDF0F7', show: true },
+      { year: '2024', meta: '135 mentee · read-only', status: 'Arsip', sBg: '#F1F2F6', sInk: '#55577A', bg: '#FAFBFD', border: '#EDF0F7', show: true }
+    ].filter((b) => b.show);
+    const cDefs = [
+      ['rubric', 'Rubric penilaian', 'Indikator, bobot, skala'],
+      ['template', 'Template dokumen', 'Surat, RAB, LPJ, sertifikat'],
+      ['divisi', 'Struktur divisi & jabatan', 'Tanpa nama pengurus'],
+      ['kategori', 'Kategori keuangan', 'Tanpa transaksi'],
+      ['kalender', 'Kerangka kalender', 'Periode penilaian, kelas rutin'],
+      ['kurikulum', 'Kurikulum & materi', 'Tema per bulan']
+    ];
+    const cloneItems = cDefs.map((c) => {
+      const on = !!st.clone[c[0]];
+      return {
+        label: c[1], desc: c[2], checked: on ? 'true' : 'false', mark: on ? '✓' : '',
+        style: 'display: flex; gap: 10px; align-items: flex-start; padding: 12px; border-radius: 14px; font: inherit; cursor: pointer; color: #0D0D1A; background: ' + (on ? '#EEF2FC' : '#FFFFFF') + '; border: 1.5px solid ' + (on ? '#3157A5' : '#E3E7F2'),
+        box: 'width: 20px; height: 20px; flex: none; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; ' + (on ? 'background: #32306F; color: #FFFFFF' : 'background: #FFFFFF; border: 2px solid #C9CFE2'),
+        toggle: () => { const x = Object.assign({}, st.clone); x[c[0]] = !on; this.setState({ clone: x }); }
+      };
+    });
+    const pdpDefs = [
+      { id: 'p1', who: 'Alumni mentee Batch 2024', kind: 'Unduh salinan data', when: 'Diajukan 12 Okt', action: 'Kirim file ke email' },
+      { id: 'p2', who: 'Mentor Batch 2025', kind: 'Hapus akun & data', when: 'Diajukan 9 Okt', action: 'Proses penghapusan' }
+    ];
+    const pdp = pdpDefs.map((r) => Object.assign({}, r, { pending: !st.pdpDone[r.id], isDone: !!st.pdpDone[r.id], done: () => { const x = Object.assign({}, st.pdpDone); x[r.id] = true; this.setState({ pdpDone: x }); } }));
+    const C = { Akses: ['#E7E6F3', '#32306F'], Data: ['#E4EBF8', '#3157A5'], Keamanan: ['#FEE2E2', '#991B1B'], Sistem: ['#F1F2F6', '#55577A'], Keuangan: ['#EEFFB8', '#3A4A00'] };
+    const allLogs = [
+      ['14 Okt 08.41', 'Super Admin', 'Memberi hak PIC Verifikasi ke Mentor Development Lead', 'Akses', '10.2.4.18'],
+      ['14 Okt 08.12', 'Bendahara', 'Mengunggah RAB Leadership Camp (v2)', 'Keuangan', '10.2.4.33'],
+      ['14 Okt 02.00', 'Sistem', 'Backup harian selesai · 1,21 GB', 'Sistem', '—'],
+      ['13 Okt 22.17', 'Sistem', 'Akun mentee dikunci 15 menit setelah 9 login gagal', 'Keamanan', '182.1.66.20'],
+      ['13 Okt 19.03', 'Mentee Development Lead', 'Menyetujui 5 akun mentee', 'Akses', '10.2.4.21'],
+      ['13 Okt 15.40', 'Head of Program Development', 'Membuka ulang form penilaian Gita W.', 'Data', '10.2.4.40'],
+      ['13 Okt 10.05', 'Managing Director', 'Mengubah bobot nilai akhir 70:30', 'Data', '10.2.4.11'],
+      ['12 Okt 21.30', 'Super Admin', 'Menonaktifkan akun duplikat', 'Akses', '10.2.4.18']
+    ];
+    const auditFilters = ['semua', 'Akses', 'Data', 'Keamanan', 'Keuangan'].map((f) => ({
+      label: f === 'semua' ? 'Semua' : f, pressed: st.audit === f ? 'true' : 'false',
+      style: 'height: 34px; padding: 0 12px; border-radius: 999px; font: inherit; font-size: 12.5px; cursor: pointer; ' + (st.audit === f ? 'background: #0D0D1A; color: #FFFFFF; border: 1px solid #0D0D1A; font-weight: 800' : 'background: #FFFFFF; color: #33355A; border: 1px solid #E3E7F2; font-weight: 700'),
+      pick: () => this.setState({ audit: f })
+    }));
+    const logs = allLogs.filter((l) => st.audit === 'semua' || l[3] === st.audit).map((l) => ({ when: l[0], who: l[1], what: l[2], cat: l[3], ip: l[4], cBg: C[l[3]][0], cInk: C[l[3]][1] }));
+    return {
+      headline: st.maint ? 'Mode maintenance aktif.' : 'Semua sistem normal.',
+      tabs: tabs,
+      isSistem: st.tab === 'sistem', isUsers: st.tab === 'users', isData: st.tab === 'data', isAudit: st.tab === 'audit',
+      maintPressed: st.maint ? 'true' : 'false',
+      maintLabel: st.maint ? 'Matikan maintenance' : 'Mode maintenance',
+      maintStyle: 'height: 46px; padding: 0 16px; border-radius: 14px; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; ' + (st.maint ? 'background: #E5484D; color: #FFFFFF; border: 0' : 'background: rgba(255,255,255,.1); color: #FFFFFF; border: 1px solid rgba(255,255,255,.25)'),
+      toggleMaint: () => this.setState({ maint: !st.maint }),
+      services: services, quotas: quotas, backups: backups,
+      backupBusy: st.busy,
+      backupLabel: st.busy ? 'Mencadangkan…' : 'Backup sekarang',
+      runBackup: () => { if (st.busy) return; this.setState({ busy: true }); this.timer = setTimeout(() => this.setState({ busy: false, extraBackup: true }), 1800); },
+      users: users, batches: batches, cloneItems: cloneItems,
+      cloneCount: Object.keys(st.clone).filter((k) => st.clone[k]).length,
+      notCloned: !st.cloned, cloned: st.cloned,
+      doClone: () => this.setState({ cloned: true }),
+      pdp: pdp, auditFilters: auditFilters, logs: logs
+    };
+  }
+}
+</script>
+<script type="text/x-dc" data-dc="Navbar" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: null, notif: false, me: false };
+  }
+  renderVals() {
+    const role = this.props.role ?? 'mentee';
+    const active = this.props.active ?? 'beranda';
+    const dark = (this.props.theme ?? 'light') === 'dark';
+    const c = dark ? {
+      bar: 'rgba(14,13,43,.82)', ink: '#ECEEFF', muted: '#9C9EC4', brand: '#C9D6F0', line: 'rgba(255,255,255,.08)', line2: 'rgba(255,255,255,.14)', chip: 'rgba(255,255,255,.06)', field: 'rgba(255,255,255,.06)', pop: '#1A1940', icon: '#C9D6F0', ring: '#0E0D2B', link: '#A3D6E6', navInk: '#C9CBEA', navOnBg: '#D4FF3A', navOnInk: '#0D0D1A',
+      logo: '../assets/logo-white.png'
+    } : {
+      bar: 'rgba(255,255,255,.78)', ink: '#0D0D1A', muted: '#6B6D8C', brand: '#32306F', line: '#F0F2F8', line2: '#E3E7F2', chip: '#FFFFFF', field: '#F5F7FC', pop: '#FFFFFF', icon: '#32306F', ring: '#FFFFFF', link: '#3157A5', navInk: '#33355A', navOnBg: '#32306F', navOnInk: '#FFFFFF',
+      logo: '../assets/logo-color.png'
+    };
+    const kel = [
+      { label: 'Ringkasan kelompok', desc: 'Anggota, status lampu, update terbaru', href: 'kelompok.html', short: 'KL', tint: '#E3F3F8' },
+      { label: 'Monitoring progres', desc: 'Riwayat update & kehadiran per bulan', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Catat sesi mentoring', desc: 'Kehadiran, topik, tindak lanjut', href: 'catat-sesi.html', short: 'CS', tint: '#E7E6F3' },
+      { label: 'Penilaian 360°', desc: 'Form bulanan & raport kelompok', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' }
+    ];
+    const programP = { key: 'program', label: 'Program', children: [
+      { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Penilaian & rubric', desc: 'Indikator, bobot, periode', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' },
+      { label: 'Kelola event', desc: 'Buat event & pendaftaran', href: 'kelola-event.html', short: 'EV', tint: '#E3F3F8' },
+      { label: 'Pengumuman', desc: 'Kirim ke role, kelompok, orang', href: 'pengumuman.html', short: 'PG', tint: '#E7E6F3' }
+    ] };
+    const wsBase = [
+      { label: 'Proker & Task', desc: 'Project, to-do, notulensi, Google apps', href: 'proker.html', short: 'PK', tint: '#E4EBF8' },
+      { label: 'File Manager', desc: 'Drive IPB LEAP: lihat, pindah, edit', href: 'file-manager.html', short: 'FM', tint: '#E3F3F8' },
+      { label: 'Pusat Template', desc: 'Preview, unduh, generate', href: 'template.html', short: 'TP', tint: '#E7E6F3' }
+    ];
+    const tail = [
+      { key: 'kalender', label: 'Kalender', href: 'kalender.html' },
+      { key: 'event', label: 'Event', href: 'event.html' },
+      { key: 'chat', label: 'Chat', href: 'chat.html' }
+    ];
+    const menus = {
+      mentee: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
+        { key: 'program', label: 'Program', children: [
+          { label: 'Progres & Project', desc: 'Update bulanan dan final project', href: 'beranda-mentee.html', short: 'PR', tint: '#E3F3F8' },
+          { label: 'Raport', desc: 'Nilai bulanan dan feedback 360°', href: 'penilaian.html', short: 'RP', tint: '#EEFFB8' }
+        ] }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
+      asmen: [
+        { key: 'beranda', label: 'Beranda', href: 'kelompok.html' },
+        { key: 'kelompok', label: 'Kelompok', children: kel }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'kelompok.html' }]),
+      pengurus: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      bendahara: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase.concat([{ label: 'Keuangan', desc: 'Khusus Bendahara: cashflow & RAB', href: 'keuangan.html', short: 'Rp', tint: '#EEFFB8' }]) }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      superadmin: [
+        { key: 'beranda', label: 'Sistem', href: 'super-admin.html' },
+        { key: 'pengguna', label: 'Pengguna & Role', href: 'super-admin.html' },
+        { key: 'data', label: 'Data & Batch', href: 'super-admin.html' },
+        { key: 'audit', label: 'Audit Log', href: 'super-admin.html' }
+      ]
+    };
+    menus.mentor = menus.asmen;
+    const people = {
+      mentee: { name: 'Nabila Putri', subtitle: 'Mentee · Kelompok Rajawali', initials: 'NP', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
+      asmen: { name: 'Raka Pratama', subtitle: 'Asmen · Kelompok Rajawali', initials: 'RP', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
+      mentor: { name: 'Dian Hapsari', subtitle: 'Mentor · Kelompok Rajawali', initials: 'DH', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
+      pengurus: { name: 'Head of Operations', subtitle: 'Steering Team IPB Leap 2026', initials: 'HO', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Pengurus', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      bendahara: { name: 'Bendahara', subtitle: 'Steering Team IPB Leap 2026', initials: 'BD', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Bendahara', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
+    };
+    const p = people[role] || people.mentee;
+    const items = (menus[role] || menus.mentee).map((m) => {
+      const on = m.key === active;
+      const open = this.state.open === m.key;
+      return Object.assign({}, m, {
+        isLink: !m.children,
+        hasChildren: !!m.children,
+        open: open,
+        expanded: open ? 'true' : 'false',
+        current: on ? 'page' : 'false',
+        style: 'display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 12px; border: 0; font: inherit; font-size: 14.5px; cursor: pointer; text-decoration: none; ' + (on ? 'background: ' + c.navOnBg + '; color: ' + c.navOnInk + '; font-weight: 700; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 8px 18px -10px rgba(50,48,111,.8)' : 'background: transparent; color: ' + c.navInk + '; font-weight: 600'),
+        toggle: () => this.setState({ open: open ? null : m.key, notif: false, me: false })
+      });
+    });
+    return Object.assign({}, p, {
+      c: c,
+      items: items,
+      homeHref: items[0].href,
+      notifOpen: this.state.notif,
+      meOpen: this.state.me,
+      notifExpanded: this.state.notif ? 'true' : 'false',
+      meExpanded: this.state.me ? 'true' : 'false',
+      toggleNotif: () => this.setState({ notif: !this.state.notif, me: false, open: null }),
+      toggleMe: () => this.setState({ me: !this.state.me, notif: false, open: null })
+    });
+  }
+}
+</script>
+<script src="../assets/leap-runtime.js"></script>
+</body>
+</html>

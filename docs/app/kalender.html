@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kalender · IPB Leap Management System</title>
+<meta name="description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Kalender · IPB Leap Management System">
+<meta property="og:description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/app/kalender.html">
+<meta property="og:image" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/assets/logo-color.png">
+<meta name="theme-color" content="#32306F">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+[data-dc-host]{display:contents}
+html{scroll-behavior:smooth}
+
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.96) translateY(8px)}100%{opacity:1;transform:none}}
+.rise{animation:rise .45s cubic-bezier(.2,.9,.3,1.15) both}
+.pop{animation:pop .28s cubic-bezier(.2,.9,.3,1.2) both}
+.ev{transition:transform .15s, filter .15s}
+.ev:hover{transform:translateX(2px);filter:brightness(.97)}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+input:focus,select:focus{outline:none;border-color:#3157A5 !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+
+body{margin:0}
+
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
+<div style="position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center"><span style="padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800">PROTOTYPE</span><span>IPB Leap Management System · semua data masih contoh</span><a href="../index.html" style="color:#A3D6E6;font-weight:800;text-decoration:none">← Kembali ke website</a></div>
+<div id="app" data-page="Kalender"></div>
+<template data-dc="Kalender">
+<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="mentee" active="kalender" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 24px 24px 64px; display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+
+    <aside style="flex: 1 1 240px; max-width: 280px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+      <button class="btn" type="button" onClick="{{openCreate}}" style="height: 52px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 16px 30px -18px rgba(50,48,111,.9)">+ Buat event</button>
+      <div style="padding: 18px; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px"><strong style="font-size: 14px">Kalender saya</strong><button type="button" aria-label="Tambah kalender" style="width: 28px; height: 28px; border-radius: 8px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800; color: #3157A5">+</button></div>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <sc-for list="{{cals}}" as="c" hint-placeholder-count="4">
+            <button type="button" onClick="{{c.toggle}}" aria-pressed="{{c.pressed}}" style="display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-radius: 10px; border: 0; background: transparent; font: inherit; font-size: 13.5px; cursor: pointer; color: #0D0D1A; text-align: left">
+              <span style="width: 18px; height: 18px; border-radius: 6px; flex: none; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 11px; font-weight: 900; background: {{c.boxBg}}; border: 2px solid {{c.color}}; box-sizing: border-box">{{c.mark}}</span>
+              <span style="flex: 1; font-weight: 600">{{c.name}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="padding: 18px; border-radius: 24px; background: #E3F3F8; font-size: 13px; line-height: 1.5; color: #1F5566">
+        <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #0D0D1A; margin-bottom: 4px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #16A34A"></span>Sinkron Google Calendar</div>
+        Dua arah · terakhir 2 menit lalu<br>nabila@apps.ipb.ac.id
+      </div>
+    </aside>
+
+    <section class="rise" style="flex: 999 1 640px; min-width: 0; padding: 22px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45)">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px">
+        <div style="display: flex; align-items: center; gap: 10px">
+          <h1 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px; letter-spacing: -.02em; color: #32306F">Oktober 2026</h1>
+          <button type="button" aria-label="Bulan sebelumnya" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">‹</button>
+          <button type="button" aria-label="Bulan berikutnya" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">›</button>
+          <button type="button" style="height: 36px; padding: 0 12px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font: inherit; font-weight: 700; font-size: 13px">Hari ini</button>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center">
+          <label style="position: relative"><span style="position: absolute; left: -9999px">Cari event</span><input type="search" placeholder="Cari event, orang, lokasi" style="height: 38px; width: 220px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 13px"></label>
+          <div role="tablist" aria-label="Tampilan" style="display: flex; gap: 3px; padding: 4px; border-radius: 12px; background: #E9EDF7">
+            <sc-for list="{{views}}" as="v" hint-placeholder-count="4">
+              <button type="button" role="tab" aria-selected="{{v.selected}}" onClick="{{v.pick}}" style="{{v.style}}">{{v.label}}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <sc-if value="{{isMonth}}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); font-size: 12px; font-weight: 800; color: #8A8CA8; letter-spacing: .06em; padding-bottom: 8px">
+            <span style="padding: 0 8px">SEN</span><span style="padding: 0 8px">SEL</span><span style="padding: 0 8px">RAB</span><span style="padding: 0 8px">KAM</span><span style="padding: 0 8px">JUM</span><span style="padding: 0 8px">SAB</span><span style="padding: 0 8px">MIN</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid #EDF0F7; border-left: 1px solid #EDF0F7">
+            <sc-for list="{{days}}" as="d" hint-placeholder-count="35">
+              <div style="min-height: 118px; padding: 6px; border-right: 1px solid #EDF0F7; border-bottom: 1px solid #EDF0F7; background: {{d.bg}}; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px; min-width: 0">
+                <span style="{{d.numStyle}}">{{d.n}}</span>
+                <sc-for list="{{d.events}}" as="e" hint-placeholder-count="1">
+                  <button class="ev" type="button" onClick="{{e.open}}" style="{{e.style}}"><span style="font-weight: 800">{{e.time}}</span> {{e.title}}</button>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{isAgenda}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <sc-for list="{{agenda}}" as="e" hint-placeholder-count="8">
+            <button class="ev" type="button" onClick="{{e.open}}" style="display: flex; align-items: center; gap: 16px; padding: 14px 16px; border-radius: 18px; border: 1px solid #EDF0F7; background: #FFFFFF; font: inherit; cursor: pointer; text-align: left; color: #0D0D1A">
+              <span style="width: 54px; flex: none; font-weight: 800; color: #32306F; font-size: 14px">{{e.dateLabel}}</span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: {{e.color}}; flex: none"></span>
+              <span style="flex: 1"><strong style="font-size: 14.5px">{{e.title}}</strong><span style="display: block; font-size: 12.5px; color: #6B6D8C">{{e.time}} · {{e.where}}</span></span>
+              <span style="font-size: 12px; font-weight: 700; color: #6B6D8C">{{e.calName}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{isOther}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 48px; text-align: center; color: #6B6D8C; font-size: 14px; border: 1.5px dashed #D5DAEA; border-radius: 20px">Tampilan {{viewLabel}} mengikuti pola yang sama. Coba Bulan atau Agenda di prototype ini.</div>
+      </sc-if>
+    </section>
+
+    <sc-if value="{{hasSel}}" hint-placeholder-val="{{ false }}">
+      <aside class="pop" style="flex: 1 1 300px; max-width: 340px; min-width: 0; position: sticky; top: 96px; padding: 22px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 30px 60px -30px rgba(50,48,111,.6)">
+        <div style="display: flex; justify-content: space-between; gap: 8px">
+          <span style="font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 8px; background: {{sel.tint}}; color: {{sel.ink}}">{{sel.calName}}</span>
+          <button type="button" onClick="{{closeSel}}" aria-label="Tutup" style="width: 32px; height: 32px; border-radius: 10px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer">×</button>
+        </div>
+        <h2 style="margin: 14px 0 6px; font-size: 21px; font-weight: 800; color: #0D0D1A">{{sel.title}}</h2>
+        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; color: #33355A">
+          <span>{{sel.dateLabel}} Okt 2026 · {{sel.time}}</span>
+          <span>{{sel.where}}</span>
+          <span style="color: #6B6D8C">Pengingat: 1 hari &amp; 1 jam sebelumnya · email + notifikasi</span>
+        </div>
+        <div style="margin: 16px 0; display: flex; align-items: center">
+          <span style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#0D0D1A,#32306F); color: #FFFFFF; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF">DH</span>
+          <span style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: #3157A5; color: #FFFFFF; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF">RP</span>
+          <span style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: #A3D6E6; color: #1F5566; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF">FA</span>
+          <span style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: #D4FF3A; color: #0D0D1A; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF">GW</span>
+          <span style="margin-left: 10px; font-size: 12.5px; color: #6B6D8C; font-weight: 600">{{sel.guests}}</span>
+        </div>
+        <span style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 8px">Kamu hadir?</span>
+        <div role="group" aria-label="RSVP" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
+          <sc-for list="{{rsvp}}" as="r" hint-placeholder-count="3">
+            <button type="button" onClick="{{r.pick}}" aria-pressed="{{r.pressed}}" style="{{r.style}}">{{r.label}}</button>
+          </sc-for>
+        </div>
+        <a class="btn" href="#" style="margin-top: 14px; height: 46px; border-radius: 14px; background: #0D0D1A; color: #FFFFFF; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center; justify-content: center">Gabung Google Meet</a>
+      </aside>
+    </sc-if>
+
+    <sc-if value="{{showCreate}}" hint-placeholder-val="{{ false }}">
+      <div style="position: fixed; inset: 0; z-index: 80; background: rgba(13,13,26,.4); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px">
+        <div class="pop" role="dialog" aria-label="Buat event" style="width: 100%; max-width: 560px; max-height: 90vh; overflow: auto; padding: 26px; border-radius: 30px; background: rgba(255,255,255,.96); border: 1px solid rgba(255,255,255,.8); box-shadow: 0 40px 80px -30px rgba(13,13,26,.6)">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px"><h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #32306F">Event baru</h2><button type="button" onClick="{{closeCreate}}" aria-label="Tutup" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer">×</button></div>
+          <div style="display: flex; flex-direction: column; gap: 14px">
+            <input type="text" aria-label="Judul event" value="Belajar bareng: review proposal" style="height: 54px; padding: 0 16px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 18px; font-weight: 800">
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Tanggal<input type="text" value="Kam, 29 Okt" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; color: #0D0D1A"></label>
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Mulai<input type="text" value="16.00" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; color: #0D0D1A"></label>
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Selesai<input type="text" value="17.30 WIB" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; color: #0D0D1A"></label>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Ulangi<select style="height: 44px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Tidak berulang</option><option>Setiap minggu</option><option>Setiap bulan</option><option>Custom…</option></select></label>
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Kalender<select style="height: 44px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Kelompok Rajawali</option><option>Pribadi</option></select></label>
+            </div>
+            <div>
+              <span style="display: block; font-size: 12.5px; font-weight: 700; color: #55577A; margin-bottom: 6px">Invite &amp; tag</span>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; border-radius: 14px; border: 1.5px solid #3157A5; background: #FFFFFF">
+                <span style="font-size: 13px; font-weight: 700; padding: 6px 10px; border-radius: 10px; background: #E4EBF8; color: #3157A5">Kelompok Rajawali · 6</span>
+                <span style="font-size: 13px; font-weight: 700; padding: 6px 10px; border-radius: 10px; background: #E7E6F3; color: #32306F">@Raka Pratama</span>
+                <input type="text" aria-label="Tambah orang" placeholder="Ketik nama, kelompok, divisi…" style="flex: 1; min-width: 160px; border: 0; font: inherit; font-size: 13px; outline: none">
+              </div>
+              <span style="display: block; margin-top: 6px; font-size: 12px; color: #16A34A; font-weight: 700">Semua tamu kosong di jam ini</span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 13.5px; font-weight: 600">
+              <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked=""> Buat link Google Meet</label>
+              <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked=""> Pengingat 1 jam</label>
+              <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox"> Publik</label>
+            </div>
+            <button class="btn" type="button" onClick="{{saveCreate}}" style="height: 52px; border-radius: 16px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Simpan &amp; kirim undangan</button>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+  </main>
+</div>
+</template>
+<template data-dc="Navbar">
+<header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: {{c.ink}}; background: {{c.bar}}; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid {{c.line}}; box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
+  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px">
+
+    <div style="display: flex; align-items: center; gap: 12px">
+      <a href="{{homeHref}}" aria-label="Beranda IPB Leap Management System" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+        <img src="{{c.logo}}" alt="" style="height: 38px; width: auto">
+        <span style="display: flex; flex-direction: column; line-height: 1.05"><span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; color: {{c.brand}}; letter-spacing: -.01em">LEAP</span><span style="font-size: 10.5px; font-weight: 700; color: {{c.muted}}; letter-spacing: .06em; text-transform: uppercase">Management System</span></span>
+      </a>
+      <button type="button" style="height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; font: inherit; font-size: 12.5px; font-weight: 700; color: {{c.brand}}; display: flex; align-items: center; gap: 6px; cursor: pointer">Batch 2026
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+    </div>
+
+    <nav aria-label="Menu utama" style="flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px">
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="6">
+        <div style="position: relative">
+          <sc-if value="{{it.isLink}}" hint-placeholder-val="{{ true }}">
+            <a href="{{it.href}}" aria-current="{{it.current}}" style="{{it.style}}">{{it.label}}</a>
+          </sc-if>
+          <sc-if value="{{it.hasChildren}}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{it.toggle}}" aria-expanded="{{it.expanded}}" style="{{it.style}}">{{it.label}}
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <sc-if value="{{it.open}}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 310px; padding: 8px; border-radius: 20px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column; gap: 2px">
+                <sc-for list="{{it.children}}" as="ch" hint-placeholder-count="3">
+                  <a href="{{ch.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; text-decoration: none; color: {{c.ink}}">
+                    <span style="width: 34px; height: 34px; flex: none; border-radius: 11px; background: {{ch.tint}}; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800; color: #32306F">{{ch.short}}</span>
+                    <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{ch.label}}</span><span style="font-size: 12.5px; color: {{c.muted}}; line-height: 1.4">{{ch.desc}}</span></span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 8px; position: relative">
+      <button type="button" aria-label="Cari (Ctrl K)" style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <span>Cari</span><span style="font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: {{c.chip}}; border: 1px solid {{c.line2}}">⌘K</span>
+      </button>
+      <button type="button" aria-label="Tambah cepat" title="Task, note, atau event baru" style="width: 40px; height: 40px; border-radius: 12px; border: 0; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.3)">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+      </button>
+      <a href="chat.html" aria-label="Chat, 5 pesan baru" style="position: relative; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {{c.icon}}">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>
+        <span style="position: absolute; top: 4px; right: 3px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 9px; background: #3157A5; color: #FFFFFF; font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid {{c.ring}}">5</span>
+      </a>
+      <button type="button" onClick="{{toggleNotif}}" aria-label="Notifikasi, 3 belum dibaca" aria-expanded="{{notifExpanded}}" style="position: relative; width: 40px; height: 40px; border-radius: 12px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: {{c.icon}}; cursor: pointer">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>
+        <span style="position: absolute; top: 6px; right: 7px; width: 10px; height: 10px; border-radius: 50%; background: #D4FF3A; border: 2px solid #32306F"></span>
+      </button>
+      <button type="button" onClick="{{toggleMe}}" aria-expanded="{{meExpanded}}" aria-label="Menu akun" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 6px 0 4px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; cursor: pointer; font: inherit">
+        <span style="width: 34px; height: 34px; border-radius: 50%; background: {{avatarBg}}; color: #FFFFFF; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{initials}}</span>
+        <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; background: {{roleBg}}; color: {{roleInk}}">{{roleLabel}}</span>
+      </button>
+
+      <sc-if value="{{notifOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 40px; width: 360px; padding: 16px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><strong style="font-size: 15px">Notifikasi</strong><span style="font-size: 12.5px; font-weight: 700; color: {{c.link}}">Tandai dibaca</span></div>
+          <div style="display: flex; flex-direction: column">
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Periode penilaian Oktober ditutup <strong>H-3</strong>. Masih ada 2 form.<br><span style="color: {{c.muted}}; font-size: 12px">10 menit lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Kamu diundang ke <strong>Sesi Mentoring #6</strong>, Sab 18 Okt 09.00.<br><span style="color: {{c.muted}}; font-size: 12px">1 jam lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Pendaftaran <strong>Leadership Camp</strong> dibuka hari ini.<br><span style="color: {{c.muted}}; font-size: 12px">3 jam lalu</span></span></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{meOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 0; width: 270px; padding: 8px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column">
+          <div style="padding: 12px; border-bottom: 1px solid {{c.line}}; margin-bottom: 4px"><div style="font-weight: 800; font-size: 14.5px">{{name}}</div><div style="font-size: 12.5px; color: {{c.muted}}">{{subtitle}}</div></div>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Profil &amp; ID Card</a>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Pengaturan</a>
+          <a href="index.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; color: #E5484D; text-decoration: none">Keluar</a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</header>
+</template>
+<script type="text/x-dc" data-dc="Kalender" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { hidden: {}, view: 'bulan', sel: 'e7', create: false, rsvp: { e7: 'ya' }, added: false };
+  }
+  renderVals() {
+    const st = this.state;
+    const calDefs = {
+      pribadi: { name: 'Pribadi', color: '#2FA3C7', tint: '#E3F3F8', ink: '#1F5566' },
+      kelompok: { name: 'Kelompok Rajawali', color: '#3157A5', tint: '#E4EBF8', ink: '#24427F' },
+      program: { name: 'Program IPB LEAP', color: '#32306F', tint: '#E7E6F3', ink: '#32306F' },
+      kuliah: { name: 'Kuliah (Google)', color: '#8A8CA8', tint: '#F1F2F6', ink: '#4B4D68' }
+    };
+    const ev = [
+      { id: 'e1', d: 4, time: '09.00', title: 'Sesi Mentoring #5', cal: 'kelompok', where: 'Google Meet' },
+      { id: 'e2', d: 4, time: '19.00', title: 'Diaspora Talk VII', cal: 'program', where: 'Zoom Program' },
+      { id: 'e3', d: 6, time: '08.00', title: 'Kuliah lapang', cal: 'kuliah', where: 'Kebun Cikabayan' },
+      { id: 'e4', d: 8, time: '19.00', title: 'Kelas: Problem Framing', cal: 'program', where: 'Zoom Program' },
+      { id: 'e5', d: 13, time: '16.00', title: 'Wawancara petani', cal: 'pribadi', where: 'Desa Cibanteng' },
+      { id: 'e6', d: 15, time: '16.00', title: 'Belajar bareng', cal: 'pribadi', where: 'Perpustakaan IPB' },
+      { id: 'e7', d: 18, time: '09.00', title: 'Sesi Mentoring #6', cal: 'kelompok', where: 'Google Meet · meet.google.com/abc-defg-hij' },
+      { id: 'e8', d: 20, time: '08.00', title: 'Kuliah lapang', cal: 'kuliah', where: 'Kebun Cikabayan' },
+      { id: 'e9', d: 22, time: '19.00', title: 'Kelas: Komunikasi & Influence', cal: 'program', where: 'Zoom Program' },
+      { id: 'e10', d: 25, time: 'Seharian', title: 'Penilaian Oktober dibuka', cal: 'program', where: 'Platform' },
+      { id: 'e11', d: 27, time: '16.00', title: '1-on-1 dengan Raka', cal: 'kelompok', where: 'Kantin Sapta' },
+      { id: 'e12', d: 31, time: '23.59', title: 'Batas update progres', cal: 'pribadi', where: 'Platform' }
+    ];
+    if (st.added) ev.push({ id: 'e13', d: 29, time: '16.00', title: 'Belajar bareng: review proposal', cal: 'kelompok', where: 'Google Meet' });
+    const visible = ev.filter((e) => !st.hidden[e.cal]);
+    const deco = (e) => Object.assign({}, e, {
+      calName: calDefs[e.cal].name, color: calDefs[e.cal].color, tint: calDefs[e.cal].tint, ink: calDefs[e.cal].ink,
+      dateLabel: String(e.d),
+      guests: e.cal === 'kelompok' ? '6 tamu · 5 hadir' : e.cal === 'program' ? '128 peserta' : 'Hanya kamu',
+      style: 'display: block; width: 100%; text-align: left; padding: 4px 7px; border-radius: 8px; border: 0; font: inherit; font-size: 11.5px; line-height: 1.35; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: ' + calDefs[e.cal].tint + '; color: ' + calDefs[e.cal].ink + (st.sel === e.id ? '; box-shadow: 0 0 0 2px ' + calDefs[e.cal].color : ''),
+      open: () => this.setState({ sel: e.id })
+    });
+    const days = [];
+    const lead = [28, 29, 30];
+    lead.forEach((n) => days.push({ n: n, bg: '#FAFBFD', numStyle: 'font-size: 12.5px; font-weight: 700; color: #B5B7CC; padding: 2px 4px', events: [] }));
+    for (let n = 1; n <= 31; n++) {
+      const today = n === 13;
+      days.push({
+        n: n,
+        bg: today ? '#F7FBE8' : '#FFFFFF',
+        numStyle: today ? 'align-self: flex-start; font-size: 12.5px; font-weight: 900; color: #0D0D1A; background: #D4FF3A; border-radius: 8px; padding: 2px 7px' : 'font-size: 12.5px; font-weight: 700; color: #33355A; padding: 2px 4px',
+        events: visible.filter((e) => e.d === n).map(deco)
+      });
+    }
+    days.push({ n: 1, bg: '#FAFBFD', numStyle: 'font-size: 12.5px; font-weight: 700; color: #B5B7CC; padding: 2px 4px', events: [] });
+    const cals = Object.keys(calDefs).map((k) => {
+      const on = !st.hidden[k];
+      return {
+        name: calDefs[k].name, color: calDefs[k].color,
+        boxBg: on ? calDefs[k].color : '#FFFFFF', mark: on ? '✓' : '',
+        pressed: on ? 'true' : 'false',
+        toggle: () => { const h = Object.assign({}, st.hidden); h[k] = on; this.setState({ hidden: h }); }
+      };
+    });
+    const views = [['hari', 'Hari'], ['minggu', 'Minggu'], ['bulan', 'Bulan'], ['agenda', 'Agenda']].map((v) => ({
+      label: v[1],
+      selected: st.view === v[0] ? 'true' : 'false',
+      style: 'height: 30px; padding: 0 10px; border-radius: 9px; border: 0; font: inherit; font-size: 12.5px; cursor: pointer; ' + (st.view === v[0] ? 'background: #FFFFFF; color: #32306F; font-weight: 800; box-shadow: 0 4px 10px -6px rgba(50,48,111,.5)' : 'background: transparent; color: #6B6D8C; font-weight: 700'),
+      pick: () => this.setState({ view: v[0] })
+    }));
+    const selE = ev.find((e) => e.id === st.sel);
+    const my = st.rsvp[st.sel];
+    const rsvp = [['ya', 'Ya'], ['mungkin', 'Mungkin'], ['tidak', 'Tidak']].map((r) => ({
+      label: r[1],
+      pressed: my === r[0] ? 'true' : 'false',
+      style: 'height: 40px; border-radius: 12px; font: inherit; font-weight: 800; font-size: 13.5px; cursor: pointer; ' + (my === r[0] ? (r[0] === 'ya' ? 'background: #D4FF3A; color: #0D0D1A; border: 1.5px solid #0D0D1A' : 'background: #32306F; color: #FFFFFF; border: 1.5px solid #32306F') : 'background: #FFFFFF; color: #55577A; border: 1.5px solid #D5DAEA'),
+      pick: () => { const x = Object.assign({}, st.rsvp); x[st.sel] = r[0]; this.setState({ rsvp: x }); }
+    }));
+    const viewName = { hari: 'Hari', minggu: 'Minggu', bulan: 'Bulan', agenda: 'Agenda' };
+    return {
+      cals: cals, views: views, days: days,
+      agenda: visible.filter((e) => e.d >= 13).map(deco),
+      isMonth: st.view === 'bulan',
+      isAgenda: st.view === 'agenda',
+      isOther: st.view === 'hari' || st.view === 'minggu',
+      viewLabel: viewName[st.view],
+      hasSel: !!selE,
+      sel: selE ? deco(selE) : {},
+      rsvp: rsvp,
+      closeSel: () => this.setState({ sel: null }),
+      showCreate: st.create,
+      openCreate: () => this.setState({ create: true }),
+      closeCreate: () => this.setState({ create: false }),
+      saveCreate: () => this.setState({ create: false, added: true, sel: 'e13', view: 'bulan' })
+    };
+  }
+}
+</script>
+<script type="text/x-dc" data-dc="Navbar" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: null, notif: false, me: false };
+  }
+  renderVals() {
+    const role = this.props.role ?? 'mentee';
+    const active = this.props.active ?? 'beranda';
+    const dark = (this.props.theme ?? 'light') === 'dark';
+    const c = dark ? {
+      bar: 'rgba(14,13,43,.82)', ink: '#ECEEFF', muted: '#9C9EC4', brand: '#C9D6F0', line: 'rgba(255,255,255,.08)', line2: 'rgba(255,255,255,.14)', chip: 'rgba(255,255,255,.06)', field: 'rgba(255,255,255,.06)', pop: '#1A1940', icon: '#C9D6F0', ring: '#0E0D2B', link: '#A3D6E6', navInk: '#C9CBEA', navOnBg: '#D4FF3A', navOnInk: '#0D0D1A',
+      logo: '../assets/logo-white.png'
+    } : {
+      bar: 'rgba(255,255,255,.78)', ink: '#0D0D1A', muted: '#6B6D8C', brand: '#32306F', line: '#F0F2F8', line2: '#E3E7F2', chip: '#FFFFFF', field: '#F5F7FC', pop: '#FFFFFF', icon: '#32306F', ring: '#FFFFFF', link: '#3157A5', navInk: '#33355A', navOnBg: '#32306F', navOnInk: '#FFFFFF',
+      logo: '../assets/logo-color.png'
+    };
+    const kel = [
+      { label: 'Ringkasan kelompok', desc: 'Anggota, status lampu, update terbaru', href: 'kelompok.html', short: 'KL', tint: '#E3F3F8' },
+      { label: 'Monitoring progres', desc: 'Riwayat update & kehadiran per bulan', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Catat sesi mentoring', desc: 'Kehadiran, topik, tindak lanjut', href: 'catat-sesi.html', short: 'CS', tint: '#E7E6F3' },
+      { label: 'Penilaian 360°', desc: 'Form bulanan & raport kelompok', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' }
+    ];
+    const programP = { key: 'program', label: 'Program', children: [
+      { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Penilaian & rubric', desc: 'Indikator, bobot, periode', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' },
+      { label: 'Kelola event', desc: 'Buat event & pendaftaran', href: 'kelola-event.html', short: 'EV', tint: '#E3F3F8' },
+      { label: 'Pengumuman', desc: 'Kirim ke role, kelompok, orang', href: 'pengumuman.html', short: 'PG', tint: '#E7E6F3' }
+    ] };
+    const wsBase = [
+      { label: 'Proker & Task', desc: 'Project, to-do, notulensi, Google apps', href: 'proker.html', short: 'PK', tint: '#E4EBF8' },
+      { label: 'File Manager', desc: 'Drive IPB LEAP: lihat, pindah, edit', href: 'file-manager.html', short: 'FM', tint: '#E3F3F8' },
+      { label: 'Pusat Template', desc: 'Preview, unduh, generate', href: 'template.html', short: 'TP', tint: '#E7E6F3' }
+    ];
+    const tail = [
+      { key: 'kalender', label: 'Kalender', href: 'kalender.html' },
+      { key: 'event', label: 'Event', href: 'event.html' },
+      { key: 'chat', label: 'Chat', href: 'chat.html' }
+    ];
+    const menus = {
+      mentee: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
+        { key: 'program', label: 'Program', children: [
+          { label: 'Progres & Project', desc: 'Update bulanan dan final project', href: 'beranda-mentee.html', short: 'PR', tint: '#E3F3F8' },
+          { label: 'Raport', desc: 'Nilai bulanan dan feedback 360°', href: 'penilaian.html', short: 'RP', tint: '#EEFFB8' }
+        ] }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
+      asmen: [
+        { key: 'beranda', label: 'Beranda', href: 'kelompok.html' },
+        { key: 'kelompok', label: 'Kelompok', children: kel }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'kelompok.html' }]),
+      pengurus: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      bendahara: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase.concat([{ label: 'Keuangan', desc: 'Khusus Bendahara: cashflow & RAB', href: 'keuangan.html', short: 'Rp', tint: '#EEFFB8' }]) }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      superadmin: [
+        { key: 'beranda', label: 'Sistem', href: 'super-admin.html' },
+        { key: 'pengguna', label: 'Pengguna & Role', href: 'super-admin.html' },
+        { key: 'data', label: 'Data & Batch', href: 'super-admin.html' },
+        { key: 'audit', label: 'Audit Log', href: 'super-admin.html' }
+      ]
+    };
+    menus.mentor = menus.asmen;
+    const people = {
+      mentee: { name: 'Nabila Putri', subtitle: 'Mentee · Kelompok Rajawali', initials: 'NP', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
+      asmen: { name: 'Raka Pratama', subtitle: 'Asmen · Kelompok Rajawali', initials: 'RP', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
+      mentor: { name: 'Dian Hapsari', subtitle: 'Mentor · Kelompok Rajawali', initials: 'DH', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
+      pengurus: { name: 'Head of Operations', subtitle: 'Steering Team IPB Leap 2026', initials: 'HO', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Pengurus', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      bendahara: { name: 'Bendahara', subtitle: 'Steering Team IPB Leap 2026', initials: 'BD', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Bendahara', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
+    };
+    const p = people[role] || people.mentee;
+    const items = (menus[role] || menus.mentee).map((m) => {
+      const on = m.key === active;
+      const open = this.state.open === m.key;
+      return Object.assign({}, m, {
+        isLink: !m.children,
+        hasChildren: !!m.children,
+        open: open,
+        expanded: open ? 'true' : 'false',
+        current: on ? 'page' : 'false',
+        style: 'display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 12px; border: 0; font: inherit; font-size: 14.5px; cursor: pointer; text-decoration: none; ' + (on ? 'background: ' + c.navOnBg + '; color: ' + c.navOnInk + '; font-weight: 700; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 8px 18px -10px rgba(50,48,111,.8)' : 'background: transparent; color: ' + c.navInk + '; font-weight: 600'),
+        toggle: () => this.setState({ open: open ? null : m.key, notif: false, me: false })
+      });
+    });
+    return Object.assign({}, p, {
+      c: c,
+      items: items,
+      homeHref: items[0].href,
+      notifOpen: this.state.notif,
+      meOpen: this.state.me,
+      notifExpanded: this.state.notif ? 'true' : 'false',
+      meExpanded: this.state.me ? 'true' : 'false',
+      toggleNotif: () => this.setState({ notif: !this.state.notif, me: false, open: null }),
+      toggleMe: () => this.setState({ me: !this.state.me, notif: false, open: null })
+    });
+  }
+}
+</script>
+<script src="../assets/leap-runtime.js"></script>
+</body>
+</html>

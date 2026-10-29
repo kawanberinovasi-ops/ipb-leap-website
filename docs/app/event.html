@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upcoming Event · IPB Leap Management System</title>
+<meta name="description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Upcoming Event · IPB Leap Management System">
+<meta property="og:description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/app/event.html">
+<meta property="og:image" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/assets/logo-color.png">
+<meta name="theme-color" content="#32306F">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+[data-dc-host]{display:contents}
+html{scroll-behavior:smooth}
+
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pop{0%{opacity:0;transform:translateX(24px)}100%{opacity:1;transform:none}}
+@keyframes hop{0%{transform:translateY(0) rotate(0)}35%{transform:translateY(-18px) rotate(-8deg)}70%{transform:translateY(0)}100%{transform:translateY(0)}}
+.rise{animation:rise .5s cubic-bezier(.2,.9,.3,1.15) both}
+.spin{animation:spin 18s linear infinite}
+.pop{animation:pop .3s cubic-bezier(.2,.9,.3,1.1) both}
+.hop{animation:hop .8s cubic-bezier(.3,1.4,.5,1) both}
+.card{transition:transform .2s, box-shadow .2s}
+.card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 30px 60px -30px rgba(50,48,111,.6) !important}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+
+body{margin:0}
+
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
+<div style="position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center"><span style="padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800">PROTOTYPE</span><span>IPB Leap Management System · semua data masih contoh</span><a href="../index.html" style="color:#A3D6E6;font-weight:800;text-decoration:none">← Kembali ke website</a></div>
+<div id="app" data-page="Event"></div>
+<template data-dc="Event">
+<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="mentee" active="event" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 22px">
+    <div class="rise" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <div>
+        <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Program · HA IPB · CDA IPB · mitra</span>
+        <h1 style="margin: 6px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 54px; letter-spacing: -.02em; color: #32306F; line-height: 1">Upcoming Event</h1>
+        <p style="margin: 10px 0 0; font-size: 15px; color: #55577A">Daftar langsung di sini, data diambil dari profilmu. Gak perlu isi form lagi.</p>
+      </div>
+      <a class="btn" href="kelola-event.html" style="height: 46px; padding: 0 16px; border-radius: 14px; border: 1px dashed #A3B4DA; background: #FFFFFF; font-weight: 700; font-size: 14px; color: #3157A5; text-decoration: none; display: flex; align-items: center">Pengurus: + Event / tempel tautan HA &amp; CDA</a>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px">
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
+        <button type="button" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="{{f.style}}">{{f.label}}</button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <div style="flex: 999 1 620px; min-width: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px">
+        <sc-for list="{{events}}" as="e" hint-placeholder-count="6">
+          <button class="card rise" type="button" onClick="{{e.open}}" aria-pressed="{{e.pressed}}" style="{{e.cardStyle}}">
+            <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 20px; overflow: hidden; background: {{e.bg}}; color: {{e.ink}}; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; text-align: left">
+              <div aria-hidden="true" class="spin" style="position: absolute; right: -60px; top: -60px; width: 200px; height: 200px; border-radius: 50%; border: 18px dashed {{e.accent}}; opacity: .55"></div>
+              <div aria-hidden="true" style="position: absolute; left: -30px; bottom: 70px; width: 140%; height: 34px; background: {{e.accent}}; transform: rotate(-12deg); opacity: .9"></div>
+              <span style="position: relative; align-self: flex-start; font-size: 11px; font-weight: 900; letter-spacing: .1em; padding: 5px 9px; border-radius: 7px; background: rgba(255,255,255,.92); color: #0D0D1A">{{e.org}}</span>
+              <div style="position: relative">
+                <span style="display: block; font-size: 12px; font-weight: 800; letter-spacing: .08em; opacity: .85">{{e.kicker}}</span>
+                <span style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px; line-height: .92; letter-spacing: -.02em; margin-top: 6px">{{e.t1}}</span>
+                <span style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px; line-height: .92; letter-spacing: -.02em">{{e.t2}}</span>
+                <span style="display: block; margin-top: 12px; font-size: 13px; font-weight: 800">{{e.eventDate}}</span>
+              </div>
+            </div>
+            <div style="padding: 14px 6px 6px; display: flex; flex-direction: column; gap: 8px; text-align: left; width: 100%">
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+                <span style="font-size: 11.5px; font-weight: 800; padding: 4px 9px; border-radius: 999px; background: {{e.sBg}}; color: {{e.sInk}}">{{e.status}}</span>
+                <span style="font-size: 12px; font-weight: 700; color: #6B6D8C">{{e.countdown}}</span>
+              </div>
+              <strong style="font-size: 15.5px; color: #0D0D1A">{{e.title}}</strong>
+              <span style="display: flex; flex-wrap: wrap; gap: 6px"><span style="font-size: 11.5px; font-weight: 800; padding: 3px 8px; border-radius: 7px; background: {{e.fBg}}; color: {{e.fInk}}">{{e.format}}</span><span style="font-size: 12px; font-weight: 700; color: #33355A">{{e.time}}</span></span>
+              <span style="font-size: 12.5px; color: #55577A">Daftar {{e.regOpen}} – {{e.regClose}} · {{e.whereReg}}</span>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+
+      <sc-if value="{{hasSel}}" hint-placeholder-val="{{ true }}">
+        <aside class="pop" style="flex: 1 1 340px; max-width: 400px; min-width: 0; position: sticky; top: 96px; padding: 20px; border-radius: 30px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 30px 60px -30px rgba(50,48,111,.6)">
+          <div style="position: relative; height: 200px; border-radius: 22px; overflow: hidden; background: {{sel.bg}}; color: {{sel.ink}}; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-end">
+            <div aria-hidden="true" class="spin" style="position: absolute; right: -50px; top: -50px; width: 180px; height: 180px; border-radius: 50%; border: 16px dashed {{sel.accent}}; opacity: .55"></div>
+            <span style="position: relative; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 36px; line-height: .92; letter-spacing: -.02em">{{sel.t1}} {{sel.t2}}</span>
+          </div>
+          <h2 style="margin: 16px 0 4px; font-size: 21px; font-weight: 800">{{sel.title}}</h2>
+          <p style="margin: 0 0 14px; font-size: 14px; line-height: 1.55; color: #55577A">{{sel.desc}}</p>
+          <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 13.5px; padding: 14px; border-radius: 18px; background: #F5F7FC">
+            <span style="color: #6B6D8C; font-weight: 600">Penyelenggara</span><strong>{{sel.org}}</strong>
+            <span style="color: #6B6D8C; font-weight: 600">Pendaftaran</span><strong>{{sel.regOpen}} – {{sel.regClose}}</strong>
+            <span style="color: #6B6D8C; font-weight: 600">Tanggal acara</span><strong>{{sel.eventDate}}</strong>
+            <span style="color: #6B6D8C; font-weight: 600">Waktu</span><strong>{{sel.time}}</strong>
+            <span style="color: #6B6D8C; font-weight: 600">Format</span><strong>{{sel.format}}</strong>
+            <span style="color: #6B6D8C; font-weight: 600">Lokasi / link</span><strong>{{sel.place}}</strong>
+            <span style="color: #6B6D8C; font-weight: 600">Daftar di</span><strong>{{sel.whereReg}}</strong>
+          </div>
+          <sc-if value="{{sel.hasQuota}}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top: 14px">
+              <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 6px"><span>Kuota</span><span>{{sel.filled}} / {{sel.quota}}</span></div>
+              <div style="height: 10px; border-radius: 10px; background: #E3E7F2; overflow: hidden"><div style="height: 100%; width: {{sel.pct}}%; border-radius: 10px; background: linear-gradient(90deg,#3157A5,#A3D6E6)"></div></div>
+            </div>
+          </sc-if>
+          <details style="margin-top: 14px; padding: 12px 14px; border-radius: 16px; border: 1px solid #E3E7F2" open="">
+            <summary style="font-size: 13.5px; font-weight: 800; cursor: pointer">Syarat &amp; ketentuan</summary>
+            <ol style="margin: 10px 0 0; padding-left: 18px; font-size: 13px; line-height: 1.6; color: #33355A">
+              <sc-for list="{{sel.sk}}" as="k" hint-placeholder-count="3"><li>{{k}}</li></sc-for>
+            </ol>
+          </details>
+          <div style="margin-top: 16px">
+            <sc-if value="{{canRegister}}" hint-placeholder-val="{{ true }}">
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Ukuran kaos (pertanyaan tambahan)
+                  <select style="height: 44px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>M</option><option>S</option><option>L</option><option>XL</option></select>
+                </label>
+                <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 13px; font-weight: 600; line-height: 1.45"><input type="checkbox" checked="{{agreed}}" onChange="{{toggleAgree}}" style="margin-top: 2px"> Saya sudah membaca dan menyetujui syarat &amp; ketentuan</label>
+                <button class="btn" type="button" onClick="{{register}}" disabled="{{notAgreed}}" style="{{regStyle}}">Daftar 1 klik sebagai Nabila Putri</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{isRegistered}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; align-items: center; gap: 14px; padding: 14px; border-radius: 20px; background: #EEFFB8">
+                <span class="hop" aria-hidden="true" style="width: 46px; height: 46px; flex: none; border-radius: 15px; background: #D4FF3A; border: 2px solid #0D0D1A; display: flex; align-items: center; justify-content: center; font-weight: 900">✓</span>
+                <span style="font-size: 13.5px; line-height: 1.45; color: #2B3600"><strong style="display: block; color: #0D0D1A">Kamu terdaftar!</strong>Sudah masuk kalendermu, pengingat H-1 aktif.</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{isExternal}}" hint-placeholder-val="{{ false }}">
+              <a class="btn" href="#" style="height: 54px; border-radius: 18px; background: #0D0D1A; color: #FFFFFF; font-weight: 800; font-size: 15px; text-decoration: none; display: flex; align-items: center; justify-content: center">Buka form penyelenggara ↗</a>
+            </sc-if>
+            <sc-if value="{{isClosed}}" hint-placeholder-val="{{ false }}">
+              <div style="height: 54px; border-radius: 18px; background: #F1F2F6; color: #6B6D8C; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center">{{closedLabel}}</div>
+            </sc-if>
+          </div>
+          <button type="button" style="margin-top: 10px; width: 100%; height: 42px; border-radius: 14px; border: 1px solid #E3E7F2; background: #FFFFFF; font: inherit; font-weight: 700; font-size: 13.5px; cursor: pointer">Bagikan halaman publik event</button>
+        </aside>
+      </sc-if>
+    </div>
+  </main>
+</div>
+</template>
+<template data-dc="Navbar">
+<header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: {{c.ink}}; background: {{c.bar}}; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid {{c.line}}; box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
+  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px">
+
+    <div style="display: flex; align-items: center; gap: 12px">
+      <a href="{{homeHref}}" aria-label="Beranda IPB Leap Management System" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+        <img src="{{c.logo}}" alt="" style="height: 38px; width: auto">
+        <span style="display: flex; flex-direction: column; line-height: 1.05"><span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; color: {{c.brand}}; letter-spacing: -.01em">LEAP</span><span style="font-size: 10.5px; font-weight: 700; color: {{c.muted}}; letter-spacing: .06em; text-transform: uppercase">Management System</span></span>
+      </a>
+      <button type="button" style="height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; font: inherit; font-size: 12.5px; font-weight: 700; color: {{c.brand}}; display: flex; align-items: center; gap: 6px; cursor: pointer">Batch 2026
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+    </div>
+
+    <nav aria-label="Menu utama" style="flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px">
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="6">
+        <div style="position: relative">
+          <sc-if value="{{it.isLink}}" hint-placeholder-val="{{ true }}">
+            <a href="{{it.href}}" aria-current="{{it.current}}" style="{{it.style}}">{{it.label}}</a>
+          </sc-if>
+          <sc-if value="{{it.hasChildren}}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{it.toggle}}" aria-expanded="{{it.expanded}}" style="{{it.style}}">{{it.label}}
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <sc-if value="{{it.open}}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 310px; padding: 8px; border-radius: 20px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column; gap: 2px">
+                <sc-for list="{{it.children}}" as="ch" hint-placeholder-count="3">
+                  <a href="{{ch.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; text-decoration: none; color: {{c.ink}}">
+                    <span style="width: 34px; height: 34px; flex: none; border-radius: 11px; background: {{ch.tint}}; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800; color: #32306F">{{ch.short}}</span>
+                    <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{ch.label}}</span><span style="font-size: 12.5px; color: {{c.muted}}; line-height: 1.4">{{ch.desc}}</span></span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 8px; position: relative">
+      <button type="button" aria-label="Cari (Ctrl K)" style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <span>Cari</span><span style="font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: {{c.chip}}; border: 1px solid {{c.line2}}">⌘K</span>
+      </button>
+      <button type="button" aria-label="Tambah cepat" title="Task, note, atau event baru" style="width: 40px; height: 40px; border-radius: 12px; border: 0; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.3)">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+      </button>
+      <a href="chat.html" aria-label="Chat, 5 pesan baru" style="position: relative; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {{c.icon}}">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>
+        <span style="position: absolute; top: 4px; right: 3px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 9px; background: #3157A5; color: #FFFFFF; font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid {{c.ring}}">5</span>
+      </a>
+      <button type="button" onClick="{{toggleNotif}}" aria-label="Notifikasi, 3 belum dibaca" aria-expanded="{{notifExpanded}}" style="position: relative; width: 40px; height: 40px; border-radius: 12px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: {{c.icon}}; cursor: pointer">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>
+        <span style="position: absolute; top: 6px; right: 7px; width: 10px; height: 10px; border-radius: 50%; background: #D4FF3A; border: 2px solid #32306F"></span>
+      </button>
+      <button type="button" onClick="{{toggleMe}}" aria-expanded="{{meExpanded}}" aria-label="Menu akun" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 6px 0 4px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; cursor: pointer; font: inherit">
+        <span style="width: 34px; height: 34px; border-radius: 50%; background: {{avatarBg}}; color: #FFFFFF; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{initials}}</span>
+        <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; background: {{roleBg}}; color: {{roleInk}}">{{roleLabel}}</span>
+      </button>
+
+      <sc-if value="{{notifOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 40px; width: 360px; padding: 16px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><strong style="font-size: 15px">Notifikasi</strong><span style="font-size: 12.5px; font-weight: 700; color: {{c.link}}">Tandai dibaca</span></div>
+          <div style="display: flex; flex-direction: column">
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Periode penilaian Oktober ditutup <strong>H-3</strong>. Masih ada 2 form.<br><span style="color: {{c.muted}}; font-size: 12px">10 menit lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Kamu diundang ke <strong>Sesi Mentoring #6</strong>, Sab 18 Okt 09.00.<br><span style="color: {{c.muted}}; font-size: 12px">1 jam lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Pendaftaran <strong>Leadership Camp</strong> dibuka hari ini.<br><span style="color: {{c.muted}}; font-size: 12px">3 jam lalu</span></span></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{meOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 0; width: 270px; padding: 8px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column">
+          <div style="padding: 12px; border-bottom: 1px solid {{c.line}}; margin-bottom: 4px"><div style="font-weight: 800; font-size: 14.5px">{{name}}</div><div style="font-size: 12.5px; color: {{c.muted}}">{{subtitle}}</div></div>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Profil &amp; ID Card</a>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Pengaturan</a>
+          <a href="index.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; color: #E5484D; text-decoration: none">Keluar</a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</header>
+</template>
+<script type="text/x-dc" data-dc="Event" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: 'semua', sel: 'v1', reg: {}, agreed: false };
+  }
+  renderVals() {
+    const st = this.state;
+    const S = { 'Dibuka': ['#DCFCE7', '#166534'], 'Segera Dibuka': ['#FEF3C7', '#92400E'], 'Ditutup': ['#FEE2E2', '#991B1B'], 'Selesai': ['#F1F2F6', '#55577A'] };
+    const defs = [
+      { id: 'v1', org: 'IPB LEAP', key: 'leap', title: 'Leadership Camp 2026', kicker: 'BATCH 2026 · 3 HARI', t1: 'Leadership', t2: 'Camp', status: 'Dibuka', countdown: 'tutup 20 hari lagi', regOpen: '13 Okt', regClose: '2 Nov', eventDate: '14–16 Nov 2026', place: 'Bogor, lokasi menyusul', reg: 'platform', quota: 120, filled: 87, bg: 'linear-gradient(150deg,#32306F 10%,#3157A5)', ink: '#FFFFFF', accent: '#D4FF3A', desc: 'Tiga hari latihan memimpin lewat simulasi, outbound, dan project sprint bareng kelompok.' },
+      { id: 'v2', org: 'CDA IPB', key: 'cda', title: 'Career Day: Agri-Industry', kicker: 'CAREER DEVELOPMENT', t1: 'Career', t2: 'Day', status: 'Dibuka', countdown: 'tutup 12 hari lagi', regOpen: '1 Okt', regClose: '25 Okt', eventDate: '28 Okt 2026', place: 'Kampus IPB Dramaga', reg: 'external', bg: '#D4FF3A', ink: '#0D0D1A', accent: '#3157A5', desc: 'Bursa kerja dan sesi rekrutmen perusahaan agro-industri. Pendaftaran di situs CDA IPB.' },
+      { id: 'v3', org: 'HA IPB', key: 'ha', title: 'Diaspora Talk VIII', kicker: 'HIMPUNAN ALUMNI IPB', t1: 'Diaspora', t2: 'Talk VIII', status: 'Segera Dibuka', countdown: 'buka 7 hari lagi', regOpen: '20 Okt', regClose: '8 Nov', eventDate: '9 Nov 2026', place: 'Online', reg: 'external', bg: 'linear-gradient(160deg,#A3D6E6,#E3F3F8)', ink: '#0D0D1A', accent: '#32306F', desc: 'Alumni diaspora berbagi jalan studi dan karier di luar negeri.' },
+      { id: 'v4', org: 'CDA IPB', key: 'cda', title: 'Workshop CV & LinkedIn', kicker: 'CAREER DEVELOPMENT', t1: 'CV &', t2: 'LinkedIn', status: 'Segera Dibuka', countdown: 'buka 4 hari lagi', regOpen: '17 Okt', regClose: '30 Okt', eventDate: '1 Nov 2026', place: 'Online', reg: 'platform', quota: 200, filled: 0, bg: '#0E0D2B', ink: '#FFFFFF', accent: '#2FA3C7', desc: 'Bedah CV dan profil LinkedIn langsung bersama recruiter.' },
+      { id: 'v5', org: 'IPB LEAP', key: 'leap', title: 'Kelas Publik: Public Speaking', kicker: 'KELAS TERBUKA', t1: 'Public', t2: 'Speaking', status: 'Ditutup', countdown: 'acara 15 Okt', regOpen: '1 Okt', regClose: '10 Okt', eventDate: '15 Okt 2026', place: 'Zoom Program', reg: 'platform', quota: 300, filled: 300, bg: 'linear-gradient(150deg,#3157A5,#2FA3C7)', ink: '#FFFFFF', accent: '#FFFFFF', desc: 'Kelas terbuka untuk semua mahasiswa IPB.' },
+      { id: 'v6', org: 'IPB LEAP', key: 'leap', title: 'Menlead Talks Chapter 4', kicker: 'TALKSHOW', t1: 'Menlead', t2: 'Talks', status: 'Selesai', countdown: '27 Sep', regOpen: '10 Sep', regClose: '25 Sep', eventDate: '27 Sep 2026', place: 'Auditorium Andi Hakim Nasoetion', reg: 'platform', quota: 250, filled: 231, bg: '#E7E6F3', ink: '#32306F', accent: '#A3D6E6', desc: 'Talkshow karier profesional bersama mentor IPB LEAP.' }
+    ];
+    const extra = {
+      v1: ['14–16 Nov · 07.00–17.00 WIB', 'Offline', ['Mentee & Asmen aktif Batch 2026.', 'Wajib ikut 3 hari penuh dan menginap.', 'Membawa perlengkapan pribadi sesuai panduan yang dikirim H-7.', 'Batal maksimal H-5 agar kuota dialihkan ke daftar tunggu.']],
+      v2: ['28 Okt · 08.00–15.00 WIB', 'Offline', ['Terbuka untuk mahasiswa & alumni IPB.', 'Pendaftaran dan seleksi oleh CDA IPB.']],
+      v3: ['9 Nov · 19.30–21.30 WIB', 'Online', ['Terbuka untuk alumni muda & mahasiswa IPB.', 'Link Zoom dikirim penyelenggara H-1.']],
+      v4: ['1 Nov · 09.00–12.00 WIB', 'Hybrid', ['Peserta IPB LEAP Batch 2026.', 'Siapkan CV terbaru (PDF) sebelum sesi.', 'Wajib hadir penuh untuk e-sertifikat.']],
+      v5: ['15 Okt · 19.00–21.00 WIB', 'Online', ['Terbuka untuk mahasiswa IPB.', 'Kamera menyala saat sesi praktik.']],
+      v6: ['27 Sep · 13.00–16.00 WIB', 'Offline', ['Terbuka untuk umum.']]
+    };
+    const FC = { Online: ['#E3F3F8', '#1F5566'], Offline: ['#E7E6F3', '#32306F'], Hybrid: ['#EEFFB8', '#3A4A00'] };
+    defs.forEach((d) => { const x = extra[d.id]; d.time = x[0]; d.format = x[1]; d.sk = x[2]; d.fBg = FC[x[1]][0]; d.fInk = FC[x[1]][1]; if (x[1] === 'Hybrid') d.place = 'Kampus IPB Dramaga + Zoom'; });
+    const fdefs = [['semua', 'Semua'], ['leap', 'IPB LEAP'], ['ha', 'HA IPB'], ['cda', 'CDA IPB'], ['dibuka', 'Sedang dibuka']];
+    const filters = fdefs.map((f) => {
+      const on = st.filter === f[0];
+      return { label: f[1], pressed: on ? 'true' : 'false', style: 'height: 40px; padding: 0 16px; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; ' + (on ? 'background: #32306F; color: #FFFFFF; border: 1.5px solid #32306F; font-weight: 800' : 'background: #FFFFFF; color: #33355A; border: 1.5px solid #E3E7F2; font-weight: 700'), pick: () => this.setState({ filter: f[0] }) };
+    });
+    const shown = defs.filter((e) => st.filter === 'semua' || (st.filter === 'dibuka' ? e.status === 'Dibuka' : e.key === st.filter));
+    const deco = (e) => Object.assign({}, e, {
+      sBg: S[e.status][0], sInk: S[e.status][1],
+      whereReg: e.reg === 'platform' ? 'di platform' : 'tautan eksternal',
+      hasQuota: e.reg === 'platform',
+      pct: e.quota ? Math.round(e.filled / e.quota * 100) : 0,
+      pressed: st.sel === e.id ? 'true' : 'false',
+      cardStyle: 'display: flex; flex-direction: column; padding: 8px; border-radius: 26px; font: inherit; cursor: pointer; background: #FFFFFF; border: 1.5px solid ' + (st.sel === e.id ? '#3157A5' : 'rgba(50,48,111,.08)') + '; box-shadow: 0 18px 40px -30px rgba(50,48,111,.5)',
+      open: () => this.setState({ sel: e.id, agreed: false })
+    });
+    const cur = defs.find((e) => e.id === st.sel);
+    const registered = !!st.reg[st.sel];
+    const openPlatform = cur && cur.reg === 'platform' && cur.status === 'Dibuka';
+    return {
+      filters: filters,
+      events: shown.map(deco),
+      hasSel: !!cur,
+      sel: cur ? deco(cur) : {},
+      canRegister: openPlatform && !registered,
+      isRegistered: registered,
+      isExternal: !!cur && cur.reg === 'external' && cur.status === 'Dibuka',
+      isClosed: !!cur && cur.status !== 'Dibuka',
+      closedLabel: cur ? (cur.status === 'Segera Dibuka' ? 'Pendaftaran dibuka ' + cur.regOpen + ' · ingatkan aku' : cur.status === 'Ditutup' ? 'Pendaftaran ditutup · kuota penuh' : 'Event selesai · lihat dokumentasi') : '',
+      agreed: st.agreed, notAgreed: !st.agreed,
+      toggleAgree: () => this.setState({ agreed: !st.agreed }),
+      regStyle: 'height: 54px; border-radius: 18px; border: 0; font: inherit; font-weight: 800; font-size: 15px; ' + (st.agreed ? 'background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25)' : 'background: #E3E7F2; color: #8A8CA8; cursor: not-allowed'),
+      register: () => { if (!st.agreed) return; const r = Object.assign({}, st.reg); r[st.sel] = true; this.setState({ reg: r }); }
+    };
+  }
+}
+</script>
+<script type="text/x-dc" data-dc="Navbar" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: null, notif: false, me: false };
+  }
+  renderVals() {
+    const role = this.props.role ?? 'mentee';
+    const active = this.props.active ?? 'beranda';
+    const dark = (this.props.theme ?? 'light') === 'dark';
+    const c = dark ? {
+      bar: 'rgba(14,13,43,.82)', ink: '#ECEEFF', muted: '#9C9EC4', brand: '#C9D6F0', line: 'rgba(255,255,255,.08)', line2: 'rgba(255,255,255,.14)', chip: 'rgba(255,255,255,.06)', field: 'rgba(255,255,255,.06)', pop: '#1A1940', icon: '#C9D6F0', ring: '#0E0D2B', link: '#A3D6E6', navInk: '#C9CBEA', navOnBg: '#D4FF3A', navOnInk: '#0D0D1A',
+      logo: '../assets/logo-white.png'
+    } : {
+      bar: 'rgba(255,255,255,.78)', ink: '#0D0D1A', muted: '#6B6D8C', brand: '#32306F', line: '#F0F2F8', line2: '#E3E7F2', chip: '#FFFFFF', field: '#F5F7FC', pop: '#FFFFFF', icon: '#32306F', ring: '#FFFFFF', link: '#3157A5', navInk: '#33355A', navOnBg: '#32306F', navOnInk: '#FFFFFF',
+      logo: '../assets/logo-color.png'
+    };
+    const kel = [
+      { label: 'Ringkasan kelompok', desc: 'Anggota, status lampu, update terbaru', href: 'kelompok.html', short: 'KL', tint: '#E3F3F8' },
+      { label: 'Monitoring progres', desc: 'Riwayat update & kehadiran per bulan', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Catat sesi mentoring', desc: 'Kehadiran, topik, tindak lanjut', href: 'catat-sesi.html', short: 'CS', tint: '#E7E6F3' },
+      { label: 'Penilaian 360°', desc: 'Form bulanan & raport kelompok', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' }
+    ];
+    const programP = { key: 'program', label: 'Program', children: [
+      { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Penilaian & rubric', desc: 'Indikator, bobot, periode', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' },
+      { label: 'Kelola event', desc: 'Buat event & pendaftaran', href: 'kelola-event.html', short: 'EV', tint: '#E3F3F8' },
+      { label: 'Pengumuman', desc: 'Kirim ke role, kelompok, orang', href: 'pengumuman.html', short: 'PG', tint: '#E7E6F3' }
+    ] };
+    const wsBase = [
+      { label: 'Proker & Task', desc: 'Project, to-do, notulensi, Google apps', href: 'proker.html', short: 'PK', tint: '#E4EBF8' },
+      { label: 'File Manager', desc: 'Drive IPB LEAP: lihat, pindah, edit', href: 'file-manager.html', short: 'FM', tint: '#E3F3F8' },
+      { label: 'Pusat Template', desc: 'Preview, unduh, generate', href: 'template.html', short: 'TP', tint: '#E7E6F3' }
+    ];
+    const tail = [
+      { key: 'kalender', label: 'Kalender', href: 'kalender.html' },
+      { key: 'event', label: 'Event', href: 'event.html' },
+      { key: 'chat', label: 'Chat', href: 'chat.html' }
+    ];
+    const menus = {
+      mentee: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
+        { key: 'program', label: 'Program', children: [
+          { label: 'Progres & Project', desc: 'Update bulanan dan final project', href: 'beranda-mentee.html', short: 'PR', tint: '#E3F3F8' },
+          { label: 'Raport', desc: 'Nilai bulanan dan feedback 360°', href: 'penilaian.html', short: 'RP', tint: '#EEFFB8' }
+        ] }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
+      asmen: [
+        { key: 'beranda', label: 'Beranda', href: 'kelompok.html' },
+        { key: 'kelompok', label: 'Kelompok', children: kel }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'kelompok.html' }]),
+      pengurus: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      bendahara: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase.concat([{ label: 'Keuangan', desc: 'Khusus Bendahara: cashflow & RAB', href: 'keuangan.html', short: 'Rp', tint: '#EEFFB8' }]) }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      superadmin: [
+        { key: 'beranda', label: 'Sistem', href: 'super-admin.html' },
+        { key: 'pengguna', label: 'Pengguna & Role', href: 'super-admin.html' },
+        { key: 'data', label: 'Data & Batch', href: 'super-admin.html' },
+        { key: 'audit', label: 'Audit Log', href: 'super-admin.html' }
+      ]
+    };
+    menus.mentor = menus.asmen;
+    const people = {
+      mentee: { name: 'Nabila Putri', subtitle: 'Mentee · Kelompok Rajawali', initials: 'NP', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
+      asmen: { name: 'Raka Pratama', subtitle: 'Asmen · Kelompok Rajawali', initials: 'RP', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
+      mentor: { name: 'Dian Hapsari', subtitle: 'Mentor · Kelompok Rajawali', initials: 'DH', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
+      pengurus: { name: 'Head of Operations', subtitle: 'Steering Team IPB Leap 2026', initials: 'HO', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Pengurus', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      bendahara: { name: 'Bendahara', subtitle: 'Steering Team IPB Leap 2026', initials: 'BD', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Bendahara', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
+    };
+    const p = people[role] || people.mentee;
+    const items = (menus[role] || menus.mentee).map((m) => {
+      const on = m.key === active;
+      const open = this.state.open === m.key;
+      return Object.assign({}, m, {
+        isLink: !m.children,
+        hasChildren: !!m.children,
+        open: open,
+        expanded: open ? 'true' : 'false',
+        current: on ? 'page' : 'false',
+        style: 'display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 12px; border: 0; font: inherit; font-size: 14.5px; cursor: pointer; text-decoration: none; ' + (on ? 'background: ' + c.navOnBg + '; color: ' + c.navOnInk + '; font-weight: 700; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 8px 18px -10px rgba(50,48,111,.8)' : 'background: transparent; color: ' + c.navInk + '; font-weight: 600'),
+        toggle: () => this.setState({ open: open ? null : m.key, notif: false, me: false })
+      });
+    });
+    return Object.assign({}, p, {
+      c: c,
+      items: items,
+      homeHref: items[0].href,
+      notifOpen: this.state.notif,
+      meOpen: this.state.me,
+      notifExpanded: this.state.notif ? 'true' : 'false',
+      meExpanded: this.state.me ? 'true' : 'false',
+      toggleNotif: () => this.setState({ notif: !this.state.notif, me: false, open: null }),
+      toggleMe: () => this.setState({ me: !this.state.me, notif: false, open: null })
+    });
+  }
+}
+</script>
+<script src="../assets/leap-runtime.js"></script>
+</body>
+</html>

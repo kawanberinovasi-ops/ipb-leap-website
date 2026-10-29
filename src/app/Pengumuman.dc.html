@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Buat Pengumuman · IPB Leap Management System</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes fly{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(18px,-18px) rotate(-10deg)}}
+.rise{animation:rise .45s cubic-bezier(.2,.9,.3,1.15) both}
+.chip{transition:all .15s}
+.chip:hover{transform:translateY(-1px)}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px rgba(49,87,165,.14)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="pengurus" active="program" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 22px">
+    <div>
+      <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Program · broadcast</span>
+      <h1 style="margin: 6px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 48px; letter-spacing: -.02em; color: #32306F; line-height: 1">Buat pengumuman</h1>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+      <section class="rise" style="flex: 999 1 600px; min-width: 0; padding: 26px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45); display: flex; flex-direction: column; gap: 18px">
+        <div>
+          <span style="display: block; font-size: 14px; font-weight: 800; margin-bottom: 10px">Kirim ke</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <sc-for list="{{roles}}" as="r" hint-placeholder-count="5">
+              <button class="chip" type="button" onClick="{{r.toggle}}" aria-pressed="{{r.pressed}}" style="{{r.style}}"><span style="{{r.box}}">{{r.mark}}</span>{{r.label}} <span style="opacity: .7; font-weight: 600">{{r.count}}</span></button>
+            </sc-for>
+          </div>
+          <span style="display: block; font-size: 13px; font-weight: 700; color: #6B6D8C; margin: 14px 0 8px">Atau pilih lebih spesifik</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border-radius: 16px; border: 1.5px solid #D5DAEA; min-height: 48px; align-items: center">
+            <sc-for list="{{specifics}}" as="x" hint-placeholder-count="2">
+              <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 6px 6px 6px 10px; border-radius: 10px; background: {{x.bg}}; color: {{x.ink}}">{{x.label}}<button type="button" onClick="{{x.remove}}" aria-label="Hapus {{x.label}}" style="width: 20px; height: 20px; border-radius: 6px; border: 0; background: rgba(255,255,255,.7); cursor: pointer; font-size: 12px">×</button></span>
+            </sc-for>
+            <select aria-label="Tambah penerima" onChange="{{addSpecific}}" style="flex: 1; min-width: 200px; height: 34px; border: 0; font: inherit; font-size: 13.5px; color: #55577A; background: transparent">
+              <option value="">+ Kelompok, divisi, atau orang…</option>
+              <option value="k:Kelompok Rajawali">Kelompok Rajawali</option>
+              <option value="k:Kelompok Elang">Kelompok Elang</option>
+              <option value="d:Divisi Branding &amp; Creative">Divisi Branding &amp; Creative</option>
+              <option value="d:Divisi Program Development">Divisi Program Development</option>
+              <option value="o:Gita Wulandari">Gita Wulandari (Mentee)</option>
+              <option value="o:Dian Hapsari">Dian Hapsari (Mentor)</option>
+            </select>
+          </div>
+          <p style="margin: 10px 0 0; font-size: 13px; font-weight: 700; color: #3157A5">Perkiraan penerima: {{total}} orang</p>
+        </div>
+
+        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 800">Judul<input type="text" value="{{title}}" onChange="{{onTitle}}" style="height: 50px; padding: 0 14px; border-radius: 14px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 16px; font-weight: 700"></label>
+        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 800">Isi pengumuman
+          <span style="display: flex; gap: 4px; padding: 6px; border-radius: 12px 12px 0 0; border: 1.5px solid #D5DAEA; border-bottom: 0; background: #F8F9FD"><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900">B</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-style: italic; font-weight: 700">I</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700">•</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #3157A5">@</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></span></span>
+          <textarea rows="6" value="{{body}}" onChange="{{onBody}}" style="margin-top: -8px; resize: vertical; padding: 14px; border-radius: 0 0 14px 14px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14.5px; line-height: 1.55"></textarea>
+        </label>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <button type="button" style="height: 40px; padding: 0 14px; border-radius: 12px; border: 1.5px dashed #A3B4DA; background: transparent; font: inherit; font-weight: 700; font-size: 13px; color: #3157A5; cursor: pointer">+ Lampiran / dokumen</button>
+          <button type="button" style="height: 40px; padding: 0 14px; border-radius: 12px; border: 1.5px dashed #A3B4DA; background: transparent; font: inherit; font-weight: 700; font-size: 13px; color: #3157A5; cursor: pointer">+ Tautkan event</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; padding: 16px; border-radius: 20px; background: #F8F9FD">
+          <div>
+            <span style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 8px">Kanal</span>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox" checked="" disabled=""> In-app (selalu)</label>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox" checked=""> Email</label>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox" checked=""> Push notification + suara</label>
+          </div>
+          <div>
+            <span style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 8px">Waktu kirim</span>
+            <div role="group" style="display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: #E9EDF7">
+              <button type="button" onClick="{{now}}" aria-pressed="{{nowPressed}}" style="{{nowStyle}}">Sekarang</button>
+              <button type="button" onClick="{{later}}" aria-pressed="{{laterPressed}}" style="{{laterStyle}}">Jadwalkan</button>
+            </div>
+            <sc-if value="{{isLater}}" hint-placeholder-val="{{ false }}">
+              <input type="datetime-local" value="2026-10-15T07:00" aria-label="Jadwal kirim" style="margin-top: 8px; width: 100%; box-sizing: border-box; height: 42px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 13.5px">
+            </sc-if>
+          </div>
+          <div>
+            <span style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 8px">Tampilan</span>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox" checked=""> Sematkan di beranda</label>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox"> Tandai penting (badge merah)</label>
+          </div>
+        </div>
+      </section>
+
+      <aside style="flex: 1 1 340px; min-width: 0; position: sticky; top: 96px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-size: 13px; font-weight: 800; color: #6B6D8C">Pratinjau di HP penerima</span>
+        <div style="padding: 14px; border-radius: 32px; background: #0D0D1A; box-shadow: 0 30px 60px -30px rgba(13,13,26,.8)">
+          <div style="border-radius: 22px; background: #F5F7FC; padding: 16px; min-height: 300px">
+            <div style="display: flex; gap: 10px; align-items: center; padding: 12px; border-radius: 16px; background: rgba(255,255,255,.9); box-shadow: 0 10px 20px -14px rgba(0,0,0,.4)">
+              <img src="/_blob/d1185905fce3a282f8c2d64c19416648" alt="" style="width: 34px; height: auto">
+              <span style="flex: 1; min-width: 0"><strong style="display: block; font-size: 12.5px">IPB LEAP · sekarang</strong><span style="display: block; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{title}}</span></span>
+            </div>
+            <div style="margin-top: 14px; padding: 16px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E3E7F2">
+              <span style="font-size: 11px; font-weight: 800; letter-spacing: .08em; padding: 4px 8px; border-radius: 6px; background: #D4FF3A; color: #0D0D1A">PENGUMUMAN</span>
+              <strong style="display: block; font-size: 16px; margin-top: 10px">{{title}}</strong>
+              <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.55; color: #33355A; white-space: pre-line">{{body}}</p>
+              <span style="display: block; margin-top: 10px; font-size: 12px; color: #6B6D8C">Dari Head of Operations · untuk {{toLabel}}</span>
+            </div>
+          </div>
+        </div>
+        <sc-if value="{{notSent}}" hint-placeholder-val="{{ true }}">
+          <button class="btn" type="button" onClick="{{send}}" style="height: 54px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25)">{{sendLabel}}</button>
+        </sc-if>
+        <sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 20px; background: #EEFFB8; font-size: 14px"><span style="width: 40px; height: 40px; border-radius: 14px; background: #D4FF3A; border: 2px solid #0D0D1A; display: flex; align-items: center; justify-content: center; font-weight: 900">✓</span><span><strong style="display: block">Terkirim ke {{total}} orang</strong>Statistik baca muncul di riwayat.</span></div>
+        </sc-if>
+      </aside>
+    </div>
+
+    <section style="padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+      <h2 style="margin: 0 0 14px; font-size: 19px; font-weight: 800">Riwayat pengumuman</h2>
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 680px">
+          <thead><tr style="text-align: left; color: #6B6D8C; font-size: 12.5px"><th style="padding: 10px 12px; font-weight: 700">Judul</th><th style="padding: 10px 12px; font-weight: 700">Penerima</th><th style="padding: 10px 12px; font-weight: 700">Dikirim</th><th style="padding: 10px 12px; font-weight: 700">Dibaca</th></tr></thead>
+          <tbody>
+            <sc-for list="{{history}}" as="h" hint-placeholder-count="3">
+              <tr style="border-top: 1px solid #F0F2F8"><td style="padding: 12px; font-weight: 700">{{h.title}}</td><td style="padding: 12px; color: #55577A">{{h.to}}</td><td style="padding: 12px; color: #55577A">{{h.when}}</td><td style="padding: 12px"><span style="display: flex; align-items: center; gap: 8px"><span style="width: 90px; height: 8px; border-radius: 8px; background: #E3E7F2; overflow: hidden"><span style="display: block; width: {{h.pct}}%; height: 100%; background: #3157A5"></span></span><strong style="font-size: 13px">{{h.pct}}%</strong></span></td></tr>
+            </sc-for>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sel: { mentee: true, asmen: true }, specifics: ['d:Divisi Branding & Creative'], when: 'now', sent: false,
+      title: 'Pendaftaran Leadership Camp dibuka!',
+      body: 'Halo semuanya! Pendaftaran Leadership Camp 2026 dibuka sampai 2 Nov. Daftar 1 klik di menu Event, kuota 120 orang.'
+    };
+  }
+  renderVals() {
+    const st = this.state;
+    const C = { semua: 211, mentee: 128, asmen: 31, mentor: 31, pengurus: 21 };
+    const defs = [['semua', 'Semua'], ['mentee', 'Mentee'], ['asmen', 'Asmen'], ['mentor', 'Mentor'], ['pengurus', 'Pengurus']];
+    const roles = defs.map((d) => {
+      const on = !!st.sel[d[0]];
+      return {
+        label: d[1], count: C[d[0]], pressed: on ? 'true' : 'false', mark: on ? '✓' : '',
+        style: 'display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px; border-radius: 999px; font: inherit; font-size: 14px; font-weight: 800; cursor: pointer; ' + (on ? 'background: #32306F; color: #FFFFFF; border: 1.5px solid #32306F' : 'background: #FFFFFF; color: #33355A; border: 1.5px solid #D5DAEA'),
+        box: 'width: 18px; height: 18px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; ' + (on ? 'background: #D4FF3A; color: #0D0D1A' : 'background: #F1F2F6; color: transparent'),
+        toggle: () => {
+          let n = Object.assign({}, st.sel);
+          if (d[0] === 'semua') n = on ? {} : { semua: true };
+          else { delete n.semua; n[d[0]] = !on; if (!n[d[0]]) delete n[d[0]]; }
+          this.setState({ sel: n, sent: false });
+        }
+      };
+    });
+    const K = { k: ['#E4EBF8', '#24427F'], d: ['#EEFFB8', '#3A4A00'], o: ['#E7E6F3', '#32306F'] };
+    const specifics = st.specifics.map((v) => ({
+      label: v.slice(2), bg: K[v[0]][0], ink: K[v[0]][1],
+      remove: () => this.setState({ specifics: st.specifics.filter((x) => x !== v) })
+    }));
+    const extra = { k: 6, d: 4, o: 1 };
+    let total = st.sel.semua ? C.semua : Object.keys(st.sel).reduce((s, k) => s + C[k], 0);
+    if (!st.sel.semua) st.specifics.forEach((v) => { total += extra[v[0]]; });
+    const toParts = (st.sel.semua ? ['Semua'] : defs.filter((d) => st.sel[d[0]]).map((d) => d[1])).concat(st.specifics.map((v) => v.slice(2)));
+    const on = 'flex: 1; height: 34px; border-radius: 9px; border: 0; background: #FFFFFF; color: #32306F; font: inherit; font-weight: 800; font-size: 13px; cursor: pointer';
+    const off = 'flex: 1; height: 34px; border-radius: 9px; border: 0; background: transparent; color: #6B6D8C; font: inherit; font-weight: 700; font-size: 13px; cursor: pointer';
+    const history = [
+      { title: 'Periode penilaian Oktober dibuka 25 Okt', to: 'Mentee, Asmen, Mentor', when: '12 Okt · 07.00', pct: 91 },
+      { title: 'Rapat Steering Team 18 Okt', to: 'Pengurus', when: '11 Okt · 20.10', pct: 100 },
+      { title: 'Template RAB terbaru v3', to: 'Pengurus', when: '9 Okt · 15.30', pct: 76 }
+    ];
+    if (st.sent) history.unshift({ title: st.title, to: toParts.join(', '), when: st.when === 'now' ? 'Baru saja' : 'Terjadwal 15 Okt · 07.00', pct: st.when === 'now' ? 4 : 0 });
+    return {
+      roles: roles, specifics: specifics, total: total, toLabel: toParts.join(', ') || 'belum dipilih',
+      title: st.title, body: st.body,
+      onTitle: (e) => this.setState({ title: e.target.value }),
+      onBody: (e) => this.setState({ body: e.target.value }),
+      addSpecific: (e) => { const v = e.target.value; if (v && st.specifics.indexOf(v) < 0) this.setState({ specifics: st.specifics.concat([v]) }); e.target.value = ''; },
+      isLater: st.when === 'later',
+      nowStyle: st.when === 'now' ? on : off, laterStyle: st.when === 'later' ? on : off,
+      nowPressed: st.when === 'now' ? 'true' : 'false', laterPressed: st.when === 'later' ? 'true' : 'false',
+      now: () => this.setState({ when: 'now' }), later: () => this.setState({ when: 'later' }),
+      sendLabel: st.when === 'now' ? 'Kirim ke ' + total + ' orang' : 'Jadwalkan untuk ' + total + ' orang',
+      notSent: !st.sent, sent: st.sent,
+      send: () => this.setState({ sent: true }),
+      history: history
+    };
+  }
+}
+</script>
+</body>
+</html>

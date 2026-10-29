@@ -168,8 +168,11 @@
         var hm = a.value.match(ONLY_HOLE);
         var fn = hm ? lookup(hm[1], scope) : null;
         if (typeof fn === 'function') {
+          var ev = an.slice(2);
+          // onChange ala React: untuk input teks/textarea dipicu setiap ketikan
+          if (ev === 'change' && (tag === 'textarea' || (tag === 'input' && !/^(checkbox|radio|file|range|color|date|time|month|week|datetime-local)$/i.test(node.getAttribute('type') || '')))) ev = 'input';
           el.__dcH = el.__dcH || {};
-          el.__dcH[an.slice(2)] = fn;
+          el.__dcH[ev] = fn;
         }
         return;
       }
@@ -206,8 +209,18 @@
     }
     for (i = 0; i < src.attributes.length; i++) {
       a = src.attributes[i];
-      if (target.getAttribute(a.name) !== a.value) target.setAttribute(a.name, a.value);
+      if (target.getAttribute(a.name) !== a.value) {
+        target.setAttribute(a.name, a.value);
+        if (a.name === 'value' && 'value' in target) target.value = a.value;
+      }
     }
+    // properti form mengikuti atribut saat atribut berubah
+    ['checked', 'selected'].forEach(function (p) {
+      var has = src.hasAttribute(p);
+      if (p in target && target.__dcLast && target.__dcLast[p] !== has) target[p] = has;
+      target.__dcLast = target.__dcLast || {};
+      target.__dcLast[p] = has;
+    });
   }
 
   function mountImport(host, info) {
@@ -229,6 +242,12 @@
     }
     patchAttrs(target, src);
     syncHandlers(target, src);
+    if (target.nodeName === 'TEXTAREA') {
+      var before = target.textContent;
+      patchChildren(target, src);
+      if (target.textContent !== before) target.value = target.textContent;
+      return;
+    }
     patchChildren(target, src);
   }
 

@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pusat Template · IPB Leap Management System</title>
+<meta name="description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Pusat Template · IPB Leap Management System">
+<meta property="og:description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/app/template.html">
+<meta property="og:image" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/assets/logo-color.png">
+<meta name="theme-color" content="#32306F">
+<link rel="icon" type="image/png" href="../assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+[data-dc-host]{display:contents}
+html{scroll-behavior:smooth}
+
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.96) translateY(8px)}100%{opacity:1;transform:none}}
+.rise{animation:rise .4s cubic-bezier(.2,.9,.3,1.15) both}
+.pop{animation:pop .28s cubic-bezier(.2,.9,.3,1.2) both}
+.lift{transition:transform .18s, box-shadow .18s}
+.lift:hover{transform:translateY(-4px);box-shadow:0 22px 40px -24px rgba(50,48,111,.55) !important}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+
+body{margin:0}
+
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
+<div style="position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center"><span style="padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800">PROTOTYPE</span><span>IPB Leap Management System · semua data masih contoh</span><a href="../index.html" style="color:#A3D6E6;font-weight:800;text-decoration:none">← Kembali ke website</a></div>
+<div id="app" data-page="Template"></div>
+<template data-dc="Template">
+<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="pengurus" active="workspace" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 20px">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <div>
+        <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Workspace · dokumen standar IPB LEAP</span>
+        <h1 style="margin: 6px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 50px; letter-spacing: -.02em; color: #32306F; line-height: 1">Pusat Template</h1>
+      </div>
+      <input type="search" aria-label="Cari template" value="{{q}}" onChange="{{onQ}}" placeholder="Cari template…" style="width: 300px; height: 46px; padding: 0 14px; border-radius: 14px; border: 1px solid #D5DAEA; background: #FFFFFF; font: inherit; font-size: 14px">
+    </div>
+
+    <div role="tablist" aria-label="Kategori" style="display: flex; flex-wrap: wrap; gap: 8px">
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="7">
+        <button type="button" role="tab" aria-selected="{{c.selected}}" onClick="{{c.pick}}" style="{{c.style}}">{{c.label}} <span style="opacity: .65">{{c.count}}</span></button>
+      </sc-for>
+    </div>
+
+    <div class="rise" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px">
+      <sc-for list="{{items}}" as="t" hint-placeholder-count="8">
+        <div class="lift" style="padding: 14px; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); display: flex; flex-direction: column; gap: 10px">
+          <button type="button" onClick="{{t.preview}}" aria-label="Preview {{t.name}}" style="position: relative; height: 150px; border-radius: 16px; border: 0; padding: 14px; cursor: zoom-in; background: {{t.bg}}; overflow: hidden; text-align: left">
+            <span aria-hidden="true" style="position: absolute; left: 22px; right: 22px; top: 22px; bottom: -20px; border-radius: 8px; background: #FFFFFF; box-shadow: 0 10px 24px -14px rgba(13,13,26,.5); padding: 12px; display: flex; flex-direction: column; gap: 6px">
+              <span style="height: 7px; width: 55%; border-radius: 4px; background: {{t.ink}}"></span>
+              <span style="height: 5px; width: 90%; border-radius: 3px; background: #E3E7F2"></span>
+              <span style="height: 5px; width: 80%; border-radius: 3px; background: #E3E7F2"></span>
+              <span style="height: 5px; width: 85%; border-radius: 3px; background: #E3E7F2"></span>
+            </span>
+            <span style="position: absolute; left: 12px; top: 12px; font-size: 10.5px; font-weight: 900; letter-spacing: .08em; padding: 4px 8px; border-radius: 6px; background: #0D0D1A; color: #FFFFFF">{{t.fmt}}</span>
+          </button>
+          <div><strong style="font-size: 15px">{{t.name}}</strong><div style="font-size: 12.5px; color: #6B6D8C">{{t.cat}} · {{t.ver}}</div></div>
+          <div style="display: flex; gap: 6px">
+            <button type="button" onClick="{{t.preview}}" style="flex: 1; height: 38px; border-radius: 11px; border: 0; background: #0D0D1A; color: #FFFFFF; font: inherit; font-size: 13px; font-weight: 800; cursor: pointer">Preview</button>
+            <button type="button" aria-label="Unduh {{t.name}}" style="width: 38px; height: 38px; border-radius: 11px; border: 1px solid #D5DAEA; background: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#32306F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg></button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+      <div style="padding: 40px; text-align: center; border-radius: 24px; border: 1.5px dashed #D5DAEA; color: #6B6D8C">Tidak ada template yang cocok.</div>
+    </sc-if>
+  </main>
+
+  <sc-if value="{{hasPrev}}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 80; background: rgba(13,13,26,.5); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px">
+      <div class="pop" role="dialog" aria-label="Preview template" style="width: 100%; max-width: 1040px; max-height: 92vh; overflow: auto; border-radius: 30px; background: #FFFFFF; display: flex; flex-wrap: wrap; box-shadow: 0 40px 80px -30px rgba(13,13,26,.6)">
+        <div style="flex: 999 1 560px; min-width: 0; background: #E9EDF7; padding: 28px; display: flex; justify-content: center">
+          <div style="width: 100%; max-width: 560px; min-height: 600px; background: #FFFFFF; border-radius: 6px; box-shadow: 0 20px 40px -20px rgba(13,13,26,.45); padding: 40px 44px; box-sizing: border-box; font-size: 12px; line-height: 1.6; color: #22243A">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #32306F; padding-bottom: 12px; margin-bottom: 18px">
+              <img src="../assets/logo-color.png" alt="IPB LEAP" style="height: 34px; width: auto">
+              <span style="font-size: 10px; font-weight: 700; color: #6B6D8C; text-align: right">IPB LEAP · Leadership Acceleration Program<br>Himpunan Alumni IPB</span>
+            </div>
+            <sc-if value="{{pv.isSheet}}" hint-placeholder-val="{{ false }}">
+              <div>
+                <strong style="display: block; font-size: 15px; text-align: center; margin-bottom: 4px">RENCANA ANGGARAN BIAYA</strong>
+                <span style="display: block; text-align: center; margin-bottom: 14px">Kegiatan: [NAMA KEGIATAN] · Batch 2026</span>
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px">
+                  <thead><tr style="background: #32306F; color: #FFFFFF"><th style="padding: 6px; text-align: left">No</th><th style="padding: 6px; text-align: left">Uraian</th><th style="padding: 6px">Vol</th><th style="padding: 6px">Satuan</th><th style="padding: 6px; text-align: right">Harga</th><th style="padding: 6px; text-align: right">Jumlah</th></tr></thead>
+                  <tbody>
+                    <tr style="border-bottom: 1px solid #E3E7F2"><td style="padding: 6px">1</td><td style="padding: 6px">Konsumsi peserta</td><td style="padding: 6px; text-align: center">[ ]</td><td style="padding: 6px; text-align: center">paket</td><td style="padding: 6px; text-align: right">[Rp]</td><td style="padding: 6px; text-align: right">=Vol×Harga</td></tr>
+                    <tr style="border-bottom: 1px solid #E3E7F2"><td style="padding: 6px">2</td><td style="padding: 6px">Sewa venue</td><td style="padding: 6px; text-align: center">[ ]</td><td style="padding: 6px; text-align: center">hari</td><td style="padding: 6px; text-align: right">[Rp]</td><td style="padding: 6px; text-align: right">=Vol×Harga</td></tr>
+                    <tr style="border-bottom: 1px solid #E3E7F2"><td style="padding: 6px">3</td><td style="padding: 6px">Honor pemateri</td><td style="padding: 6px; text-align: center">[ ]</td><td style="padding: 6px; text-align: center">orang</td><td style="padding: 6px; text-align: right">[Rp]</td><td style="padding: 6px; text-align: right">=Vol×Harga</td></tr>
+                    <tr style="background: #EEFFB8; font-weight: 800"><td style="padding: 6px" colspan="5">TOTAL</td><td style="padding: 6px; text-align: right">=SUM</td></tr>
+                  </tbody>
+                </table>
+                <p style="margin: 16px 0 0; font-size: 10.5px; color: #6B6D8C">Kolom Uraian, Vol, Harga, Jumlah dibaca otomatis saat RAB diunggah ke Keuangan.</p>
+              </div>
+            </sc-if>
+            <sc-if value="{{pv.isProposal}}" hint-placeholder-val="{{ false }}">
+              <div>
+                <div style="padding: 26px; border-radius: 10px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; margin-bottom: 18px"><span style="font-size: 10px; font-weight: 800; letter-spacing: .1em; color: #D4FF3A">PROPOSAL KERJA SAMA</span><strong style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 22px; margin-top: 6px">[NAMA KEGIATAN]</strong><span style="font-size: 11px">Ditujukan kepada: [NAMA MITRA]</span></div>
+                <strong style="display: block; margin-bottom: 6px">Daftar isi</strong>
+                <ol style="margin: 0; padding-left: 18px"><li>Latar belakang IPB LEAP</li><li>Tujuan &amp; target peserta</li><li>Bentuk kegiatan &amp; timeline</li><li>Paket kerja sama &amp; benefit mitra</li><li>Rencana anggaran</li><li>Kontak</li></ol>
+              </div>
+            </sc-if>
+            <sc-if value="{{pv.isLetter}}" hint-placeholder-val="{{ false }}">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 14px"><span>Nomor: <strong>{{pv.no}}</strong><br>Lampiran: -<br>Perihal: <strong>{{pv.perihal}}</strong></span><span>Bogor, [TANGGAL]</span></div>
+                <p style="margin: 0 0 10px">Kepada Yth.<br><strong>[NAMA PENERIMA]</strong><br>di tempat</p>
+                <p style="margin: 0 0 10px">Dengan hormat,<br>Sehubungan dengan kegiatan <strong>[NAMA KEGIATAN]</strong> yang akan dilaksanakan pada [HARI, TANGGAL] pukul [JAM] WIB bertempat di [LOKASI], kami mengundang Bapak/Ibu untuk hadir sebagai [PERAN].</p>
+                <p style="margin: 0 0 24px">Demikian surat ini kami sampaikan. Atas perhatiannya kami ucapkan terima kasih.</p>
+                <div style="display: flex; justify-content: space-between; text-align: center"><span>Managing Director<br><br><br><strong>[NAMA]</strong></span><span>Sekretaris<br><br><br><strong>[NAMA]</strong></span></div>
+              </div>
+            </sc-if>
+            <sc-if value="{{pv.isCert}}" hint-placeholder-val="{{ false }}">
+              <div style="text-align: center; padding: 30px 10px; border: 3px double #32306F; border-radius: 10px">
+                <span style="font-size: 10px; font-weight: 800; letter-spacing: .14em; color: #3157A5">SERTIFIKAT</span>
+                <p style="margin: 10px 0 4px">diberikan kepada</p>
+                <strong style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 26px; color: #32306F">[Nama Peserta]</strong>
+                <p style="margin: 8px 0 0">sebagai <strong>[peran]</strong> dalam <strong>[nama event]</strong><br>IPB LEAP Batch 2026 · [tanggal]</p>
+                <span style="display: inline-block; margin-top: 16px; font-size: 10px; color: #6B6D8C">No. [nomor unik] · QR verifikasi</span>
+              </div>
+            </sc-if>
+            <sc-if value="{{pv.isNotes}}" hint-placeholder-val="{{ false }}">
+              <div>
+                <strong style="display: block; font-size: 15px; margin-bottom: 10px">NOTULENSI RAPAT</strong>
+                <table style="width: 100%; font-size: 11px; margin-bottom: 12px"><tr><td style="width: 110px">Hari/tanggal</td><td>: [ ]</td></tr><tr><td>Tempat</td><td>: [ ]</td></tr><tr><td>Peserta</td><td>: [ ]</td></tr></table>
+                <strong>Pembahasan</strong><ol style="margin: 4px 0 10px; padding-left: 18px"><li>[ ]</li><li>[ ]</li></ol>
+                <strong>Action item</strong><table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 4px"><tr style="background: #F1F4FB"><th style="padding: 5px; text-align: left">Tugas</th><th style="padding: 5px; text-align: left">PIC</th><th style="padding: 5px; text-align: left">Deadline</th></tr><tr><td style="padding: 5px">[ ]</td><td style="padding: 5px">[ ]</td><td style="padding: 5px">[ ]</td></tr></table>
+              </div>
+            </sc-if>
+            <sc-if value="{{pv.isDeck}}" hint-placeholder-val="{{ false }}">
+              <div style="display: flex; flex-direction: column; gap: 12px">
+                <div style="aspect-ratio: 16 / 9; border-radius: 8px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-end"><strong style="font-family: 'Montserrat', sans-serif; font-style: italic; font-size: 22px">[Judul presentasi]</strong><span style="font-size: 11px">IPB LEAP · Batch 2026</span></div>
+                <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px"><span style="aspect-ratio: 16 / 9; border-radius: 6px; background: #F1F4FB"></span><span style="aspect-ratio: 16 / 9; border-radius: 6px; background: #EEFFB8"></span><span style="aspect-ratio: 16 / 9; border-radius: 6px; background: #E3F3F8"></span></div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="flex: 1 1 280px; min-width: 0; padding: 26px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 8px"><div><span style="font-size: 11px; font-weight: 900; letter-spacing: .08em; padding: 4px 8px; border-radius: 6px; background: #0D0D1A; color: #FFFFFF">{{pv.fmt}}</span><h2 style="margin: 10px 0 2px; font-size: 22px; font-weight: 800">{{pv.name}}</h2><span style="font-size: 13px; color: #6B6D8C">{{pv.cat}} · {{pv.ver}}</span></div><button type="button" onClick="{{closePrev}}" aria-label="Tutup" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer">×</button></div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.55; color: #55577A">{{pv.desc}}</p>
+          <span style="font-size: 12.5px; font-weight: 700; color: #6B6D8C">Kolom isian: {{pv.fields}}</span>
+          <button class="btn" type="button" style="height: 48px; border-radius: 15px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer">Unduh .{{pv.ext}}</button>
+          <a class="btn" href="{{pv.gurl}}" target="_blank" rel="noopener" style="height: 46px; border-radius: 15px; border: 1px solid #D5DAEA; background: #FFFFFF; color: #0D0D1A; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center; justify-content: center">Salin ke Google Drive &amp; buka ↗</a>
+          <sc-if value="{{pv.canGen}}" hint-placeholder-val="{{ false }}">
+            <button class="btn" type="button" style="height: 46px; border-radius: 15px; border: 0; background: #D4FF3A; color: #0D0D1A; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer">Generate otomatis &amp; kirim email</button>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</template>
+<template data-dc="Navbar">
+<header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: {{c.ink}}; background: {{c.bar}}; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid {{c.line}}; box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
+  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px">
+
+    <div style="display: flex; align-items: center; gap: 12px">
+      <a href="{{homeHref}}" aria-label="Beranda IPB Leap Management System" style="display: flex; align-items: center; gap: 10px; text-decoration: none">
+        <img src="{{c.logo}}" alt="" style="height: 38px; width: auto">
+        <span style="display: flex; flex-direction: column; line-height: 1.05"><span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; color: {{c.brand}}; letter-spacing: -.01em">LEAP</span><span style="font-size: 10.5px; font-weight: 700; color: {{c.muted}}; letter-spacing: .06em; text-transform: uppercase">Management System</span></span>
+      </a>
+      <button type="button" style="height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; font: inherit; font-size: 12.5px; font-weight: 700; color: {{c.brand}}; display: flex; align-items: center; gap: 6px; cursor: pointer">Batch 2026
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+    </div>
+
+    <nav aria-label="Menu utama" style="flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px">
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="6">
+        <div style="position: relative">
+          <sc-if value="{{it.isLink}}" hint-placeholder-val="{{ true }}">
+            <a href="{{it.href}}" aria-current="{{it.current}}" style="{{it.style}}">{{it.label}}</a>
+          </sc-if>
+          <sc-if value="{{it.hasChildren}}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{it.toggle}}" aria-expanded="{{it.expanded}}" style="{{it.style}}">{{it.label}}
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <sc-if value="{{it.open}}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 310px; padding: 8px; border-radius: 20px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column; gap: 2px">
+                <sc-for list="{{it.children}}" as="ch" hint-placeholder-count="3">
+                  <a href="{{ch.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; text-decoration: none; color: {{c.ink}}">
+                    <span style="width: 34px; height: 34px; flex: none; border-radius: 11px; background: {{ch.tint}}; display: flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800; color: #32306F">{{ch.short}}</span>
+                    <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{ch.label}}</span><span style="font-size: 12.5px; color: {{c.muted}}; line-height: 1.4">{{ch.desc}}</span></span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="display: flex; align-items: center; gap: 8px; position: relative">
+      <button type="button" aria-label="Cari (Ctrl K)" style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+        <span>Cari</span><span style="font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: {{c.chip}}; border: 1px solid {{c.line2}}">⌘K</span>
+      </button>
+      <button type="button" aria-label="Tambah cepat" title="Task, note, atau event baru" style="width: 40px; height: 40px; border-radius: 12px; border: 0; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.3)">
+        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
+      </button>
+      <a href="chat.html" aria-label="Chat, 5 pesan baru" style="position: relative; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {{c.icon}}">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>
+        <span style="position: absolute; top: 4px; right: 3px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 9px; background: #3157A5; color: #FFFFFF; font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid {{c.ring}}">5</span>
+      </a>
+      <button type="button" onClick="{{toggleNotif}}" aria-label="Notifikasi, 3 belum dibaca" aria-expanded="{{notifExpanded}}" style="position: relative; width: 40px; height: 40px; border-radius: 12px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: {{c.icon}}; cursor: pointer">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>
+        <span style="position: absolute; top: 6px; right: 7px; width: 10px; height: 10px; border-radius: 50%; background: #D4FF3A; border: 2px solid #32306F"></span>
+      </button>
+      <button type="button" onClick="{{toggleMe}}" aria-expanded="{{meExpanded}}" aria-label="Menu akun" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 6px 0 4px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; cursor: pointer; font: inherit">
+        <span style="width: 34px; height: 34px; border-radius: 50%; background: {{avatarBg}}; color: #FFFFFF; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{initials}}</span>
+        <span style="font-size: 11.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; background: {{roleBg}}; color: {{roleInk}}">{{roleLabel}}</span>
+      </button>
+
+      <sc-if value="{{notifOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 40px; width: 360px; padding: 16px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><strong style="font-size: 15px">Notifikasi</strong><span style="font-size: 12.5px; font-weight: 700; color: {{c.link}}">Tandai dibaca</span></div>
+          <div style="display: flex; flex-direction: column">
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Periode penilaian Oktober ditutup <strong>H-3</strong>. Masih ada 2 form.<br><span style="color: {{c.muted}}; font-size: 12px">10 menit lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Kamu diundang ke <strong>Sesi Mentoring #6</strong>, Sab 18 Okt 09.00.<br><span style="color: {{c.muted}}; font-size: 12px">1 jam lalu</span></span></div>
+            <div style="display: flex; gap: 12px; padding: 12px 4px"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Pendaftaran <strong>Leadership Camp</strong> dibuka hari ini.<br><span style="color: {{c.muted}}; font-size: 12px">3 jam lalu</span></span></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{meOpen}}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; top: 56px; right: 0; width: 270px; padding: 8px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60; display: flex; flex-direction: column">
+          <div style="padding: 12px; border-bottom: 1px solid {{c.line}}; margin-bottom: 4px"><div style="font-weight: 800; font-size: 14.5px">{{name}}</div><div style="font-size: 12.5px; color: {{c.muted}}">{{subtitle}}</div></div>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Profil &amp; ID Card</a>
+          <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Pengaturan</a>
+          <a href="index.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; color: #E5484D; text-decoration: none">Keluar</a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</header>
+</template>
+<script type="text/x-dc" data-dc="Template" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cat: 'Semua', q: '', prev: null };
+  }
+  renderVals() {
+    const st = this.state;
+    const T = [
+      { id: 1, name: 'RAB Kegiatan', cat: 'Keuangan', ver: 'v3 terbaru', fmt: 'XLSX', ext: 'xlsx', kind: 'sheet', bg: 'linear-gradient(135deg,#DCFCE7,#A7F3D0)', ink: '#16A34A', g: 'https://docs.google.com/spreadsheets', desc: 'Template RAB dengan rumus otomatis. Format kolomnya sudah dikenali sistem saat diunggah ke Keuangan.', fields: 'Nama kegiatan, Uraian, Volume, Harga' },
+      { id: 2, name: 'LPJ Kegiatan', cat: 'Keuangan', ver: 'v2', fmt: 'DOCX', ext: 'docx', kind: 'notes', bg: 'linear-gradient(135deg,#E4EBF8,#C9D6F0)', ink: '#3157A5', g: 'https://docs.google.com/document', desc: 'Laporan pertanggungjawaban: ringkasan, realisasi anggaran, dokumentasi.', fields: 'Kegiatan, Realisasi, Lampiran' },
+      { id: 3, name: 'Kwitansi', cat: 'Keuangan', ver: 'v1', fmt: 'DOCX', ext: 'docx', kind: 'letter', bg: 'linear-gradient(135deg,#FEF3C7,#FDE68A)', ink: '#B45309', g: 'https://docs.google.com/document', desc: 'Bukti pembayaran resmi bertanda tangan Bendahara.', fields: 'Penerima, Nominal, Keperluan' },
+      { id: 4, name: 'Proposal Sponsorship', cat: 'Proposal', ver: 'v4 terbaru', fmt: 'DOCX', ext: 'docx', kind: 'proposal', bg: 'linear-gradient(135deg,#32306F,#3157A5)', ink: '#32306F', g: 'https://docs.google.com/document', desc: 'Proposal kerja sama lengkap dengan paket benefit mitra.', fields: 'Kegiatan, Mitra, Paket' },
+      { id: 5, name: 'Proposal Kegiatan', cat: 'Proposal', ver: 'v2', fmt: 'DOCX', ext: 'docx', kind: 'proposal', bg: 'linear-gradient(135deg,#7DBBD0,#3157A5)', ink: '#32306F', g: 'https://docs.google.com/document', desc: 'Proposal internal untuk HA IPB dan pihak kampus.', fields: 'Kegiatan, Tujuan, Anggaran' },
+      { id: 6, name: 'Surat Undangan', cat: 'Surat', ver: 'nomor otomatis', fmt: 'DOCX', ext: 'docx', kind: 'letter', perihal: 'Undangan', bg: 'linear-gradient(135deg,#E3F3F8,#A3D6E6)', ink: '#1F5566', g: 'https://docs.google.com/document', desc: 'Nomor surat terisi otomatis sesuai format IPB LEAP dan tercatat di arsip surat.', fields: 'Penerima, Kegiatan, Tanggal, Lokasi', gen: true },
+      { id: 7, name: 'Surat Tugas', cat: 'Surat', ver: 'nomor otomatis', fmt: 'DOCX', ext: 'docx', kind: 'letter', perihal: 'Surat Tugas', bg: 'linear-gradient(135deg,#E3F3F8,#A3D6E6)', ink: '#1F5566', g: 'https://docs.google.com/document', desc: 'Surat tugas untuk panitia atau perwakilan IPB LEAP.', fields: 'Nama, Jabatan, Tugas, Periode', gen: true },
+      { id: 8, name: 'Notulensi Rapat', cat: 'Notulensi', ver: 'v1', fmt: 'DOCX', ext: 'docx', kind: 'notes', bg: 'linear-gradient(135deg,#FEF3C7,#FDE68A)', ink: '#B45309', g: 'https://docs.google.com/document', desc: 'Format notulensi dengan tabel action item.', fields: 'Tanggal, Peserta, Action item' },
+      { id: 9, name: 'Sertifikat Event', cat: 'Desain', ver: 'merge field', fmt: 'PDF', ext: 'pdf', kind: 'cert', bg: 'linear-gradient(135deg,#EEFFB8,#D4FF3A)', ink: '#3A4A00', g: 'https://docs.google.com/presentation', desc: 'Diisi otomatis dari data presensi, lalu dikirim massal via email.', fields: 'Nama, Peran, Event, Tanggal', gen: true },
+      { id: 10, name: 'Deck Presentasi', cat: 'Desain', ver: 'brand 2026', fmt: 'PPTX', ext: 'pptx', kind: 'deck', bg: 'linear-gradient(135deg,#E7E6F3,#C4C2E6)', ink: '#32306F', g: 'https://docs.google.com/presentation', desc: 'Slide berwarna brand IPB LEAP untuk presentasi kegiatan.', fields: '-' }
+    ];
+    const catNames = ['Semua', 'Keuangan', 'Proposal', 'Surat', 'Notulensi', 'Desain'];
+    const cats = catNames.map((c) => ({
+      label: c, count: c === 'Semua' ? T.length : T.filter((t) => t.cat === c).length,
+      selected: st.cat === c ? 'true' : 'false',
+      style: 'height: 40px; padding: 0 16px; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; ' + (st.cat === c ? 'background: #32306F; color: #FFFFFF; border: 1.5px solid #32306F; font-weight: 800' : 'background: #FFFFFF; color: #33355A; border: 1.5px solid #E3E7F2; font-weight: 700'),
+      pick: () => this.setState({ cat: c })
+    }));
+    const q = st.q.toLowerCase();
+    const shown = T.filter((t) => (st.cat === 'Semua' || t.cat === st.cat) && (!q || t.name.toLowerCase().indexOf(q) >= 0));
+    const items = shown.map((t) => Object.assign({}, t, { preview: () => this.setState({ prev: t.id }) }));
+    const p = T.find((t) => t.id === st.prev);
+    const pv = p ? Object.assign({}, p, {
+      isSheet: p.kind === 'sheet', isProposal: p.kind === 'proposal', isLetter: p.kind === 'letter', isCert: p.kind === 'cert', isNotes: p.kind === 'notes', isDeck: p.kind === 'deck',
+      no: '[otomatis] /IPBLEAP/X/2026', perihal: p.perihal || 'Kwitansi', canGen: !!p.gen, gurl: p.g
+    }) : {};
+    return {
+      cats: cats, items: items, empty: items.length === 0, q: st.q,
+      onQ: (e) => this.setState({ q: e.target.value }),
+      hasPrev: !!p, pv: pv,
+      closePrev: () => this.setState({ prev: null })
+    };
+  }
+}
+</script>
+<script type="text/x-dc" data-dc="Navbar" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: null, notif: false, me: false };
+  }
+  renderVals() {
+    const role = this.props.role ?? 'mentee';
+    const active = this.props.active ?? 'beranda';
+    const dark = (this.props.theme ?? 'light') === 'dark';
+    const c = dark ? {
+      bar: 'rgba(14,13,43,.82)', ink: '#ECEEFF', muted: '#9C9EC4', brand: '#C9D6F0', line: 'rgba(255,255,255,.08)', line2: 'rgba(255,255,255,.14)', chip: 'rgba(255,255,255,.06)', field: 'rgba(255,255,255,.06)', pop: '#1A1940', icon: '#C9D6F0', ring: '#0E0D2B', link: '#A3D6E6', navInk: '#C9CBEA', navOnBg: '#D4FF3A', navOnInk: '#0D0D1A',
+      logo: '../assets/logo-white.png'
+    } : {
+      bar: 'rgba(255,255,255,.78)', ink: '#0D0D1A', muted: '#6B6D8C', brand: '#32306F', line: '#F0F2F8', line2: '#E3E7F2', chip: '#FFFFFF', field: '#F5F7FC', pop: '#FFFFFF', icon: '#32306F', ring: '#FFFFFF', link: '#3157A5', navInk: '#33355A', navOnBg: '#32306F', navOnInk: '#FFFFFF',
+      logo: '../assets/logo-color.png'
+    };
+    const kel = [
+      { label: 'Ringkasan kelompok', desc: 'Anggota, status lampu, update terbaru', href: 'kelompok.html', short: 'KL', tint: '#E3F3F8' },
+      { label: 'Monitoring progres', desc: 'Riwayat update & kehadiran per bulan', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Catat sesi mentoring', desc: 'Kehadiran, topik, tindak lanjut', href: 'catat-sesi.html', short: 'CS', tint: '#E7E6F3' },
+      { label: 'Penilaian 360°', desc: 'Form bulanan & raport kelompok', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' }
+    ];
+    const programP = { key: 'program', label: 'Program', children: [
+      { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
+      { label: 'Penilaian & rubric', desc: 'Indikator, bobot, periode', href: 'penilaian.html', short: 'PN', tint: '#EEFFB8' },
+      { label: 'Kelola event', desc: 'Buat event & pendaftaran', href: 'kelola-event.html', short: 'EV', tint: '#E3F3F8' },
+      { label: 'Pengumuman', desc: 'Kirim ke role, kelompok, orang', href: 'pengumuman.html', short: 'PG', tint: '#E7E6F3' }
+    ] };
+    const wsBase = [
+      { label: 'Proker & Task', desc: 'Project, to-do, notulensi, Google apps', href: 'proker.html', short: 'PK', tint: '#E4EBF8' },
+      { label: 'File Manager', desc: 'Drive IPB LEAP: lihat, pindah, edit', href: 'file-manager.html', short: 'FM', tint: '#E3F3F8' },
+      { label: 'Pusat Template', desc: 'Preview, unduh, generate', href: 'template.html', short: 'TP', tint: '#E7E6F3' }
+    ];
+    const tail = [
+      { key: 'kalender', label: 'Kalender', href: 'kalender.html' },
+      { key: 'event', label: 'Event', href: 'event.html' },
+      { key: 'chat', label: 'Chat', href: 'chat.html' }
+    ];
+    const menus = {
+      mentee: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
+        { key: 'program', label: 'Program', children: [
+          { label: 'Progres & Project', desc: 'Update bulanan dan final project', href: 'beranda-mentee.html', short: 'PR', tint: '#E3F3F8' },
+          { label: 'Raport', desc: 'Nilai bulanan dan feedback 360°', href: 'penilaian.html', short: 'RP', tint: '#EEFFB8' }
+        ] }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
+      asmen: [
+        { key: 'beranda', label: 'Beranda', href: 'kelompok.html' },
+        { key: 'kelompok', label: 'Kelompok', children: kel }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'kelompok.html' }]),
+      pengurus: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      bendahara: [
+        { key: 'beranda', label: 'Beranda', href: 'beranda-pengurus.html' },
+        programP,
+        { key: 'workspace', label: 'Workspace', children: wsBase.concat([{ label: 'Keuangan', desc: 'Khusus Bendahara: cashflow & RAB', href: 'keuangan.html', short: 'Rp', tint: '#EEFFB8' }]) }
+      ].concat(tail, [{ key: 'task', label: 'Task', href: 'proker.html' }]),
+      superadmin: [
+        { key: 'beranda', label: 'Sistem', href: 'super-admin.html' },
+        { key: 'pengguna', label: 'Pengguna & Role', href: 'super-admin.html' },
+        { key: 'data', label: 'Data & Batch', href: 'super-admin.html' },
+        { key: 'audit', label: 'Audit Log', href: 'super-admin.html' }
+      ]
+    };
+    menus.mentor = menus.asmen;
+    const people = {
+      mentee: { name: 'Nabila Putri', subtitle: 'Mentee · Kelompok Rajawali', initials: 'NP', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
+      asmen: { name: 'Raka Pratama', subtitle: 'Asmen · Kelompok Rajawali', initials: 'RP', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
+      mentor: { name: 'Dian Hapsari', subtitle: 'Mentor · Kelompok Rajawali', initials: 'DH', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
+      pengurus: { name: 'Head of Operations', subtitle: 'Steering Team IPB Leap 2026', initials: 'HO', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Pengurus', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      bendahara: { name: 'Bendahara', subtitle: 'Steering Team IPB Leap 2026', initials: 'BD', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Bendahara', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
+      superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
+    };
+    const p = people[role] || people.mentee;
+    const items = (menus[role] || menus.mentee).map((m) => {
+      const on = m.key === active;
+      const open = this.state.open === m.key;
+      return Object.assign({}, m, {
+        isLink: !m.children,
+        hasChildren: !!m.children,
+        open: open,
+        expanded: open ? 'true' : 'false',
+        current: on ? 'page' : 'false',
+        style: 'display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 14px; border-radius: 12px; border: 0; font: inherit; font-size: 14.5px; cursor: pointer; text-decoration: none; ' + (on ? 'background: ' + c.navOnBg + '; color: ' + c.navOnInk + '; font-weight: 700; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 8px 18px -10px rgba(50,48,111,.8)' : 'background: transparent; color: ' + c.navInk + '; font-weight: 600'),
+        toggle: () => this.setState({ open: open ? null : m.key, notif: false, me: false })
+      });
+    });
+    return Object.assign({}, p, {
+      c: c,
+      items: items,
+      homeHref: items[0].href,
+      notifOpen: this.state.notif,
+      meOpen: this.state.me,
+      notifExpanded: this.state.notif ? 'true' : 'false',
+      meExpanded: this.state.me ? 'true' : 'false',
+      toggleNotif: () => this.setState({ notif: !this.state.notif, me: false, open: null }),
+      toggleMe: () => this.setState({ me: !this.state.me, notif: false, open: null })
+    });
+  }
+}
+</script>
+<script src="../assets/leap-runtime.js"></script>
+</body>
+</html>

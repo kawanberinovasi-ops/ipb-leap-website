@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kelompok & Monitoring · IPB Leap Management System</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(245,158,11,.6)}70%{box-shadow:0 0 0 10px rgba(245,158,11,0)}100%{box-shadow:0 0 0 0 rgba(245,158,11,0)}}
+.rise{animation:rise .5s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.06s}.d2{animation-delay:.12s}.d3{animation-delay:.18s}.d4{animation-delay:.24s}
+.ping{animation:ping 1.8s infinite}
+.lift{transition:transform .18s, box-shadow .18s}
+.lift:hover{transform:translateY(-4px);box-shadow:0 22px 44px -24px rgba(50,48,111,.55) !important}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+textarea:focus{outline:none;border-color:#3157A5 !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="asmen" active="beranda" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 24px">
+
+    <div class="rise" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+      <div>
+        <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Kelompok · Batch 2026</span>
+        <h1 style="margin: 6px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 52px; letter-spacing: -.02em; color: #32306F; line-height: 1">Rajawali</h1>
+        <p style="margin: 10px 0 0; font-size: 14.5px; color: #55577A">Mentor Dian Hapsari · Asmen Raka Pratama · 4 mentee · frekuensi update: bulanan</p>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center">
+        <div role="group" aria-label="Lihat sebagai" style="display: flex; gap: 4px; padding: 5px; border-radius: 14px; background: #E9EDF7">
+          <button type="button" onClick="{{asAsmen}}" aria-pressed="{{asmenPressed}}" style="{{asmenTab}}">Asmen</button>
+          <button type="button" onClick="{{asMentor}}" aria-pressed="{{mentorPressed}}" style="{{mentorTab}}">Mentor</button>
+        </div>
+        <a class="btn" href="Penilaian.dc.html" style="height: 46px; padding: 0 18px; border-radius: 14px; background: #FFFFFF; border: 1px solid #D5DAEA; font-weight: 700; font-size: 14px; color: #0D0D1A; text-decoration: none; display: flex; align-items: center">Penilaian Oktober</a>
+        <a class="btn" href="MonitoringProgres.dc.html" style="height: 46px; padding: 0 18px; border-radius: 14px; background: #FFFFFF; border: 1px solid #D5DAEA; font-weight: 700; font-size: 14px; color: #0D0D1A; text-decoration: none; display: flex; align-items: center">Monitoring progres</a>
+        <a class="btn" href="CatatSesi.dc.html" style="height: 46px; padding: 0 18px; border-radius: 14px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center">+ Catat sesi mentoring</a>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+      <div class="rise d1" style="padding: 22px; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+        <span style="font-size: 13px; font-weight: 700; color: #6B6D8C">Status mentee</span>
+        <div style="display: flex; gap: 14px; margin-top: 12px; align-items: center">
+          <span style="display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 22px"><span style="width: 14px; height: 14px; border-radius: 50%; background: #16A34A"></span>3</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 22px"><span style="width: 14px; height: 14px; border-radius: 50%; background: #F59E0B"></span>1</span>
+          <span style="display: flex; align-items: center; gap: 6px; font-weight: 800; font-size: 22px; color: #8A8CA8"><span style="width: 14px; height: 14px; border-radius: 50%; background: #E5484D; opacity: .35"></span>0</span>
+        </div>
+      </div>
+      <div class="rise d2" style="padding: 22px; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+        <span style="font-size: 13px; font-weight: 700; color: #6B6D8C">Update Oktober</span>
+        <div style="font-size: 30px; font-weight: 800; color: #32306F; margin-top: 6px">3<span style="font-size: 18px; color: #8A8CA8">/4</span></div>
+      </div>
+      <div class="rise d3" style="padding: 22px; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+        <span style="font-size: 13px; font-weight: 700; color: #6B6D8C">Kehadiran sesi (rata-rata)</span>
+        <div style="font-size: 30px; font-weight: 800; color: #32306F; margin-top: 6px">86%</div>
+      </div>
+      <div class="rise d4" style="padding: 22px; border-radius: 24px; background: #32306F; color: #FFFFFF">
+        <span style="font-size: 13px; font-weight: 700; color: #A3D6E6">Rata-rata nilai September</span>
+        <div style="font-size: 30px; font-weight: 800; margin-top: 6px">83,7 <span style="font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; vertical-align: middle">B</span></div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px">
+      <sc-for list="{{mentees}}" as="m" hint-placeholder-count="4">
+        <button class="lift" type="button" onClick="{{m.pick}}" aria-pressed="{{m.pressed}}" style="{{m.cardStyle}}">
+          <div style="display: flex; align-items: center; gap: 12px; width: 100%">
+            <span style="width: 46px; height: 46px; border-radius: 50%; background: {{m.bg}}; color: {{m.ink}}; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; flex: none">{{m.initials}}</span>
+            <span style="flex: 1; text-align: left"><span style="display: block; font-weight: 800; font-size: 15.5px">{{m.name}}</span><span style="font-size: 12.5px; color: #6B6D8C">{{m.prodi}}</span></span>
+            <span class="{{m.pingClass}}" style="width: 16px; height: 16px; border-radius: 50%; background: {{m.light}}; border: 3px solid #FFFFFF; box-shadow: 0 0 0 1px {{m.light}}"></span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; width: 100%; margin-top: 16px">
+            <span style="padding: 10px; border-radius: 14px; background: #F5F7FC; text-align: left"><span style="display: block; font-size: 11.5px; color: #6B6D8C; font-weight: 600">Update</span><span style="font-weight: 800; font-size: 14px">{{m.update}}</span></span>
+            <span style="padding: 10px; border-radius: 14px; background: #F5F7FC; text-align: left"><span style="display: block; font-size: 11.5px; color: #6B6D8C; font-weight: 600">Hadir</span><span style="font-weight: 800; font-size: 14px">{{m.att}}</span></span>
+            <span style="padding: 10px; border-radius: 14px; background: #F5F7FC; text-align: left"><span style="display: block; font-size: 11.5px; color: #6B6D8C; font-weight: 600">Nilai Sep</span><span style="font-weight: 800; font-size: 14px">{{m.score}}</span></span>
+          </div>
+          <span style="margin-top: 12px; width: 100%; text-align: left; font-size: 12.5px; font-weight: 700; color: {{m.noteInk}}">{{m.note}}</span>
+        </button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <section style="flex: 999 1 600px; min-width: 0; padding: 28px; border-radius: 28px; background: linear-gradient(180deg,#FFFFFF,#FAFBFF); border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45)">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px">
+          <h2 style="margin: 0; font-size: 20px; font-weight: 800">Update progres · {{selName}}</h2>
+          <span style="font-size: 12.5px; font-weight: 700; color: #6B6D8C">Oktober 2026 · dikirim 12 Okt</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+          <div style="padding: 16px; border-radius: 18px; background: #F0FDF4"><span style="font-size: 12px; font-weight: 800; color: #166534; letter-spacing: .06em">CAPAIAN</span><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55">Wawancara 6 petani di Cibanteng, draft latar belakang proposal selesai.</p></div>
+          <div style="padding: 16px; border-radius: 18px; background: #FFFBEB"><span style="font-size: 12px; font-weight: 800; color: #92400E; letter-spacing: .06em">KENDALA</span><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55">Jadwal kuliah lapang bentrok dengan sesi kelas Rabu.</p></div>
+          <div style="padding: 16px; border-radius: 18px; background: #EEF2FC"><span style="font-size: 12px; font-weight: 800; color: #3157A5; letter-spacing: .06em">RENCANA</span><p style="margin: 8px 0 0; font-size: 14px; line-height: 1.55">Finalisasi proposal bareng tim, uji coba katalog di grup WA desa.</p></div>
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center; margin-top: 14px; font-size: 13px; color: #55577A"><span style="padding: 6px 10px; border-radius: 10px; background: #F5F7FC; border: 1px solid #E3E7F2; font-weight: 700">foto-wawancara.jpg</span><span style="padding: 6px 10px; border-radius: 10px; background: #F5F7FC; border: 1px solid #E3E7F2; font-weight: 700">draft-proposal (Docs)</span></div>
+
+        <div style="margin-top: 22px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; gap: 12px"><span style="width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg,#0D0D1A,#32306F); color: #FFFFFF; font-weight: 800; font-size: 12px; display: flex; align-items: center; justify-content: center; flex: none">DH</span><div style="padding: 12px 14px; border-radius: 4px 18px 18px 18px; background: #F1F4FB; font-size: 14px; line-height: 1.5"><strong>Dian (Mentor)</strong> · Bagus, data lapangannya kuat. Coba hitung margin petani sebelum dan sesudah.</div></div>
+        </div>
+
+        <sc-if value="{{isAsmen}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; align-items: flex-end">
+            <textarea rows="2" placeholder="Tulis tanggapan untuk {{selFirst}}…" aria-label="Tanggapan" style="flex: 1 1 320px; resize: vertical; padding: 12px 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></textarea>
+            <button class="btn" type="button" onClick="{{markReviewed}}" style="{{reviewStyle}}">{{reviewLabel}}</button>
+          </div>
+        </sc-if>
+        <sc-if value="{{isMentor}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; gap: 10px; margin-top: 16px">
+            <textarea rows="2" placeholder="Tambah komentar sebagai Mentor…" aria-label="Komentar mentor" style="flex: 1; resize: vertical; padding: 12px 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></textarea>
+            <button type="button" style="height: 48px; padding: 0 18px; align-self: flex-end; border-radius: 14px; border: 0; background: #32306F; color: #FFFFFF; font: inherit; font-weight: 800; cursor: pointer">Kirim</button>
+          </div>
+        </sc-if>
+      </section>
+
+      <aside style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+        <div style="padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+          <h2 style="margin: 0 0 14px; font-size: 17px; font-weight: 800">Log sesi mentoring</h2>
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13.5px">
+            <div style="display: flex; justify-content: space-between; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid #F0F2F8"><span><strong>#5 · Kelompok</strong><br><span style="color: #6B6D8C">4 Okt · Mengenal stakeholder desa</span></span><span style="font-weight: 800; color: #166534">4/4</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 8px; padding-bottom: 10px; border-bottom: 1px solid #F0F2F8"><span><strong>1-on-1 · Gita</strong><br><span style="color: #6B6D8C">27 Sep · Manajemen waktu</span></span><span style="font-weight: 800; color: #166534">1/1</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 8px"><span><strong>#4 · Kelompok</strong><br><span style="color: #6B6D8C">20 Sep · Problem framing</span></span><span style="font-weight: 800; color: #92400E">3/4</span></div>
+          </div>
+        </div>
+        <sc-if value="{{isAsmen}}" hint-placeholder-val="{{ true }}">
+          <div style="padding: 24px; border-radius: 28px; background: #FFFBEB; border: 1px solid #FDE68A">
+            <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 17px; font-weight: 800">Catatan privat · {{selFirst}}</h2><span style="font-size: 11.5px; font-weight: 800; padding: 4px 8px; border-radius: 8px; background: #FFFFFF; color: #92400E">Asmen &amp; Mentor saja</span></div>
+            <p style="margin: 10px 0 0; font-size: 14px; line-height: 1.55; color: #5C4A12">Lebih aktif di chat daripada di sesi. Ajak pegang moderator sesi #6.</p>
+          </div>
+        </sc-if>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { view: 'asmen', sel: 'm1', reviewed: {} };
+  }
+  renderVals() {
+    const st = this.state;
+    const defs = [
+      { id: 'm1', name: 'Nabila Putri', initials: 'NP', prodi: 'Agribisnis · 59', bg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', ink: '#FFFFFF', light: '#16A34A', update: '12 Okt', att: '100%', score: '86,4', note: 'On track', noteInk: '#166534' },
+      { id: 'm2', name: 'Fajar Akbar', initials: 'FA', prodi: 'Teknik Pertanian · 59', bg: '#A3D6E6', ink: '#1F5566', light: '#16A34A', update: '9 Okt', att: '80%', score: '79,8', note: 'On track', noteInk: '#166534' },
+      { id: 'm3', name: 'Gita Wulandari', initials: 'GW', prodi: 'Ilmu Gizi · 60', bg: '#D4FF3A', ink: '#0D0D1A', light: '#F59E0B', update: 'Belum', att: '75%', score: '68,2', note: 'Perlu perhatian · update September terlambat', noteInk: '#92400E' },
+      { id: 'm4', name: 'Yusuf Saputra', initials: 'YS', prodi: 'Ekonomi · 59', bg: '#32306F', ink: '#FFFFFF', light: '#16A34A', update: '14 Okt', att: '90%', score: '90,5', note: 'On track', noteInk: '#166534' }
+    ];
+    const mentees = defs.map((d) => {
+      const on = st.sel === d.id;
+      return Object.assign({}, d, {
+        pressed: on ? 'true' : 'false',
+        pingClass: d.light === '#F59E0B' ? 'ping' : '',
+        cardStyle: 'display: flex; flex-direction: column; align-items: stretch; padding: 20px; border-radius: 24px; font: inherit; color: #0D0D1A; cursor: pointer; text-align: left; background: linear-gradient(180deg,#FFFFFF,#F9FAFE); border: 1.5px solid ' + (on ? '#3157A5' : 'rgba(50,48,111,.08)') + '; box-shadow: ' + (on ? '0 20px 40px -24px rgba(49,87,165,.8)' : '0 14px 30px -26px rgba(50,48,111,.5)'),
+        pick: () => this.setState({ sel: d.id })
+      });
+    });
+    const cur = defs.find((d) => d.id === st.sel);
+    const done = !!st.reviewed[st.sel];
+    const tabOn = 'height: 36px; padding: 0 14px; border-radius: 10px; border: 0; background: #FFFFFF; color: #32306F; font: inherit; font-weight: 800; font-size: 13.5px; cursor: pointer; box-shadow: 0 4px 12px -6px rgba(50,48,111,.5)';
+    const tabOff = 'height: 36px; padding: 0 14px; border-radius: 10px; border: 0; background: transparent; color: #6B6D8C; font: inherit; font-weight: 700; font-size: 13.5px; cursor: pointer';
+    return {
+      mentees: mentees,
+      selName: cur.name,
+      selFirst: cur.name.split(' ')[0],
+      isAsmen: st.view === 'asmen',
+      isMentor: st.view === 'mentor',
+      asmenTab: st.view === 'asmen' ? tabOn : tabOff,
+      mentorTab: st.view === 'mentor' ? tabOn : tabOff,
+      asmenPressed: st.view === 'asmen' ? 'true' : 'false',
+      mentorPressed: st.view === 'mentor' ? 'true' : 'false',
+      asAsmen: () => this.setState({ view: 'asmen' }),
+      asMentor: () => this.setState({ view: 'mentor' }),
+      reviewLabel: done ? '✓ Ditinjau' : 'Kirim & tandai ditinjau',
+      reviewStyle: 'height: 48px; padding: 0 18px; border-radius: 14px; border: 0; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; ' + (done ? 'background: #D4FF3A; color: #0D0D1A' : 'background: #0D0D1A; color: #FFFFFF'),
+      markReviewed: () => { const r = Object.assign({}, st.reviewed); r[st.sel] = true; this.setState({ reviewed: r }); }
+    };
+  }
+}
+</script>
+</body>
+</html>
