@@ -146,5 +146,5 @@ $('#copy-activation').onclick=async()=>{try{await navigator.clipboard.writeText(
 $('#close-activation').onclick=()=>{$('#activation-link').value='';$('#activation-dialog').close();};
 $('#close-copy').onclick=()=>$('#copy-dialog').close();
 window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
-async function start(){if(!configured)throw Error('Layanan ERP sedang disiapkan.');if(!await verifiedUser()){location.replace(new URL('akses-penilaian.html',appBase).pathname+'?next='+encodeURIComponent(location.pathname+location.search));return;}await bootstrap();await refresh();}
-export function mount(){start().catch(e=>{$('#content').innerHTML=empty('Halaman belum dapat dimuat',errorText(e),button('Coba lagi','id="retry"',true)+link('Kembali ke login',new URL('akses-penilaian.html',appBase).pathname));$('#retry')?.addEventListener('click',()=>location.reload());});}
+async function start(){if(!configured)throw Error('Layanan ERP sedang disiapkan.');if(!await verifiedUser()){location.replace(new URL('index.html',appBase).pathname+'?next='+encodeURIComponent(location.pathname+location.search));return;}await bootstrap();await refresh();}
+export function mount(){start().catch(e=>{$('#content').innerHTML=empty('Halaman belum dapat dimuat',errorText(e),button('Coba lagi','id="retry"',true)+link('Kembali ke login',new URL('index.html',appBase).pathname));$('#retry')?.addEventListener('click',()=>location.reload());});}
