@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>IPB LEAP · Beranda</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E0D2B}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes floatA{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes driftA{0%,100%{transform:translate(0,0) rotate(-2deg) scale(1)}33%{transform:translate(8px,-12px) rotate(1.5deg) scale(1.03)}66%{transform:translate(-6px,6px) rotate(-3deg) scale(.98)}}
+@keyframes driftB{0%,100%{transform:translate(0,0) rotate(2deg)}50%{transform:translate(-10px,-8px) rotate(-2.5deg) scale(1.04)}}
+@keyframes driftC{0%,100%{transform:translate(0,0) rotate(0deg) scale(1)}25%{transform:translate(6px,8px) rotate(3deg)}75%{transform:translate(-8px,-10px) rotate(-1.5deg) scale(1.05)}}
+@keyframes swapA{0%{opacity:0;transform:scale(1.14);filter:blur(8px) saturate(.4)}60%{opacity:1}100%{opacity:1;transform:none;filter:none}}
+@keyframes swapB{0%{opacity:0;transform:scale(1.14);filter:blur(8px) saturate(.4)}60%{opacity:1}100%{opacity:1;transform:none;filter:none}}
+@keyframes scan{from{transform:translateY(-100%)}to{transform:translateY(100%)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(-3deg)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes flow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes barGrow{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+@keyframes statIn{from{opacity:0;transform:translateY(24px) skewY(4deg)}to{opacity:1;transform:none}}
+.gtext{background:linear-gradient(90deg,#FFFFFF 0%,#D4FF3A 25%,#A3D6E6 50%,#FFFFFF 75%,#D4FF3A 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:flow 5s linear infinite}
+.gbar{background:linear-gradient(90deg,#D4FF3A,#A3D6E6,#FFFFFF,#D4FF3A);background-size:200% 100%;transform-origin:left;animation:barGrow 1.4s cubic-bezier(.2,.9,.3,1) both,flow 3s linear infinite}
+.stat{animation:statIn .8s cubic-bezier(.2,.9,.3,1.15) both}
+.s1{animation-delay:.1s}.s2{animation-delay:.22s}.s3{animation-delay:.34s}.s4{animation-delay:.46s}
+.rise{animation:rise .6s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}
+.swapA{animation:swapA .7s cubic-bezier(.2,.9,.3,1) both}
+.swapB{animation:swapB .7s cubic-bezier(.2,.9,.3,1) both}
+.scan{animation:scan 3.2s linear infinite}
+.blink{animation:blink 1.4s steps(2) infinite}
+.floaty{animation:floaty 4s ease-in-out infinite}
+.marquee{animation:marquee 30s linear infinite}
+.card{transition:left 1.1s cubic-bezier(.65,0,.25,1.15), top 1.1s cubic-bezier(.65,0,.25,1.15), width 1.1s cubic-bezier(.65,0,.25,1.15), height 1.1s cubic-bezier(.65,0,.25,1.15)}
+.card:hover{transform:scale(1.04) !important;z-index:30 !important}
+@keyframes blobA{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-120px,80px) scale(1.15)}66%{transform:translate(60px,140px) scale(.9)}}
+@keyframes blobB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(220px,-120px) scale(1.2)}}
+@keyframes blobC{0%,100%{transform:translate(0,0) scale(.9)}25%{transform:translate(160px,-60px) scale(1.1)}75%{transform:translate(-140px,90px) scale(1)}}
+@keyframes gridMove{from{transform:translate(0,0)}to{transform:translate(30px,30px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spark{0%{opacity:0;transform:translateY(0) scale(.4)}20%{opacity:1}80%{opacity:.8}100%{opacity:0;transform:translateY(-120px) scale(1.1)}}
+@keyframes plus{0%,100%{transform:rotate(0) scale(1);opacity:.9}50%{transform:rotate(90deg) scale(1.4);opacity:.4}}
+.b-a{animation:blobA 18s ease-in-out infinite}.b-b{animation:blobB 22s ease-in-out infinite}.b-c{animation:blobC 26s ease-in-out infinite}
+.gridmove{animation:gridMove 6s linear infinite}
+.ring{animation:spin 24s linear infinite}.ring2{animation-duration:36s;animation-direction:reverse}
+.spark{animation-name:spark;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+.plus{animation:plus 5s ease-in-out infinite}.p2{animation-delay:-1.6s}.p3{animation-delay:-3.2s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.face{display:block;animation:bob 2.6s ease-in-out infinite}
+@keyframes statPop{from{opacity:0;transform:translateY(30px) rotate(calc(var(--r) * 3)) scale(.6)}to{opacity:1;transform:rotate(var(--r))}}
+@keyframes statFloat{0%,100%{transform:translate(0,0) rotate(0)}30%{transform:translate(6px,-12px) rotate(2deg)}65%{transform:translate(-8px,6px) rotate(-2deg)}}
+.statpop{transform:rotate(var(--r));animation:statPop .9s cubic-bezier(.2,.9,.3,1.3) both}
+.statfloat{animation-name:statFloat;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+.gtile{transition:transform .25s}.gtile:hover{transform:scale(1.03)}
+@media (max-width: 1000px){.gal{grid-template-columns:repeat(2,minmax(0,1fr)) !important;grid-auto-rows:120px !important}.gal>.gtile{grid-column:auto !important;grid-row:auto !important}}
+@keyframes ringFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.kpframe{animation:ringFlow 6s ease-in-out infinite;transition:transform .35s cubic-bezier(.2,.9,.3,1.3)}.kpframe:hover{transform:rotate(0deg) scale(1.03) !important}
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:56px 56px}
+.nudge{transition:transform .25s}.nudge:hover{transform:translateY(-4px)}
+.b4{grid-column:span 4}.b6{grid-column:span 6}.b5{grid-column:span 5}.b7{grid-column:span 7}.b12{grid-column:span 12}.r2{grid-row:span 2}
+.row{transition:transform .2s, background .2s}.row:hover{transform:translateX(4px);background:rgba(255,255,255,.14) !important}
+.newsrow{transition:padding .2s}.newsrow:hover{padding-left:6px !important}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(47,191,113,.5)}50%{box-shadow:0 0 0 6px rgba(47,191,113,0)}}
+.pulse{animation:pulse 1.8s ease-in-out infinite}
+@media (max-width: 1000px){.b4,.b5,.b6,.b7,.b12{grid-column:1/-1}.r2{grid-row:auto}}
+.lift{transition:transform .2s, box-shadow .2s}
+.lift:hover{transform:translateY(-5px);box-shadow:0 26px 50px -28px rgba(50,48,111,.6) !important}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+@media (max-width: 900px){.hero-h1{font-size:54px !important}.stagewrap{transform:scale(.62);transform-origin:top center;margin-bottom:-240px}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="position: relative; background: linear-gradient(180deg, #32306F 0%, #2C3F8E 28%, #24306F 55%, #1A1A4E 80%, #0E0D2B 100%); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; overflow: hidden">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="PubNav" active="home" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <section style="position: relative; overflow: hidden; background: linear-gradient(135deg, #32306F 0%, #3157A5 100%); color: #FFFFFF; -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%); mask-image: linear-gradient(180deg, #000 82%, transparent 100%)">
+    <div aria-hidden="true" style="position: absolute; inset: 0; overflow: hidden; pointer-events: none">
+      <div class="blob b-a" style="position: absolute; left: 58%; top: -18%; width: 720px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(163,214,230,.55), transparent 65%); filter: blur(40px)"></div>
+      <div class="blob b-b" style="position: absolute; left: -12%; top: 45%; width: 640px; height: 560px; border-radius: 50%; background: radial-gradient(circle, rgba(212,255,58,.28), transparent 65%); filter: blur(50px)"></div>
+      <div class="blob b-c" style="position: absolute; left: 30%; top: 20%; width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(110,90,230,.45), transparent 65%); filter: blur(60px)"></div>
+      <div class="gridmove" style="position: absolute; inset: -60px; background-image: radial-gradient(rgba(255,255,255,.22) 1.2px, transparent 1.6px); background-size: 30px 30px; -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 20%, transparent 75%); mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 20%, transparent 75%)"></div>
+      <div class="ring" style="position: absolute; right: -180px; top: -200px; width: 640px; height: 640px; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0deg, rgba(212,255,58,.35) 40deg, transparent 90deg, rgba(163,214,230,.35) 200deg, transparent 260deg); -webkit-mask-image: radial-gradient(circle, transparent 62%, #000 63%, #000 64%, transparent 65%); mask-image: radial-gradient(circle, transparent 62%, #000 63%, #000 64%, transparent 65%)"></div>
+      <div class="ring ring2" style="position: absolute; left: -260px; bottom: -320px; width: 760px; height: 760px; border-radius: 50%; background: conic-gradient(from 90deg, transparent 0deg, rgba(255,255,255,.28) 60deg, transparent 120deg); -webkit-mask-image: radial-gradient(circle, transparent 66%, #000 67%, #000 67.6%, transparent 68.5%); mask-image: radial-gradient(circle, transparent 66%, #000 67%, #000 67.6%, transparent 68.5%)"></div>
+      <sc-for list="{{sparks}}" as="p" hint-placeholder-count="16">
+        <span class="spark" style="position: absolute; left: {{p.x}}%; top: {{p.y}}%; width: {{p.s}}px; height: {{p.s}}px; border-radius: 50%; background: {{p.c}}; box-shadow: 0 0 12px {{p.c}}; animation-duration: {{p.d}}s; animation-delay: {{p.delay}}s"></span>
+      </sc-for>
+      <span class="plus" style="position: absolute; left: 47%; top: 14%; color: #D4FF3A; font-size: 22px; font-weight: 900">+</span>
+      <span class="plus p2" style="position: absolute; left: 6%; top: 22%; color: #A3D6E6; font-size: 18px; font-weight: 900">✦</span>
+      <span class="plus p3" style="position: absolute; left: 44%; top: 78%; color: #FFFFFF; font-size: 16px; font-weight: 900">✦</span>
+    </div>
+    <div style="position: relative; max-width: 1360px; margin: 0 auto; padding: 64px 24px 72px; display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
+      <div style="flex: 1 1 520px; min-width: 0">
+        <span style="display: inline-block; font-size: 12.5px; font-weight: 800; letter-spacing: .12em; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25)">IPB LEAP · LEADERSHIP ACCELERATION PROGRAM</span>
+        <h1 class="rise hero-h1" style="margin: 24px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 80px; line-height: .94; letter-spacing: -.025em">Pemimpin Melahirkan Pemimpin.</h1>
+        <span class="floaty rise d1" style="display: inline-block; margin-top: 22px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 26px; color: #0D0D1A; background: #D4FF3A; padding: 8px 20px; border-radius: 999px">Make Your Leap</span>
+        <p class="rise d2" style="margin: 26px 0 0; font-size: 18px; line-height: 1.65; color: rgba(255,255,255,.88); max-width: 560px">Talenta muda IPB tidak kekurangan materi. Mereka butuh akselerasi: arah yang jelas, orang yang sudah lebih dulu sampai, akses, dan pengalaman nyata.</p>
+        <div class="rise d3" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px">
+          <a class="btn" href="PubEvent.dc.html" style="height: 54px; padding: 0 24px; border-radius: 18px; background: #FFFFFF; color: #32306F; font-weight: 800; font-size: 16px; text-decoration: none; display: flex; align-items: center">Lihat event terbuka</a>
+          <a class="btn" href="PubTentang.dc.html" style="height: 54px; padding: 0 22px; border-radius: 18px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center">Kenali programnya</a>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 560px; min-width: 0; display: flex; justify-content: center">
+        <div class="stagewrap" style="position: relative; width: 600px; height: 640px; flex: none">
+        <div class="stage" role="img" aria-label="Kolase foto kegiatan IPB LEAP yang berganti otomatis" style="position: relative; width: 600px; height: 640px; flex: none; border-radius: 36px; background: transparent; overflow: hidden">
+          <sc-for list="{{cards}}" as="c" hint-placeholder-count="9">
+            <div class="card" style="position: absolute; left: {{c.x}}px; top: {{c.y}}px; width: {{c.w}}px; height: {{c.h}}px; z-index: {{c.z}}; animation: {{c.drift}} {{c.float}}s ease-in-out infinite; animation-delay: {{c.delay}}s">
+              <div style="position: relative; width: 100%; height: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -18px rgba(0,0,0,.85); border: 1px solid rgba(255,255,255,.12); background: #15143A">
+                <div class="{{c.anim}}" style="position: absolute; inset: 0">
+                  <sc-if value="{{c.hasSrc}}" hint-placeholder-val="{{ false }}">
+                    <img src="{{c.src}}" alt="{{c.label}}" style="width: 100%; height: 100%; object-fit: cover">
+                  </sc-if>
+                  <sc-if value="{{c.noSrc}}" hint-placeholder-val="{{ true }}">
+                    <div style="width: 100%; height: 100%; background: {{c.bg}}"></div>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+
+        </div>
+          <div role="list" aria-label="IPB LEAP dalam angka">
+            <sc-for list="{{statsFloat}}" as="s" hint-placeholder-count="2">
+              <div role="listitem" class="statpop {{s.d}}" style="position: absolute; left: {{s.x}}px; top: {{s.y}}px; z-index: 60; --r: {{s.r}}deg; pointer-events: none">
+                <div class="statfloat" style="display: flex; flex-direction: column; align-items: {{s.align}}; animation-duration: {{s.dur}}s; animation-delay: {{s.shift}}s">
+                  <span class="gtext" style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: {{s.fs}}px; line-height: .85; letter-spacing: -.035em; animation-delay: {{s.shift}}s; filter: drop-shadow(0 8px 22px rgba(14,13,43,.55))">{{s.value}}</span>
+                  <span style="margin-top: 6px; padding: 5px 11px; border-radius: 999px; background: rgba(14,13,43,.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 12.5px; font-weight: 800; letter-spacing: .02em; color: #FFFFFF; white-space: nowrap">{{s.label}}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="height: 40px"></div>
+  </section>
+
+  <div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 820px; bottom: 0; pointer-events: none; overflow: hidden">
+    <div class="blob b-b" style="position: absolute; left: -10%; top: 4%; width: 760px; height: 640px; border-radius: 50%; background: radial-gradient(circle, rgba(49,87,165,.7), transparent 65%); filter: blur(60px)"></div>
+    <div class="blob b-a" style="position: absolute; right: -8%; top: 22%; width: 700px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(163,214,230,.32), transparent 65%); filter: blur(60px)"></div>
+    <div class="blob b-c" style="position: absolute; left: 25%; top: 48%; width: 680px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(110,90,230,.42), transparent 65%); filter: blur(70px)"></div>
+    <div class="blob b-b" style="position: absolute; right: 10%; top: 72%; width: 560px; height: 480px; border-radius: 50%; background: radial-gradient(circle, rgba(212,255,58,.16), transparent 65%); filter: blur(60px); animation-delay: -8s"></div>
+    <div class="gridmove" style="position: absolute; inset: -60px; background-image: radial-gradient(rgba(255,255,255,.12) 1.2px, transparent 1.6px); background-size: 34px 34px; -webkit-mask-image: linear-gradient(180deg, transparent, #000 20%, #000 70%, transparent); mask-image: linear-gradient(180deg, transparent, #000 20%, #000 70%, transparent)"></div>
+    <div class="ring" style="position: absolute; left: -300px; top: 30%; width: 820px; height: 820px; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0deg, rgba(212,255,58,.3) 40deg, transparent 100deg, rgba(163,214,230,.3) 220deg, transparent 280deg); -webkit-mask-image: radial-gradient(circle, transparent 66%, #000 67%, #000 67.5%, transparent 68.5%); mask-image: radial-gradient(circle, transparent 66%, #000 67%, #000 67.5%, transparent 68.5%)"></div>
+  </div>
+  <main style="position: relative; max-width: 1360px; margin: 0 auto; padding: 8px 24px 96px; color: #FFFFFF; display: flex; flex-direction: column; gap: 72px">
+    <section aria-labelledby="kp-h">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 34px">
+        <div>
+          <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .1em; color: #D4FF3A">KATA PENGANTAR</span>
+          <h2 id="kp-h" style="margin: 10px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; letter-spacing: -.02em; color: #FFFFFF">Pesan untuk para Leapers.</h2>
+        </div>
+        
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px 32px">
+        <sc-for list="{{welcomes}}" as="w" hint-placeholder-count="3">
+          <article class="rise {{w.d}}" style="display: flex; flex-direction: column; gap: 18px">
+            <div class="kpframe" style="position: relative; aspect-ratio: 4 / 5; border-radius: 30px; padding: 3px; background: {{w.ring}}; background-size: 200% 200%; transform: rotate({{w.r}}deg)">
+              <div style="position: relative; width: 100%; height: 100%; border-radius: 27px; overflow: hidden; background: linear-gradient(160deg, rgba(255,255,255,.1), rgba(255,255,255,.03)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: rgba(255,255,255,.55)">
+                <svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path></svg>
+                <span style="font-size: 12.5px; font-weight: 700">Foto belum ada</span>
+              </div>
+              <span style="position: absolute; left: 18px; bottom: -14px; padding: 7px 14px; border-radius: 999px; background: {{w.tagBg}}; color: {{w.tagInk}}; font-size: 11.5px; font-weight: 800; letter-spacing: .08em; box-shadow: 0 10px 24px -10px rgba(0,0,0,.6)">{{w.role}}</span>
+            </div>
+            <div style="padding-top: 8px">
+              <strong style="display: block; font-size: 21px; color: rgba(255,255,255,.45)">Nama belum diisi</strong>
+              <span style="font-size: 13.5px; color: rgba(255,255,255,.68)">{{w.org}}</span>
+              <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.65; font-style: italic; color: rgba(255,255,255,.55)">"Kutipan sambutan belum tersedia."</p>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+
+    <section aria-labelledby="dash-h">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 26px">
+        <div>
+          <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .1em; color: #D4FF3A">DASHBOARD PUBLIK</span>
+          <h2 id="dash-h" style="margin: 10px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; letter-spacing: -.02em; color: #FFFFFF">Lagi ada apa di IPB LEAP?</h2>
+        </div>
+        <span style="display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); font-size: 13px; font-weight: 700; color: #FFFFFF"><span class="pulse" aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: #2FBF71"></span>Diperbarui {{today}}</span>
+      </div>
+
+      <div class="bento">
+        <article class="rise b7 r2" style="border-radius: 32px; padding: 4px 0; background: transparent; display: flex; flex-direction: column; gap: 20px">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
+            <h3 style="margin: 0; font-size: 20px; font-weight: 800">Event terdekat</h3>
+            <a href="PubEvent.dc.html" style="font-size: 14px; font-weight: 800; color: #D4FF3A; text-decoration: none">Semua event →</a>
+          </div>
+          <sc-if value="{{hasNext}}" hint-placeholder-val="{{ true }}">
+            <a class="lift" href="PubEvent.dc.html" style="position: relative; overflow: hidden; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 18px; padding: 26px; border-radius: 26px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; text-decoration: none">
+              <span aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(320px 200px at 100% 0%, rgba(212,255,58,.28), transparent 70%)"></span>
+              <span style="position: relative; display: flex; flex-direction: column; gap: 8px; min-width: 0">
+                <span style="display: flex; flex-wrap: wrap; gap: 6px"><span style="padding: 4px 10px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; font-size: 12px; font-weight: 800">{{next.status}}</span><span style="padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 12px; font-weight: 700">{{next.mode}}</span><span style="padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 12px; font-weight: 700">{{next.org}}</span></span>
+                <strong style="font-size: 28px; line-height: 1.1; letter-spacing: -.01em">{{next.title}}</strong>
+                <span style="font-size: 14px; color: rgba(255,255,255,.82)">{{next.when}} · {{next.place}}</span>
+                <span style="font-size: 13px; font-weight: 700; color: #D4FF3A">Daftar sampai {{next.close}}</span>
+              </span>
+              <span style="position: relative; text-align: right">
+                <span class="gtext" style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 72px; line-height: .9">{{next.left}}</span>
+                <span style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,.8)">{{next.leftLabel}}</span>
+              </span>
+            </a>
+          </sc-if>
+          <div role="list" style="display: flex; flex-direction: column; gap: 10px">
+            <sc-for list="{{upcoming}}" as="e" hint-placeholder-count="3">
+              <a role="listitem" class="row" href="PubEvent.dc.html" style="display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,.07); color: #FFFFFF; text-decoration: none">
+                <span style="width: 58px; height: 58px; flex: none; border-radius: 16px; background: {{e.bg}}; color: {{e.ink}}; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1"><strong style="font-size: 22px">{{e.day}}</strong><span style="font-size: 11px; font-weight: 800; letter-spacing: .06em">{{e.mon}}</span></span>
+                <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-size: 15.5px">{{e.title}}</strong><span style="font-size: 13px; color: rgba(255,255,255,.68)">{{e.org}} · {{e.time}} · {{e.mode}}</span></span>
+                <span style="flex: none; padding: 5px 10px; border-radius: 999px; background: rgba(212,255,58,.16); border: 1px solid rgba(212,255,58,.35); font-size: 12px; font-weight: 800; color: #D4FF3A">{{e.left}}</span>
+              </a>
+            </sc-for>
+          </div>
+        </article>
+
+        <article class="rise d1 b5" style="border-radius: 32px; padding: 28px; background: linear-gradient(160deg, #0E0D2B 0%, #1C1B52 60%, #24306F 100%); box-shadow: 0 30px 60px -30px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08); color: #FFFFFF; display: flex; flex-direction: column; gap: 16px; position: relative; overflow: hidden">
+                    <span aria-hidden="true" class="blob b-a" style="position: absolute; right: -120px; top: -140px; width: 340px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(212,255,58,.28), transparent 65%); filter: blur(30px)"></span>
+          <span aria-hidden="true" class="blob b-c" style="position: absolute; left: -120px; bottom: -160px; width: 360px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(49,87,165,.7), transparent 65%); filter: blur(30px)"></span>
+          <h3 style="position: relative; margin: 0; font-size: 20px; font-weight: 800">Kabar terbaru</h3>
+          <div role="list" style="position: relative; display: flex; flex-direction: column">
+            <sc-for list="{{news}}" as="n" hint-placeholder-count="4">
+              <a role="listitem" class="newsrow" href="{{n.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; color: #FFFFFF; text-decoration: none">
+                <span style="flex: none; padding: 4px 9px; border-radius: 8px; background: {{n.tagBg}}; color: {{n.tagInk}}; font-size: 11.5px; font-weight: 800">{{n.tag}}</span>
+                <span style="flex: 1; font-size: 15px; font-weight: 600; line-height: 1.45">{{n.title}}</span>
+                <span aria-hidden="true" style="flex: none; color: #D4FF3A; font-weight: 800">→</span>
+              </a>
+            </sc-for>
+          </div>
+        </article>
+
+        <article class="rise d2 b5" style="border-radius: 32px; padding: 4px 0; background: transparent; display: flex; flex-direction: column; gap: 16px">
+          <h3 style="margin: 0; font-size: 20px; font-weight: 800">Kenalan sama komunitasnya</h3>
+          <sc-for list="{{people}}" as="g" hint-placeholder-count="3">
+            <a class="row" href="{{g.href}}" style="display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,.07); color: #FFFFFF; text-decoration: none">
+              <span style="display: flex; flex: none">
+                <sc-for list="{{g.faces}}" as="f" hint-placeholder-count="4">
+                  <span class="face" style="width: 44px; height: 44px; margin-right: -12px; border-radius: 50%; border: 3px solid #23306F; background: {{f}}; animation-delay: {{g.delay}}s"></span>
+                </sc-for>
+              </span>
+              <span style="flex: 1; min-width: 0; padding-left: 14px; display: flex; flex-direction: column; gap: 2px"><strong style="font-size: 15.5px">{{g.role}}</strong><span style="font-size: 12.5px; color: rgba(255,255,255,.68)">{{g.desc}}</span></span>
+              <span style="flex: none; padding: 5px 10px; border-radius: 999px; background: {{g.tagBg}}; color: {{g.tagInk}}; font-size: 12px; font-weight: 800">Lihat →</span>
+            </a>
+          </sc-for>
+          <span style="font-size: 12.5px; color: rgba(255,255,255,.55)">Foto dan profil segera diunggah.</span>
+        </article>
+
+        <sc-for list="{{teasers}}" as="t" hint-placeholder-count="3">
+          <a class="rise nudge b6 {{t.d}}" href="{{t.href}}" style="border-radius: 32px; padding: 4px 0; background: transparent; color: #FFFFFF; text-decoration: none; display: flex; flex-direction: column; gap: 12px; min-height: 190px">
+            <span style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; font-weight: 800; letter-spacing: .1em; color: #A3D6E6">{{t.kicker}}</span><span style="font-size: 14px; font-weight: 800; color: #D4FF3A">→</span></span>
+            <strong style="font-size: 20px; color: #FFFFFF">{{t.title}}</strong>
+            <span style="display: flex; gap: 8px; margin-top: auto">
+              <sc-for list="{{t.dots}}" as="x" hint-placeholder-count="3">
+                <span style="flex: 1; height: 56px; border-radius: 14px; border: 1.5px dashed rgba(255,255,255,.25); background: rgba(255,255,255,.04)"></span>
+              </sc-for>
+            </span>
+            <span style="font-size: 13px; color: rgba(255,255,255,.55)">{{t.note}}</span>
+          </a>
+        </sc-for>
+
+        <a class="rise nudge b12" href="PubKegiatan.dc.html" style="border-radius: 32px; padding: 4px 0; background: transparent; color: #FFFFFF; text-decoration: none; display: flex; flex-direction: column; gap: 16px">
+          <span style="display: flex; justify-content: space-between; align-items: center"><strong style="font-size: 20px">Dokumentasi kegiatan</strong><span style="font-size: 14px; font-weight: 800; color: #D4FF3A">Lihat galeri →</span></span>
+          <span class="gal" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: 84px; gap: 10px">
+            <sc-for list="{{gallery}}" as="g" hint-placeholder-count="9">
+              <span class="gtile" style="position: relative; overflow: hidden; border-radius: 18px; background: #15143A; grid-column: {{g.c}}; grid-row: {{g.r}}">
+                <span class="{{g.anim}}" style="position: absolute; inset: 0; display: block; background: {{g.bg}}"></span>
+              </span>
+            </sc-for>
+          </span>
+          <span style="font-size: 13px; color: rgba(255,255,255,.55)">Foto kegiatan offline menyusul.</span>
+        </a>
+      </div>
+    </section>
+
+    <section style="border-radius: 36px; padding: 44px; background: linear-gradient(135deg,rgba(50,48,111,.85),rgba(49,87,165,.85)); border: 1px solid rgba(255,255,255,.18); color: #FFFFFF; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 24px; position: relative; overflow: hidden">
+      <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(420px 260px at 100% 0%, rgba(212,255,58,.2), transparent 70%)"></div>
+      <div style="position: relative">
+        <h2 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 44px; line-height: 1; letter-spacing: -.02em">Siap make your leap?</h2>
+        <p style="margin: 12px 0 0; font-size: 16px; color: rgba(255,255,255,.85)">Ikuti event terbuka atau hubungi tim IPB LEAP.</p>
+      </div>
+      <div style="position: relative; display: flex; flex-wrap: wrap; gap: 10px">
+        <a class="btn" href="PubEvent.dc.html" style="height: 52px; padding: 0 22px; border-radius: 16px; background: #D4FF3A; color: #0D0D1A; font-weight: 800; text-decoration: none; display: flex; align-items: center">Lihat event</a>
+        <a class="btn" href="PubKontak.dc.html" style="height: 52px; padding: 0 22px; border-radius: 16px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); color: #FFFFFF; font-weight: 700; text-decoration: none; display: flex; align-items: center">Hubungi kami</a>
+      </div>
+    </section>
+  </main>
+
+  <dc-import name="PubFooter" hint-size="100%,420px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4200}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.slots = [
+      { x: 170, y: 140, w: 260, h: 360, z: 10, float: 6, ms: 3000, fs: 30 },
+      { x: 120, y: 40, w: 200, h: 150, z: 3, float: 7, ms: 2600, fs: 18 },
+      { x: 360, y: 72, w: 120, h: 120, z: 2, float: 5.5, ms: 3400, fs: 14 },
+      { x: 70, y: 110, w: 130, h: 170, z: 4, float: 6.5, ms: 2800, fs: 15 },
+      { x: 20, y: 262, w: 220, h: 190, z: 6, float: 7.5, ms: 3200, fs: 20 },
+      { x: 382, y: 150, w: 200, h: 240, z: 7, float: 6.2, ms: 3600, fs: 20 },
+      { x: 150, y: 440, w: 210, h: 120, z: 5, float: 5.8, ms: 2400, fs: 18 },
+      { x: 400, y: 384, w: 140, h: 110, z: 8, float: 6.8, ms: 3800, fs: 14 },
+      { x: -14, y: 300, w: 70, h: 150, z: 1, float: 7.2, ms: 2900, fs: 11 }
+    ];
+    this.state = { idx: this.slots.map((s, i) => i), flip: this.slots.map(() => false), shown: 0, cnt: 0, shift: 0 };
+    this.gSlots = [
+      { c: '1 / 5', r: '1 / 4', ms: 2700 }, { c: '5 / 8', r: '1 / 3', ms: 3300 }, { c: '8 / 10', r: '1 / 2', ms: 2400 },
+      { c: '10 / 13', r: '1 / 3', ms: 3600 }, { c: '8 / 10', r: '2 / 4', ms: 2900 }, { c: '5 / 8', r: '3 / 5', ms: 3100 },
+      { c: '10 / 13', r: '3 / 5', ms: 3800 }, { c: '1 / 5', r: '4 / 5', ms: 2200 }, { c: '8 / 10', r: '4 / 5', ms: 3400 }
+    ];
+    this.state.gIdx = this.gSlots.map((g, i) => (i * 4 + 3) % 12);
+    this.state.gFlip = this.gSlots.map(() => false);
+    const sc = ['#D4FF3A', '#A3D6E6', '#FFFFFF'];
+    this.sparks = Array.from({ length: 16 }, (_, i) => ({ x: ((i * 37) % 97) + 1, y: ((i * 53) % 85) + 10, s: 2 + (i % 4), c: sc[i % 3], d: (5 + (i % 5) * 1.3).toFixed(1), delay: (-(i * 0.7)).toFixed(1) }));
+  }
+  componentDidMount() {
+    let reduce = false;
+    try { reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    if (reduce) { this.setState({ cnt: 1 }); return; }
+    const t0 = Date.now();
+    const tick = () => {
+      const p = Math.min(1, (Date.now() - t0) / 1800);
+      this.setState({ cnt: 1 - Math.pow(1 - p, 3) });
+      if (p < 1) this.raf = requestAnimationFrame(tick);
+    };
+    this.raf = requestAnimationFrame(tick);
+    this.timers = this.slots.map((s, i) => setInterval(() => {
+      this.setState((st) => {
+        const idx = st.idx.slice();
+        const flip = st.flip.slice();
+        idx[i] = (idx[i] + 3 + i) % 12;
+        flip[i] = !flip[i];
+        return { idx: idx, flip: flip, shown: st.shown + 1 };
+      });
+    }, s.ms));
+    this.timers.push(setInterval(() => this.setState((st) => ({ shift: (st.shift + 1) % this.slots.length })), 5200));
+    this.gSlots.forEach((g, i) => this.timers.push(setInterval(() => this.setState((st) => {
+      const gIdx = st.gIdx.slice(); const gFlip = st.gFlip.slice();
+      gIdx[i] = (gIdx[i] + 5 + i) % 12; gFlip[i] = !gFlip[i];
+      return { gIdx: gIdx, gFlip: gFlip };
+    }), g.ms)));
+  }
+  componentWillUnmount() { (this.timers || []).forEach((t) => clearInterval(t)); if (this.raf) cancelAnimationFrame(this.raf); }
+  renderVals() {
+    const photos = [
+      { label: 'Pelantikan', src: '', bg: 'linear-gradient(160deg,#3157A5,#32306F)', ink: '#FFFFFF' },
+      { label: 'Bootcamp', src: '', bg: '#D4FF3A', ink: '#0D0D1A' },
+      { label: 'Sesi Mentoring', src: '', bg: 'linear-gradient(160deg,#A3D6E6,#E4EBF8)', ink: '#0D0D1A' },
+      { label: 'Kunjungan Lapang', src: '', bg: '#E7E6F3', ink: '#32306F' },
+      { label: 'Leadership Camp', src: '', bg: 'linear-gradient(160deg,#2FA3C7,#3157A5)', ink: '#FFFFFF' },
+      { label: 'Graduation', src: '', bg: '#FFFFFF', ink: '#32306F' },
+      { label: 'ToT Asmen', src: '', bg: 'linear-gradient(160deg,#32306F,#0E0D2B)', ink: '#D4FF3A' },
+      { label: 'Diskusi Mentor', src: '', bg: '#C9D6F0', ink: '#0D0D1A' },
+      { label: 'Impact Showcase', src: '', bg: 'linear-gradient(160deg,#D4FF3A,#A3D6E6)', ink: '#0D0D1A' },
+      { label: 'Field Trip', src: '', bg: '#3157A5', ink: '#FFFFFF' },
+      { label: 'Kelas Offline', src: '', bg: 'linear-gradient(160deg,#E4EBF8,#FFFFFF)', ink: '#32306F' },
+      { label: 'Networking', src: '', bg: '#0E0D2B', ink: '#A3D6E6' }
+    ];
+    const st = this.state;
+    const drifts = ['driftA', 'driftB', 'driftC'];
+    const cards = this.slots.map((s0, i) => {
+      const s = this.slots[(i + st.shift) % this.slots.length];
+      const p = photos[st.idx[i] % photos.length];
+      return Object.assign({}, s, {
+        drift: drifts[i % 3], float: s0.float + 1.5,
+        label: p.label, src: p.src, hasSrc: !!p.src, noSrc: !p.src, bg: p.bg, ink: p.ink,
+        anim: st.flip[i] ? 'swapA' : 'swapB',
+        delay: (i * 0.37).toFixed(2)
+      });
+    });
+    const tiles = [
+      { no: '01', label: 'About Us', desc: 'Dari Mentoring Leader menuju akselerasi.', href: 'PubTentang.dc.html', bg: '#FFFFFF', ink: '#0D0D1A' },
+      { no: '03', label: 'Program Framework', desc: 'North star, enam pilar, lima pathway.', href: 'PubTentang.dc.html', bg: '#32306F', ink: '#FFFFFF' },
+      { no: '04', label: 'Our Mentor', desc: 'Alumni IPB lintas generasi dan profesi.', href: 'PubMentor.dc.html', bg: '#FFFFFF', ink: '#0D0D1A' },
+      { no: '05', label: 'Our Asmen', desc: 'Pendamping harian tiap kelompok.', href: 'PubAsmen.dc.html', bg: '#FFFFFF', ink: '#0D0D1A' },
+      { no: '06', label: 'Our Mentee', desc: 'Talenta muda yang sedang melompat.', href: 'PubMentee.dc.html', bg: '#A3D6E6', ink: '#0D0D1A' },
+      { no: '07', label: 'Kegiatan', desc: 'Dokumentasi mentoring offline.', href: 'PubKegiatan.dc.html', bg: '#FFFFFF', ink: '#0D0D1A' },
+      { no: '08', label: 'Leap Showcase', desc: 'Karya, usaha, dan project mentee.', href: 'PubShowcase.dc.html', bg: '#D4FF3A', ink: '#0D0D1A' },
+      { no: '09', label: 'Prestasi', desc: 'Capaian para Leapers.', href: 'PubPrestasi.dc.html', bg: '#FFFFFF', ink: '#0D0D1A' },
+      { no: '10', label: 'Event', desc: 'Event terbuka, daftar tanpa akun.', href: 'PubEvent.dc.html', bg: '#3157A5', ink: '#FFFFFF' },
+      { no: '11', label: 'Kontak', desc: 'Email dan WhatsApp tim IPB LEAP.', href: 'PubKontak.dc.html', bg: '#FFFFFF', ink: '#0D0D1A' }
+    ];
+    const k = st.cnt;
+    const n = (v) => Math.round(v * k);
+    const stats = [
+      { where: 'float', value: String(n(7)), label: 'batch Mentoring Leader', d: 's1', shift: '0', x: -36, y: 196, r: -6, fs: 56, align: 'flex-start', dur: 7 },
+      { where: 'float', value: '±' + n(1400).toLocaleString('id-ID'), label: 'mentee telah dibina', d: 's2', shift: '-1.2', x: 196, y: 548, r: -3, fs: 58, align: 'flex-start', dur: 8.5 },
+      { where: 'float', value: String(n(5)), label: 'pathway akselerasi', d: 's3', shift: '-2.4', x: 452, y: 6, r: 5, fs: 48, align: 'flex-end', dur: 6.5 },
+      { where: 'float', value: String(n(12)), label: 'bulan akselerasi', d: 's4', shift: '-3.6', x: 500, y: 392, r: 4, fs: 52, align: 'flex-end', dur: 9 }
+    ];
+    const DAY = 86400000;
+    const now = new Date();
+    const today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+    const mons = ['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'];
+    const evs = [
+      { title: 'Workshop CV & LinkedIn', org: 'CDA IPB', date: '2026-11-01', time: '13.00–15.00 WIB', when: 'Min, 1 Nov 2026 · 13.00–15.00 WIB', place: 'Gedung CDA IPB + Zoom', mode: 'Hybrid', status: 'Dibuka', close: '30 Okt', bg: '#0E0D2B', ink: '#FFFFFF' },
+      { title: 'Career Day: Agri-Industry', org: 'CDA IPB', date: '2026-11-05', time: '09.00–15.00 WIB', when: 'Kam, 5 Nov 2026 · 09.00–15.00 WIB', place: 'Kampus IPB Dramaga', mode: 'Offline', status: 'Dibuka', close: '3 Nov', bg: '#D4FF3A', ink: '#0D0D1A' },
+      { title: 'Diaspora Talk VIII', org: 'HA IPB', date: '2026-11-09', time: '19.30–21.00 WIB', when: 'Sen, 9 Nov 2026 · 19.30–21.00 WIB', place: 'Zoom', mode: 'Online', status: 'Segera Dibuka', close: '8 Nov', bg: '#A3D6E6', ink: '#0D0D1A' },
+      { title: 'Leadership Camp 2026', org: 'IPB LEAP', date: '2026-11-14', time: '08.00–17.00 WIB', when: '14–16 Nov 2026 · 08.00–17.00 WIB', place: 'Bogor', mode: 'Offline', status: 'Dibuka', close: '2 Nov', bg: '#32306F', ink: '#FFFFFF' }
+    ].map((e) => {
+      const p = e.date.split('-').map(Number);
+      const t = new Date(p[0], p[1] - 1, p[2]).getTime();
+      const d = Math.round((t - today0) / DAY);
+      return Object.assign({}, e, { t: t, dleft: d, day: String(p[2]).padStart(2, '0'), mon: mons[p[1] - 1], left: d === 0 ? 'Hari ini' : 'H-' + d, leftLabel: d === 0 ? 'mulai hari ini' : 'hari lagi' });
+    }).filter((e) => e.dleft >= 0).sort((a, b) => a.t - b.t);
+    const next = evs[0] ? Object.assign({}, evs[0], { left: evs[0].dleft === 0 ? '0' : String(evs[0].dleft) }) : {};
+    const news = [
+      { tag: 'Event', title: 'Pendaftaran Leadership Camp 2026 dibuka sampai 2 November.', href: 'PubEvent.dc.html', tagBg: '#D4FF3A', tagInk: '#0D0D1A' },
+      { tag: 'Event', title: 'Workshop CV & LinkedIn bareng CDA IPB, daftar sebelum 30 Oktober.', href: 'PubEvent.dc.html', tagBg: '#D4FF3A', tagInk: '#0D0D1A' },
+      { tag: 'Program', title: 'Mentoring Leader kini bertransformasi menjadi IPB LEAP.', href: 'PubTentang.dc.html', tagBg: '#A3D6E6', tagInk: '#0D0D1A' },
+      { tag: 'Showcase', title: 'Leap Showcase segera menampilkan karya nyata para mentee.', href: 'PubShowcase.dc.html', tagBg: '#FFFFFF', tagInk: '#32306F' }
+    ];
+    const teasers = [
+      { kicker: 'LEAP SHOWCASE', title: 'Karya mentee', note: 'Belum ada karya yang ditampilkan.', href: 'PubShowcase.dc.html', d: 'd1', dots: [1, 2, 3] },
+      { kicker: 'ACHIEVEMENT', title: 'Prestasi terbaru', note: 'Data prestasi belum diunggah.', href: 'PubPrestasi.dc.html', d: 'd2', dots: [1, 2, 3] }
+    ];
+    const gallery = this.gSlots.map((g, i) => ({ c: g.c, r: g.r, bg: photos[st.gIdx[i] % photos.length].bg, anim: st.gFlip[i] ? 'swapA' : 'swapB' }));
+    return {
+      stats: stats, statsInline: stats.filter((x) => x.where === 'in'), statsFloat: stats.filter((x) => x.where === 'float'), cards: cards, tiles: tiles,
+      today: now.getDate() + ' ' + mons[now.getMonth()].charAt(0) + mons[now.getMonth()].slice(1).toLowerCase() + ' ' + now.getFullYear(),
+      hasNext: !!evs[0], next: next, upcoming: evs.slice(1), news: news,
+      paths: ['Entrepreneur', 'Akademisi & Peneliti', 'Professional & Birokrat', 'Politik', 'Sosial & Komunitas'],
+      teasers: teasers, gallery: gallery,
+      sparks: this.sparks,
+      welcomes: [
+        { role: 'KETUA UMUM', org: 'Dewan Pengurus Pusat Himpunan Alumni IPB', ring: 'linear-gradient(135deg,#D4FF3A,#A3D6E6,#6E5AE6,#D4FF3A)', tagBg: '#D4FF3A', tagInk: '#0D0D1A', r: '-2', d: 'd1' },
+        { role: 'REKTOR', org: 'IPB University', ring: 'linear-gradient(135deg,#A3D6E6,#FFFFFF,#3157A5,#A3D6E6)', tagBg: '#FFFFFF', tagInk: '#32306F', r: '1.5', d: 'd2' },
+        { role: 'SEKRETARIS JENDERAL', org: 'Dewan Pengurus Pusat Himpunan Alumni IPB', ring: 'linear-gradient(135deg,#6E5AE6,#A3D6E6,#D4FF3A,#6E5AE6)', tagBg: '#A3D6E6', tagInk: '#0D0D1A', r: '-1', d: 'd3' }
+      ],
+      people: [
+        { role: 'Mentor', desc: 'Alumni IPB yang sudah lebih dulu sampai', href: 'PubMentor.dc.html', faces: ['linear-gradient(135deg,#32306F,#3157A5)', 'linear-gradient(135deg,#3157A5,#A3D6E6)', 'linear-gradient(135deg,#0E0D2B,#32306F)', 'linear-gradient(135deg,#A3D6E6,#E3F3F8)'], tagBg: '#32306F', tagInk: '#FFFFFF', delay: '0' },
+        { role: 'Asmen', desc: 'Asisten mentor pendamping tiap kelompok', href: 'PubAsmen.dc.html', faces: ['linear-gradient(135deg,#3157A5,#2FA3C7)', 'linear-gradient(135deg,#A3D6E6,#3157A5)', 'linear-gradient(135deg,#32306F,#A3D6E6)', 'linear-gradient(135deg,#2FA3C7,#E3F3F8)'], tagBg: '#A3D6E6', tagInk: '#0D0D1A', delay: '-.6' },
+        { role: 'Mentee', desc: 'Talenta muda IPB yang siap melompat', href: 'PubMentee.dc.html', faces: ['linear-gradient(135deg,#D4FF3A,#A3D6E6)', 'linear-gradient(135deg,#EEFFB8,#D4FF3A)', 'linear-gradient(135deg,#D4FF3A,#3157A5)', 'linear-gradient(135deg,#A3D6E6,#D4FF3A)'], tagBg: '#D4FF3A', tagInk: '#0D0D1A', delay: '-1.2' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

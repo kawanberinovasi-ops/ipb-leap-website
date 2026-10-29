@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event · IPB LEAP</title>
+<meta name="description" content="IPB LEAP (Leadership Acceleration Program) — program akselerasi kepemimpinan Himpunan Alumni IPB. Pemimpin Melahirkan Pemimpin. Make Your Leap.">
+<meta property="og:title" content="Event · IPB LEAP">
+<meta property="og:description" content="IPB LEAP (Leadership Acceleration Program) — program akselerasi kepemimpinan Himpunan Alumni IPB. Pemimpin Melahirkan Pemimpin. Make Your Leap.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/event.html">
+<meta property="og:image" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/assets/logo-color.png">
+<meta name="theme-color" content="#32306F">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+[data-dc-host]{display:contents}
+html{scroll-behavior:smooth}
+
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pop{0%{opacity:0;transform:scale(.96) translateY(10px)}100%{opacity:1;transform:none}}
+@keyframes hop{0%{transform:translateY(0) rotate(0)}35%{transform:translateY(-20px) rotate(-8deg)}70%{transform:translateY(0)}100%{transform:translateY(0)}}
+.rise{animation:rise .55s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.08s}
+.spin{animation:spin 18s linear infinite}
+.pop{animation:pop .3s cubic-bezier(.2,.9,.3,1.2) both}
+.hop{animation:hop .9s cubic-bezier(.3,1.4,.5,1) both}
+.lift{transition:transform .2s, box-shadow .2s}
+.lift:hover{transform:translateY(-5px) rotate(-.3deg);box-shadow:0 26px 50px -28px rgba(50,48,111,.6) !important}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+input:focus,select:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px rgba(49,87,165,.14)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+
+
+body{margin:0}
+
+
+body{margin:0}
+
+</style>
+</head>
+<body>
+<noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat website IPB LEAP.</p></noscript>
+<div id="app" data-page="PubEvent"></div>
+<template data-dc="PubEvent">
+<div style="background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50"><dc-import name="PubNav" active="event" hint-size="100%,73px"></dc-import></div>
+
+  <section style="max-width: 1360px; margin: 0 auto; padding: 72px 24px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
+    <div>
+      <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #3157A5">EVENT</span>
+      <h1 class="rise" style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 64px; line-height: .96; letter-spacing: -.025em; color: #32306F">Terbuka untuk umum.</h1>
+      <p class="rise d1" style="margin: 16px 0 0; font-size: 17px; line-height: 1.65; color: #55577A; max-width: 640px">Event ini sama dengan Upcoming Event di platform. Kamu bisa daftar tanpa akun, cukup isi form singkat.</p>
+    </div>
+    <a href="#masuk" style="font-size: 14px; font-weight: 800">Punya akun? Masuk untuk event khusus peserta →</a>
+  </section>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 16px 24px 96px">
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px">
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
+        <button type="button" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="{{f.style}}">{{f.label}}</button>
+      </sc-for>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px">
+      <sc-for list="{{events}}" as="e" hint-placeholder-count="4">
+        <article class="lift" style="border-radius: 28px; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 16px 36px -28px rgba(50,48,111,.55)">
+          <div style="position: relative; aspect-ratio: 4 / 3; background: {{e.bg}}; color: {{e.ink}}; padding: 20px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden">
+            <div aria-hidden="true" class="spin" style="position: absolute; right: -50px; top: -50px; width: 190px; height: 190px; border-radius: 50%; border: 16px dashed {{e.accent}}; opacity: .55"></div>
+            <span style="position: relative; align-self: flex-start; font-size: 11px; font-weight: 900; letter-spacing: .1em; padding: 5px 9px; border-radius: 7px; background: rgba(255,255,255,.92); color: #0D0D1A">{{e.org}}</span>
+            <span style="position: relative; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 32px; line-height: .92; letter-spacing: -.02em">{{e.title}}</span>
+          </div>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 8px">
+            <div style="display: flex; flex-wrap: wrap; gap: 6px">
+              <span style="font-size: 11.5px; font-weight: 800; padding: 4px 9px; border-radius: 999px; background: {{e.sBg}}; color: {{e.sInk}}">{{e.status}}</span>
+              <span style="font-size: 11.5px; font-weight: 800; padding: 4px 9px; border-radius: 999px; background: #E4EBF8; color: #3157A5">{{e.mode}}</span>
+            </div>
+            <strong style="font-size: 15px">{{e.when}}</strong>
+            <span style="font-size: 13px; color: #55577A">{{e.place}} · daftar sampai {{e.close}}</span>
+            <sc-if value="{{e.canReg}}" hint-placeholder-val="{{ true }}">
+              <button class="btn" type="button" onClick="{{e.open}}" style="margin-top: 6px; height: 46px; border-radius: 14px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer">Daftar sekarang</button>
+            </sc-if>
+            <sc-if value="{{e.external}}" hint-placeholder-val="{{ false }}">
+              <a class="btn" href="#" style="margin-top: 6px; height: 46px; border-radius: 14px; background: #0D0D1A; color: #FFFFFF; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center; justify-content: center">Daftar di situs penyelenggara ↗</a>
+            </sc-if>
+            <sc-if value="{{e.soon}}" hint-placeholder-val="{{ false }}">
+              <span style="margin-top: 6px; height: 46px; border-radius: 14px; background: #F1F2F6; color: #6B6D8C; font-weight: 800; font-size: 13.5px; display: flex; align-items: center; justify-content: center">Pendaftaran dibuka {{e.open1}}</span>
+            </sc-if>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </main>
+  <dc-import name="PubFooter" hint-size="100%,420px"></dc-import>
+
+  <sc-if value="{{regOpen}}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 80; background: rgba(13,13,26,.45); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px">
+      <div class="pop" role="dialog" aria-label="Daftar event" style="width: 100%; max-width: 520px; max-height: 90vh; overflow: auto; padding: 28px; border-radius: 30px; background: #FFFFFF; box-shadow: 0 40px 80px -30px rgba(13,13,26,.6)">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 16px">
+          <div><span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #3157A5">DAFTAR EVENT · TANPA AKUN</span><h2 style="margin: 4px 0 0; font-size: 22px; font-weight: 800; color: #32306F">{{selTitle}}</h2><span style="font-size: 13px; color: #6B6D8C">{{selWhen}}</span></div>
+          <button type="button" onClick="{{closeReg}}" aria-label="Tutup" style="width: 36px; height: 36px; flex: none; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer">×</button>
+        </div>
+        <sc-if value="{{regForm}}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-direction: column; gap: 12px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Nama lengkap<input type="text" style="height: 46px; padding: 0 14px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Email<input type="email" style="height: 46px; padding: 0 14px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">No. WhatsApp<input type="tel" style="height: 46px; padding: 0 14px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+            </div>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Asal kampus / instansi<input type="text" style="height: 46px; padding: 0 14px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+            <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: #55577A; line-height: 1.5"><input type="checkbox" style="margin-top: 3px"> Saya membaca dan menyetujui syarat &amp; ketentuan event.</label>
+            <button class="btn" type="button" onClick="{{submitReg}}" style="height: 52px; border-radius: 16px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Daftar</button>
+            <span style="font-size: 12px; color: #8A8CA8; text-align: center">Konfirmasi dan tiket QR dikirim ke email kamu.</span>
+          </div>
+        </sc-if>
+        <sc-if value="{{regDone}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 20px; background: #EEFFB8">
+            <span class="hop" aria-hidden="true" style="width: 48px; height: 48px; flex: none; border-radius: 16px; background: #D4FF3A; border: 2px solid #0D0D1A; display: flex; align-items: center; justify-content: center; font-weight: 900">✓</span>
+            <span style="font-size: 14px; line-height: 1.5; color: #2B3600"><strong style="display: block; color: #0D0D1A">Kamu terdaftar!</strong>Cek email untuk konfirmasi dan tiket QR.</span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</template>
+<template data-dc="PubNav">
+<header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; background: rgba(255,255,255,.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(50,48,111,.08); box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
+  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px">
+    <a href="index.html" aria-label="Beranda IPB LEAP" style="display: flex; align-items: center; text-decoration: none"><img src="assets/logo-color.png" alt="IPB LEAP" style="height: 40px; width: auto"></a>
+
+    <nav aria-label="Menu utama" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2px">
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="7">
+        <div style="position: relative">
+          <sc-if value="{{it.isLink}}" hint-placeholder-val="{{ true }}">
+            <a href="{{it.href}}" aria-current="{{it.current}}" style="{{it.style}}">{{it.label}}</a>
+          </sc-if>
+          <sc-if value="{{it.hasChildren}}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{it.toggle}}" aria-expanded="{{it.expanded}}" style="{{it.style}}">{{it.label}}
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <sc-if value="{{it.open}}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 290px; padding: 8px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2; box-shadow: 0 24px 60px -24px rgba(50,48,111,.45); z-index: 60; display: flex; flex-direction: column; gap: 2px">
+                <sc-for list="{{it.children}}" as="ch" hint-placeholder-count="3">
+                  <a href="{{ch.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; text-decoration: none; color: #0D0D1A">
+                    <span style="width: 34px; height: 34px; flex: none; border-radius: 11px; background: {{ch.tint}}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #32306F">{{ch.short}}</span>
+                    <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{ch.label}}</span><span style="font-size: 12.5px; color: #6B6D8C; line-height: 1.4">{{ch.desc}}</span></span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="display: flex; gap: 8px">
+      <a href="#masuk" style="height: 42px; padding: 0 16px; border-radius: 13px; border: 1px solid #D5DAEA; background: #FFFFFF; color: #0D0D1A; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center">Masuk</a>
+      <a href="event.html" style="height: 42px; padding: 0 16px; border-radius: 13px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center">Ikut Event</a>
+    </div>
+  </div>
+</header>
+</template>
+<template data-dc="PubFooter">
+<footer style="font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: #0E0D2B; color: rgba(255,255,255,.8); position: relative; overflow: hidden">
+  <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(520px 300px at 100% 0%, rgba(49,87,165,.45), transparent 70%), radial-gradient(420px 260px at 0% 100%, rgba(212,255,58,.12), transparent 70%); pointer-events: none"></div>
+  <div style="position: relative; max-width: 1360px; margin: 0 auto; padding: 40px 24px 0">
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; padding: 24px 28px; border-radius: 28px; background: linear-gradient(135deg, #32306F, #3157A5); border: 1px solid rgba(255,255,255,.14)">
+      <div><strong style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 26px; color: #FFFFFF">Ada pertanyaan soal IPB LEAP?</strong><span style="font-size: 14px; color: rgba(255,255,255,.8)">Pendaftaran, kolaborasi, sponsorship, atau ingin jadi mentor.</span></div>
+      <div style="display: flex; flex-wrap: wrap; gap: 10px">
+        <a href="https://wa.me/6285559070165" style="height: 46px; padding: 0 18px; border-radius: 14px; background: #D4FF3A; color: #0D0D1A; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center">Chat WhatsApp</a>
+        <a href="kontak.html" style="height: 46px; padding: 0 18px; border-radius: 14px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); color: #FFFFFF; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center">Kirim pesan</a>
+      </div>
+    </div>
+  </div>
+  <div style="position: relative; max-width: 1360px; margin: 0 auto; padding: 44px 24px 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 36px">
+    <div style="flex: 1 1 340px; max-width: 420px; display: flex; flex-direction: column; gap: 12px">
+      <img src="assets/logo-white.png" alt="IPB LEAP" style="height: 52px; width: auto; align-self: flex-start">
+      <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 22px; color: #FFFFFF">Pemimpin Melahirkan Pemimpin.</span>
+      <p style="margin: 0; font-size: 14px; line-height: 1.65">IPB LEAP (Leadership Acceleration Program), sebelumnya Mentoring Leader, adalah program akselerasi kepemimpinan Himpunan Alumni IPB yang mempertemukan talenta muda IPB dengan alumni yang sudah lebih dulu sampai.</p>
+      <span style="align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 14px">Make Your Leap</span>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; font-size: 14px">
+      <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Tentang</strong><a href="tentang.html" style="color: rgba(255,255,255,.72); text-decoration: none">About Us</a><a href="tentang.html#framework" style="color: rgba(255,255,255,.72); text-decoration: none">Program Framework</a></div>
+      <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Komunitas</strong><a href="mentor.html" style="color: rgba(255,255,255,.72); text-decoration: none">Our Mentor</a><a href="asmen.html" style="color: rgba(255,255,255,.72); text-decoration: none">Our Asmen</a><a href="mentee.html" style="color: rgba(255,255,255,.72); text-decoration: none">Our Mentee</a></div>
+      <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Program</strong><a href="kegiatan.html" style="color: rgba(255,255,255,.72); text-decoration: none">Kegiatan</a><a href="showcase.html" style="color: rgba(255,255,255,.72); text-decoration: none">Leap Showcase</a><a href="prestasi.html" style="color: rgba(255,255,255,.72); text-decoration: none">Prestasi</a><a href="event.html" style="color: rgba(255,255,255,.72); text-decoration: none">Event</a><a href="#masuk" style="color: rgba(255,255,255,.72); text-decoration: none">Masuk platform</a></div>
+      <div style="display: flex; flex-direction: column; gap: 10px; max-width: 280px"><strong style="color: #FFFFFF">Kontak</strong>
+        <a href="mailto:mentoringleaderhaipb@gmail.com" style="color: rgba(255,255,255,.72); text-decoration: none; display: flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A3D6E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="m3 7 9 6 9-6"></path></svg>mentoringleaderhaipb@gmail.com</a>
+        <a href="https://wa.me/6285559070165" style="color: rgba(255,255,255,.72); text-decoration: none; display: flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4FF3A" stroke-width="2" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>0855-5907-0165 (M. Fauzan Ramdani)</a>
+        <a href="https://ipbleap.com" style="color: rgba(255,255,255,.72); text-decoration: none; display: flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A3D6E6" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"></path></svg>ipbleap.com</a>
+      </div>
+    </div>
+  </div>
+  <div style="position: relative; max-width: 1360px; margin: 0 auto; padding: 18px 24px 28px; border-top: 1px solid rgba(255,255,255,.1); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 24px; font-size: 13px">
+    <span style="font-weight: 700">© 2026 IPB LEAP · Leadership Acceleration Program. Hak cipta dilindungi.</span>
+    <span style="display: flex; flex-wrap: wrap; gap: 6px 18px"><span>Program Himpunan Alumni IPB</span><span>Website dikembangkan oleh <strong style="color: #FFFFFF">{{dev}}</strong></span></span>
+  </div>
+</footer>
+</template>
+<script type="text/x-dc" data-dc="PubEvent" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { filter: 'semua', reg: null, regDone: false };
+  }
+  renderVals() {
+    const st = this.state;
+    const S = { 'Dibuka': ['#DCFCE7', '#166534'], 'Segera Dibuka': ['#FEF3C7', '#92400E'] };
+    const defs = [
+      { id: 'v1', key: 'leap', org: 'IPB LEAP', title: 'Leadership Camp 2026', when: '14–16 Nov 2026 · 08.00–17.00 WIB', place: 'Bogor', mode: 'Offline', status: 'Dibuka', close: '2 Nov', reg: 'platform', bg: 'linear-gradient(150deg,#32306F,#3157A5)', ink: '#FFFFFF', accent: '#D4FF3A' },
+      { id: 'v2', key: 'cda', org: 'CDA IPB', title: 'Career Day: Agri-Industry', when: 'Kam, 5 Nov 2026 · 09.00–15.00 WIB', place: 'Kampus IPB Dramaga', mode: 'Offline', status: 'Dibuka', close: '3 Nov', reg: 'external', bg: '#D4FF3A', ink: '#0D0D1A', accent: '#3157A5' },
+      { id: 'v3', key: 'ha', org: 'HA IPB', title: 'Diaspora Talk VIII', when: 'Sen, 9 Nov 2026 · 19.30–21.00 WIB', place: 'Zoom', mode: 'Online', status: 'Segera Dibuka', close: '8 Nov', open1: '20 Okt', reg: 'external', bg: 'linear-gradient(160deg,#A3D6E6,#E3F3F8)', ink: '#0D0D1A', accent: '#32306F' },
+      { id: 'v4', key: 'cda', org: 'CDA IPB', title: 'Workshop CV & LinkedIn', when: 'Min, 1 Nov 2026 · 13.00–15.00 WIB', place: 'Gedung CDA IPB + Zoom', mode: 'Hybrid', status: 'Dibuka', close: '30 Okt', reg: 'platform', bg: '#0E0D2B', ink: '#FFFFFF', accent: '#2FA3C7' }
+    ];
+    const fd = [['semua', 'Semua'], ['leap', 'IPB LEAP'], ['ha', 'HA IPB'], ['cda', 'CDA IPB']];
+    const filters = fd.map((f) => ({
+      label: f[1], pressed: st.filter === f[0] ? 'true' : 'false',
+      style: 'height: 40px; padding: 0 16px; border-radius: 999px; font: inherit; font-size: 14px; cursor: pointer; ' + (st.filter === f[0] ? 'background: #32306F; color: #FFFFFF; border: 1.5px solid #32306F; font-weight: 800' : 'background: #FFFFFF; color: #33355A; border: 1.5px solid #E3E7F2; font-weight: 700'),
+      pick: () => this.setState({ filter: f[0] })
+    }));
+    const events = defs.filter((e) => st.filter === 'semua' || e.key === st.filter).map((e) => Object.assign({}, e, {
+      sBg: S[e.status][0], sInk: S[e.status][1],
+      canReg: e.status === 'Dibuka' && e.reg === 'platform',
+      external: e.status === 'Dibuka' && e.reg === 'external',
+      soon: e.status !== 'Dibuka',
+      open: () => this.setState({ reg: e.id, regDone: false })
+    }));
+    const sel = defs.find((e) => e.id === st.reg);
+    return {
+      filters: filters, events: events,
+      regOpen: !!sel, regForm: !!sel && !st.regDone, regDone: st.regDone,
+      selTitle: sel ? sel.title : '', selWhen: sel ? sel.when : '',
+      closeReg: () => this.setState({ reg: null, regDone: false }),
+      submitReg: () => this.setState({ regDone: true })
+    };
+  }
+}
+</script>
+<script type="text/x-dc" data-dc="PubNav" data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: null };
+  }
+  renderVals() {
+    const active = this.props.active ?? 'home';
+    const defs = [
+      { key: 'home', label: 'Beranda', href: 'index.html' },
+      { key: 'tentang', label: 'Tentang', href: 'tentang.html' },
+      { key: 'komunitas', label: 'Komunitas', children: [
+        { label: 'Our Mentor', desc: 'Alumni IPB lintas profesi', href: 'mentor.html', short: 'MT', tint: '#E7E6F3' },
+        { label: 'Our Asmen', desc: 'Associate Mentor tiap kelompok', href: 'asmen.html', short: 'AS', tint: '#E4EBF8' },
+        { label: 'Our Mentee', desc: 'Talenta muda di lima pathway', href: 'mentee.html', short: 'MN', tint: '#E3F3F8' }
+      ] },
+      { key: 'kegiatan', label: 'Kegiatan', href: 'kegiatan.html' },
+      { key: 'showcase', label: 'Leap Showcase', href: 'showcase.html' },
+      { key: 'prestasi', label: 'Prestasi', href: 'prestasi.html' },
+      { key: 'event', label: 'Event', href: 'event.html' },
+      { key: 'kontak', label: 'Kontak', href: 'kontak.html' }
+    ];
+    const items = defs.map((m) => {
+      const on = m.key === active;
+      const open = this.state.open === m.key;
+      return Object.assign({}, m, {
+        isLink: !m.children, hasChildren: !!m.children, open: open,
+        expanded: open ? 'true' : 'false', current: on ? 'page' : 'false',
+        style: 'display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 13px; border-radius: 12px; border: 0; font: inherit; font-size: 14px; cursor: pointer; text-decoration: none; ' + (on ? 'background: #32306F; color: #FFFFFF; font-weight: 700' : 'background: transparent; color: #33355A; font-weight: 600'),
+        toggle: () => this.setState({ open: open ? null : m.key })
+      });
+    });
+    return { items: items };
+  }
+}
+</script>
+<script type="text/x-dc" data-dc="PubFooter" data-props='{}'>
+class Component extends DCLogic {
+  renderVals() { return { dev: (this.props && this.props.dev) || 'Tim IPB LEAP' }; }
+}
+</script>
+<script src="assets/leap-runtime.js"></script>
+</body>
+</html>

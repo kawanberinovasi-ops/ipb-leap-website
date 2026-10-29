@@ -1,0 +1,30 @@
+{
+  "site": {
+    "url": "https://kawanberinovasi-ops.github.io/ipb-leap-website/",
+    "cname": "",
+    "description": "IPB LEAP (Leadership Acceleration Program) — program akselerasi kepemimpinan Himpunan Alumni IPB. Pemimpin Melahirkan Pemimpin. Make Your Leap."
+  },
+  "pages": {
+    "PubHome":         { "out": "index.html",         "title": "IPB LEAP · Pemimpin Melahirkan Pemimpin" },
+    "PubTentang":      { "out": "tentang.html",       "title": "Tentang IPB LEAP · Program Framework" },
+    "PubMentor":       { "out": "mentor.html",        "title": "Our Mentor · IPB LEAP" },
+    "PubMentorDetail": { "out": "mentor-profil.html", "title": "Profil Mentor · IPB LEAP" },
+    "PubAsmen":        { "out": "asmen.html",         "title": "Our Asmen · IPB LEAP" },
+    "PubAsmenDetail":  { "out": "asmen-profil.html",  "title": "Profil Asmen · IPB LEAP" },
+    "PubMentee":       { "out": "mentee.html",        "title": "Our Mentee · IPB LEAP" },
+    "PubMenteeDetail": { "out": "mentee-profil.html", "title": "Profil Mentee · IPB LEAP" },
+    "PubKegiatan":     { "out": "kegiatan.html",      "title": "Kegiatan · IPB LEAP" },
+    "PubShowcase":     { "out": "showcase.html",      "title": "Leap Showcase · IPB LEAP" },
+    "PubPrestasi":     { "out": "prestasi.html",      "title": "Prestasi · IPB LEAP" },
+    "PubEvent":        { "out": "event.html",         "title": "Event · IPB LEAP" },
+    "PubKontak":       { "out": "kontak.html",        "title": "Kontak · IPB LEAP" }
+  },
+  "components": ["PubNav", "PubFooter"],
+  "assets": {
+    "/_blob/d1185905fce3a282f8c2d64c19416648": "assets/logo-color.png",
+    "/_blob/3b740a84164b3fb26a17e9dc369c700e": "assets/logo-white.png"
+  },
+  "links": {
+    "Main.dc.html": "#masuk"
+  }
+}
