@@ -8,10 +8,10 @@ export const client = configured ? createClient(CONFIG.url, CONFIG.publishableKe
 
 export const appBase = new URL('../../app/', import.meta.url);
 export function safeNext(value, origin = location.origin) {
- try {const u=new URL(value||new URL('abc.html',appBase).pathname,origin);
- if(u.origin!==origin||!u.pathname.startsWith(appBase.pathname)||/[\\\x00-\x1f]/.test(value||''))return new URL('abc.html',appBase).pathname;
+ try {const u=new URL(value||new URL('beranda-mentee.html',appBase).pathname,origin);
+ if(u.origin!==origin||!u.pathname.startsWith(appBase.pathname)||['index.html','akses-penilaian.html'].includes(u.pathname.split('/').pop())||/[\\\x00-\x1f]/.test(value||''))return new URL('beranda-mentee.html',appBase).pathname;
  for(const k of ['role','realm','view','v'])u.searchParams.delete(k);return u.pathname+u.search;
- }catch{return new URL('abc.html',appBase).pathname;}
+ }catch{return new URL('beranda-mentee.html',appBase).pathname;}
 }
 
 export function errorText(error) {
@@ -24,11 +24,11 @@ export function errorText(error) {
   return s || 'Permintaan belum berhasil. Isian belum disimpan.';
 }
 
-export async function verifiedUser() {
-  if (!client) return null;
-  const { data, error } = await client.auth.getUser();
-  if (error) return null;
-  return data.user || null;
+let verification=null;
+export function verifiedUser() {
+ if(!client)return Promise.resolve(null);
+ if(!verification)verification=(async()=>{const {data,error}=await client.auth.getUser();if(error){if([401,403].includes(error.status)||['session_not_found','refresh_token_not_found','refresh_token_already_used','bad_jwt'].includes(error.code)||error.name==='AuthSessionMissingError')return null;throw new Error(errorText(error));}return data.user||null;})().finally(()=>{verification=null;});
+ return verification;
 }
 
 export async function rpc(name, args = {}) {

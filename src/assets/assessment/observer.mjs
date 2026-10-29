@@ -17,7 +17,7 @@ export function observerSelection(state,refs=[]){
 }
 export async function mount(){
  const host=document.querySelector('#content');
- if(!await verifiedUser()){location.replace(new URL('akses-penilaian.html',appBase).pathname+'?next='+encodeURIComponent(location.pathname+location.search));return;}
+ if(!await verifiedUser()){location.replace(new URL('index.html',appBase).pathname+'?next='+encodeURIComponent(location.pathname+location.search));return;}
  const base=await workspace();window.leapAccount=base.actor;window.dispatchEvent(new CustomEvent('leap:account'));
  let state,context=new URLSearchParams(location.search),cohort=context.get('cohort'),mentee=context.get('mentee'),period=Number(context.get('period'))===12?12:6,busy=false,dirty=false;cohort ||= base.selectedCohort;mentee ||= base.selectedMentee;
  const status=document.createElement('p');status.setAttribute('role','status');status.setAttribute('aria-live','polite');

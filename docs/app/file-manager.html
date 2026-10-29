@@ -233,7 +233,7 @@ body{margin:0}
           <div style="padding: 12px; border-bottom: 1px solid {{c.line}}; margin-bottom: 4px"><div style="font-weight: 800; font-size: 14.5px">{{name}}</div><div style="font-size: 12.5px; color: {{c.muted}}">{{subtitle}}</div></div>
           <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Profil &amp; ID Card</a>
           <a href="pengaturan.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 600; color: {{c.ink}}; text-decoration: none">Pengaturan</a>
-          <a href="index.html" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; color: #E5484D; text-decoration: none">Keluar</a>
+          <a href="index.html" onClick="{{logout}}" style="padding: 10px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; color: #E5484D; text-decoration: none">Keluar</a>
         </div>
       </sc-if>
     </div>
@@ -330,7 +330,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { open: null, notif: false, me: false };
   }
-  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));}
+  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));if(!location.pathname.includes('/review-penilaian/'))import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).catch(()=>{});}
   renderVals() {
     const actor=window.leapAccount,granted=actor?.roles||[],selected=sessionStorage.getItem('ipbleap.ui.role'),serverRole=granted.includes(selected)?selected:granted[0];
     const role = actor ? ({program:'pengurus',finance:'bendahara',system:'superadmin'}[serverRole]||serverRole||'mentee') : (this.props.role ?? 'mentee');
@@ -441,6 +441,8 @@ class Component extends DCLogic {
     });
     return Object.assign({}, p, {
       c: c,
+      ...(actor?{name:actor.display_name,subtitle:granted.map(r=>({mentee:'Mentee',asmen:'Asmen',mentor:'Mentor',program:'Pengurus',finance:'Bendahara',system:'Super Admin'}[r]||r)).join(' · '),initials:(actor.display_name||'').split(/\s+/).slice(0,2).map(n=>n[0]).join('')}:{}),
+      logout: async(e)=>{e.preventDefault();if(location.pathname.includes('/review-penilaian/')){location.href='index.html';return;}try{await(await import(new URL('../assets/assessment/session.mjs',location.href).href)).signOut(e);}catch(error){alert(error.message||'Belum berhasil keluar. Coba lagi.');}},
       items: items,
       homeHref: items[0].href,
       notifOpen: this.state.notif,
