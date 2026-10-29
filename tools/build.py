@@ -11,6 +11,7 @@ import os
 import posixpath
 import re
 import sys
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -168,6 +169,7 @@ html{{scroll-behavior:smooth}}
 
 def main():
     DIST.mkdir(exist_ok=True)
+    shutil.copytree(SRC / "assets", DIST / "assets", dirs_exist_ok=True)
     out = [build_page(n, m) for n, m in PAGES.items()]
     (DIST / '404.html').write_text((DIST / 'index.html').read_text(encoding='utf-8'), encoding='utf-8')
     if CONFIG['site'].get('cname'):

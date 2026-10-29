@@ -46,3 +46,9 @@ Cek lokal: `cd docs && python3 -m http.server 8000` lalu buka http://localhost:8
 
 - Foto kegiatan, prestasi, mentor, asmen, mentee, dan kata pengantar masih placeholder.
 - Kontak: mentoringleaderhaipb@gmail.com · 0855-5907-0165 (M. Fauzan Ramdani).
+
+## Review penilaian
+
+Preview kosong dan tanpa backend tersedia pada `review-penilaian/`. Build dengan `python3 tools/build.py` lalu `python3 tools/build_review.py`. Tampilan topbar, login umum, hero dan seluruh modul selain isi penilaian tetap versi asli; isi menu Program/Kelompok mengikuti tugas tiap peran. Gunakan pilihan “Lihat sebagai” pada preview untuk menelusuri alur Mentee, Asmen, Mentor dan Tim Penilaian M12.
+
+Integrasi operasional ada pada branch `integrate/assessment-20261029`; akses akun khusus penilaian berada di `app/akses-penilaian.html`, terpisah dari login prototype. SQL tambahan dan Edge belum diterapkan. Lihat `INTEGRASI-PENILAIAN.md`.

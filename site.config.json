@@ -2,7 +2,7 @@
   "site": {
     "url": "https://kawanberinovasi-ops.github.io/ipb-leap-website/",
     "cname": "",
-    "description": "IPB LEAP (Leadership Acceleration Program) — program akselerasi kepemimpinan Himpunan Alumni IPB. Pemimpin Melahirkan Pemimpin. Make Your Leap."
+    "description": "IPB LEAP (Leadership Acceleration Program) \u2014 program akselerasi kepemimpinan Himpunan Alumni IPB. Pemimpin Melahirkan Pemimpin. Make Your Leap."
   },
   "sections": [
     {
@@ -15,55 +15,55 @@
       "pages": {
         "PubHome": {
           "out": "index.html",
-          "title": "IPB LEAP · Pemimpin Melahirkan Pemimpin"
+          "title": "IPB LEAP \u00b7 Pemimpin Melahirkan Pemimpin"
         },
         "PubTentang": {
           "out": "tentang.html",
-          "title": "Tentang IPB LEAP · Program Framework"
+          "title": "Tentang IPB LEAP \u00b7 Program Framework"
         },
         "PubMentor": {
           "out": "mentor.html",
-          "title": "Our Mentor · IPB LEAP"
+          "title": "Our Mentor \u00b7 IPB LEAP"
         },
         "PubMentorDetail": {
           "out": "mentor-profil.html",
-          "title": "Profil Mentor · IPB LEAP"
+          "title": "Profil Mentor \u00b7 IPB LEAP"
         },
         "PubAsmen": {
           "out": "asmen.html",
-          "title": "Our Asmen · IPB LEAP"
+          "title": "Our Asmen \u00b7 IPB LEAP"
         },
         "PubAsmenDetail": {
           "out": "asmen-profil.html",
-          "title": "Profil Asmen · IPB LEAP"
+          "title": "Profil Asmen \u00b7 IPB LEAP"
         },
         "PubMentee": {
           "out": "mentee.html",
-          "title": "Our Mentee · IPB LEAP"
+          "title": "Our Mentee \u00b7 IPB LEAP"
         },
         "PubMenteeDetail": {
           "out": "mentee-profil.html",
-          "title": "Profil Mentee · IPB LEAP"
+          "title": "Profil Mentee \u00b7 IPB LEAP"
         },
         "PubKegiatan": {
           "out": "kegiatan.html",
-          "title": "Kegiatan · IPB LEAP"
+          "title": "Kegiatan \u00b7 IPB LEAP"
         },
         "PubShowcase": {
           "out": "showcase.html",
-          "title": "Leap Showcase · IPB LEAP"
+          "title": "Leap Showcase \u00b7 IPB LEAP"
         },
         "PubPrestasi": {
           "out": "prestasi.html",
-          "title": "Prestasi · IPB LEAP"
+          "title": "Prestasi \u00b7 IPB LEAP"
         },
         "PubEvent": {
           "out": "event.html",
-          "title": "Event · IPB LEAP"
+          "title": "Event \u00b7 IPB LEAP"
         },
         "PubKontak": {
           "out": "kontak.html",
-          "title": "Kontak · IPB LEAP"
+          "title": "Kontak \u00b7 IPB LEAP"
         }
       }
     },
@@ -74,12 +74,12 @@
         "Navbar"
       ],
       "noindex": true,
-      "description": "Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.",
-      "banner": "<div style=\"position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center\"><span style=\"padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800\">PROTOTYPE</span><span>IPB Leap Management System · semua data masih contoh</span><a href=\"{home}\" style=\"color:#A3D6E6;font-weight:800;text-decoration:none\">← Kembali ke website</a></div>\n",
+      "description": "Prototype IPB Leap Management System \u2014 platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.",
+      "banner": "<div style=\"position:relative;z-index:70;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:6px 14px;padding:8px 16px;background:#0D0D1A;color:#FFFFFF;font:600 12.5px/1.4 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center\"><span style=\"padding:3px 9px;border-radius:999px;background:#D4FF3A;color:#0D0D1A;font-weight:800\">PROTOTYPE</span><span>IPB Leap Management System \u00b7 semua data masih contoh</span><a href=\"{home}\" style=\"color:#A3D6E6;font-weight:800;text-decoration:none\">\u2190 Kembali ke website</a></div>\n",
       "pages": {
         "Main": {
           "out": "app/index.html",
-          "title": "Masuk · IPB Leap Management System"
+          "title": "Masuk \u00b7 IPB Leap Management System"
         },
         "BerandaMentee": {
           "out": "app/beranda-mentee.html"
@@ -131,6 +131,34 @@
         },
         "SuperAdmin": {
           "out": "app/super-admin.html"
+        },
+        "POC": {
+          "out": "app/poc.html"
+        },
+        "ABC": {
+          "out": "app/abc.html"
+        },
+        "Progres": {
+          "out": "app/progres.html"
+        },
+        "Raport": {
+          "out": "app/raport.html"
+        },
+        "KelompokPenilaian": {
+          "out": "app/kelompok-penilaian.html"
+        },
+        "Observer": {
+          "out": "app/observer.html"
+        },
+        "AksesPenilaian": {
+          "out": "app/akses-penilaian.html",
+          "title": "Akses Penilaian \u00b7 IPB LEAP"
+        },
+        "Mentoring": {
+          "out": "app/mentoring.html"
+        },
+        "HasilKPI": {
+          "out": "app/hasil-kpi.html"
         }
       }
     }
