@@ -1,5 +1,7 @@
 ## Pembaruan alur per peran — 29 Oktober 2026
 
+> Pembaruan terbaru: [revisi 15 anotasi dan status backend 2 November 2026](REVISI-ANOTASI-2026-11-02.md). Status historis di bawah perlu dibaca bersama pembaruan tersebut.
+
 Sumber: keputusan pengguna di chat 9 Oktober dan 29 Oktober, materi POC/ABC, dan playbook Asisten Mentor yang ditemukan melalui penelusuran konteks percakapan. Halaman publik ipbleap.com saat diperiksa masih Segera Hadir; isi ERP di balik login tidak diperiksa dengan akun pengguna.
 
 Preview kini memiliki pemilih peran Mentee / Asisten Mentor / Mentor / Tim Penilaian M12. Mentee mengisi; Asmen memeriksa kelengkapan ABC, komitmen, proses dan bukti; Mentor membaca sumber, menyepakati POC dan menetapkan KPI M3/M6/M9 serta P3 M6; Tim Penilaian menetapkan M12. Tidak ada perubahan rumus atau bobot. P1 dan P4 ditampilkan hanya baca pada keputusan Mentor agar pemeriksaan tidak diulang. 360 tetap bahan pertimbangan satu P3.

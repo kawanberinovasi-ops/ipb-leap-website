@@ -1,5 +1,5 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {randomUUID}from'node:crypto';
-import {createDB,as,id,actors} from './fixtures/database.mjs';import {buildOperation,latest} from '../backend/erp/functions/domain.mjs';
+import {createDB,as,id,actors} from './fixtures/database.mjs';import {buildOperation,latest,agreed} from '../backend/erp/functions/domain.mjs';
 test('assessment: draft → submit → repair → resubmit → evidence → publication, persisted versions and role enforcement',async t=>{
  const db=await createDB();t.after(()=>db.close());await db.exec('grant usage on schema erp_private to service_role');
  const load=async name=>{await as(db,name);return(await db.query('select erp_workspace($1,$2) as w',[id(20),id(1)])).rows[0].w;};
@@ -17,11 +17,20 @@ test('assessment: draft → submit → repair → resubmit → evidence → publ
  await send('asmen',{id:abcId,month:1,action:'commitment',data:{status:'Selesai',action:'Uji lapangan',result:'Catatan tersedia',learning:'Belajar',next:'Uji berikutnya',note:'Diperiksa'}});
  const before=await rev('mentee');await send('mentee',{id:abcId,month:1,action:'save',data:abc});
  await assert.rejects(send('mentee',{id:abcId,month:1,action:'save',data:abc},before),/berubah/);
- const pocId=id(201),kpi={id:id(202),title:'Hasil uji',kind:'number',baseline:0,unit:'unit',direction:'up',measurement:'Data hasil',evidencePlan:'Dokumen',levels:Object.fromEntries([3,6,9,12].map(m=>['M'+m,{progress:2,achieve:4,exceed:6}]))};
+ const pocId=id(201),kpi={id:id(202),title:'Hasil uji',kind:'number',baseline:0,unit:'unit',direction:'up',measurement:'Data hasil',evidencePlan:'Dokumen',milestones:Object.fromEntries([3,6,9,12].map(m=>['M'+m,'Hasil nyata periode '+m]))};
  const poc={title:'POC test',outcome:'Outcome',baselineContext:'Awal',risk:'Risiko',support:'Tidak ada',plan:'Rencana',kpis:[kpi]};
+ await as(db,'mentor','service_role');await db.exec('reset role');await db.query("update erp_enrolments set field='Entrepreneur / Business',pathway='Grow' where user_id=$1",[id(1)]);
+ poc.pathway='Grow';kpi.trackKpi='Market & Customer Validation';
  await send('mentee',{id:pocId,kind:'poc',month:1,action:'submit',data:poc});
- await assert.rejects(send('asmen',{id:pocId,month:1,action:'poc_decide',data:{note:'Saya setujui'}}),/tugas Mentor/);
- await send('mentor',{id:pocId,month:1,action:'poc_decide',data:{note:'Disepakati'}});
+ const calibration=[{kpiId:kpi.id,levels:Object.fromEntries([3,6,9,12].map(m=>['M'+m,{progress:2,achieve:4,exceed:6}]))}];
+ await assert.rejects(send('asmen',{id:pocId,month:1,action:'poc_decide',data:{note:'Saya setujui',calibration}}),/tugas Mentor/);
+ await send('mentor',{id:pocId,month:1,action:'poc_decide',data:{note:'Disepakati',calibration}});
+ w=await load('mentee');const saved=w.records.find(r=>r.id===pocId);assert.deepEqual(latest(saved).data,poc);assert.deepEqual(saved.checks.at(-1).data.calibration,calibration);assert.equal(agreed(w.records).data.kpis[0].levels.M3.achieve,4);
+ const mentoring={priority:'Fokus',insight:'Belajar',decision:'Langkah',action:'Kerjakan',evidencePlan:'Bukti',deadline:'2025-02-01',sessionDetails:{kind:'Common Class',date:'2025-01-15',time:'09:00'},checkinSummary:'Tindak lanjut dua mingguan dilaporkan kepada Mentor'};
+ await send('mentee',{id:id(205),kind:'mentoring',month:1,action:'submit',data:mentoring});
+ w=await load('asmen');assert.equal(w.records.find(r=>r.id===id(205)).session_id,null);assert.deepEqual(latest(w.records.find(r=>r.id===id(205))).data,mentoring);
+ await assert.rejects(send('asmen',{id:id(205),month:1,action:'mentoring_check',data:{note:'ABC lengkap'}}),/tugas Mentor/);
+ await send('mentor',{id:id(205),month:1,action:'mentoring_check',data:{note:'ABC lengkap'}});
  await db.exec('reset role');
  for(let i=0;i<4;i++)await db.query("insert into erp_sessions(id,cohort_id,group_id,kind,starts_at,month_no,participant_ids,created_by)values($1,$2,$3,'checkin',$4,$5,$6,$7)",[id(210+i),id(20),id(21),`2025-0${2+Math.floor(i/2)}-${i%2?20:'05'}T09:00:00+07:00`,2+Math.floor(i/2),[id(1)],id(9)]);
  for(let i=0;i<4;i++){
