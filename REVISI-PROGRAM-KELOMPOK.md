@@ -1,5 +1,7 @@
 # Revisi Program dan Kelompok — 29 Oktober 2026
 
+> Pembaruan terbaru: [revisi 15 anotasi dan status backend 2 November 2026](REVISI-ANOTASI-2026-11-02.md). Status historis di bawah perlu dibaca bersama pembaruan tersebut.
+
 Perubahan ini memakai LMS yang ada dan alur Simulasi-Kelompok-12-Bulan-IPB-LEAP.html. Tidak ada perubahan SQL, konfigurasi Supabase, rumus, bobot, ambang, pembulatan, atau kebijakan pengamat.
 
 ## Lokasi

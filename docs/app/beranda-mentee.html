@@ -80,25 +80,18 @@ body{margin:0}
 
       <section class="rise d1 lift" style="flex: 1 1 340px; min-width: 0; border-radius: 32px; padding: 28px; background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFF 100%); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -28px rgba(50,48,111,.45); display: flex; flex-direction: column; gap: 16px">
         <div style="display: flex; justify-content: space-between; align-items: center">
-          <span style="font-size: 14px; font-weight: 700; color: #55577A">Nilai bulanan · September</span>
-          <a href="penilaian.html" style="font-size: 13px; font-weight: 700">Raport →</a>
+          <span style="font-size: 14px; font-weight: 700; color: #55577A">{{scoreLabel}}</span>
+          <a href="raport.html" style="font-size: 13px; font-weight: 700">Raport →</a>
         </div>
         <div style="display: flex; align-items: flex-end; gap: 12px">
           <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 72px; line-height: .9; color: #32306F; letter-spacing: -.03em">{{score}}</span>
-          <span style="margin-bottom: 8px; font-size: 14px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #EEFFB8; color: #3A4A00">A · Sangat Baik</span>
+          <span style="margin-bottom: 8px; font-size: 14px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #EEFFB8; color: #3A4A00">{{scoreStatus}}</span>
         </div>
-        <svg role="img" aria-label="Tren nilai Juli 78, Agustus 82, September 86,4" viewBox="0 0 300 90" style="width: 100%; height: 90px">
-          <defs><linearGradient id="trend" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3157A5" stop-opacity=".25"></stop><stop offset="1" stop-color="#3157A5" stop-opacity="0"></stop></linearGradient></defs>
-          <path d="M10 64 L150 46 L290 22 L290 90 L10 90 Z" fill="url(#trend)"></path>
-          <path d="M10 64 L150 46 L290 22" fill="none" stroke="#3157A5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
-          <circle cx="10" cy="64" r="5" fill="#FFFFFF" stroke="#3157A5" stroke-width="2.5"></circle>
-          <circle cx="150" cy="46" r="5" fill="#FFFFFF" stroke="#3157A5" stroke-width="2.5"></circle>
-          <circle cx="290" cy="22" r="7" fill="#D4FF3A" stroke="#32306F" stroke-width="2.5"></circle>
-        </svg>
-        <div style="display: flex; justify-content: space-between; font-size: 12.5px; color: #6B6D8C; font-weight: 600; margin-top: -8px"><span>Jul · 78</span><span>Agu · 82</span><span style="color: #32306F; font-weight: 800">Sep · 86,4</span></div>
+        <sc-if value="{{hasTrend}}"><svg role="img" aria-label="{{trendLabel}}" viewBox="0 0 300 90" style="width:100%;height:90px"><defs><linearGradient id="trend" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#3157A5" stop-opacity=".25"></stop><stop offset="1" stop-color="#3157A5" stop-opacity="0"></stop></linearGradient></defs><path d="{{trendArea}}" fill="url(#trend)"></path><path d="{{trendLine}}" fill="none" stroke="#3157A5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path><sc-for list="{{trendPoints}}" as="point"><circle cx="{{point.x}}" cy="{{point.y}}" r="5" fill="#D4FF3A" stroke="#32306F" stroke-width="2.5"></circle></sc-for></svg><div style="display:flex;justify-content:space-between;font-size:12.5px;color:#6B6D8C;font-weight:600"><sc-for list="{{trendPoints}}" as="point"><span>{{point.label}}</span></sc-for></div></sc-if>
+        <p style="font-size:13px;color:#6B6D8C">{{reportError}}</p>
         <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
-          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Dari Mentor</div><div style="font-size: 20px; font-weight: 800; color: #32306F">88,0</div></div>
-          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Dari Asmen</div><div style="font-size: 20px; font-weight: 800; color: #32306F">84,8</div></div>
+          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Proses program · /25</div><div style="font-size: 20px; font-weight: 800; color: #32306F">{{processScore}}</div></div>
+          <div style="padding: 12px; border-radius: 16px; background: #F1F4FB"><div style="font-size: 12px; color: #6B6D8C; font-weight: 600">Capaian KPI · /25</div><div style="font-size: 20px; font-weight: 800; color: #32306F">{{achievementScore}}</div></div>
         </div>
       </section>
     </div>
@@ -287,7 +280,7 @@ body{margin:0}
       <button type="button" aria-label="Tambah cepat" title="Task, note, atau event baru" style="width: 40px; height: 40px; border-radius: 12px; border: 0; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.3)">
         <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
       </button>
-      <a href="chat.html" aria-label="Chat, 5 pesan baru" style="position: relative; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {{c.icon}}">
+      <a hidden data-hidden-feature="chat" href="chat.html" aria-label="Chat, 5 pesan baru" style="display:none!important;position: relative; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {{c.icon}}">
         <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>
         <span style="position: absolute; top: 4px; right: 3px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 9px; background: #3157A5; color: #FFFFFF; font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid {{c.ring}}">5</span>
       </a>
@@ -329,6 +322,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { update: false, sent: false, done: { t1: true } };
   }
+  componentDidMount(){window.addEventListener('leap:report',e=>this.setState(e.detail));import(new URL('../assets/assessment/home.mjs',location.href).href).then(m=>m.mountHome());}
   renderVals() {
     const defs = [
       { id: 't1', title: 'RSVP Sesi Mentoring #6', meta: 'Sab, 18 Okt', tag: 'Event', tagBg: '#E4EBF8', tagInk: '#3157A5' },
@@ -349,13 +343,13 @@ class Component extends DCLogic {
       });
     });
     return {
-      score: '86,4',
+      score: this.state.score||'—',scoreLabel:this.state.scoreLabel||'Nilai program',scoreStatus:this.state.scoreStatus||'Belum ada raport diterbitkan',processScore:this.state.processScore||'—',achievementScore:this.state.achievementScore||'—',hasTrend:this.state.hasTrend||false,trendLine:this.state.trendLine||'',trendArea:this.state.trendArea||'',trendPoints:this.state.trendPoints||[],trendLabel:this.state.trendLabel||'',reportError:this.state.reportError||'',
       tasks: tasks,
       doneCount: tasks.filter((t) => done[t.id]).length,
       updateOpen: this.state.update,
       sent: this.state.sent,
       notSent: !this.state.sent,
-      openUpdate: () => this.setState({ update: true, sent: false }),
+      openUpdate: () => {location.href='mentoring.html';},
       closeUpdate: () => this.setState({ update: false, sent: false }),
       sendUpdate: () => { const n = Object.assign({}, this.state.done); n.t2 = true; this.setState({ sent: true, done: n }); }
     };
@@ -463,7 +457,7 @@ class Component extends DCLogic {
       const current=new URLSearchParams(location.search);for(const key of ['cohort','mentee','group','period','record','source'])if(current.has(key)&&!u.searchParams.has(key))u.searchParams.set(key,current.get(key));
       if(location.pathname.includes('/review-penilaian/'))u.searchParams.set('peran',role==='pengurus'?'program':role);
       return u.pathname+u.search;}return href;};
-    const items = (menus[role] || menus.mentee).map((m) => {
+    const items = (menus[role] || menus.mentee).filter(m=>!['chat','task'].includes(m.key)).map((m) => {
       m=Object.assign({},m,{href:scopedHref(m.href),children:m.children?.map(ch=>Object.assign({},ch,{href:scopedHref(ch.href)}))});
       const on = m.key === active;
       const open = this.state.open === m.key;

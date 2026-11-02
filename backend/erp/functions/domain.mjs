@@ -1,3 +1,5 @@
+import {TRACKS,trackFor} from './curriculum.mjs';
+export {TRACKS,trackFor};
 // Aturan operasional v1. Tidak berisi akun, laporan, atau nilai contoh.
 export const RULE='IPB-LEAP-2026-v1';
 export const FIELDS=['Entrepreneur / Business','Academic & Research','Professional / Corporate / Bureaucracy','Politics / Public Leadership','Social & Community / Social Impact'];
@@ -6,7 +8,9 @@ export const LEVELS=['Not Achieved','Progress','Achieve','Exceed'];
 export const COMPETENCIES=['Mengenal diri','Berpikir kritis','Komunikasi','Kolaborasi','Eksekusi','Etika'];
 export const ACTIVITIES=['Kick-off','Define the Arena','Build & Execute','Mentoring/check-in','Expert Visit','Coaching Clinic','Showcase/Graduation'];
 export const latest=r=>r?.versions?.at(-1);
-export const agreed=records=>records.filter(r=>r.kind==='poc').flatMap(r=>r.versions.filter(v=>v.status==='Disepakati')).at(-1);
+export const agreed=records=>{const entries=records.filter(r=>r.kind==='poc').flatMap(r=>r.versions.filter(v=>v.status==='Disepakati').map(v=>({r,v}))),entry=entries.at(-1);if(!entry)return;const {r,v}=entry,prior=r.versions.filter(x=>x.number<v.number).at(-1),calibration=r.checks?.findLast(c=>c.kind==='poc'&&c.source_version_id===prior?.id)?.data.calibration;return calibratedPOC(v,calibration);};
+function calibratedPOC(v,calibration){if(!calibration?.length)return v;return {...v,data:{...v.data,kpis:v.data.kpis.map(k=>({...k,levels:calibration.find(c=>c.kpiId===k.id)?.levels||k.levels}))}};}
+
 export const lastCheck=(r,kind,source=latest(r)?.id)=>r?.checks?.filter(c=>c.kind===kind&&c.source_version_id===source).at(-1);
 export const clean=s=>typeof s==='string'?s.trim():'';
 export const round=n=>Math.round((n+Number.EPSILON)*100)/100;
@@ -18,7 +22,7 @@ const link=s=>{if(!s)return;try{const u=new URL(s);if(!['https:','http:'].includ
 export const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 export function programMonth(startsOn,asOf=today()){const [sy,sm]=startsOn.slice(0,7).split('-').map(Number),[y,m]=asOf.slice(0,7).split('-').map(Number);return Math.max(0,Math.min(12,(y-sy)*12+m-sm+1));}
 function sentences(s){return clean(s).split(/[.!?]+(?:\s|$)/).filter(x=>x.trim()).length;}
-export function validatePOC(d){
+export function validatePOC(d,requireLevels=true){
  ['title','outcome','baselineContext','risk','support','plan'].forEach(k=>need(d[k],({title:'judul POC',outcome:'outcome',baselineContext:'kondisi awal',risk:'risiko',support:'dukungan',plan:'rencana kerja'})[k]));
  if(!Array.isArray(d.kpis)||d.kpis.length<1||d.kpis.length>3)fail('POC memuat satu hingga tiga KPI.');
  if(new Set(d.kpis.map(k=>k.id)).size!==d.kpis.length)fail('ID KPI harus berbeda.');
@@ -26,6 +30,7 @@ export function validatePOC(d){
   if(!['number','milestone'].includes(k.kind))fail('Pilih jenis KPI.');
   if(k.kind==='number'&&(!num(k.baseline)||!['up','down'].includes(k.direction)))fail('Isi baseline dan arah perubahan KPI.');
   if(k.kind==='milestone')need(k.baseline,'baseline milestone');
+  if(!requireLevels&&k.milestones){for(const m of PERIODS)need(k.milestones['M'+m],'milestone M'+m);continue;}
   for(const m of PERIODS){const b=k.levels?.['M'+m];if(!b)fail('Lengkapi empat patokan KPI untuk M'+m+'.');
    for(const key of ['progress','achieve','exceed']){if(k.kind==='number'?!num(b[key]):!clean(b[key]))fail('Lengkapi batas '+key+' pada M'+m+'.');}
    if(k.kind==='number'){const a=Number(b.progress),t=Number(b.achieve),e=Number(b.exceed);if(k.direction==='up'?!(a<t&&t<e):!(a>t&&t>e))fail('Batas Progress, Achieve, Exceed harus berurutan sesuai arah KPI.');}
@@ -40,15 +45,16 @@ function reflection(d){
  if(d.activity==='Kick-off'&&(!Array.isArray(d.priorities)||d.priorities.length!==3||d.priorities.some(p=>['ability','why','practice'].some(k=>!clean(p[k])))))fail('Lengkapi tiga prioritas belajar pribadi untuk Kick-off.');
 }
 export function validateMentee(kind,d,root,w){
- if(kind==='poc')validatePOC(d);
+ if(kind==='poc'){validatePOC(d,false);if(d.curriculumVersion==='Draft 4'||d.kpis.some(k=>k.milestones||k.trackKpi)){const e=w.enrolments?.find(e=>e.role==='mentee'&&e.user_id===root.mentee_id&&e.active),t=trackFor(e?.field);if(!t)fail('Track akun belum ditetapkan. Hubungi pengelola.');if(d.pathway!==e.pathway)fail('Pathway berubah. Muat ulang untuk memakai penugasan terbaru.');for(const k of d.kpis)if(!t.kpis.includes(k.trackKpi))fail('Pilih KPI dari modul sesuai track akun.');}}
  else if(kind==='abc')reflection(d);
  else if(kind==='checkin'||kind==='mentoring'){
   (kind==='checkin'?['action','result','learning','next']:['priority','insight','decision','action','evidencePlan']).forEach(k=>need(d[k],k));
   if(!date(d.deadline))fail('Isi tenggat langkah berikutnya.');
   if(kind==='checkin'){if(!clean(d.proofText)&&!clean(d.proofUrl))fail('Jelaskan bukti hasil aktual atau hambatan jika bukti belum ada.');link(d.proofUrl);}
-  const session=w.sessions.find(s=>s.id===root.session_id&&s.kind===(kind==='checkin'?'checkin':'mentoring')&&s.month_no===root.month_no&&s.participant_ids.includes(root.mentee_id)&&!s.cancelled);
+  if(kind==='mentoring'&&!root.session_id){if(!date(d.sessionDetails?.date)||d.sessionDetails.date>today())fail('Isi tanggal sesi yang sudah berlangsung.');if(!['Sesi kelompok','1-on-1','Common Class'].includes(d.sessionDetails?.kind))fail('Pilih jenis sesi.');if(d.sessionDetails.time&&!/^([01]\d|2[0-3]):[0-5]\d$/.test(d.sessionDetails.time))fail('Isi jam sesi yang benar.');}
+  else {const session=w.sessions.find(s=>s.id===root.session_id&&s.kind===(kind==='checkin'?'checkin':'mentoring')&&s.month_no===root.month_no&&s.participant_ids.includes(root.mentee_id)&&!s.cancelled);
   if(!session)fail('Pilih jadwal kegiatan yang ditetapkan pengelola.');
-  if(new Date(session.starts_at)>new Date())fail('Kegiatan belum berlangsung. Simpan sebagai draft lebih dahulu.');
+  if(new Date(session.starts_at)>new Date())fail('Kegiatan belum berlangsung. Simpan sebagai draft lebih dahulu.');}
  }else if(kind==='actual'){
   if(!PERIODS.includes(root.month_no))fail('Aktual diisi pada M3, M6, M9, dan M12.');
   const poc=agreed(w.records);if(!poc||d.pocVersion!==poc.id)fail('Gunakan versi POC terakhir yang disepakati.');
@@ -118,8 +124,8 @@ export function buildOperation(w,p){
  if(['abc_check','poc_decide','mentoring_check'].includes(action)){
   if(v.status!=='Diajukan')fail('Catatan belum diajukan atau sudah diperiksa.');need(d.note,'catatan pemeriksa');
   const status=d.repair?'Perlu perbaikan':action==='poc_decide'?'Disepakati':'Sudah diperiksa';
-  if(action==='poc_decide'&&!d.repair)validatePOC(v.data);
-  return{...op,data:v.data,status,check:{kind:action==='abc_check'?'abc':action==='poc_decide'?'poc':'mentoring',source:v.id,data:{note:d.note,repair:!!d.repair}}};
+  if(action==='poc_decide'&&!d.repair)validatePOC(calibratedPOC(v,d.calibration).data);
+  return{...op,data:v.data,status,check:{kind:action==='abc_check'?'abc':action==='poc_decide'?'poc':'mentoring',source:v.id,data:{note:d.note,repair:!!d.repair,...(action==='poc_decide'&&d.calibration?{calibration:d.calibration}:{})}}};
  }
  if(['commitment','process','evidence'].includes(action)){
   if(v.status==='Draft')fail('Ajukan catatan sebelum diperiksa.');
