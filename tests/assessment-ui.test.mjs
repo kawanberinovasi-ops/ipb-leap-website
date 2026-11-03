@@ -27,3 +27,16 @@ test('UI: finance and system cannot access assessment forms with no subject gran
 });
 
 test('UI: mentoring ABC saves under the existing mentoring kind and reloads without duplication',async()=>{const w=state();w.sessions=[{id:id(80),kind:'mentoring',month_no:6,starts_at:'2026-06-01T02:00:00Z',participant_ids:[id(1)],cancelled:false}];let payload;const v=await ui(w,'mentoring',{onCommand:p=>payload=p});await v.click('[data-new="mentoring"]');const f=v.document.querySelector('#record-form');for(const [name,value] of Object.entries({'sessionDetails.date':'2026-06-01','sessionDetails.kind':'Common Class','sessionDetails.time':'09:00',priority:'Prioritas',insight:'Pemahaman baru',decision:'Langkah terbaik',action:'Tindakan',deadline:'2026-07-01',evidencePlan:'Bukti'}))f.elements.namedItem(name).value=value;await v.click('[data-record-action="submit"]');assert.equal(payload.kind,'mentoring');assert.equal(payload.session,null);assert.equal(payload.data.insight,'Pemahaman baru');assert.equal(w.records.length,1);const reload=await ui(w,'mentoring');assert.equal(reload.document.querySelectorAll('.record-row').length,1);assert.equal(w.records.filter(r=>r.kind==='abc').length,0);v.dom.window.close();reload.dom.window.close();});
+
+test('UI: each track has English KPI labels, valid module pathways, and no deleted cohort/role picker',async()=>{
+ for(const track of domain.TRACKS){
+  const w=state();w.enrolments[0].field=track.field;w.enrolments[0].pathway='Coba';let payload;
+  const v=await ui(w,'poc',{onCommand:p=>payload=p});assert.equal(v.document.querySelector('#cohort-select'),null);assert.equal(v.document.querySelector('#assessment-role'),null);
+  await v.click('[data-new="poc"]');const f=v.document.querySelector('form');const pathway=f.elements.pathway;
+  assert.deepEqual([...pathway.options].slice(1).map(o=>o.value),track.pathways);assert.equal(pathway.value,'');
+  const kpi=f.elements.namedItem('kpis.0.trackKpi');assert.deepEqual([...kpi.options].slice(1).map(o=>o.textContent),track.kpis.map(domain.kpiLabel));assert.deepEqual([...kpi.options].slice(1).map(o=>o.value),track.kpis);
+  assert.ok(!v.document.body.textContent.includes('Diambil dari Modul IPB LEAP Draft 4. Pilih fokus'));
+  pathway.value=track.pathways[0];kpi.value=track.kpis[0];f.elements.title.value='TEST contract';await v.click('[data-record-action="save"]');assert.equal(payload.data.pathway,track.pathways[0]);assert.equal(w.enrolments[0].pathway,'Coba');
+  const reload=await ui(w,'poc');await reload.click('[data-edit]');assert.equal(reload.document.querySelector('[name=pathway]').value,track.pathways[0]);v.dom.window.close();reload.dom.window.close();
+ }
+});

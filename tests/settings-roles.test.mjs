@@ -1,0 +1,10 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';import {readFile} from 'node:fs/promises';import {JSDOM} from 'jsdom';
+test('Settings follows actual granted role and shared identity; requested ungranted roles never become preview access',async()=>{
+ const html=await readFile(new URL('../src/app/Settings.dc.html',import.meta.url),'utf8');assert.ok(!html.includes('Pratinjau sebagai role'));assert.ok(!html.includes('Nabila Putri'));assert.ok(!html.includes('SCAN UNTUK VERIFIKASI'));
+ const code=html.match(/<script type="text\/x-dc" data-dc-script[^>]*>([\s\S]*?)<\/script>/)[1];
+ for(const [granted,requested,expected] of [['mentee','system','mentee'],['asmen','mentor','asmen'],['mentor','program','mentor'],['program','program','pengurus'],['finance','finance','bendahara'],['system','system','superadmin']]){
+  const dom=new JSDOM('',{url:'https://example.test/app/pengaturan.html',runScripts:'outside-only'});const actor={id:'TEST-ID',email:'test@example.test',display_name:'TEST NAME',roles:[granted],active:true};dom.window.leapAccount=actor;dom.window.sessionStorage.setItem('ipbleap.ui.role',requested);dom.window.matchMedia=()=>({matches:false});
+  dom.window.DCLogic=class{setState(v){Object.assign(this.state,v);}};const context=dom.getInternalVMContext();const session=new vm.SyntheticModule(['mountSession'],function(){this.setExport('mountSession',async()=>actor);},{context});await session.link(()=>{});await session.evaluate();
+  const m=new vm.SourceTextModule(code+'\nexport {Component};',{context,importModuleDynamically:()=>session});await m.link(()=>{});await m.evaluate();const component=new m.namespace.Component({});component.componentDidMount();await new Promise(setImmediate);const values=component.renderVals();assert.equal(values.role,expected);assert.equal(values.person.name,'TEST NAME');assert.equal(values.person.email,'test@example.test');assert.equal(values.card.id,'TEST-ID');assert.equal(values.roleTabs,undefined);assert.equal(values.isStudent,['mentee','asmen'].includes(granted));component.componentWillUnmount();dom.window.close();
+ }
+});

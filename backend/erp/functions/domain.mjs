@@ -1,5 +1,5 @@
-import {TRACKS,trackFor} from './curriculum.mjs';
-export {TRACKS,trackFor};
+import {TRACKS,trackFor,kpiLabel} from './curriculum.mjs';
+export {TRACKS,trackFor,kpiLabel};
 // Aturan operasional v1. Tidak berisi akun, laporan, atau nilai contoh.
 export const RULE='IPB-LEAP-2026-v1';
 export const FIELDS=['Entrepreneur / Business','Academic & Research','Professional / Corporate / Bureaucracy','Politics / Public Leadership','Social & Community / Social Impact'];
@@ -45,7 +45,7 @@ function reflection(d){
  if(d.activity==='Kick-off'&&(!Array.isArray(d.priorities)||d.priorities.length!==3||d.priorities.some(p=>['ability','why','practice'].some(k=>!clean(p[k])))))fail('Lengkapi tiga prioritas belajar pribadi untuk Kick-off.');
 }
 export function validateMentee(kind,d,root,w){
- if(kind==='poc'){validatePOC(d,false);if(d.curriculumVersion==='Draft 4'||d.kpis.some(k=>k.milestones||k.trackKpi)){const e=w.enrolments?.find(e=>e.role==='mentee'&&e.user_id===root.mentee_id&&e.active),t=trackFor(e?.field);if(!t)fail('Track akun belum ditetapkan. Hubungi pengelola.');if(d.pathway!==e.pathway)fail('Pathway berubah. Muat ulang untuk memakai penugasan terbaru.');for(const k of d.kpis)if(!t.kpis.includes(k.trackKpi))fail('Pilih KPI dari modul sesuai track akun.');}}
+ if(kind==='poc'){validatePOC(d,false);if(d.curriculumVersion==='Draft 4'||d.kpis.some(k=>k.milestones||k.trackKpi)){const e=w.enrolments?.find(e=>e.role==='mentee'&&e.user_id===root.mentee_id&&e.active),t=trackFor(e?.field);if(!t)fail('Track akun belum ditetapkan. Hubungi pengelola.');if(!t.pathways.includes(d.pathway))fail('Pilih pathway dari modul sesuai track akun.');for(const k of d.kpis)if(!t.kpis.includes(k.trackKpi))fail('Pilih KPI dari modul sesuai track akun.');}}
  else if(kind==='abc')reflection(d);
  else if(kind==='checkin'||kind==='mentoring'){
   (kind==='checkin'?['action','result','learning','next']:['priority','insight','decision','action','evidencePlan']).forEach(k=>need(d[k],k));
