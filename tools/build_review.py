@@ -8,7 +8,7 @@ ROOT=Path(__file__).resolve().parent.parent
 out=ROOT/'docs/review-penilaian'
 assets=out/'assets/assessment';app=out/'app'
 assets.mkdir(parents=True,exist_ok=True);app.mkdir(parents=True,exist_ok=True)
-for name in ['app.css','domain.mjs','curriculum.mjs','sources.mjs','observer.mjs']:
+for name in ['app.css','domain.mjs','curriculum.mjs','sources.mjs','observer.mjs','final-evidence.mjs']:
  shutil.copy2(ROOT/'src/assets/assessment'/name,assets/name)
 s=(ROOT/'src/assets/assessment/app.mjs').read_text().replace('function render(){','function render(){if(reviewPreview)return renderPreview();').replace("'kelompok-penilaian':'kelompok'","'kelompok-penilaian':'kelompok',observer:'observer'").replace('const p=new URLSearchParams();',"const p=new URLSearchParams({peran:query.get('peran')||'mentee'});")
 (assets/'app.mjs').write_text(s+'\n'+(ROOT/'tools/review/content.mjs').read_text())

@@ -138,7 +138,7 @@ body{margin:0}
               <div style="position: relative; width: 100%; height: 100%; border-radius: 14px; overflow: hidden; box-shadow: 0 20px 40px -18px rgba(0,0,0,.85); border: 1px solid rgba(255,255,255,.12); background: #15143A">
                 <div class="{{c.anim}}" style="position: absolute; inset: 0">
                   <sc-if value="{{c.hasSrc}}" hint-placeholder-val="{{ false }}">
-                    <img src="{{c.src}}" alt="{{c.label}}" style="width: 100%; height: 100%; object-fit: cover">
+                    <img src="{{c.src}}" alt="{{c.label}}" style="width: 100%; height: 100%; object-fit: cover; object-position: {{c.position}}">
                   </sc-if>
                   <sc-if value="{{c.noSrc}}" hint-placeholder-val="{{ true }}">
                     <div style="width: 100%; height: 100%; background: {{c.bg}}"></div>
@@ -292,11 +292,11 @@ body{margin:0}
           <span class="gal" style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: 84px; gap: 10px">
             <sc-for list="{{gallery}}" as="g" hint-placeholder-count="9">
               <span class="gtile" style="position: relative; overflow: hidden; border-radius: 18px; background: #15143A; grid-column: {{g.c}}; grid-row: {{g.r}}">
-                <span class="{{g.anim}}" style="position: absolute; inset: 0; display: block; background: {{g.bg}}"></span>
+                <img class="{{g.anim}}" src="{{g.src}}" alt="{{g.label}}" loading="lazy" decoding="async" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{g.position}}">
               </span>
             </sc-for>
           </span>
-          <span style="font-size: 13px; color: rgba(255,255,255,.55)">Foto kegiatan offline menyusul.</span>
+          <span style="font-size: 13px; color: rgba(255,255,255,.55)">Dokumentasi Kick-off 2025 dan wisuda Mentoring Leader Batch 6.</span>
         </a>
       </div>
     </section>
@@ -445,20 +445,7 @@ class Component extends DCLogic {
   }
   componentWillUnmount() { (this.timers || []).forEach((t) => clearInterval(t)); if (this.raf) cancelAnimationFrame(this.raf); }
   renderVals() {
-    const photos = [
-      { label: 'Pelantikan', src: '', bg: 'linear-gradient(160deg,#3157A5,#32306F)', ink: '#FFFFFF' },
-      { label: 'Bootcamp', src: '', bg: '#D4FF3A', ink: '#0D0D1A' },
-      { label: 'Sesi Mentoring', src: '', bg: 'linear-gradient(160deg,#A3D6E6,#E4EBF8)', ink: '#0D0D1A' },
-      { label: 'Kunjungan Lapang', src: '', bg: '#E7E6F3', ink: '#32306F' },
-      { label: 'Leadership Camp', src: '', bg: 'linear-gradient(160deg,#2FA3C7,#3157A5)', ink: '#FFFFFF' },
-      { label: 'Graduation', src: '', bg: '#FFFFFF', ink: '#32306F' },
-      { label: 'ToT Asmen', src: '', bg: 'linear-gradient(160deg,#32306F,#0E0D2B)', ink: '#D4FF3A' },
-      { label: 'Diskusi Mentor', src: '', bg: '#C9D6F0', ink: '#0D0D1A' },
-      { label: 'Impact Showcase', src: '', bg: 'linear-gradient(160deg,#D4FF3A,#A3D6E6)', ink: '#0D0D1A' },
-      { label: 'Field Trip', src: '', bg: '#3157A5', ink: '#FFFFFF' },
-      { label: 'Kelas Offline', src: '', bg: 'linear-gradient(160deg,#E4EBF8,#FFFFFF)', ink: '#32306F' },
-      { label: 'Networking', src: '', bg: '#0E0D2B', ink: '#A3D6E6' }
-    ];
+    const photos = [{"label": "Kebersamaan peserta · Kick-off 2025", "src": "assets/photos/IMG-20250227-WA0034.jpg", "source": "https://drive.google.com/file/d/1NBBFB8z6DraZnMrXZfF_MH3J5uZFYyS2/view", "position": "50% 75%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Tim kegiatan · Kick-off 2025", "src": "assets/photos/IMG-20250227-WA0036.jpg", "source": "https://drive.google.com/file/d/1NBGyVTNM_HUSi3dJ9iLSoPgEtZdd6UhE/view", "position": "50% 75%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Peserta wisuda · Batch 6", "src": "assets/photos/IMG_7574.JPG", "source": "https://drive.google.com/file/d/1rNYZxIiCsFHlJWLF8r_8ZLc7JXh6uA8U/view", "position": "50% 50%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Sambutan pada acara wisuda · Batch 6", "src": "assets/photos/IMG_7590.JPG", "source": "https://drive.google.com/file/d/1kTRdpF_fd3fzv05EHdbfgec65mhliLCy/view", "position": "50% 50%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Rangkaian wisuda · Batch 6", "src": "assets/photos/IMG_7560.JPG", "source": "https://drive.google.com/file/d/1rBoa1SFtx1ErhNkUQkF-hB49OFMjRCU8/view", "position": "50% 50%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Kebersamaan alumni · Batch 6", "src": "assets/photos/IMG_7582.JPG", "source": "https://drive.google.com/file/d/1ml8jxKaaK9SaKI9KxWHt-9eXfVl6_nI9/view", "position": "50% 50%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Kebersamaan peserta · Kick-off 2025", "src": "assets/photos/IMG-20250227-WA0034.jpg", "source": "https://drive.google.com/file/d/1NBBFB8z6DraZnMrXZfF_MH3J5uZFYyS2/view", "position": "50% 75%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Tim kegiatan · Kick-off 2025", "src": "assets/photos/IMG-20250227-WA0036.jpg", "source": "https://drive.google.com/file/d/1NBGyVTNM_HUSi3dJ9iLSoPgEtZdd6UhE/view", "position": "50% 75%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Peserta wisuda · Batch 6", "src": "assets/photos/IMG_7574.JPG", "source": "https://drive.google.com/file/d/1rNYZxIiCsFHlJWLF8r_8ZLc7JXh6uA8U/view", "position": "50% 50%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Sambutan pada acara wisuda · Batch 6", "src": "assets/photos/IMG_7590.JPG", "source": "https://drive.google.com/file/d/1kTRdpF_fd3fzv05EHdbfgec65mhliLCy/view", "position": "50% 50%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Rangkaian wisuda · Batch 6", "src": "assets/photos/IMG_7560.JPG", "source": "https://drive.google.com/file/d/1rBoa1SFtx1ErhNkUQkF-hB49OFMjRCU8/view", "position": "50% 50%", "bg": "#15143A", "ink": "#FFFFFF"}, {"label": "Kebersamaan alumni · Batch 6", "src": "assets/photos/IMG_7582.JPG", "source": "https://drive.google.com/file/d/1ml8jxKaaK9SaKI9KxWHt-9eXfVl6_nI9/view", "position": "50% 50%", "bg": "#15143A", "ink": "#FFFFFF"}];
     const st = this.state;
     const drifts = ['driftA', 'driftB', 'driftC'];
     const cards = this.slots.map((s0, i) => {
@@ -466,7 +453,7 @@ class Component extends DCLogic {
       const p = photos[st.idx[i] % photos.length];
       return Object.assign({}, s, {
         drift: drifts[i % 3], float: s0.float + 1.5,
-        label: p.label, src: p.src, hasSrc: !!p.src, noSrc: !p.src, bg: p.bg, ink: p.ink,
+        label: p.label, src: p.src, position: p.position, hasSrc: !!p.src, noSrc: !p.src, bg: p.bg, ink: p.ink,
         anim: st.flip[i] ? 'swapA' : 'swapB',
         delay: (i * 0.37).toFixed(2)
       });
@@ -517,7 +504,7 @@ class Component extends DCLogic {
       { kicker: 'LEAP SHOWCASE', title: 'Karya mentee', note: 'Belum ada karya yang ditampilkan.', href: 'showcase.html', d: 'd1', dots: [1, 2, 3] },
       { kicker: 'ACHIEVEMENT', title: 'Prestasi terbaru', note: 'Data prestasi belum diunggah.', href: 'prestasi.html', d: 'd2', dots: [1, 2, 3] }
     ];
-    const gallery = this.gSlots.map((g, i) => ({ c: g.c, r: g.r, bg: photos[st.gIdx[i] % photos.length].bg, anim: st.gFlip[i] ? 'swapA' : 'swapB' }));
+    const gallery = this.gSlots.map((g, i) => ({ c: g.c, r: g.r, bg: photos[st.gIdx[i] % photos.length].bg, src: photos[st.gIdx[i] % photos.length].src, label: photos[st.gIdx[i] % photos.length].label, position: photos[st.gIdx[i] % photos.length].position, anim: st.gFlip[i] ? 'swapA' : 'swapB' }));
     return {
       stats: stats, statsInline: stats.filter((x) => x.where === 'in'), statsFloat: stats.filter((x) => x.where === 'float'), cards: cards, tiles: tiles,
       today: now.getDate() + ' ' + mons[now.getMonth()].charAt(0) + mons[now.getMonth()].slice(1).toLowerCase() + ' ' + now.getFullYear(),

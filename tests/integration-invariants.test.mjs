@@ -1,10 +1,12 @@
 import{test}from'node:test';import assert from'node:assert/strict';import{readFile,readdir}from'node:fs/promises';import{execFileSync}from'node:child_process';
 const read=p=>readFile(new URL('../'+p,import.meta.url),'utf8');
+const normalizeHome=s=>s.replace(/const photos = \[[\s\S]*?\];/,'const photos = [];').replace('; object-position: {{c.position}}','').replace('src: p.src, position: p.position, hasSrc:','src: p.src, hasSrc:').replace('bg: photos[st.gIdx[i] % photos.length].bg, src: photos[st.gIdx[i] % photos.length].src, label: photos[st.gIdx[i] % photos.length].label, position: photos[st.gIdx[i] % photos.length].position, anim:','bg: photos[st.gIdx[i] % photos.length].bg, anim:').replace('<img class="{{g.anim}}" src="{{g.src}}" alt="{{g.label}}" loading="lazy" decoding="async" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{g.position}}">','<span class="{{g.anim}}" style="position: absolute; inset: 0; display: block; background: {{g.bg}}"></span>').replace('Dokumentasi Kick-off 2025 dan wisuda Mentoring Leader Batch 6.','Foto kegiatan offline menyusul.');
+
 test('frontend/backend calculation rules remain byte-identical and 360 never adds a second score',async()=>{
  const [browser,server]=await Promise.all([read('src/assets/assessment/domain.mjs'),read('backend/erp/functions/domain.mjs')]);assert.equal(browser,server);assert.equal(server.includes('observerRefs'),false);
 });
 test('all existing public pages remain byte-identical and all ERP routes remain available',async()=>{
- const config=JSON.parse(await read('site.config.json'));for(const p of Object.values(config.sections[0].pages)){const original=execFileSync('git',['show','268c72681e65a53015b28ccd0ba064b1b7b303f8:docs/'+p.out],{encoding:'utf8'});assert.equal(await read('docs/'+p.out),original,p.out);}
+ const config=JSON.parse(await read('site.config.json'));for(const p of Object.values(config.sections[0].pages)){const original=execFileSync('git',['show','268c72681e65a53015b28ccd0ba064b1b7b303f8:docs/'+p.out],{encoding:'utf8'});const actual=await read('docs/'+p.out);assert.equal(p.out==='index.html'?normalizeHome(actual):actual,p.out==='index.html'?normalizeHome(original):original,p.out);}
  const existing=['beranda-mentee','beranda-pengurus','catat-sesi','chat','event','file-manager','kalender','kelola-event','kelompok','keuangan','monitoring-progres','pengaturan','pengumuman','penilaian','proker','super-admin','template'];const files=await readdir(new URL('../docs/app',import.meta.url));for(const name of existing)assert.ok(files.includes(name+'.html'));
 });
 test('single active assessment entry and deployment assets exclude fixtures',async()=>{

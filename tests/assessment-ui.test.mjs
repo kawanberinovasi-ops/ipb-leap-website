@@ -1,3 +1,4 @@
+import * as evidence from '../src/assets/assessment/final-evidence.mjs';
 import {test}from'node:test';import assert from'node:assert/strict';import vm from'node:vm';import{readFile}from'node:fs/promises';import{JSDOM}from'jsdom';import * as domain from'../src/assets/assessment/domain.mjs';import * as sources from'../src/assets/assessment/sources.mjs';
 const id=n=>'00000000-0000-4000-8000-'+String(n).padStart(12,'0');
 const tick=async()=>{for(let n=0;n<8;n++)await new Promise(setImmediate);};
@@ -8,7 +9,7 @@ async function ui(w,path='abc',options={}){
  dom.window.structuredClone=structuredClone;dom.window.matchMedia=()=>({matches:true});dom.window.HTMLElement.prototype.scrollIntoView=()=>{};dom.window.confirm=()=>true;
  let count=0;
  const api={configured:true,client:{auth:{signOut:async()=>{}}},verifiedUser:async()=>({id:id(1)}),workspace:async()=>structuredClone(w),bootstrap:async()=>{},revision:async()=>count,command:async()=>{},accountCommand:async()=>{},errorText:e=>e.message,recordCommand:async p=>{options.onCommand?.(p);if(options.error)throw Error(options.error);const op=domain.buildOperation(w,p);let r=w.records.find(r=>r.id===p.id);if(!r){r={id:p.id,kind:p.kind,month_no:p.month,mentee_id:id(1),versions:[],checks:[],publications:[]};w.records.push(r);}r.versions.push({id:id(100+count),number:r.versions.length+1,status:op.status,data:op.data,created_at:'2026-10-01T00:00:00Z'});r.latest_status=op.status;count++;return{ok:true};}};
- const dependencies={'sources.mjs':sources,'api.mjs':api,'domain.mjs':domain,'observer.mjs':{observerWorkspace:async()=>({available:false,feedback:[],reason:'Belum diaktifkan'}),observerPanel:()=>'',observerSelection:()=>''}};
+ const dependencies={'sources.mjs':sources,'final-evidence.mjs':evidence,'api.mjs':api,'domain.mjs':domain,'observer.mjs':{observerWorkspace:async()=>({available:false,feedback:[],reason:'Belum diaktifkan'}),observerPanel:()=>'',observerSelection:()=>''}};
  const module=new vm.SourceTextModule(await readFile(new URL('../src/assets/assessment/app.mjs',import.meta.url),'utf8'),{context,identifier:'https://example.test/subpath/assets/assessment/app.mjs',initializeImportMeta:m=>m.url='https://example.test/subpath/assets/assessment/app.mjs'});
  await module.link(specifier=>{const name=specifier.split('/').pop().split('?')[0],data=dependencies[name];return new vm.SyntheticModule(Object.keys(data),function(){for(const[k,v]of Object.entries(data))this.setExport(k,v);},{context});});
  await module.evaluate();module.namespace.mount();await tick();return{dom,document,click:async selector=>{document.querySelector(selector).click();await tick();}};
@@ -39,4 +40,15 @@ test('UI: each track has English KPI labels, valid module pathways, and no delet
   pathway.value=track.pathways[0];kpi.value=track.kpis[0];f.elements.title.value='TEST contract';await v.click('[data-record-action="save"]');assert.equal(payload.data.pathway,track.pathways[0]);assert.equal(w.enrolments[0].pathway,'Coba');
   const reload=await ui(w,'poc');await reload.click('[data-edit]');assert.equal(reload.document.querySelector('[name=pathway]').value,track.pathways[0]);v.dom.window.close();reload.dom.window.close();
  }
+});
+
+test('UI: final evidence adds track choices to existing POC, saves and reopens without changing milestones',async()=>{
+ const w=state();w.enrolments[0].field='Academic & Research';w.enrolments[0].pathway='Produce';let payload;
+ const view=await ui(w,'poc',{onCommand:p=>payload=p});await view.click('[data-new="poc"]');
+ const f=view.document.querySelector('#record-form');assert.equal(f.querySelector('[data-evidence-track]').value,'Academic & Research');
+ assert.equal(f.querySelectorAll('[name^="kpis.0.milestones."]').length,4);assert.equal(f.querySelector('[name^="kpis.0.levels."]'),null);
+ f.elements['kpis.0.finalDocuments.t1.d0'].checked=true;f.elements['kpis.0.finalDocuments.t1.d1'].checked=true;
+ f.elements['kpis.0.finalMilestone'].value='Submission pada M12';f.elements['kpis.0.milestones.M12'].value='Naskah dikirim';f.elements['kpis.0.evidencePlan'].value='Naskah dan bukti submission';
+ await view.click('[data-record-action="save"]');assert.equal(payload.data.kpis[0].finalDocuments.t1.d0,true);assert.equal(payload.data.kpis[0].milestones.M12,'Naskah dikirim');assert.equal(payload.data.kpis[0].evidencePlan,'Naskah dan bukti submission');
+ await view.click('[data-edit]');const reopened=view.document.querySelector('#record-form');assert.equal(reopened.elements['kpis.0.finalDocuments.t1.d0'].checked,true);assert.equal(reopened.elements['kpis.0.finalMilestone'].value,'Submission pada M12');view.dom.window.close();
 });
