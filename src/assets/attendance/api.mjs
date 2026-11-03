@@ -1,0 +1,13 @@
+import {isLocal} from '../management/repository.mjs';
+import {STORAGE_KEY,localUUID} from '../management/store.mjs';
+
+let csrf=null,registry=null,synced=-1;
+const base='/api/local/attendance/';
+const unavailable='Database kehadiran lokal belum aktif. Jalankan server dengan python3 jalankan.py; server http.server lama hanya menampilkan halaman.';
+export function registryId(){if(registry)return registry;const key=STORAGE_KEY+'.attendance-registry';registry=localStorage.getItem(key);if(!registry){registry=localUUID();localStorage.setItem(key,registry);}return registry;}
+async function boot(){if(csrf)return;let response;try{response=await fetch(base+'bootstrap',{credentials:'same-origin',cache:'no-store'});const data=await response.json();if(!response.ok||!data.local_only||!data.csrf)throw Error();csrf=data.csrf;}catch{throw Error(unavailable);}}
+export async function request(action,payload,retry=true){if(!isLocal()){const {rpc}=await import('../assessment/api.mjs');return rpc('erp_attendance_command',{p_action:action,p_payload:payload});}await boot();let response,data;try{response=await fetch(base+action,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json','X-LEAP-CSRF':csrf},body:JSON.stringify({...payload,registry:registryId()})});data=await response.json();}catch{throw Error('Database lokal belum dapat dihubungi. Isian tetap tersedia; kehadiran belum dicatat.');}if(response.status===403&&retry&&/Buka halaman pengurus/.test(data.error||'')){csrf=null;return request(action,payload,false);}if(!response.ok||data.error)throw Error(data.error||'Kehadiran belum tersimpan.');return data;}
+export async function syncRegistry(state){if(!isLocal())return;if(synced===state.revision)return;await request('sync',{revision:state.revision,profiles:state.profiles.map(p=>({id:p.id,display_name:p.display_name,role:p.roles[0],active:p.active})),cohorts:state.cohorts.map(c=>({id:c.id,name:c.name})),enrolments:state.enrolments.map(e=>({cohort_id:e.cohort_id,user_id:e.user_id,role:e.role,active:e.active}))});synced=state.revision;}
+export async function attendanceState(state,cohort){await syncRegistry(state);if(!cohort)return{events:[],participants:[],attendance:[],history:[]};return request('state',{cohort});}
+export async function cardFor(state,mentee,cohort=state.selectedCohort||state.cohorts.at(-1)?.id){await syncRegistry(state);return request('card',{mentee,cohort});}
+export function menteeAttendance(data,user){const participants=data.participants.filter(p=>p.user_id===user);return participants.map(p=>({...data.events.find(e=>e.id===p.event_id),attendance:data.attendance.find(a=>a.event_id===p.event_id&&a.user_id===user)||null}));}

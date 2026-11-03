@@ -1,0 +1,7 @@
+<!doctype html><html lang="id"><head><title>Kelola Akun & Progres · IPB LEAP</title></head><body><x-dc><helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/attendance/app.css">
+</helmet>
+<div class="management-shell"><div style="position:sticky;top:0;z-index:50"><dc-import name="Navbar" role="pengurus" active="program"></dc-import></div>
+<main id="management" class="management" tabindex="-1"><p>Menyiapkan ruang pengelolaan…</p></main></div>
+</x-dc><script type="text/x-dc" data-dc-script>class Component extends DCLogic {componentDidMount(){import(new URL('../assets/management/app.mjs',location.href).href).then(m=>m.mount()).catch(()=>{document.querySelector('#management').textContent='Halaman belum dapat dimuat. Muat ulang untuk mencoba kembali.';});}renderVals(){return {};}}</script></body></html>

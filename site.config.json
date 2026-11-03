@@ -159,6 +159,15 @@
         },
         "HasilKPI": {
           "out": "app/hasil-kpi.html"
+        },
+        "KelolaProgram": {
+          "out": "app/kelola-program.html"
+        },
+        "AbsensiPengurus": {
+          "out": "app/absensi-pengurus.html"
+        },
+        "Kehadiran": {
+          "out": "app/kehadiran.html"
         }
       }
     }
