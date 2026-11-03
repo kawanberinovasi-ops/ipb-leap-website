@@ -15,6 +15,7 @@
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../assets/portal/app.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 [data-dc-host]{display:contents}
@@ -47,7 +48,7 @@ body{margin:0}
 <noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
 <div id="app" data-page="BerandaMentee"></div>
 <template data-dc="BerandaMentee">
-<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+<div data-portal-shell style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
   <div style="position: sticky; top: 0; z-index: 50">
     <dc-import name="Navbar" role="mentee" active="beranda" hint-size="100%,73px"></dc-import>
   </div>
@@ -64,15 +65,14 @@ body{margin:0}
         </div>
         <div style="position: relative">
           <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px">
-            <span style="font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.26)">Batch 2026</span>
-            <span style="font-size: 12.5px; font-weight: 700; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.26)">Kelompok Rajawali</span>
-            <span style="font-size: 12.5px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #16A34A"></span>On track</span>
+            <span style="font-size: 12.5px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; display: flex; align-items: center; gap: 6px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #16A34A"></span>Ruang program kamu</span>
           </div>
-          <h1 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 58px; line-height: .98; letter-spacing: -.02em">Halo, Nabila.</h1>
-          <p style="margin: 14px 0 0; font-size: 17px; line-height: 1.6; color: rgba(255,255,255,.88); max-width: 520px">Update progres Oktober jatuh tempo <strong style="color: #FFFFFF">31 Okt</strong>. Satu menit aja, terus kamu bebas lanjut.</p>
+          <h1 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 58px; line-height: .98; letter-spacing: -.02em">Halo, {{displayName}}.</h1>
+          <p style="margin: 14px 0 0; font-size: 17px; line-height: 1.6; color: rgba(255,255,255,.88); max-width: 520px">Jalankan komitmenmu, catat hasil mentoring, dan pantau perjalanan program di sini.</p>
           <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px">
+            <a class="btn" href="{{attendanceHref}}" style="min-height:50px;padding:0 20px;border-radius:16px;background:#D4FF3A;color:#0D0D1A;font-size:15px;font-weight:800;display:flex;align-items:center;text-decoration:none">QR &amp; Kehadiran saya</a>
             <button class="btn" type="button" onClick="{{openUpdate}}" style="height: 50px; padding: 0 22px; border: 0; border-radius: 16px; background: #FFFFFF; color: #32306F; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 12px 24px -12px rgba(0,0,0,.5)">Kirim update progres</button>
-            <a class="btn" href="chat.html" style="height: 50px; padding: 0 20px; border-radius: 16px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); color: #FFFFFF; font-weight: 700; font-size: 15px; display: flex; align-items: center; text-decoration: none">Buka grup Rajawali</a>
+            <a class="btn" href="{{groupHref}}" aria-disabled="{{groupDisabled}}" style="{{groupLinkStyle}};height: 50px; padding: 0 20px; border-radius: 16px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); color: #FFFFFF; font-weight: 700; font-size: 15px; display: flex; align-items: center; text-decoration: none">{{groupAction}}</a>
           </div>
         </div>
       </section>
@@ -80,7 +80,7 @@ body{margin:0}
       <section class="rise d1 lift" style="flex: 1 1 340px; min-width: 0; border-radius: 32px; padding: 28px; background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFF 100%); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -28px rgba(50,48,111,.45); display: flex; flex-direction: column; gap: 16px">
         <div style="display: flex; justify-content: space-between; align-items: center">
           <span style="font-size: 14px; font-weight: 700; color: #55577A">{{scoreLabel}}</span>
-          <a href="raport.html" style="font-size: 13px; font-weight: 700">Raport →</a>
+          <a href="{{reportHref}}" style="font-size: 13px; font-weight: 700">Raport →</a>
         </div>
         <div style="display: flex; align-items: flex-end; gap: 12px">
           <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 72px; line-height: .9; color: #32306F; letter-spacing: -.03em">{{score}}</span>
@@ -133,15 +133,9 @@ body{margin:0}
     </sc-if>
 
     <div aria-label="Pengumuman" style="overflow: hidden; border-radius: 20px; background: #0D0D1A; color: #FFFFFF">
-      <div class="marquee" style="display: flex; gap: 48px; width: max-content; padding: 14px 0; font-size: 14px; font-weight: 600; white-space: nowrap">
-        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #D4FF3A; font-weight: 800">PENGUMUMAN</span> Periode penilaian Oktober dibuka 25 Okt – 5 Nov</span>
-        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #A3D6E6; font-weight: 800">EVENT</span> Pendaftaran Leadership Camp ditutup 2 Nov</span>
-        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #D4FF3A; font-weight: 800">PROJECT</span> Milestone Proposal final project: 15 Nov</span>
-        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #A3D6E6; font-weight: 800">MATERI</span> Tema Oktober: Komunikasi &amp; Influence</span>
-        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #D4FF3A; font-weight: 800">PENGUMUMAN</span> Periode penilaian Oktober dibuka 25 Okt – 5 Nov</span>
-        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #A3D6E6; font-weight: 800">EVENT</span> Pendaftaran Leadership Camp ditutup 2 Nov</span>
-        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #D4FF3A; font-weight: 800">PROJECT</span> Milestone Proposal final project: 15 Nov</span>
-        <span style="display: flex; gap: 10px; align-items: center"><span style="color: #A3D6E6; font-weight: 800">MATERI</span> Tema Oktober: Komunikasi &amp; Influence</span>
+      <div class="marquee" style="display:flex;gap:48px;width:max-content;max-width:{{tickerMaxWidth}};padding:14px 20px;font-size:14px;font-weight:600;white-space:nowrap;animation:{{tickerAnimation}}">
+        <sc-for list="{{announcements}}" as="a"><a href="{{a.href}}" aria-hidden="{{a.duplicate}}" tabindex="{{a.tabIndex}}" style="display:flex;gap:10px;align-items:center;color:white;text-decoration:none"><span style="color:#D4FF3A;font-weight:800">PENGUMUMAN</span>{{a.title}}</a></sc-for>
+        <sc-if value="{{noAnnouncements}}"><span style="white-space:normal">{{announcementStatus}}</span></sc-if>
       </div>
     </div>
 
@@ -150,82 +144,58 @@ body{margin:0}
       <section id="tugas" class="rise d2" style="border-radius: 28px; padding: 26px; background: linear-gradient(180deg, #FFFFFF, #F9FAFE); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -30px rgba(50,48,111,.45)">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px">
           <h2 style="margin: 0; font-size: 19px; font-weight: 800">Yang perlu kamu lakukan</h2>
-          <span style="font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: #F1F4FB; color: #32306F">{{doneCount}}/4</span>
+          <span style="font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: #F1F4FB; color: #32306F">{{taskCount}} catatan</span>
         </div>
         <div style="display: flex; flex-direction: column; gap: 8px">
-          <sc-for list="{{tasks}}" as="t" hint-placeholder-count="4">
-            <button type="button" onClick="{{t.toggle}}" aria-pressed="{{t.pressed}}" style="{{t.rowStyle}}">
+          <sc-for list="{{tasks}}" as="t" hint-placeholder-count="0">
+            <button type="button" onClick="{{t.toggle}}" style="{{t.rowStyle}}">
               <span style="{{t.boxStyle}}">{{t.mark}}</span>
               <span style="display: flex; flex-direction: column; gap: 2px; text-align: left; flex: 1"><span style="{{t.titleStyle}}">{{t.title}}</span><span style="font-size: 12.5px; color: #6B6D8C; font-weight: 500">{{t.meta}}</span></span>
               <span style="font-size: 11.5px; font-weight: 800; padding: 4px 8px; border-radius: 8px; background: {{t.tagBg}}; color: {{t.tagInk}}">{{t.tag}}</span>
             </button>
           </sc-for>
+          <sc-if value="{{noTasks}}"><p style="font-size:14px;color:#6B6D8C">Tidak ada draft atau permintaan perbaikan yang perlu ditindaklanjuti.</p></sc-if>
         </div>
       </section>
 
       <section class="rise d3" style="border-radius: 28px; padding: 26px; background: linear-gradient(180deg, #FFFFFF, #F9FAFE); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -30px rgba(50,48,111,.45)">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px">
           <h2 style="margin: 0; font-size: 19px; font-weight: 800">Jadwal terdekat</h2>
-          <a href="kalender.html" style="font-size: 13px; font-weight: 700">Kalender →</a>
+          <a href="{{calendarHref}}" style="font-size: 13px; font-weight: 700">Kalender →</a>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 12px">
-          <div style="display: flex; gap: 14px; align-items: center">
-            <div style="width: 58px; height: 62px; flex: none; border-radius: 18px; background: #32306F; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 11px; font-weight: 700; opacity: .8">SAB</span><span style="font-size: 22px; font-weight: 800; line-height: 1">18</span></div>
-            <div style="flex: 1; min-width: 0"><div style="font-weight: 700; font-size: 15px">Sesi Mentoring #6 · Rajawali</div><div style="font-size: 13px; color: #6B6D8C">09.00–11.00 · Google Meet</div></div>
-            <span style="font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: #DCFCE7; color: #166534">Hadir</span>
-          </div>
-          <div style="display: flex; gap: 14px; align-items: center">
-            <div style="width: 58px; height: 62px; flex: none; border-radius: 18px; background: #E4EBF8; color: #3157A5; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 11px; font-weight: 700">RAB</span><span style="font-size: 22px; font-weight: 800; line-height: 1">22</span></div>
-            <div style="flex: 1; min-width: 0"><div style="font-weight: 700; font-size: 15px">Kelas: Komunikasi &amp; Influence</div><div style="font-size: 13px; color: #6B6D8C">19.00–21.00 · Zoom Program</div></div>
-            <span style="font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: #FEF3C7; color: #92400E">RSVP?</span>
-          </div>
-          <div style="display: flex; gap: 14px; align-items: center">
-            <div style="width: 58px; height: 62px; flex: none; border-radius: 18px; background: #E3F3F8; color: #1F5566; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 11px; font-weight: 700">JUM</span><span style="font-size: 22px; font-weight: 800; line-height: 1">31</span></div>
-            <div style="flex: 1; min-width: 0"><div style="font-weight: 700; font-size: 15px">Batas update progres Oktober</div><div style="font-size: 13px; color: #6B6D8C">23.59 · pengingat otomatis H-2</div></div>
-          </div>
-        </div>
+        <div style="display:flex;flex-direction:column;gap:12px"><sc-for list="{{upcoming}}" as="e"><a href="{{e.href}}" style="display:block;padding:14px;border:1px solid #E3E7F2;border-radius:16px;text-decoration:none"><strong>{{e.title}}</strong><small style="display:block;margin-top:6px;color:#6B6D8C">{{e.when}}</small></a></sc-for><sc-if value="{{noUpcoming}}"><p style="font-size:14px;color:#6B6D8C">Belum ada jadwal mendatang yang tersedia untuk akunmu.</p></sc-if></div>
       </section>
 
       <section class="rise d4" style="border-radius: 28px; padding: 26px; background: linear-gradient(180deg, #FFFFFF, #F9FAFE); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -30px rgba(50,48,111,.45)">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px">
-          <h2 style="margin: 0; font-size: 19px; font-weight: 800">Kelompok Rajawali</h2>
-          <a href="chat.html" style="font-size: 13px; font-weight: 700">Grup chat →</a>
+          <h2 style="margin: 0; font-size: 19px; font-weight: 800">{{groupTitle}}</h2>
+          <a href="{{groupHref}}" style="font-size:13px;font-weight:700">Detail kelompok →</a>
         </div>
-        <div style="display: flex; flex-direction: column; gap: 12px">
-          <div style="display: flex; align-items: center; gap: 12px"><span style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#0D0D1A,#32306F); color: #FFFFFF; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center">DH</span><span style="flex: 1"><span style="display: block; font-weight: 700">Dian Hapsari</span><span style="font-size: 13px; color: #6B6D8C">Mentor · Head of People, perusahaan agribisnis</span></span></div>
-          <div style="display: flex; align-items: center; gap: 12px"><span style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center">RP</span><span style="flex: 1"><span style="display: block; font-weight: 700">Raka Pratama</span><span style="font-size: 13px; color: #6B6D8C">Asmen</span></span></div>
-          <div style="display: flex; align-items: center; gap: 0; padding-top: 6px">
-            <span style="width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,#3157A5,#A3D6E6); color: #FFFFFF; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFFFFF">NP</span>
-            <span style="width: 40px; height: 40px; margin-left: -10px; border-radius: 50%; background: #A3D6E6; color: #1F5566; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFFFFF">FA</span>
-            <span style="width: 40px; height: 40px; margin-left: -10px; border-radius: 50%; background: #D4FF3A; color: #0D0D1A; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFFFFF">GW</span>
-            <span style="width: 40px; height: 40px; margin-left: -10px; border-radius: 50%; background: #32306F; color: #FFFFFF; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; border: 3px solid #FFFFFF">YS</span>
-            <span style="margin-left: 12px; font-size: 13px; color: #6B6D8C; font-weight: 600">4 mentee</span>
-          </div>
-        </div>
+        <div style="display:flex;flex-direction:column;gap:12px"><sc-for list="{{groupPeople}}" as="p"><div style="display:flex;align-items:center;gap:12px"><span style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#32306F,#3157A5);color:white;font-weight:800;display:flex;align-items:center;justify-content:center">{{p.initials}}</span><span><strong style="display:block">{{p.name}}</strong><span style="font-size:13px;color:#6B6D8C">{{p.role}}</span></span></div></sc-for><sc-if value="{{noGroupPeople}}"><p style="font-size:14px;color:#6B6D8C">{{groupStatus}}</p></sc-if></div>
       </section>
     </div>
 
     <div style="display: flex; flex-wrap: wrap; gap: 24px">
       <section style="flex: 999 1 600px; min-width: 0; border-radius: 28px; padding: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45)">
         <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 22px">
-          <div><span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Final project</span><h2 style="margin: 4px 0 0; font-size: 22px; font-weight: 800; color: #32306F">Pasar Tani Digital untuk Desa Cibanteng</h2></div>
-          <span style="font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #E4EBF8; color: #3157A5">Milestone 2 dari 3</span>
+          <div><span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Final project</span><h2 style="margin: 4px 0 0; font-size: 22px; font-weight: 800; color: #32306F">Project program</h2></div>
+          <span style="font-size: 13px; font-weight: 800; padding: 6px 12px; border-radius: 999px; background: #E4EBF8; color: #3157A5">Data project belum terhubung</span>
         </div>
         <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
-          <div style="padding: 16px; border-radius: 20px; background: #F0FDF4; border: 1px solid #BBF7D0"><div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #166534; font-size: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #16A34A; color: #FFFFFF; font-size: 12px; display: flex; align-items: center; justify-content: center">✓</span>Ide &amp; tim</div><div style="font-size: 13px; color: #3F6B4F; margin-top: 6px">Disetujui · 30 Sep</div></div>
-          <div style="padding: 16px; border-radius: 20px; background: #EEF2FC; border: 1.5px solid #3157A5"><div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #32306F; font-size: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #3157A5; color: #FFFFFF; font-size: 12px; display: flex; align-items: center; justify-content: center">2</span>Proposal</div><div style="font-size: 13px; color: #55577A; margin-top: 6px">Tenggat 15 Nov · draft 60%</div><div style="height: 6px; border-radius: 6px; background: #D5DAEA; margin-top: 10px; overflow: hidden"><div style="width: 60%; height: 100%; background: linear-gradient(90deg,#3157A5,#A3D6E6)"></div></div></div>
-          <div style="padding: 16px; border-radius: 20px; background: #F5F7FC; border: 1px dashed #C9CFE2"><div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #6B6D8C; font-size: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #E3E7F2; color: #6B6D8C; font-size: 12px; display: flex; align-items: center; justify-content: center">3</span>Presentasi akhir</div><div style="font-size: 13px; color: #8A8CA8; margin-top: 6px">Desember</div></div>
+          <div style="padding: 16px; border-radius: 20px; background: #F0FDF4; border: 1px solid #BBF7D0"><div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #166534; font-size: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #16A34A; color: #FFFFFF; font-size: 12px; display: flex; align-items: center; justify-content: center">✓</span>Ide &amp; tim</div><div style="font-size: 13px; color: #3F6B4F; margin-top: 6px">Belum ada status tersimpan</div></div>
+          <div style="padding: 16px; border-radius: 20px; background: #EEF2FC; border: 1.5px solid #3157A5"><div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #32306F; font-size: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #3157A5; color: #FFFFFF; font-size: 12px; display: flex; align-items: center; justify-content: center">2</span>Proposal</div><div style="font-size: 13px; color: #55577A; margin-top: 6px">Belum ada progres tersimpan</div><div style="height: 6px; border-radius: 6px; background: #D5DAEA; margin-top: 10px; overflow: hidden"><div style="width: 0%; height: 100%; background: linear-gradient(90deg,#3157A5,#A3D6E6)"></div></div></div>
+          <div style="padding: 16px; border-radius: 20px; background: #F5F7FC; border: 1px dashed #C9CFE2"><div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #6B6D8C; font-size: 14px"><span style="width: 22px; height: 22px; border-radius: 50%; background: #E3E7F2; color: #6B6D8C; font-size: 12px; display: flex; align-items: center; justify-content: center">3</span>Presentasi akhir</div><div style="font-size: 13px; color: #8A8CA8; margin-top: 6px">Belum ada jadwal tersimpan</div></div>
         </div>
       </section>
 
       <section style="flex: 1 1 320px; min-width: 0; border-radius: 28px; padding: 28px; background: #E3F3F8; border: 1px solid rgba(31,85,102,.12)">
-        <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #1F5566">Materi Oktober</span>
-        <h2 style="margin: 4px 0 14px; font-size: 22px; font-weight: 800; color: #0D0D1A">Komunikasi &amp; Influence</h2>
+        <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #1F5566">Materi program</span>
+        <h2 style="margin: 4px 0 14px; font-size: 22px; font-weight: 800; color: #0D0D1A">Materi belum terhubung</h2>
         <div style="display: flex; align-items: center; gap: 14px">
-          <div style="flex: 1; height: 12px; border-radius: 12px; background: rgba(255,255,255,.8); overflow: hidden"><div style="width: 66%; height: 100%; border-radius: 12px; background: #32306F"></div></div>
-          <span style="font-weight: 800; color: #32306F">2/3</span>
+          <div style="flex: 1; height: 12px; border-radius: 12px; background: rgba(255,255,255,.8); overflow: hidden"><div style="width: 0%; height: 100%; border-radius: 12px; background: #32306F"></div></div>
+          <span style="font-weight: 800; color: #32306F">—</span>
         </div>
-        <p style="margin: 14px 0 0; font-size: 14px; color: #1F5566; line-height: 1.5">Sisa: video "Storytelling untuk pemimpin muda" (18 menit).</p>
+        <p style="margin: 14px 0 0; font-size: 14px; color: #1F5566; line-height: 1.5">Progres materi belum dapat ditampilkan dari sumber belajar.</p>
       </section>
     </div>
 
@@ -272,7 +242,7 @@ body{margin:0}
     </nav>
 
     <div style="display: flex; align-items: center; gap: 8px; position: relative">
-      <button type="button" aria-label="Cari (Ctrl K)" style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
+      <button type="button" aria-label="Cari (Ctrl K)" data-leap-search style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
         <span>Cari</span><span style="font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: {{c.chip}}; border: 1px solid {{c.line2}}">⌘K</span>
       </button>
@@ -319,16 +289,12 @@ body{margin:0}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { update: false, sent: false, done: { t1: true } };
+    this.state = { displayName:'…', groupPeople:[], announcements:[], update: false, sent: false, done: {} };
   }
-  componentDidMount(){window.addEventListener('leap:report',e=>this.setState(e.detail));import(new URL('../assets/assessment/home.mjs',location.href).href).then(m=>m.mountHome());}
+  componentDidMount(){this._homeReport=e=>this.setState(e.detail);this._homePortal=e=>this.setState(e.detail);window.addEventListener('leap:report',this._homeReport);window.addEventListener('leap:home',this._homePortal);import(new URL('../assets/assessment/home.mjs',location.href).href).then(m=>m.mountHome());}
+  componentWillUnmount(){window.removeEventListener('leap:report',this._homeReport);window.removeEventListener('leap:home',this._homePortal);window.leapHomeCleanup?.();}
   renderVals() {
-    const defs = [
-      { id: 't1', title: 'RSVP Sesi Mentoring #6', meta: 'Sab, 18 Okt', tag: 'Event', tagBg: '#E4EBF8', tagInk: '#3157A5' },
-      { id: 't2', title: 'Update progres Oktober', meta: 'Tenggat 31 Okt', tag: 'Wajib', tagBg: '#FEF3C7', tagInk: '#92400E' },
-      { id: 't3', title: 'Feedback 360° untuk Asmen & Mentor', meta: 'Dibuka 25 Okt', tag: 'Penilaian', tagBg: '#EEFFB8', tagInk: '#3A4A00' },
-      { id: 't4', title: 'Unggah draft proposal final project', meta: 'Tenggat 15 Nov', tag: 'Project', tagBg: '#E7E6F3', tagInk: '#32306F' }
-    ];
+    const defs = this.state.todo||[];
     const done = this.state.done;
     const tasks = defs.map((d) => {
       const on = !!done[d.id];
@@ -338,17 +304,18 @@ class Component extends DCLogic {
         rowStyle: 'display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px; border-radius: 16px; border: 1px solid ' + (on ? '#E3E7F2' : '#EEF0F7') + '; background: ' + (on ? '#F7F8FC' : '#FFFFFF') + '; font: inherit; cursor: pointer; color: #0D0D1A',
         boxStyle: 'width: 24px; height: 24px; flex: none; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #0D0D1A; ' + (on ? 'background: #D4FF3A; border: 2px solid #D4FF3A' : 'background: #FFFFFF; border: 2px solid #C9CFE2'),
         titleStyle: 'font-size: 14.5px; font-weight: 700; ' + (on ? 'text-decoration: line-through; color: #8A8CA8' : ''),
-        toggle: () => { const n = Object.assign({}, this.state.done); n[d.id] = !on; this.setState({ done: n }); }
+        toggle: () => {location.href=d.href;}
       });
     });
     return {
+      reportHref:this.state.reportHref||'raport.html',calendarHref:this.state.calendarHref||'kalender.html',upcoming:this.state.upcoming||[],noUpcoming:this.state.noUpcoming!==false,displayName:this.state.displayName||'…',groupTitle:this.state.groupTitle||'Kelompok kamu',groupAction:this.state.groupAction||'Memeriksa kelompok…',groupHref:this.state.groupHref||'#',groupDisabled:this.state.groupHref?'false':'true',groupLinkStyle:this.state.groupHref?'':'pointer-events:none;opacity:.65',groupPeople:this.state.groupPeople||[],noGroupPeople:!this.state.groupPeople?.length,groupStatus:this.state.groupStatus||'Memeriksa penugasan kelompok…',attendanceHref:this.state.attendanceHref||'kehadiran.html',announcements:this.state.announcements||[],noAnnouncements:!this.state.announcements?.length,announcementStatus:this.state.announcementStatus||'Memuat pengumuman pengurus…',tickerAnimation:this.state.announcements?.length?'marquee 28s linear infinite':'none',tickerMaxWidth:this.state.announcements?.length?'none':'100%',
       score: this.state.score||'—',scoreLabel:this.state.scoreLabel||'Nilai program',scoreStatus:this.state.scoreStatus||'Belum ada raport diterbitkan',processScore:this.state.processScore||'—',achievementScore:this.state.achievementScore||'—',hasTrend:this.state.hasTrend||false,trendLine:this.state.trendLine||'',trendArea:this.state.trendArea||'',trendPoints:this.state.trendPoints||[],trendLabel:this.state.trendLabel||'',reportError:this.state.reportError||'',
-      tasks: tasks,
+      tasks: tasks,taskCount:tasks.length,noTasks:!tasks.length,
       doneCount: tasks.filter((t) => done[t.id]).length,
       updateOpen: this.state.update,
       sent: this.state.sent,
       notSent: !this.state.sent,
-      openUpdate: () => {location.href='mentoring.html';},
+      openUpdate: () => {location.href=this.state.mentoringHref||'mentoring.html';},
       closeUpdate: () => this.setState({ update: false, sent: false }),
       sendUpdate: () => { const n = Object.assign({}, this.state.done); n.t2 = true; this.setState({ sent: true, done: n }); }
     };
@@ -361,7 +328,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { open: null, notif: false, me: false };
   }
-  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));if(!location.pathname.includes('/review-penilaian/'))import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).catch(()=>{});}
+  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));if(!location.pathname.includes('/review-penilaian/'))import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).then(()=>import(new URL('../assets/portal/search.mjs',location.href).href)).then(m=>m.mountSearch()).catch(()=>{});}
   renderVals() {
     const actor=window.leapAccount,granted=actor?.roles||[],selected=sessionStorage.getItem('ipbleap.ui.role'),serverRole=granted.includes(selected)?selected:granted[0];
     const role = actor ? ({program:'pengurus',finance:'bendahara',system:'superadmin'}[serverRole]||serverRole||'mentee') : (this.props.role ?? 'mentee');
@@ -420,7 +387,6 @@ class Component extends DCLogic {
           assessmentLink('Personal Outcome Contract','Outcome dan KPI sesuai track, pathway serta baseline','poc.html','PO'),
           assessmentLink('Hasil KPI','Ajukan hasil aktual M3/M6/M9/M12 dan portfolio','hasil-kpi.html','HK'),
           assessmentLink('Raport','Hasil penilaian yang sudah diterbitkan','raport.html','RP','#EEFFB8'),
-          assessmentLink('Kehadiran saya','QR presensi dan riwayat kehadiran kegiatan','kehadiran.html','KH')
         ] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
@@ -447,9 +413,9 @@ class Component extends DCLogic {
     };
     menus.mentor = [menus.asmen[0],{key:'kelompok',label:'Kelompok',children:mentorFlow}].concat(tail,[menus.asmen.at(-1)]);
     const people = {
-      mentee: { name: 'Nabila Putri', subtitle: 'Mentee · Kelompok Rajawali', initials: 'NP', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
-      asmen: { name: 'Raka Pratama', subtitle: 'Asmen · Kelompok Rajawali', initials: 'RP', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
-      mentor: { name: 'Dian Hapsari', subtitle: 'Mentor · Kelompok Rajawali', initials: 'DH', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
+      mentee: { name: 'Akun mentee', subtitle: 'Mentee', initials: 'M', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
+      asmen: { name: 'Akun Asmen', subtitle: 'Asisten Mentor', initials: 'A', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
+      mentor: { name: 'Akun Mentor', subtitle: 'Mentor', initials: 'M', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
       pengurus: { name: 'Head of Operations', subtitle: 'Steering Team IPB Leap 2026', initials: 'HO', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Pengurus', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
       bendahara: { name: 'Bendahara', subtitle: 'Steering Team IPB Leap 2026', initials: 'BD', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Bendahara', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
@@ -489,6 +455,6 @@ class Component extends DCLogic {
   }
 }
 </script>
-<script src="../assets/leap-runtime.js"></script>
+<script src="../assets/leap-runtime.js?v=20261103-portal2"></script>
 </body>
 </html>

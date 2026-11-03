@@ -15,6 +15,7 @@
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../assets/portal/app.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 [data-dc-host]{display:contents}
@@ -32,6 +33,8 @@ a{color:#3157A5}a:hover{color:#32306F}
 .btn:hover{transform:translateY(-2px)}
 input:focus,select:focus{outline:none;border-color:#3157A5 !important}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+.calendar-shell input{box-sizing:border-box;max-width:100%}.calendar-shell input[type=date],.calendar-shell input[type=time]{padding:12px;border:1px solid #D5DAEA;border-radius:12px;font:inherit}
+@media(max-width:600px){.calendar-shell main{padding:20px 16px!important}.calendar-shell main aside{max-width:none!important;flex-basis:100%!important}.calendar-shell h1{font-size:25px!important}.calendar-shell [role=tablist]{flex-wrap:wrap}.calendar-shell input{font-size:16px!important}.calendar-shell main>section{padding:12px!important}.calendar-shell input[type=search]{width:100%!important}}
 
 
 body{margin:0}
@@ -42,7 +45,7 @@ body{margin:0}
 <noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
 <div id="app" data-page="Kalender"></div>
 <template data-dc="Kalender">
-<div style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+<div class="calendar-shell" data-portal-shell style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
   <div style="position: sticky; top: 0; z-index: 50">
     <dc-import name="Navbar" role="mentee" active="kalender" hint-size="100%,73px"></dc-import>
   </div>
@@ -50,9 +53,9 @@ body{margin:0}
   <main style="max-width: 1360px; margin: 0 auto; padding: 24px 24px 64px; display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
 
     <aside style="flex: 1 1 240px; max-width: 280px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
-      <button class="btn" type="button" onClick="{{openCreate}}" style="height: 52px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 16px 30px -18px rgba(50,48,111,.9)">+ Buat event</button>
+      <button class="btn" type="button" onClick="{{openCreate}}" style="height: 52px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 16px 30px -18px rgba(50,48,111,.9)">+ Jadwal pribadi</button>
       <div style="padding: 18px; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px"><strong style="font-size: 14px">Kalender saya</strong><button type="button" aria-label="Tambah kalender" style="width: 28px; height: 28px; border-radius: 8px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800; color: #3157A5">+</button></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px"><strong style="font-size: 14px">Kalender saya</strong><button type="button" onClick="{{openCreate}}" aria-label="Tambah jadwal pribadi" style="width: 28px; height: 28px; border-radius: 8px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800; color: #3157A5">+</button></div>
         <div style="display: flex; flex-direction: column; gap: 4px">
           <sc-for list="{{cals}}" as="c" hint-placeholder-count="4">
             <button type="button" onClick="{{c.toggle}}" aria-pressed="{{c.pressed}}" style="display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-radius: 10px; border: 0; background: transparent; font: inherit; font-size: 13.5px; cursor: pointer; color: #0D0D1A; text-align: left">
@@ -63,21 +66,22 @@ body{margin:0}
         </div>
       </div>
       <div style="padding: 18px; border-radius: 24px; background: #E3F3F8; font-size: 13px; line-height: 1.5; color: #1F5566">
-        <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #0D0D1A; margin-bottom: 4px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #16A34A"></span>Sinkron Google Calendar</div>
-        Dua arah · terakhir 2 menit lalu<br>nabila@apps.ipb.ac.id
+        <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #0D0D1A; margin-bottom: 4px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #8A8CA8"></span>Sinkron Google Calendar</div>
+        Belum terhubung. Kalender menampilkan jadwal pribadi, kelompok, dan kegiatan program yang tersedia untuk akunmu.
       </div>
     </aside>
 
     <section class="rise" style="flex: 999 1 640px; min-width: 0; padding: 22px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45)">
+      <p role="alert" style="color:#943B26">{{error}}</p><sc-if value="{{noActivity}}"><p>Belum ada jadwal yang tersedia untuk akunmu.</p></sc-if>
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px">
-        <div style="display: flex; align-items: center; gap: 10px">
-          <h1 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px; letter-spacing: -.02em; color: #32306F">Oktober 2026</h1>
-          <button type="button" aria-label="Bulan sebelumnya" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">‹</button>
-          <button type="button" aria-label="Bulan berikutnya" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">›</button>
-          <button type="button" style="height: 36px; padding: 0 12px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font: inherit; font-weight: 700; font-size: 13px">Hari ini</button>
+        <div class="calendar-heading" style="display: flex; align-items: center; gap: 10px">
+          <h1 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px; letter-spacing: -.02em; color: #32306F">{{monthLabel}}</h1>
+          <button type="button" aria-label="Bulan sebelumnya" onClick="{{previous}}" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">‹</button>
+          <button type="button" aria-label="Bulan berikutnya" onClick="{{next}}" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">›</button>
+          <button type="button" onClick="{{today}}" style="height: 36px; padding: 0 12px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font: inherit; font-weight: 700; font-size: 13px">Hari ini</button>
         </div>
         <div style="display: flex; gap: 8px; align-items: center">
-          <label style="position: relative"><span style="position: absolute; left: -9999px">Cari event</span><input type="search" placeholder="Cari event, orang, lokasi" style="height: 38px; width: 220px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 13px"></label>
+          <label style="position: relative"><span style="position: absolute; left: -9999px">Cari event</span><input type="search" value="{{search}}" onInput="{{onSearch}}" placeholder="Cari jadwal atau lokasi" style="height: 38px; width: 220px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 13px"></label>
           <div role="tablist" aria-label="Tampilan" style="display: flex; gap: 3px; padding: 4px; border-radius: 12px; background: #E9EDF7">
             <sc-for list="{{views}}" as="v" hint-placeholder-count="4">
               <button type="button" role="tab" aria-selected="{{v.selected}}" onClick="{{v.pick}}" style="{{v.style}}">{{v.label}}</button>
@@ -128,24 +132,11 @@ body{margin:0}
         </div>
         <h2 style="margin: 14px 0 6px; font-size: 21px; font-weight: 800; color: #0D0D1A">{{sel.title}}</h2>
         <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; color: #33355A">
-          <span>{{sel.dateLabel}} Okt 2026 · {{sel.time}}</span>
+          <span>{{sel.dateLabel}}</span>
           <span>{{sel.where}}</span>
-          <span style="color: #6B6D8C">Pengingat: 1 hari &amp; 1 jam sebelumnya · email + notifikasi</span>
+          <span style="color: #6B6D8C">Pengingat email dan notifikasi belum dihubungkan.</span>
         </div>
-        <div style="margin: 16px 0; display: flex; align-items: center">
-          <span style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#0D0D1A,#32306F); color: #FFFFFF; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF">DH</span>
-          <span style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: #3157A5; color: #FFFFFF; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF">RP</span>
-          <span style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: #A3D6E6; color: #1F5566; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF">FA</span>
-          <span style="width: 32px; height: 32px; margin-left: -8px; border-radius: 50%; background: #D4FF3A; color: #0D0D1A; font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid #FFFFFF">GW</span>
-          <span style="margin-left: 10px; font-size: 12.5px; color: #6B6D8C; font-weight: 600">{{sel.guests}}</span>
-        </div>
-        <span style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 8px">Kamu hadir?</span>
-        <div role="group" aria-label="RSVP" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px">
-          <sc-for list="{{rsvp}}" as="r" hint-placeholder-count="3">
-            <button type="button" onClick="{{r.pick}}" aria-pressed="{{r.pressed}}" style="{{r.style}}">{{r.label}}</button>
-          </sc-for>
-        </div>
-        <a class="btn" href="#" style="margin-top: 14px; height: 46px; border-radius: 14px; background: #0D0D1A; color: #FFFFFF; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center; justify-content: center">Gabung Google Meet</a>
+        <p style="font-size:13px;color:#6B6D8C">{{sel.guests}}</p><p style="font-size:13px;color:#6B6D8C">Kehadiran kegiatan dicatat oleh pengurus melalui QR presensi.</p>
       </aside>
     </sc-if>
 
@@ -153,36 +144,17 @@ body{margin:0}
       <div style="position: fixed; inset: 0; z-index: 80; background: rgba(13,13,26,.4); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px">
         <div class="pop" role="dialog" aria-label="Buat event" style="width: 100%; max-width: 560px; max-height: 90vh; overflow: auto; padding: 26px; border-radius: 30px; background: rgba(255,255,255,.96); border: 1px solid rgba(255,255,255,.8); box-shadow: 0 40px 80px -30px rgba(13,13,26,.6)">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px"><h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #32306F">Event baru</h2><button type="button" onClick="{{closeCreate}}" aria-label="Tutup" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer">×</button></div>
-          <div style="display: flex; flex-direction: column; gap: 14px">
-            <input type="text" aria-label="Judul event" value="Belajar bareng: review proposal" style="height: 54px; padding: 0 16px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 18px; font-weight: 800">
-            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px">
-              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Tanggal<input type="text" value="Kam, 29 Okt" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; color: #0D0D1A"></label>
-              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Mulai<input type="text" value="16.00" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; color: #0D0D1A"></label>
-              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Selesai<input type="text" value="17.30 WIB" style="height: 44px; padding: 0 12px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; color: #0D0D1A"></label>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
-              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Ulangi<select style="height: 44px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Tidak berulang</option><option>Setiap minggu</option><option>Setiap bulan</option><option>Custom…</option></select></label>
-              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 12.5px; font-weight: 700; color: #55577A">Kalender<select style="height: 44px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Kelompok Rajawali</option><option>Pribadi</option></select></label>
-            </div>
-            <div>
-              <span style="display: block; font-size: 12.5px; font-weight: 700; color: #55577A; margin-bottom: 6px">Invite &amp; tag</span>
-              <div style="display: flex; flex-wrap: wrap; gap: 6px; padding: 10px; border-radius: 14px; border: 1.5px solid #3157A5; background: #FFFFFF">
-                <span style="font-size: 13px; font-weight: 700; padding: 6px 10px; border-radius: 10px; background: #E4EBF8; color: #3157A5">Kelompok Rajawali · 6</span>
-                <span style="font-size: 13px; font-weight: 700; padding: 6px 10px; border-radius: 10px; background: #E7E6F3; color: #32306F">@Raka Pratama</span>
-                <input type="text" aria-label="Tambah orang" placeholder="Ketik nama, kelompok, divisi…" style="flex: 1; min-width: 160px; border: 0; font: inherit; font-size: 13px; outline: none">
-              </div>
-              <span style="display: block; margin-top: 6px; font-size: 12px; color: #16A34A; font-weight: 700">Semua tamu kosong di jam ini</span>
-            </div>
-            <div style="display: flex; flex-wrap: wrap; gap: 14px; font-size: 13.5px; font-weight: 600">
-              <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked=""> Buat link Google Meet</label>
-              <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox" checked=""> Pengingat 1 jam</label>
-              <label style="display: flex; gap: 8px; align-items: center"><input type="checkbox"> Publik</label>
-            </div>
-            <button class="btn" type="button" onClick="{{saveCreate}}" style="height: 52px; border-radius: 16px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Simpan &amp; kirim undangan</button>
-          </div>
+          <form data-personal-event style="display:grid;gap:16px" onSubmit="{{preventSubmit}}">
+            <p>Jadwal ini hanya terlihat olehmu. Jadwal kelompok dan program dikelola melalui penugasan yang sudah ada.</p>
+            <label>Judul<input name="title" aria-label="Judul event" value="{{form.title}}" required maxlength="160" style="width:100%;box-sizing:border-box;padding:14px;border:1px solid #D5DAEA;border-radius:14px;font:inherit"></label>
+            <label>Tanggal<input name="date" type="date" value="{{form.date}}" required></label><label>Mulai · WIB<input name="start" type="time" value="{{form.start}}" required></label><label>Selesai · WIB<input name="end" type="time" value="{{form.end}}" required></label>
+            <label>Lokasi (opsional)<input name="location" value="{{form.location}}" maxlength="300"></label><p role="alert" style="color:#943B26">{{error}}</p>
+            <button class="btn" type="button" onClick="{{saveCreate}}" disabled="{{busy}}" style="padding:14px;border:0;border-radius:14px;background:linear-gradient(135deg,#32306F,#3157A5);color:white;font:inherit;font-weight:800">Simpan jadwal pribadi</button>
+          </form>
         </div>
       </div>
     </sc-if>
+    <sc-if value="{{hasSel}}"><sc-if value="{{canCancel}}"><button type="button" onClick="{{cancelPersonal}}" style="padding:12px;border:1px solid #E5484D;border-radius:14px;color:#943B26;background:white">Batalkan jadwal pribadi</button></sc-if></sc-if>
   </main>
 </div>
 </template>
@@ -226,7 +198,7 @@ body{margin:0}
     </nav>
 
     <div style="display: flex; align-items: center; gap: 8px; position: relative">
-      <button type="button" aria-label="Cari (Ctrl K)" style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
+      <button type="button" aria-label="Cari (Ctrl K)" data-leap-search style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
         <span>Cari</span><span style="font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: {{c.chip}}; border: 1px solid {{c.line2}}">⌘K</span>
       </button>
@@ -271,95 +243,10 @@ body{margin:0}
 </template>
 <script type="text/x-dc" data-dc="Kalender" data-props='{}'>
 class Component extends DCLogic {
-  constructor(props) {
-    super(props);
-    this.state = { hidden: {}, view: 'bulan', sel: 'e7', create: false, rsvp: { e7: 'ya' }, added: false };
-  }
-  renderVals() {
-    const st = this.state;
-    const calDefs = {
-      pribadi: { name: 'Pribadi', color: '#2FA3C7', tint: '#E3F3F8', ink: '#1F5566' },
-      kelompok: { name: 'Kelompok Rajawali', color: '#3157A5', tint: '#E4EBF8', ink: '#24427F' },
-      program: { name: 'Program IPB LEAP', color: '#32306F', tint: '#E7E6F3', ink: '#32306F' },
-      kuliah: { name: 'Kuliah (Google)', color: '#8A8CA8', tint: '#F1F2F6', ink: '#4B4D68' }
-    };
-    const ev = [
-      { id: 'e1', d: 4, time: '09.00', title: 'Sesi Mentoring #5', cal: 'kelompok', where: 'Google Meet' },
-      { id: 'e2', d: 4, time: '19.00', title: 'Diaspora Talk VII', cal: 'program', where: 'Zoom Program' },
-      { id: 'e3', d: 6, time: '08.00', title: 'Kuliah lapang', cal: 'kuliah', where: 'Kebun Cikabayan' },
-      { id: 'e4', d: 8, time: '19.00', title: 'Kelas: Problem Framing', cal: 'program', where: 'Zoom Program' },
-      { id: 'e5', d: 13, time: '16.00', title: 'Wawancara petani', cal: 'pribadi', where: 'Desa Cibanteng' },
-      { id: 'e6', d: 15, time: '16.00', title: 'Belajar bareng', cal: 'pribadi', where: 'Perpustakaan IPB' },
-      { id: 'e7', d: 18, time: '09.00', title: 'Sesi Mentoring #6', cal: 'kelompok', where: 'Google Meet · meet.google.com/abc-defg-hij' },
-      { id: 'e8', d: 20, time: '08.00', title: 'Kuliah lapang', cal: 'kuliah', where: 'Kebun Cikabayan' },
-      { id: 'e9', d: 22, time: '19.00', title: 'Kelas: Komunikasi & Influence', cal: 'program', where: 'Zoom Program' },
-      { id: 'e10', d: 25, time: 'Seharian', title: 'Penilaian Oktober dibuka', cal: 'program', where: 'Platform' },
-      { id: 'e11', d: 27, time: '16.00', title: '1-on-1 dengan Raka', cal: 'kelompok', where: 'Kantin Sapta' },
-      { id: 'e12', d: 31, time: '23.59', title: 'Batas update progres', cal: 'pribadi', where: 'Platform' }
-    ];
-    if (st.added) ev.push({ id: 'e13', d: 29, time: '16.00', title: 'Belajar bareng: review proposal', cal: 'kelompok', where: 'Google Meet' });
-    const visible = ev.filter((e) => !st.hidden[e.cal]);
-    const deco = (e) => Object.assign({}, e, {
-      calName: calDefs[e.cal].name, color: calDefs[e.cal].color, tint: calDefs[e.cal].tint, ink: calDefs[e.cal].ink,
-      dateLabel: String(e.d),
-      guests: e.cal === 'kelompok' ? '6 tamu · 5 hadir' : e.cal === 'program' ? '128 peserta' : 'Hanya kamu',
-      style: 'display: block; width: 100%; text-align: left; padding: 4px 7px; border-radius: 8px; border: 0; font: inherit; font-size: 11.5px; line-height: 1.35; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; background: ' + calDefs[e.cal].tint + '; color: ' + calDefs[e.cal].ink + (st.sel === e.id ? '; box-shadow: 0 0 0 2px ' + calDefs[e.cal].color : ''),
-      open: () => this.setState({ sel: e.id })
-    });
-    const days = [];
-    const lead = [28, 29, 30];
-    lead.forEach((n) => days.push({ n: n, bg: '#FAFBFD', numStyle: 'font-size: 12.5px; font-weight: 700; color: #B5B7CC; padding: 2px 4px', events: [] }));
-    for (let n = 1; n <= 31; n++) {
-      const today = n === 13;
-      days.push({
-        n: n,
-        bg: today ? '#F7FBE8' : '#FFFFFF',
-        numStyle: today ? 'align-self: flex-start; font-size: 12.5px; font-weight: 900; color: #0D0D1A; background: #D4FF3A; border-radius: 8px; padding: 2px 7px' : 'font-size: 12.5px; font-weight: 700; color: #33355A; padding: 2px 4px',
-        events: visible.filter((e) => e.d === n).map(deco)
-      });
-    }
-    days.push({ n: 1, bg: '#FAFBFD', numStyle: 'font-size: 12.5px; font-weight: 700; color: #B5B7CC; padding: 2px 4px', events: [] });
-    const cals = Object.keys(calDefs).map((k) => {
-      const on = !st.hidden[k];
-      return {
-        name: calDefs[k].name, color: calDefs[k].color,
-        boxBg: on ? calDefs[k].color : '#FFFFFF', mark: on ? '✓' : '',
-        pressed: on ? 'true' : 'false',
-        toggle: () => { const h = Object.assign({}, st.hidden); h[k] = on; this.setState({ hidden: h }); }
-      };
-    });
-    const views = [['hari', 'Hari'], ['minggu', 'Minggu'], ['bulan', 'Bulan'], ['agenda', 'Agenda']].map((v) => ({
-      label: v[1],
-      selected: st.view === v[0] ? 'true' : 'false',
-      style: 'height: 30px; padding: 0 10px; border-radius: 9px; border: 0; font: inherit; font-size: 12.5px; cursor: pointer; ' + (st.view === v[0] ? 'background: #FFFFFF; color: #32306F; font-weight: 800; box-shadow: 0 4px 10px -6px rgba(50,48,111,.5)' : 'background: transparent; color: #6B6D8C; font-weight: 700'),
-      pick: () => this.setState({ view: v[0] })
-    }));
-    const selE = ev.find((e) => e.id === st.sel);
-    const my = st.rsvp[st.sel];
-    const rsvp = [['ya', 'Ya'], ['mungkin', 'Mungkin'], ['tidak', 'Tidak']].map((r) => ({
-      label: r[1],
-      pressed: my === r[0] ? 'true' : 'false',
-      style: 'height: 40px; border-radius: 12px; font: inherit; font-weight: 800; font-size: 13.5px; cursor: pointer; ' + (my === r[0] ? (r[0] === 'ya' ? 'background: #D4FF3A; color: #0D0D1A; border: 1.5px solid #0D0D1A' : 'background: #32306F; color: #FFFFFF; border: 1.5px solid #32306F') : 'background: #FFFFFF; color: #55577A; border: 1.5px solid #D5DAEA'),
-      pick: () => { const x = Object.assign({}, st.rsvp); x[st.sel] = r[0]; this.setState({ rsvp: x }); }
-    }));
-    const viewName = { hari: 'Hari', minggu: 'Minggu', bulan: 'Bulan', agenda: 'Agenda' };
-    return {
-      cals: cals, views: views, days: days,
-      agenda: visible.filter((e) => e.d >= 13).map(deco),
-      isMonth: st.view === 'bulan',
-      isAgenda: st.view === 'agenda',
-      isOther: st.view === 'hari' || st.view === 'minggu',
-      viewLabel: viewName[st.view],
-      hasSel: !!selE,
-      sel: selE ? deco(selE) : {},
-      rsvp: rsvp,
-      closeSel: () => this.setState({ sel: null }),
-      showCreate: st.create,
-      openCreate: () => this.setState({ create: true }),
-      closeCreate: () => this.setState({ create: false }),
-      saveCreate: () => this.setState({ create: false, added: true, sel: 'e13', view: 'bulan' })
-    };
-  }
+ constructor(props){super(props);this.state={portal:null,hidden:{},view:'bulan',sel:new URLSearchParams(location.search).get('event'),create:false,form:{},search:'',error:'',busy:false};}
+ componentDidMount(){import(new URL('../assets/portal/calendar.mjs',location.href).href).then(m=>{this._calendar=m;return m.mountCalendar(this);}).catch(e=>this.setState({error:e.message}));}
+ componentWillUnmount(){window.removeEventListener('focus',this._refreshCalendar);}
+ renderVals(){return this._calendar?{...this._calendar.calendarView(this),preventSubmit:e=>{e.preventDefault();this._calendar.calendarView(this).saveCreate();}}:{monthLabel:'Memuat kalender…',error:this.state.error,cals:[],views:[],days:[],agenda:[],hasSel:false,isMonth:true,showCreate:false};}
 }
 </script>
 <script type="text/x-dc" data-dc="Navbar" data-props='{}'>
@@ -368,7 +255,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { open: null, notif: false, me: false };
   }
-  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));if(!location.pathname.includes('/review-penilaian/'))import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).catch(()=>{});}
+  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));if(!location.pathname.includes('/review-penilaian/'))import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).then(()=>import(new URL('../assets/portal/search.mjs',location.href).href)).then(m=>m.mountSearch()).catch(()=>{});}
   renderVals() {
     const actor=window.leapAccount,granted=actor?.roles||[],selected=sessionStorage.getItem('ipbleap.ui.role'),serverRole=granted.includes(selected)?selected:granted[0];
     const role = actor ? ({program:'pengurus',finance:'bendahara',system:'superadmin'}[serverRole]||serverRole||'mentee') : (this.props.role ?? 'mentee');
@@ -427,7 +314,6 @@ class Component extends DCLogic {
           assessmentLink('Personal Outcome Contract','Outcome dan KPI sesuai track, pathway serta baseline','poc.html','PO'),
           assessmentLink('Hasil KPI','Ajukan hasil aktual M3/M6/M9/M12 dan portfolio','hasil-kpi.html','HK'),
           assessmentLink('Raport','Hasil penilaian yang sudah diterbitkan','raport.html','RP','#EEFFB8'),
-          assessmentLink('Kehadiran saya','QR presensi dan riwayat kehadiran kegiatan','kehadiran.html','KH')
         ] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
@@ -454,9 +340,9 @@ class Component extends DCLogic {
     };
     menus.mentor = [menus.asmen[0],{key:'kelompok',label:'Kelompok',children:mentorFlow}].concat(tail,[menus.asmen.at(-1)]);
     const people = {
-      mentee: { name: 'Nabila Putri', subtitle: 'Mentee · Kelompok Rajawali', initials: 'NP', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
-      asmen: { name: 'Raka Pratama', subtitle: 'Asmen · Kelompok Rajawali', initials: 'RP', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
-      mentor: { name: 'Dian Hapsari', subtitle: 'Mentor · Kelompok Rajawali', initials: 'DH', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
+      mentee: { name: 'Akun mentee', subtitle: 'Mentee', initials: 'M', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
+      asmen: { name: 'Akun Asmen', subtitle: 'Asisten Mentor', initials: 'A', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
+      mentor: { name: 'Akun Mentor', subtitle: 'Mentor', initials: 'M', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
       pengurus: { name: 'Head of Operations', subtitle: 'Steering Team IPB Leap 2026', initials: 'HO', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Pengurus', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
       bendahara: { name: 'Bendahara', subtitle: 'Steering Team IPB Leap 2026', initials: 'BD', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Bendahara', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
@@ -496,6 +382,6 @@ class Component extends DCLogic {
   }
 }
 </script>
-<script src="../assets/leap-runtime.js"></script>
+<script src="../assets/leap-runtime.js?v=20261103-portal2"></script>
 </body>
 </html>

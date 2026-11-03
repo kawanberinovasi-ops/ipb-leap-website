@@ -196,7 +196,7 @@ body{margin:0}
     </nav>
 
     <div style="display: flex; align-items: center; gap: 8px; position: relative">
-      <button type="button" aria-label="Cari (Ctrl K)" style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
+      <button type="button" aria-label="Cari (Ctrl K)" data-leap-search style="height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid {{c.line2}}; background: {{c.field}}; font: inherit; font-size: 13px; color: {{c.muted}}; display: flex; align-items: center; gap: 8px; cursor: pointer">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
         <span>Cari</span><span style="font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: {{c.chip}}; border: 1px solid {{c.line2}}">⌘K</span>
       </button>
@@ -329,7 +329,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { open: null, notif: false, me: false };
   }
-  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));if(!location.pathname.includes('/review-penilaian/'))import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).catch(()=>{});}
+  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));if(!location.pathname.includes('/review-penilaian/'))import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).then(()=>import(new URL('../assets/portal/search.mjs',location.href).href)).then(m=>m.mountSearch()).catch(()=>{});}
   renderVals() {
     const actor=window.leapAccount,granted=actor?.roles||[],selected=sessionStorage.getItem('ipbleap.ui.role'),serverRole=granted.includes(selected)?selected:granted[0];
     const role = actor ? ({program:'pengurus',finance:'bendahara',system:'superadmin'}[serverRole]||serverRole||'mentee') : (this.props.role ?? 'mentee');
@@ -388,7 +388,6 @@ class Component extends DCLogic {
           assessmentLink('Personal Outcome Contract','Outcome dan KPI sesuai track, pathway serta baseline','poc.html','PO'),
           assessmentLink('Hasil KPI','Ajukan hasil aktual M3/M6/M9/M12 dan portfolio','hasil-kpi.html','HK'),
           assessmentLink('Raport','Hasil penilaian yang sudah diterbitkan','raport.html','RP','#EEFFB8'),
-          assessmentLink('Kehadiran saya','QR presensi dan riwayat kehadiran kegiatan','kehadiran.html','KH')
         ] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
@@ -415,9 +414,9 @@ class Component extends DCLogic {
     };
     menus.mentor = [menus.asmen[0],{key:'kelompok',label:'Kelompok',children:mentorFlow}].concat(tail,[menus.asmen.at(-1)]);
     const people = {
-      mentee: { name: 'Nabila Putri', subtitle: 'Mentee · Kelompok Rajawali', initials: 'NP', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
-      asmen: { name: 'Raka Pratama', subtitle: 'Asmen · Kelompok Rajawali', initials: 'RP', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
-      mentor: { name: 'Dian Hapsari', subtitle: 'Mentor · Kelompok Rajawali', initials: 'DH', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
+      mentee: { name: 'Akun mentee', subtitle: 'Mentee', initials: 'M', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
+      asmen: { name: 'Akun Asmen', subtitle: 'Asisten Mentor', initials: 'A', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
+      mentor: { name: 'Akun Mentor', subtitle: 'Mentor', initials: 'M', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
       pengurus: { name: 'Head of Operations', subtitle: 'Steering Team IPB Leap 2026', initials: 'HO', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Pengurus', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
       bendahara: { name: 'Bendahara', subtitle: 'Steering Team IPB Leap 2026', initials: 'BD', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Bendahara', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
@@ -457,6 +456,6 @@ class Component extends DCLogic {
   }
 }
 </script>
-<script src="../assets/leap-runtime.js"></script>
+<script src="../assets/leap-runtime.js?v=20261103-portal2"></script>
 </body>
 </html>
