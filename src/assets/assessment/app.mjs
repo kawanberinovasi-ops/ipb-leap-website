@@ -19,9 +19,9 @@ const profile=id=>w?.profiles.find(p=>p.id===id);
 const me=()=>w.actor;
 const currentM=()=>cohort()?programMonth(cohort().starts_on):1;
 const month=()=>PERIODS.includes(Number(query.get('period')))?Number(query.get('period')):PERIODS.find(m=>m>=currentM())||12;
-const group=()=>w.groups.find(g=>g.active&&w.members.some(m=>m.group_id===g.id&&m.user_id===w.selectedMentee&&m.active));
+const group=()=>w.groups.find(g=>w.members.some(m=>m.group_id===g.id&&m.user_id===w.selectedMentee&&m.active));
 const owns=()=>role==='mentee'&&w.selectedMentee===me().id;
-const assigned=r=>{const g=group();return g&&g[r==='asmen'?'asmen_id':'mentor_id']===me().id&&me().roles.includes(r);};
+const assigned=r=>{const g=group();return g&&g.active&&g[r==='asmen'?'asmen_id':'mentor_id']===me().id&&me().roles.includes(r);};
 const assessor=()=>me().roles.includes('program')&&w.staff.some(s=>s.user_id===me().id&&s.can_assess);
 const manager=()=>me().roles.includes('system')||me().roles.includes('program')&&w.staff.some(s=>s.user_id===me().id&&s.can_manage);
 function url(part,extra={}){const p=new URLSearchParams();if(w?.selectedCohort)p.set('cohort',w.selectedCohort);if(w?.selectedMentee)p.set('mentee',w.selectedMentee);if(w?.selectedMentee&&group())p.set('group',group().id);if(query.get('period'))p.set('period',query.get('period'));if(query.get('record')||query.get('source'))p.set('source',query.get('record')||query.get('source'));for(const[k,v]of Object.entries(extra))if(v!==null&&v!==undefined)p.set(k,v);const last=part.split('/').pop(),files={hasil:'hasil-kpi',review:'penilaian',penilaian:'penilaian',kelompok:'kelompok-penilaian',sistem:'super-admin',peserta:'super-admin',beranda:'beranda-mentee'};return new URL((files[last]||last)+'.html',appBase).pathname+(p.size?'?'+p:'');}
@@ -40,7 +40,7 @@ const hidden=(name,value)=>`<input type="hidden" name="${esc(name)}" value="${es
 function get(obj,path){return path.split('.').reduce((a,k)=>a?.[k],obj);}
 function set(obj,path,value){const keys=path.split('.');let o=obj;keys.forEach((k,i)=>{if(i===keys.length-1)o[k]=value;else{o[k]??=/^\d+$/.test(keys[i+1])?[]:{};o=o[k];}});}
 function read(form){const data={};for(const el of form.elements){if(!el.name||el.disabled||el.type==='submit'||el.type==='button')continue;let v=el.type==='checkbox'?el.checked:el.value;if(el.type==='number'||el.dataset.number!==undefined)v=v===''?'':Number(v);set(data,el.name,v);}return data;}
-function permissionsEmpty(){if(!w.selectedCohort)return empty('Belum ada cohort','Pengelola perlu menyiapkan cohort, akun peserta, dan penugasannya terlebih dahulu.',me().roles.includes('system')?link('Siapkan cohort',url('sistem')):'');if(!w.selectedMentee)return empty('Belum ada mentee yang dapat dibuka','Data pendampingan muncul setelah mentee dan pendamping ditugaskan ke kelompok aktif.');return'';}
+function permissionsEmpty(){if(!w.selectedCohort)return empty('Belum ada cohort','Pengelola perlu menyiapkan cohort, akun peserta, dan penugasannya terlebih dahulu.',me().roles.includes('system')?link('Siapkan cohort',url('sistem')):'');if(!w.selectedMentee)return empty('Belum ada mentee yang dapat dibuka','Data pendampingan muncul setelah mentee ditugaskan ke kelompokmu.');return'';}
 function title(t,sub='',action=''){return`<div class="page-title"><div><h1>${esc(t)}</h1>${sub?`<p class="sub">${esc(sub)}</p>`:''}</div>${action}</div>`;}
 function context(){
  const people=w.enrolments.filter(e=>e.role==='mentee'&&e.active&&profile(e.user_id));

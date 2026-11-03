@@ -20,7 +20,7 @@ export async function mountHome(){const actor=await mountSession();if(!actor)ret
 
 export function portalSummary(data){
  const actor=data.actor,ownGroup=data.groups.find(g=>data.members.some(m=>m.group_id===g.id&&m.user_id===actor.id&&m.active)),name=id=>data.profiles.find(p=>p.id===id)?.display_name;
- const mentor=name(ownGroup?.mentor_id),title=mentor?'Kelompok '+mentor:ownGroup?'Kelompok · Mentor belum ditetapkan':'Kelompok belum ditetapkan';
+ const mentor=name(ownGroup?.mentor_id),title=ownGroup?.name||(mentor?'Kelompok '+mentor:ownGroup?'Kelompok · Mentor belum ditetapkan':'Kelompok belum ditetapkan');
  const base=new URL('../../app/',import.meta.url),u=file=>{const x=new URL(file,base);if(data.selectedCohort)x.searchParams.set('cohort',data.selectedCohort);return x.pathname+x.search;};
  const people=[];if(ownGroup){for(const [id,role]of [[ownGroup.mentor_id,'Mentor'],[ownGroup.asmen_id,'Asisten Mentor'],...data.members.filter(m=>m.group_id===ownGroup.id).map(m=>[m.user_id,'Mentee'])]){if(!name(id))continue;people.push({name:name(id),role,initials:name(id).split(/\s+/).slice(0,2).map(s=>s[0]).join('')});}}
  const news=data.announcements.filter(a=>a.pinned&&!a.withdrawn_at&&new Date(a.publish_at)<=new Date()).sort((a,b)=>String(b.publish_at).localeCompare(String(a.publish_at))).slice(0,8).map(a=>({title:a.title,href:u('pengumuman.html')+'#announcement-'+a.id,duplicate:'false',tabIndex:'0'}));
