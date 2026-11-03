@@ -1,4 +1,4 @@
-import {localStore,localActor,ACTOR_KEY,TRACKS} from './store.mjs';
+import {localStore,localActor,ACTOR_KEY,TRACKS} from './store.mjs?v=20261103-onboarding';
 
 export const isLocal=()=>document.documentElement.dataset.leapLocal==='true';
 export async function openRepository({cohort=null,management=true}={}){
@@ -19,7 +19,7 @@ export async function openRepository({cohort=null,management=true}={}){
   cache.audit??=[];return cache;
  };
  await reload();
- const validateTrack=data=>{if(data.role==='mentee'&&!TRACKS.some(t=>t.field===data.field&&t.pathways.includes(data.pathway)))throw Error('Pilih track dan pathway yang sesuai modul program.');};
+ const validateTrack=data=>{if(data.role==='mentee'&&!TRACKS.some(t=>t.field===data.field&&(!data.pathway||t.pathways.includes(data.pathway))))throw Error('Pilih track dan pathway yang sesuai bila sudah ditetapkan.');};
  const store={read:()=>cache,reload,
   async cohort(data){if(!actor.roles.includes('system'))throw Error('Super Admin menyiapkan cohort.');const result=await api.command('create_cohort',data);await reload(result.cohort);return cache.cohorts.find(c=>c.id===result.cohort);},
   async account(data,expected){validateTrack(data);if(data.id){await api.rpc('erp_management_command',{p_payload:{...data,action:'account',cohort:data.cohort_id,user:data.id},p_expected:expected});return null;}

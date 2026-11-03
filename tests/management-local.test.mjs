@@ -1,3 +1,4 @@
+import * as bulkImport from '../src/assets/management/import.mjs';
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
@@ -38,7 +39,7 @@ async function ui(fixture,actor=MANAGER,path=''){
  const dom=new JSDOM('<!doctype html><html data-leap-local="true"><body><main id="management"></main></body></html>',{url:'http://example.test/app/kelola-program.html'+path,runScripts:'outside-only'});
  dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;this.dispatchEvent(new dom.window.Event('close'));};
  const context=dom.getInternalVMContext(),m=new vm.SourceTextModule(await readFile(new URL('../src/assets/management/app.mjs',import.meta.url),'utf8'),{context});
- const deps={...management,localStore:()=>fixture.store,localActor:()=>actor};await m.link(spec=>{const values=spec.includes('repository.mjs')?{openRepository:async()=>({store:fixture.store,actor,local:true})}:spec.includes('/attendance/')?{attendanceState:async()=>({events:[],participants:[],attendance:[],history:[]}),menteeAttendance:()=>[]}:deps;return new vm.SyntheticModule(Object.keys(values),function(){for(const[k,v]of Object.entries(values))this.setExport(k,v);},{context});});await m.evaluate();await m.namespace.mount();return{dom,document:dom.window.document};
+ const deps={...bulkImport,...management,localStore:()=>fixture.store,localActor:()=>actor};await m.link(spec=>{const values=spec.includes('repository.mjs')?{openRepository:async()=>({store:fixture.store,actor,local:true})}:spec.includes('/attendance/')?{attendanceState:async()=>({events:[],participants:[],attendance:[],history:[]}),menteeAttendance:()=>[]}:deps;return new vm.SyntheticModule(Object.keys(values),function(){for(const[k,v]of Object.entries(values))this.setExport(k,v);},{context});});await m.evaluate();await m.namespace.mount();return{dom,document:dom.window.document};
 }
 test('management form creates and edits an account; duplicate email preserves exact input and reload shows saved metadata',async()=>{
  const fixture=setup(),c=cohort(fixture.store),v=await ui(fixture),d=v.document;

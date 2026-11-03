@@ -46,17 +46,24 @@ test('management returns metadata only, enforces revisions, and cannot grant rol
 test('managed Auth provisioning is service-only, scoped to assigned cohort, non-escalating and versioned',async t=>{
  const db=await setup(t);await db.exec(`alter table erp_private.activations add column user_id uuid,add column token_hash text,add column expires_at timestamptz,add column used_at timestamptz,add column created_by uuid;alter table erp_private.activations alter column id set default gen_random_uuid();`);
  await db.exec(await readFile(new URL('../backend/erp/integrations/managed-accounts.sql',import.meta.url),'utf8'));
+ await db.exec(await readFile(new URL('../backend/erp/integrations/enrolment-pathway-optional.sql',import.meta.url),'utf8'));
  const service=async(action,p)=>(await db.query('select erp_managed_account_service($1,$2::jsonb) as result',[action,JSON.stringify(p)])).rows[0].result;
  const p={actor:id(9),session:id(109),cohort:id(20),operation:'create',roles:['mentee'],field:'Entrepreneur / Business',pathway:'Grow',expected:0,user:id(500),email:'new@example.test',name:'TEST NEW',hash:'a'.repeat(64)};
  await as(db,'manager');await assert.rejects(service('authorize',p),/permission denied/);
  await db.exec('reset role');await db.query("insert into auth.users(id,email,email_confirmed_at)values($1,'new@example.test',now())",[id(500)]);
  await as(db,'manager','service_role');await service('authorize',p);
+ await service('authorize',{...p,pathway:''});
+ await service('authorize',{...p,pathway:null});
+ await assert.rejects(service('authorize',{...p,field:'invented',pathway:''}),/track/);
+ await db.exec('reset role');
+ assert.equal((await db.query("select erp_private.track_pathway_valid('Entrepreneur / Business','') as valid")).rows[0].valid,false);
+ await as(db,'manager','service_role');
  await assert.rejects(service('authorize',{...p,roles:['system']}),/Super Admin/);
  await assert.rejects(service('authorize',{...p,cohort:id(99)}),/ditugaskan/);
  await assert.rejects(service('authorize',{...p,session:id(99)}),/Sesi/);
  await assert.rejects(service('authorize',{...p,pathway:'Produce'}),/track/);
- await service('provision',p);
- await db.exec('reset role');const person=(await db.query('select * from erp_profiles where id=$1',[id(500)])).rows[0];assert.equal(person.active,false);assert.deepEqual(person.roles,['mentee']);assert.equal((await db.query('select * from erp_enrolments where user_id=$1',[id(500)])).rows.length,1);
+ await service('provision',{...p,pathway:''});
+ await db.exec('reset role');const person=(await db.query('select * from erp_profiles where id=$1',[id(500)])).rows[0];assert.equal(person.active,false);assert.deepEqual(person.roles,['mentee']);const enrolments=(await db.query('select * from erp_enrolments where user_id=$1',[id(500)])).rows;assert.equal(enrolments.length,1);assert.equal(enrolments[0].pathway,'');
  await as(db,'manager','service_role');await service('reissue',{...p,operation:'reissue',hash:'b'.repeat(64)});
  await assert.rejects(service('reissue',{...p,operation:'reissue',user:id(6)}),/kewenangan/);
  await db.exec('reset role');const tokens=(await db.query('select * from erp_private.activations order by expires_at')).rows;assert.equal(tokens.length,2);assert.ok(tokens[0].used_at);assert.equal(tokens[1].used_at,null);

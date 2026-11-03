@@ -41,7 +41,7 @@ export function createLocalStore(storage, {uuid=localUUID,now=()=>new Date().toI
   const p=input.id?s.profiles.find(p=>p.id===input.id):null;if(input.id&&!p)throw Error('Akun tidak ditemukan.');
   if(p&&p.roles[0]!==input.role)throw Error('Peran akun yang sudah digunakan dipertahankan.');
   if(s.profiles.some(p=>p.email===email&&p.id!==input.id))throw Error('Email ini sudah terdaftar pada data lokal.');
-  const t=trackFor(input.field);if(input.role==='mentee'&&(!t||!t.pathways.includes(input.pathway)))throw Error('Pilih track dan pathway sesuai modul.');
+  const t=trackFor(input.field);if(input.role==='mentee'&&(!t||(input.pathway&&!t.pathways.includes(input.pathway))))throw Error('Pilih track dan pathway yang sesuai bila sudah ditetapkan.');
   const g=s.groups.find(g=>g.id===input.group_id);
   if(input.group_id&&(!g||g.cohort_id!==c.id||input.role!=='mentee'||g.field!==t?.field))throw Error('Kelompok harus sesuai cohort dan track mentee.');
   const id=p?.id||uuid(),active=input.active!==false;
