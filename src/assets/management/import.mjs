@@ -1,4 +1,4 @@
-import {TRACKS} from './store.mjs?v=20261103-onboarding';
+import {TRACKS} from './store.mjs?v=20261103-password';
 
 // Roster files stay in the operator's browser. Only validated account fields
 // are sent through the existing authenticated, cohort-scoped account service.
@@ -17,7 +17,7 @@ export function validateRoster(raw,profiles=[]){
  });
 }
 
-export async function provisionRoster(rows,{store,cohort,onProgress=()=>{}}){
+export async function provisionRoster(rows,{store,cohort,initialPassword=null,onProgress=()=>{}}){
  const results=[];
  for(const row of rows){
   const {existing,...data}=row;
@@ -28,9 +28,9 @@ export async function provisionRoster(rows,{store,cohort,onProgress=()=>{}}){
    if(store.read().profiles.some(p=>p.email.toLowerCase()===data.email)){
     results.push({...data,status:'Sudah terdaftar',url:''});onProgress(results);continue;
    }
-   const activation=await store.account({...data,cohort_id:cohort},store.read().revision);
-   if(!activation?.url)throw Error('Layanan belum mengembalikan tautan aktivasi.');
-   results.push({...data,status:'Menunggu aktivasi',url:activation.url});
+   const activation=await store.account({...data,cohort_id:cohort,...(initialPassword?{initial_password:initialPassword}:{})},store.read().revision);
+   if(initialPassword?!activation?.mustChangePassword:!activation?.url)throw Error('Layanan belum mengonfirmasi pendaftaran akun.');
+   results.push({...data,status:initialPassword?'Wajib ganti password':'Menunggu aktivasi',url:activation.url||''});
   }catch(e){results.push({...data,status:'Perlu diperiksa: '+e.message,url:''});}
   onProgress(results);
  }
@@ -40,5 +40,6 @@ export async function provisionRoster(rows,{store,cohort,onProgress=()=>{}}){
 export function activationCSV(results){
  // Prevent spreadsheet formula execution in source-controlled or imported names.
  const cell=v=>'"'+String(v??'').replace(/^[=+@\-\t\r]/,"'$&").replaceAll('"','""')+'"';
- return '\ufeff'+[['Nama','Email','Peran','Track','Pathway','Kelompok','Status','Tautan aktivasi pribadi'],...results.map(r=>[r.display_name,r.email,r.role,r.field,'','',r.status,r.url])].map(r=>r.map(cell).join(',')).join('\r\n');
+ const links=results.some(r=>r.url);
+ return '\ufeff'+[['Nama','Email / ID login','Peran','Track','Pathway','Kelompok','Status',...(links?['Tautan aktivasi pribadi']:[])],...results.map(r=>[r.display_name,r.email,r.role,r.field,'','',r.status,...(links?[r.url]:[])])].map(r=>r.map(cell).join(',')).join('\r\n');
 }

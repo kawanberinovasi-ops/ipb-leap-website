@@ -53,13 +53,18 @@ a{color:#3157A5}a:hover{color:#32306F}
       <label>Kata sandi baru<input name="password" type="password" autocomplete="new-password" minlength="12" required></label>
       <label>Ulangi kata sandi<input name="confirm" type="password" autocomplete="new-password" minlength="12" required></label>
       <button>Aktifkan akun</button></form>
+      <form id="leap-password-change" hidden style="display:grid;gap:16px">
+      <h3 style="margin:0;color:#32306F">Ganti password awal</h3><p id="password-change-identity"></p>
+      <label>Password pribadi baru<input class="field" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
+      <label>Ulangi password baru<input class="field" name="confirm" type="password" autocomplete="new-password" minlength="12" maxlength="128" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
+      <button class="btn" style="padding:16px;border:0;border-radius:16px;background:linear-gradient(135deg,#32306F,#3157A5);color:white;font:inherit;font-weight:700;font-size:16px;cursor:pointer">Simpan password &amp; masuk</button></form>
       <p style="font-size:13px;color:#6B6D8C;margin-top:24px">Belum punya akses atau lupa kata sandi? Hubungi pengelola untuk tautan aktivasi. Tidak ada email otomatis dari halaman ini.</p>
     </div>
   </section>
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":920}}'>
-class Component extends DCLogic {componentDidMount(){import(new URL('../assets/assessment/login.mjs',location.href).href).then(m=>m.mount()).catch(()=>{document.querySelector('#auth-message').textContent='Layanan login belum dapat dimuat. Muat ulang untuk mencoba kembali.';});}renderVals(){return {};}}
+class Component extends DCLogic {componentDidMount(){import(new URL('../assets/assessment/login.mjs?v=20261103-password',location.href).href).then(m=>m.mount()).catch(()=>{document.querySelector('#auth-message').textContent='Layanan login belum dapat dimuat. Muat ulang untuk mencoba kembali.';});}renderVals(){return {};}}
 </script>
 </body>
 </html>

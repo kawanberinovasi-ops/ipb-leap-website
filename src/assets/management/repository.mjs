@@ -1,4 +1,4 @@
-import {localStore,localActor,ACTOR_KEY,TRACKS} from './store.mjs?v=20261103-onboarding';
+import {localStore,localActor,ACTOR_KEY,TRACKS} from './store.mjs?v=20261103-password';
 
 export const isLocal=()=>document.documentElement.dataset.leapLocal==='true';
 export async function openRepository({cohort=null,management=true}={}){
@@ -24,7 +24,7 @@ export async function openRepository({cohort=null,management=true}={}){
   async cohort(data){if(!actor.roles.includes('system'))throw Error('Super Admin menyiapkan cohort.');const result=await api.command('create_cohort',data);await reload(result.cohort);return cache.cohorts.find(c=>c.id===result.cohort);},
   async account(data,expected){validateTrack(data);if(data.id){await api.rpc('erp_management_command',{p_payload:{...data,action:'account',cohort:data.cohort_id,user:data.id},p_expected:expected});return null;}
    if(data.group_id)throw Error('Aktifkan akun terlebih dahulu, kemudian tempatkan ke kelompok melalui Edit.');
-   return api.accountCommand({action:'create',cohort:data.cohort_id,name:data.display_name,email:data.email,roles:[data.role],field:data.field,pathway:data.pathway,expected});
+   return api.accountCommand({action:'create',cohort:data.cohort_id,name:data.display_name,email:data.email,roles:[data.role],field:data.field,pathway:data.pathway,expected,...(data.initial_password?{initial_password:data.initial_password}:{})});
   },
   group:(data,expected)=>api.rpc('erp_management_command',{p_payload:{...data,action:'group',cohort:data.cohort_id},p_expected:expected}),
   reissue:(user,c)=>api.accountCommand({action:'reissue',user,cohort:c})

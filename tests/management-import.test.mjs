@@ -15,3 +15,8 @@ test('provisioning uses fresh revisions, skips existing identities and retains s
  assert.equal(calls.length,2);assert.equal(calls[0].cohort_id,'TEST COHORT');assert.equal(calls[0].pathway,'');assert.equal(results[0].url,'https://example.test/#activate=TEST');assert.match(results[1].status,/TEST FAILURE/);assert.equal(results[2].status,'Sudah terdaftar');
  const csv=activationCSV([{...row,display_name:'=FORMULA',status:'Menunggu aktivasi',url:results[0].url}]);assert.ok(csv.includes('"\'=FORMULA"'));assert.ok(csv.includes(results[0].url));
 });
+test('initial password goes only to Auth provisioning and never to export or progress results',async()=>{
+ const secret='TEST ONLY not a credential',rows=validateRoster([row]);let sent;
+ const store={reload:async()=>{},read:()=>({revision:1,profiles:[]}),account:async data=>{sent=data;return{mustChangePassword:true};}};
+ const results=await provisionRoster(rows,{store,cohort:'TEST',initialPassword:secret});assert.equal(sent.initial_password,secret);assert.equal(results[0].status,'Wajib ganti password');assert.ok(!JSON.stringify(results).includes(secret));const csv=activationCSV(results);assert.ok(!csv.includes(secret));assert.ok(!csv.includes('Tautan aktivasi'));
+});

@@ -18,6 +18,7 @@ export function errorText(error) {
   const s = error?.message || '';
   if (/Invalid login credentials/i.test(s)) return 'Email atau kata sandi belum cocok.';
   if (/Email not confirmed/i.test(s)) return 'Verifikasi email terlebih dahulu, lalu masuk kembali.';
+  if (/same.password|different.*password/i.test(s)||error?.code==='same_password') return 'Gunakan password pribadi yang berbeda dari password awal.';
   if (/rate.limit|too many|security purposes/i.test(s)) return 'Terlalu banyak permintaan. Tunggu sebentar lalu coba lagi.';
   if (/Failed to fetch|NetworkError|fetch failed/i.test(s)) return 'Layanan belum dapat dihubungi. Periksa koneksi, lalu coba lagi; isian belum disimpan.';
   if (/JWT|session.*expired|not authenticated/i.test(s)) return 'Sesi akun berakhir. Masuk kembali untuk melanjutkan.';
@@ -38,7 +39,11 @@ export async function rpc(name, args = {}) {
   return data;
 }
 
-export const bootstrap = () => rpc('erp_bootstrap');
+export const bootstrap = async () => {
+ const actor=await rpc('erp_bootstrap');
+ if(actor.mustChangePassword&&location.pathname!==new URL('index.html',appBase).pathname){location.replace(new URL('index.html',appBase).pathname+'?next='+encodeURIComponent(location.pathname+location.search));throw Error('Ganti password awal sebelum membuka aplikasi.');}
+ return actor;
+};
 export const workspace = (cohort = null, mentee = null) => rpc('erp_workspace', { p_cohort: cohort, p_mentee: mentee });
 export const command = (action, payload, expected = null) => rpc('erp_command', { p_action: action, p_payload: payload, p_expected: expected });
 export async function edge(name, payload) {

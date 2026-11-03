@@ -35,15 +35,18 @@ Deno.serve(async req=>{
   const token=authorization.slice(7);const{data:verified,error}=await service.auth.getUser(token);if(error||!verified.user)return respond({error:'Sesi akun berakhir.'},401);
   const userClient=createClient(url,Deno.env.get('SUPABASE_ANON_KEY')!,{global:{headers:{Authorization:authorization}},auth:{persistSession:false}});
   const{data:me,error:sessionError}=await userClient.rpc('erp_bootstrap');if(sessionError)throw Error('Sesi akun tidak sah.');
-  const managed=!!p.cohort;const trusted={actor:verified.user.id,session:me.sessionId,...(managed?{cohort:p.cohort,roles:p.roles,operation:action,user:p.user,expected:p.expected,field:p.field,pathway:p.pathway}:{})};await call('authorize',trusted,managed);
+  const managed=!!p.cohort,passwordLogin=action==='create'&&p.initial_password!==undefined;
+  if(passwordLogin&&(!managed||typeof p.initial_password!=='string'||p.initial_password.length<12||p.initial_password.length>128))throw Error('Password awal harus 12–128 karakter pada pendaftaran cohort.');
+  const trusted={actor:verified.user.id,session:me.sessionId,...(managed?{cohort:p.cohort,roles:p.roles,operation:action,user:p.user,expected:p.expected,field:p.field,pathway:p.pathway,password_login:passwordLogin}:{})};await call('authorize',trusted,managed);
   const activation=random(), activationHash=await hash(activation);let id=p.user;
   if(action==='create'){
    if(typeof p.email!=='string'||!/^\S+@\S+\.\S+$/.test(p.email)||p.email.length>254||typeof p.name!=='string'||p.name.trim().length<2||!Array.isArray(p.roles)||!p.roles.length||p.roles.some((r:string)=>!['mentee','asmen','mentor','program','finance','system'].includes(r)))throw Error('Lengkapi nama, email, dan peran akun.');
-   const{data,error}=await service.auth.admin.createUser({email:p.email.trim().toLowerCase(),email_confirm:true,user_metadata:{full_name:p.name.trim()}});
+   const{data,error}=await service.auth.admin.createUser({email:p.email.trim().toLowerCase(),email_confirm:true,user_metadata:{full_name:p.name.trim()},...(passwordLogin?{password:p.initial_password}:{})});
    if(error)throw Error('Akun belum dapat dibuat. Periksa email atau gunakan aktivasi ulang untuk akun yang sudah ada.');
    id=data.user.id;
    try{await call('provision',{...trusted,user:id,email:data.user.email,name:p.name.trim(),roles:p.roles,hash:activationHash},managed);}catch(e){await service.auth.admin.deleteUser(id);throw e;}
   }else await call('reissue',{...trusted,user:id,hash:activationHash},managed);
+  if(passwordLogin)return respond({ok:true,id,mustChangePassword:true});
   const base=origin==='https://kawanberinovasi-ops.github.io'?'https://kawanberinovasi-ops.github.io/ipb-leap-website/app/index.html':(origins.has(origin)?origin:'https://ipbleap.com')+'/app/index.html';
   return respond({ok:true,id,url:base+'#activate='+activation,expiresDays:14});
  }catch(e){return respond({error:e instanceof Error?e.message:'Permintaan belum berhasil.'},400);}
