@@ -1,4 +1,4 @@
-import{evidenceFields,evidenceSummary,bindEvidenceTracks}from'./final-evidence.mjs';
+import{evidenceFields,evidenceSummary,bindEvidenceTracks}from'./final-evidence.mjs?v=20261103-copy';
 import {sourceSnapshot} from './sources.mjs';
 import {observerWorkspace,observerPanel,observerSelection} from './observer.mjs';
 import{client,configured,verifiedUser,workspace,bootstrap,revision,command,recordCommand,accountCommand,errorText}from'./api.mjs';

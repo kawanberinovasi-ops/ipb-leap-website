@@ -54,8 +54,15 @@ test('UI: final evidence adds track choices to existing POC, saves and reopens w
 });
 
 test('UI: each assigned track sees only its own evidence; aliases resolve and old track picks cannot override assignment',async()=>{
- for(const [track,docs] of evidence.EVIDENCE_TRACKS){const w=state();w.enrolments[0].field=track;const view=await ui(w,'poc');await view.click('[data-new="poc"]');const f=view.document.querySelector('#record-form');assert.equal(f.elements['kpis.0.finalTrack'].value,track);assert.equal(f.querySelectorAll('[data-evidence-group] input').length,docs.length);assert.equal(f.querySelector('select[name="kpis.0.finalTrack"]'),null);view.dom.window.close();}
+ for(const [track,docs] of evidence.EVIDENCE_TRACKS){const w=state();w.enrolments[0].field=track;const view=await ui(w,'poc');await view.click('[data-new="poc"]');const f=view.document.querySelector('#record-form');assert.equal(f.elements['kpis.0.finalTrack'].value,track);assert.equal(f.querySelectorAll('[data-evidence-group] input').length,docs.filter(Boolean).length);assert.equal(f.querySelector('select[name="kpis.0.finalTrack"]'),null);view.dom.window.close();}
  const w=state();w.enrolments[0].field='Social & Community / NGO / Social Impact';const view=await ui(w,'poc');await view.click('[data-new="poc"]');assert.equal(view.document.querySelector('[name="kpis.0.finalTrack"]').value,'Social & Community / Social Impact');view.dom.window.close();
  const field=(name,label)=>`<input name="${name}">${label}`;const html=evidence.evidenceFields({finalTrack:'Entrepreneur / Business',finalDocuments:{t0:{d0:true}}},0,'Academic & Research',field);assert(html.includes('Naskah / karya riset'));assert(!html.includes('Invoice dan bukti transaksi'));assert(!html.includes('Entrepreneur / Business'));
  assert(!evidence.evidenceFields({},0,'',field).includes('data-evidence-group'));assert(evidence.evidenceFields({},0,'',field).includes('Track mentee belum ditetapkan'));
+});
+
+test('UI: revised social evidence text removes the introduction and retired option without shifting saved document keys',()=>{
+ const field=(name,label,value)=>`<label><input name="${name}" ${value?'checked':''}>${label}</label>`;
+ const k={finalTrack:'Social & Community / Social Impact',finalDocuments:{t4:{d0:true,d4:true,d5:true,d6:true}}};
+ const html=evidence.evidenceFields(k,0,k.finalTrack,field);assert(!html.includes('Daftar dokumen otomatis'));assert(!html.includes('Tim lokal'));assert(!html.includes('finalDocuments.t4.d5'));assert(html.includes('finalDocuments.t4.d6" checked'));assert(html.includes('Laporan pelaksanaan dan Penerima manfaat'));assert(html.includes('Dokumen Kerjasama dengan mitra'));
+ assert.deepEqual(evidence.selectedDocuments(k),['Laporan pelaksanaan dan Penerima manfaat','Dokumen Kerjasama dengan mitra','Pendanaan lanjutan']);
 });
