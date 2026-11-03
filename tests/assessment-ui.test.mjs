@@ -45,10 +45,17 @@ test('UI: each track has English KPI labels, valid module pathways, and no delet
 test('UI: final evidence adds track choices to existing POC, saves and reopens without changing milestones',async()=>{
  const w=state();w.enrolments[0].field='Academic & Research';w.enrolments[0].pathway='Produce';let payload;
  const view=await ui(w,'poc',{onCommand:p=>payload=p});await view.click('[data-new="poc"]');
- const f=view.document.querySelector('#record-form');assert.equal(f.querySelector('[data-evidence-track]').value,'Academic & Research');
+ const f=view.document.querySelector('#record-form');assert.equal(f.elements['kpis.0.finalTrack'].value,'Academic & Research');assert.equal(f.querySelector('[data-evidence-track]'),null);assert.equal(f.querySelectorAll('[data-evidence-group]').length,1);
  assert.equal(f.querySelectorAll('[name^="kpis.0.milestones."]').length,4);assert.equal(f.querySelector('[name^="kpis.0.levels."]'),null);
  f.elements['kpis.0.finalDocuments.t1.d0'].checked=true;f.elements['kpis.0.finalDocuments.t1.d1'].checked=true;
  f.elements['kpis.0.finalMilestone'].value='Submission pada M12';f.elements['kpis.0.milestones.M12'].value='Naskah dikirim';f.elements['kpis.0.evidencePlan'].value='Naskah dan bukti submission';
  await view.click('[data-record-action="save"]');assert.equal(payload.data.kpis[0].finalDocuments.t1.d0,true);assert.equal(payload.data.kpis[0].milestones.M12,'Naskah dikirim');assert.equal(payload.data.kpis[0].evidencePlan,'Naskah dan bukti submission');
  await view.click('[data-edit]');const reopened=view.document.querySelector('#record-form');assert.equal(reopened.elements['kpis.0.finalDocuments.t1.d0'].checked,true);assert.equal(reopened.elements['kpis.0.finalMilestone'].value,'Submission pada M12');view.dom.window.close();
+});
+
+test('UI: each assigned track sees only its own evidence; aliases resolve and old track picks cannot override assignment',async()=>{
+ for(const [track,docs] of evidence.EVIDENCE_TRACKS){const w=state();w.enrolments[0].field=track;const view=await ui(w,'poc');await view.click('[data-new="poc"]');const f=view.document.querySelector('#record-form');assert.equal(f.elements['kpis.0.finalTrack'].value,track);assert.equal(f.querySelectorAll('[data-evidence-group] input').length,docs.length);assert.equal(f.querySelector('select[name="kpis.0.finalTrack"]'),null);view.dom.window.close();}
+ const w=state();w.enrolments[0].field='Social & Community / NGO / Social Impact';const view=await ui(w,'poc');await view.click('[data-new="poc"]');assert.equal(view.document.querySelector('[name="kpis.0.finalTrack"]').value,'Social & Community / Social Impact');view.dom.window.close();
+ const field=(name,label)=>`<input name="${name}">${label}`;const html=evidence.evidenceFields({finalTrack:'Entrepreneur / Business',finalDocuments:{t0:{d0:true}}},0,'Academic & Research',field);assert(html.includes('Naskah / karya riset'));assert(!html.includes('Invoice dan bukti transaksi'));assert(!html.includes('Entrepreneur / Business'));
+ assert(!evidence.evidenceFields({},0,'',field).includes('data-evidence-group'));assert(evidence.evidenceFields({},0,'',field).includes('Track mentee belum ditetapkan'));
 });
