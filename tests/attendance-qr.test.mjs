@@ -1,0 +1,8 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';import{readFile}from'node:fs/promises';
+const load=async file=>{const context=vm.createContext({module:{exports:{}},exports:{}});vm.runInContext(await readFile(new URL('../src/assets/attendance/vendor/'+file,import.meta.url),'utf8'),context);return context.module.exports;};
+test('a real mentee QR round-trips through the bundled scanner; plain white image is not a QR',async()=>{
+ const qrcode=await load('qrcode-2.0.4.js'),read=await load('jsqr-1.4.0.js'),payload='ipbleap:attendance:v1:TEST_ONLY_RANDOM_TOKEN_NOT_PERSONAL_DATA';const qr=qrcode(0,'M');qr.addData(payload,'Byte');qr.make();const cell=7,margin=4,size=(qr.getModuleCount()+margin*2)*cell,pixels=new Uint8ClampedArray(size*size*4).fill(255);
+ for(let row=0;row<qr.getModuleCount();row++)for(let col=0;col<qr.getModuleCount();col++)if(qr.isDark(row,col))for(let y=0;y<cell;y++)for(let x=0;x<cell;x++){const i=((row+margin)*cell+y)*size*4+((col+margin)*cell+x)*4;pixels[i]=pixels[i+1]=pixels[i+2]=0;}
+ assert.equal(read(pixels,size,size,{inversionAttempts:'attemptBoth'}).data,payload);assert.equal(read(new Uint8ClampedArray(size*size*4).fill(255),size,size),null);
+});
+test('camera starts only from explicit action and stops on navigation/visibility; photos are decoded locally',async()=>{const src=await readFile(new URL('../src/assets/attendance/app.mjs',import.meta.url),'utf8');assert.ok(src.includes("if(action==='camera')await camera()"));assert.ok(src.includes("window.addEventListener('pagehide',stop)"));assert.ok(src.includes('track.stop()'));assert.ok(src.includes('getUserMedia({audio:false'));assert.ok(src.includes('URL.revokeObjectURL(url)'));assert.ok(!src.includes('fetch('));});

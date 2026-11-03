@@ -5,3 +5,7 @@ __pycache__/
 
 .openai/
 .qa/
+
+.local-management/
+
+.local-attendance*.sqlite3*

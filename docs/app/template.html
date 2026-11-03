@@ -335,6 +335,7 @@ class Component extends DCLogic {
       assessmentLink('Penilaian','Capaian KPI dan 360-Degree Assessment','kelompok-penilaian.html?view=penilaian','PN','#EEFFB8')
     ];
     const programP = { key: 'program', label: 'Program', children: [
+      ...(role==='pengurus'?[{ label: 'Scan Absensi', desc: 'Scan QR dan rekap kehadiran per mentee', href: 'absensi-pengurus.html', short: 'QR', tint: '#EEFFB8' },{ label: 'Kelola Akun & Progres', desc: 'Akun, kelompok dan perjalanan tiap mentee', href: 'kelola-program.html', short: 'AK', tint: '#E7E6F3' }]:[]),
       { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
       { label: 'Penilaian akhir M12', desc: 'Khusus Tim Penilaian yang ditugaskan', href: 'penilaian.html?period=12', short: 'PN', tint: '#EEFFB8' },
       { label: 'Kelola event', desc: 'Buat event & pendaftaran', href: 'kelola-event.html', short: 'EV', tint: '#E3F3F8' },
@@ -358,7 +359,8 @@ class Component extends DCLogic {
           assessmentLink('Mentoring','Detail sesi dan hasil mentoring dalam Worksheet ABC','mentoring.html','MT'),
           assessmentLink('Personal Outcome Contract','Outcome dan KPI sesuai track, pathway serta baseline','poc.html','PO'),
           assessmentLink('Hasil KPI','Ajukan hasil aktual M3/M6/M9/M12 dan portfolio','hasil-kpi.html','HK'),
-          assessmentLink('Raport','Hasil penilaian yang sudah diterbitkan','raport.html','RP','#EEFFB8')
+          assessmentLink('Raport','Hasil penilaian yang sudah diterbitkan','raport.html','RP','#EEFFB8'),
+          assessmentLink('Kehadiran saya','QR presensi dan riwayat kehadiran kegiatan','kehadiran.html','KH')
         ] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
@@ -378,6 +380,7 @@ class Component extends DCLogic {
       superadmin: [
         { key: 'beranda', label: 'Sistem', href: 'super-admin.html' },
         { key: 'pengguna', label: 'Pengguna & Role', href: 'super-admin.html' },
+        { key: 'program', label: 'Kelola Program', href: 'kelola-program.html' },
         { key: 'data', label: 'Data & Batch', href: 'super-admin.html' },
         { key: 'audit', label: 'Audit Log', href: 'super-admin.html' }
       ]

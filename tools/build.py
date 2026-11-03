@@ -126,7 +126,7 @@ def build_page(name, meta):
     for cname, c in comps.items():
         templates.append(f'<template data-dc="{cname}">\n{c["body"]}\n</template>')
         scripts.append(f"<script type=\"text/x-dc\" data-dc=\"{cname}\" data-props='{c['props']}'>{c['script']}</script>")
-    banner = section.get('banner', '')
+    banner = '' if name in ('KelolaProgram','AbsensiPengurus','Kehadiran') else section.get('banner', '')
     if banner:
         banner = banner.replace('{home}', rel('index.html', out))
     html = f'''<!doctype html>

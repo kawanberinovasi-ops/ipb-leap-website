@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "python3 tools/build.py",
-    "test": "node --experimental-vm-modules --test tests/*.test.mjs"
+    "test": "node --experimental-vm-modules --test tests/*.test.mjs",
+    "dev": "python3 tools/local_attendance_server.py --preview"
   },
   "engines": {
     "node": ">=24.12"
