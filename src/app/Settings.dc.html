@@ -23,6 +23,24 @@ a{color:#3157A5}a:hover{color:#32306F}
 .btn{transition:transform .18s}
 .btn:hover{transform:translateY(-2px)}
 input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px rgba(49,87,165,.16)}
+@media(max-width:760px){
+.theme-all header>div{padding:12px 16px!important;gap:12px!important;max-width:100%;box-sizing:border-box}
+.theme-all header>div>div{max-width:100%;min-width:0}
+.theme-all header>div>div:first-child{width:100%;justify-content:space-between;gap:8px!important}
+.theme-all header nav{width:100%;flex-basis:100%!important;position:relative;justify-content:center!important}
+.theme-all header nav>div{position:static!important}
+.theme-all header nav>div>div{left:0!important;transform:none!important;width:100%!important;max-width:100%;box-sizing:border-box}
+.theme-all header>div>div:last-child{width:100%;justify-content:space-between;flex-wrap:wrap}
+.theme-all header button[aria-label^="Cari"] span{display:none}
+.theme-all header button[aria-label^="Cari"]{padding:0 12px!important}
+.theme-all header button[aria-label="Menu akun"]{max-width:170px;overflow:hidden}
+.theme-all main{padding:24px 16px 48px!important;box-sizing:border-box}
+.theme-all main h1{font-size:36px!important}
+.theme-all main aside{max-width:none!important;flex-basis:100%!important;box-sizing:border-box}
+.theme-all main section{max-width:100%;min-width:0;box-sizing:border-box}
+.theme-all .settings-fields{grid-template-columns:1fr!important}
+.theme-all input,.theme-all textarea{max-width:100%;box-sizing:border-box;font-size:16px!important}
+}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
 </style>
 </helmet>
@@ -37,12 +55,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
         <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: {{t.muted}}">Akun kamu</span>
         <h1 style="margin: 6px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 50px; letter-spacing: -.02em; color: {{t.brand}}; line-height: 1">Pengaturan</h1>
       </div>
-      <div role="group" aria-label="Pratinjau sebagai role" style="display: flex; flex-wrap: wrap; gap: 4px; padding: 5px; border-radius: 14px; background: {{t.soft}}">
-        <span style="font-size: 12px; font-weight: 700; color: {{t.muted}}; padding: 0 8px; align-self: center">Pratinjau:</span>
-        <sc-for list="{{roleTabs}}" as="r" hint-placeholder-count="4">
-          <button type="button" onClick="{{r.pick}}" aria-pressed="{{r.pressed}}" style="{{r.style}}">{{r.label}}</button>
-        </sc-for>
-      </div>
+      <span aria-label="Peran akun" style="font-size:13px;font-weight:800;padding:10px 16px;border-radius:14px;background:{{t.soft}};color:{{t.brand}}">{{card.label}}</span>
     </div>
 
     <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
@@ -65,32 +78,32 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
         <sc-if value="{{is.profil}}" hint-placeholder-val="{{ true }}">
           <div style="{{s.card}}">
             <h2 style="{{s.h2}}">Profil &amp; data pribadi</h2>
-            <p style="{{s.sub}}">Diisi sekali, dipakai di ID card, pendaftaran event, raport, dan sertifikat.</p>
-            <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px">
-              <label style="{{s.label}}">Nama lengkap<input type="text" value="{{person.name}}" style="{{s.input}}"></label>
+            <p style="{{s.sub}}">Nama, email, dan peran mengikuti akun login kamu. Penyimpanan profil tambahan belum dihubungkan.</p>
+            <div class="settings-fields" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px">
+              <label style="{{s.label}}">Nama lengkap<input type="text" value="{{person.name}}" readonly style="{{s.input}}"></label>
               <label style="{{s.label}}">Nama panggilan<input type="text" value="{{person.nick}}" style="{{s.input}}"></label>
-              <label style="{{s.label}}">Email <span style="font-size: 11.5px; font-weight: 800; color: #16A34A">✓ terverifikasi OTP</span><input type="email" value="{{person.email}}" disabled="" style="{{s.inputOff}}"></label>
-              <label style="{{s.label}}">Nomor WhatsApp<input type="tel" value="0812 3456 7890" style="{{s.input}}"></label>
+              <label style="{{s.label}}">Email <span style="font-size: 11.5px; font-weight: 800; color: #16A34A">Email akun</span><input type="email" value="{{person.email}}" disabled="" style="{{s.inputOff}}"></label>
+              <label style="{{s.label}}">Nomor WhatsApp<input type="tel" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
               <sc-if value="{{isStudent}}" hint-placeholder-val="{{ true }}">
-                <label style="{{s.label}}">Fakultas / Prodi<input type="text" value="FEM · Agribisnis" style="{{s.input}}"></label>
+                <label style="{{s.label}}">Fakultas / Prodi<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
               </sc-if>
               <sc-if value="{{isStudent}}" hint-placeholder-val="{{ true }}">
-                <label style="{{s.label}}">NIM · Angkatan<input type="text" value="H34190042 · 59" style="{{s.input}}"></label>
+                <label style="{{s.label}}">NIM · Angkatan<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
               </sc-if>
               <sc-if value="{{isMentor}}" hint-placeholder-val="{{ false }}">
-                <label style="{{s.label}}">Instansi<input type="text" value="Perusahaan agribisnis" style="{{s.input}}"></label>
+                <label style="{{s.label}}">Instansi<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
               </sc-if>
               <sc-if value="{{isMentor}}" hint-placeholder-val="{{ false }}">
-                <label style="{{s.label}}">Jabatan · Alumni angkatan<input type="text" value="Head of People · 41" style="{{s.input}}"></label>
+                <label style="{{s.label}}">Jabatan · Alumni angkatan<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
               </sc-if>
-              <label style="{{s.label}}">Domisili<input type="text" value="Bogor, Jawa Barat" style="{{s.input}}"></label>
-              <label style="{{s.label}}">LinkedIn<input type="url" value="linkedin.com/in/nama-kamu" style="{{s.input}}"></label>
+              <label style="{{s.label}}">Domisili<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
+              <label style="{{s.label}}">LinkedIn<input type="url" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
             </div>
-            <label style="{{s.label}}; margin-top: 16px">Bio singkat<textarea rows="3" style="{{s.input}}; height: auto; padding: 12px 14px; resize: vertical">Suka ngulik social enterprise dan pemberdayaan desa.</textarea></label>
+            <label style="{{s.label}}; margin-top: 16px">Bio singkat<textarea rows="3" style="{{s.input}}; height: auto; padding: 12px 14px; resize: vertical"></textarea></label>
             <div style="margin-top: 16px">
               <span style="{{s.labelText}}">Minat</span>
               <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px">
-                <span style="{{s.chipOn}}">Social enterprise</span><span style="{{s.chipOn}}">Kepemimpinan desa</span><span style="{{s.chipOn}}">Public speaking</span><span style="{{s.chip}}">+ Tambah</span>
+                <span style="{{s.hint}}">Belum ada minat tersimpan.</span><span style="{{s.chip}}">+ Tambah</span>
               </div>
             </div>
             <div style="display: flex; justify-content: flex-end; margin-top: 22px"><button class="btn" type="button" onClick="{{save}}" style="{{s.primary}}">Simpan perubahan</button></div>
@@ -144,19 +157,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
                     </div>
                   </div>
                   <div style="position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; transform: rotateY(180deg); border-radius: 22px; overflow: hidden; background: #0E0D2B; color: #FFFFFF; box-shadow: 0 40px 70px -36px rgba(13,13,26,.8); display: flex; flex-direction: column; align-items: center; padding: 28px 24px; box-sizing: border-box">
-                    <span style="font-size: 11px; font-weight: 800; letter-spacing: .12em; color: #A3D6E6">SCAN UNTUK VERIFIKASI &amp; PRESENSI</span>
-                    <div role="img" aria-label="QR code verifikasi dan presensi" style="margin-top: 18px; padding: 14px; border-radius: 18px; background: #FFFFFF">
-                      <div style="display: grid; grid-template-columns: repeat(21, 7px)">
-                        <sc-for list="{{qr}}" as="q" hint-placeholder-count="441">
-                          <span style="width: 7px; height: 7px; background: {{q.c}}"></span>
-                        </sc-for>
-                      </div>
-                    </div>
-                    <span style="margin-top: 12px; font-size: 12px; font-weight: 700; color: rgba(255,255,255,.75)">{{card.id}}</span>
-                    <div style="margin-top: 22px; width: 100%; display: flex; flex-direction: column; gap: 8px; font-size: 11.5px; line-height: 1.5; color: rgba(255,255,255,.78)">
-                      <span>Tunjukkan QR ini ke panitia saat presensi event dan sesi mentoring.</span>
-                      <span>Berlaku selama Batch 2026 dan tidak dapat dipindahtangankan.</span>
-                    </div>
+                    <span style="font-size:14px;font-weight:800;color:#A3D6E6">KARTU AKUN IPB LEAP</span>
+                    <span style="margin-top:24px;font-size:12px;overflow-wrap:anywhere">{{card.id}}</span>
+                    <sc-if value="{{isMentee}}"><a href="Kehadiran.dc.html" style="margin-top:24px;padding:14px 20px;border-radius:14px;background:#D4FF3A;color:#0D0D1A;font-weight:800;text-decoration:none">Buka QR &amp; kehadiran saya</a></sc-if>
+                    <span style="margin-top:20px;font-size:12px;line-height:1.6">Hak akses mengikuti peran dan penugasan akun.</span>
                     <div style="margin-top: auto; width: 100%; height: 6px; border-radius: 6px; background: linear-gradient(90deg, #32306F, #3157A5, {{card.accent}})"></div>
                   </div>
                 </div>
@@ -251,8 +255,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
             <h2 style="{{s.h2}}">Integrasi Google</h2>
             <p style="{{s.sub}}">Login pakai akun Google langsung menyambungkan Calendar dan Drive. Akun email non-Google cukup sambungkan sekali di sini.</p>
             <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px">
-              <div style="{{s.row}}"><span style="display: flex; gap: 12px; align-items: center"><span style="width: 40px; height: 40px; border-radius: 12px; background: #E4EBF8; color: #3157A5; font-weight: 900; font-size: 12px; display: flex; align-items: center; justify-content: center">CAL</span><span><strong style="display: block">Google Calendar</strong><span style="{{s.hint}}">Sinkron dua arah · {{person.email}}</span></span></span><span style="font-size: 12.5px; font-weight: 800; padding: 6px 10px; border-radius: 10px; background: #DCFCE7; color: #166534">Tersambung</span></div>
-              <div style="{{s.row}}"><span style="display: flex; gap: 12px; align-items: center"><span style="width: 40px; height: 40px; border-radius: 12px; background: #DCFCE7; color: #166534; font-weight: 900; font-size: 12px; display: flex; align-items: center; justify-content: center">DRV</span><span><strong style="display: block">Google Drive</strong><span style="{{s.hint}}">Akses Shared Drive IPB LEAP sesuai role</span></span></span><span style="font-size: 12.5px; font-weight: 800; padding: 6px 10px; border-radius: 10px; background: #DCFCE7; color: #166534">Tersambung</span></div>
+              <div style="{{s.row}}"><span style="display: flex; gap: 12px; align-items: center"><span style="width: 40px; height: 40px; border-radius: 12px; background: #E4EBF8; color: #3157A5; font-weight: 900; font-size: 12px; display: flex; align-items: center; justify-content: center">CAL</span><span><strong style="display: block">Google Calendar</strong><span style="{{s.hint}}">Sinkron dua arah · {{person.email}}</span></span></span><span style="font-size: 12.5px; font-weight: 800; padding: 6px 10px; border-radius: 10px; background: #DCFCE7; color: #166534">Belum terhubung</span></div>
+              <div style="{{s.row}}"><span style="display: flex; gap: 12px; align-items: center"><span style="width: 40px; height: 40px; border-radius: 12px; background: #DCFCE7; color: #166534; font-weight: 900; font-size: 12px; display: flex; align-items: center; justify-content: center">DRV</span><span><strong style="display: block">Google Drive</strong><span style="{{s.hint}}">Akses Shared Drive IPB LEAP sesuai role</span></span></span><span style="font-size: 12.5px; font-weight: 800; padding: 6px 10px; border-radius: 10px; background: #DCFCE7; color: #166534">Belum terhubung</span></div>
             </div>
           </div>
         </sc-if>
@@ -287,11 +291,22 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = {
-      tab: 'profil', role: 'mentee', theme: 'light', flipped: false, photo: null, toast: null,
+      tab: 'profil', role: '', actor: null, theme: 'light', flipped: false, photo: null, toast: null,
       sw: { motion: false, contrast: false, sound: true, digest: true, dnd: false, otp: true, pub: true, pubEvent: true, pubProject: true, pubScore: false },
       notif: { chat: [1, 0, 1], undangan: [1, 1, 1], penilaian: [1, 1, 1], update: [1, 1, 0], pengumuman: [1, 1, 1], task: [1, 0, 1] },
       sound: 'leap'
     };
+  }
+  componentDidMount() {
+    this._accountChanged=()=>{
+      const actor=window.leapAccount;
+      if(!actor?.active||!actor.roles?.length){this.setState({actor:null,role:''});return;}
+      const requested=sessionStorage.getItem('ipbleap.ui.role');
+      const role=actor.roles.includes(requested)?requested:actor.roles[0];
+      this.setState({actor,role:({program:'pengurus',finance:'bendahara',system:'superadmin'}[role]||role)});
+    };
+    window.addEventListener('leap:account',this._accountChanged);
+    import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).then(this._accountChanged);
   }
   beep(kind) {
     try {
@@ -315,7 +330,7 @@ class Component extends DCLogic {
     clearTimeout(this._tt);
     this._tt = setTimeout(() => this.setState({ toast: null }), 2400);
   }
-  componentWillUnmount() { clearTimeout(this._tt); }
+  componentWillUnmount() { clearTimeout(this._tt);window.removeEventListener('leap:account',this._accountChanged); }
   renderVals() {
     const st = this.state;
     const sysDark = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -365,23 +380,11 @@ class Component extends DCLogic {
     });
     const is = {};
     tabDefs.forEach((d) => { is[d[0]] = st.tab === d[0]; });
-    const people = {
-      mentee: { name: 'Nabila Putri', nick: 'Nabila', email: 'nabila@apps.ipb.ac.id' },
-      asmen: { name: 'Raka Pratama', nick: 'Raka', email: 'raka@apps.ipb.ac.id' },
-      mentor: { name: 'Dian Hapsari', nick: 'Dian', email: 'dian.hapsari@gmail.com' },
-      pengurus: { name: 'Head of Operations', nick: 'Ops', email: 'operations@ipbleap.id' }
-    };
-    const cards = {
-      mentee: { label: 'Mentee', accent: '#A3D6E6', ink: '#0D0D1A', group: 'Kelompok Rajawali', id: 'IPBL-26-0142' },
-      asmen: { label: 'Asmen', accent: '#3157A5', ink: '#FFFFFF', group: 'Associate Mentor · Rajawali', id: 'IPBL-26-A031' },
-      mentor: { label: 'Mentor', accent: '#32306F', ink: '#FFFFFF', group: 'Mentor · Rajawali', id: 'IPBL-26-M031' },
-      pengurus: { label: 'Pengurus', accent: '#D4FF3A', ink: '#0D0D1A', group: 'Steering Team IPB Leap 2026', id: 'IPBL-26-P004' }
-    };
-    const roleTabs = Object.keys(cards).map((k) => ({
-      label: cards[k].label, pressed: st.role === k ? 'true' : 'false',
-      style: 'height: 32px; padding: 0 12px; border-radius: 10px; border: 0; font: inherit; font-size: 12.5px; cursor: pointer; ' + (st.role === k ? 'background: ' + t.card + '; color: ' + t.ink + '; font-weight: 800' : 'background: transparent; color: ' + t.muted + '; font-weight: 700'),
-      pick: () => this.setState({ role: k })
-    }));
+    const actor=st.actor;
+    const person={name:actor?.display_name||'',nick:actor?.display_name?.split(/\s+/)[0]||'',email:actor?.email||''};
+    const definitions={mentee:['Mentee','#A3D6E6','#0D0D1A'],asmen:['Asmen','#3157A5','#FFFFFF'],mentor:['Mentor','#32306F','#FFFFFF'],pengurus:['Pengurus / Pengelola','#D4FF3A','#0D0D1A'],bendahara:['Bendahara','#D4FF3A','#0D0D1A'],superadmin:['Super Admin','#0D0D1A','#FFFFFF']};
+    const definition=definitions[st.role]||['Memeriksa akun…','#EEF1F8','#32306F'];
+    const card={label:definition[0],accent:definition[1],ink:definition[2],id:actor?.id||'—',group:actor?'Mengikuti penugasan akun':'Memeriksa penugasan'};
     const themeDefs = [['light', 'Terang', '#F5F7FC', '#FFFFFF', '#FFFFFF'], ['dark', 'Gelap', '#0E0D2B', '#22205A', '#17163A'], ['system', 'Ikuti sistem', 'linear-gradient(90deg,#F5F7FC 50%,#0E0D2B 50%)', 'linear-gradient(90deg,#FFFFFF 50%,#22205A 50%)', '#8A8CA8']];
     const themeOpts = themeDefs.map((d) => {
       const on = st.theme === d[0];
@@ -408,25 +411,10 @@ class Component extends DCLogic {
       Object.assign({ label: 'Tampilkan final project', hint: 'Judul dan ringkasan project kelompok' }, sw(st.sw.pubProject, flipSw('pubProject'), 'Project publik')),
       Object.assign({ label: 'Tampilkan nilai di portofolio publik', hint: 'Default mati. Nilai raport tetap hanya terlihat olehmu, kelompok, dan pengurus' }, sw(st.sw.pubScore, flipSw('pubScore'), 'Nilai publik'))
     ];
-    const N = 21, qr = [];
-    let seed = 7;
-    const finder = (x, y) => {
-      const boxes = [[0, 0], [N - 7, 0], [0, N - 7]];
-      for (const b of boxes) {
-        const dx = x - b[0], dy = y - b[1];
-        if (dx >= 0 && dx < 7 && dy >= 0 && dy < 7) return (dx === 0 || dx === 6 || dy === 0 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4)) ? 1 : 0;
-      }
-      return -1;
-    };
-    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-      seed = (seed * 1103515245 + 12345) % 2147483648;
-      const f = finder(x, y);
-      qr.push({ c: (f === -1 ? (seed % 100) < 48 : f === 1) ? '#0D0D1A' : '#FFFFFF' });
-    }
     return {
-      t: t, s: s, is: is, tabs: tabs, roleTabs: roleTabs, themeOpts: themeOpts, displayToggles: displayToggles, notifRows: notifRows, privacyToggles: privacyToggles, qr: qr,
+      t: t, s: s, is: is, tabs: tabs, themeOpts: themeOpts, displayToggles: displayToggles, notifRows: notifRows, privacyToggles: privacyToggles,
       role: st.role, themeName: dark ? 'dark' : 'light',
-      person: people[st.role], card: cards[st.role],
+      person: person, card: card, isMentee: st.role === 'mentee',
       isStudent: st.role === 'mentee' || st.role === 'asmen',
       isMentor: st.role === 'mentor',
       photo: st.photo, hasPhoto: !!st.photo, noPhoto: !st.photo,
@@ -439,7 +427,7 @@ class Component extends DCLogic {
       otpSw: sw(st.sw.otp, flipSw('otp'), 'OTP'),
       onSound: (e) => { this.setState({ sound: e.target.value }); this.beep(e.target.value); },
       testSound: () => this.beep(st.sound),
-      save: () => this.showToast('Profil tersimpan'),
+      save: () => this.showToast('Perubahan belum disimpan. Penyimpanan profil tambahan belum dihubungkan.'),
       toast: !!st.toast, toastText: st.toast || ''
     };
   }
