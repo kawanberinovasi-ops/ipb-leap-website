@@ -125,15 +125,15 @@
     }
     if (node.nodeType !== 1) return;
     var tag = node.localName;
-    if (tag === 'sc-for') {
-      var listExpr = (node.getAttribute('list') || '').match(ONLY_HOLE);
+    if (tag === 'sc-for' || (tag === 'template' && node.hasAttribute('data-dc-each'))) {
+      var listExpr = (node.getAttribute('list') || node.getAttribute('data-dc-each') || '').match(ONLY_HOLE);
       var list = listExpr ? lookup(listExpr[1], scope) : null;
-      var as = node.getAttribute('as') || 'item';
+      var as = node.getAttribute('as') || node.getAttribute('data-as') || 'item';
       if (Array.isArray(list)) {
         list.forEach(function (item, i) {
           var s = Object.create(scope);
           s[as] = item; s.$index = i;
-          renderChildren(node, s, inst, out);
+          renderChildren(node.content || node, s, inst, out);
         });
       }
       return;
@@ -176,7 +176,14 @@
         }
         return;
       }
-      if (a.value.indexOf('{{') !== -1) el.setAttribute(an, interp(a.value, scope));
+      // Native boolean attributes are enabled by presence, even disabled="false".
+      // Keep ARIA/data attributes as strings; resolve only exact DC boolean bindings.
+      var boolHole = a.value.match(ONLY_HOLE);
+      if (boolHole && /^(checked|selected|disabled|hidden|readonly|required|multiple|autofocus)$/.test(an)) {
+        var boolValue = lookup(boolHole[1], scope);
+        if (boolValue && boolValue !== 'false') el.setAttribute(an, '');
+      }
+      else if (a.value.indexOf('{{') !== -1) el.setAttribute(an, interp(a.value, scope));
       else el.setAttribute(an, a.value);
     });
     var src = node.localName === 'template' ? node.content : node;

@@ -157,7 +157,7 @@ html{{scroll-behavior:smooth}}
 {banner}<div id="app" data-page="{name}"></div>
 {chr(10).join(templates)}
 {chr(10).join(scripts)}
-<script src="{rel('assets/leap-runtime.js', out)}"></script>
+<script src="{rel('assets/leap-runtime.js', out)}{'?v=20261103-portal2' if section['id']=='app' else ''}"></script>
 </body>
 </html>
 '''

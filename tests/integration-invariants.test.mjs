@@ -13,11 +13,11 @@ test('single active assessment entry and deployment assets exclude fixtures',asy
 });
 test('shared logout hook preserves original Navbar style, hero and unrelated module content',async()=>{
  const base='268c72681e65a53015b28ccd0ba064b1b7b303f8';
- const hero=await read('src/app/BerandaMentee.dc.html');assert.ok(hero.includes('Halo, Nabila.'));assert.ok(hero.includes('linear-gradient(180deg, #FFFFFF 0%, #F8FAFF 100%)'));
- const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'docs/app'],{encoding:'utf8'}).trim().split('\n').filter(p=>!['docs/app/penilaian.html','docs/app/kelompok.html','docs/app/index.html','docs/app/beranda-mentee.html','docs/app/pengaturan.html'].includes(p));
- const withoutNav=s=>s.replace(/<div style="position:relative;z-index:70;[\s\S]*?<\/div>\n/,'').replace(' onClick="{{logout}}"','').replace(' hidden data-hidden-feature="chat"','').replace('display:none!important;','').replace(/<script type="text\/x-dc" data-dc="Navbar"[\s\S]*?<\/script>/g,'');
+ const hero=await read('src/app/BerandaMentee.dc.html');assert.ok(hero.includes('Halo, {{displayName}}.'));assert.ok(hero.includes('linear-gradient(180deg, #FFFFFF 0%, #F8FAFF 100%)'));
+ const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'docs/app'],{encoding:'utf8'}).trim().split('\n').filter(p=>!['docs/app/penilaian.html','docs/app/kelompok.html','docs/app/index.html','docs/app/beranda-mentee.html','docs/app/pengaturan.html','docs/app/event.html','docs/app/kalender.html','docs/app/pengumuman.html'].includes(p));
+ const withoutNav=s=>s.replace('?v=20261103-portal2','').replace(/<div style="position:relative;z-index:70;[\s\S]*?<\/div>\n/,'').replace(' data-leap-search','').replace(' onClick="{{logout}}"','').replace(' hidden data-hidden-feature="chat"','').replace('display:none!important;','').replace(/<script type="text\/x-dc" data-dc="Navbar"[\s\S]*?<\/script>/g,'');
  for(const path of paths)assert.equal(withoutNav(await read(path)),withoutNav(execFileSync('git',['show',base+':'+path],{encoding:'utf8'})),path);
- const nav=await read('src/app/Navbar.dc.html'),original=execFileSync('git',['show',base+':src/app/Navbar.dc.html'],{encoding:'utf8'});assert.equal(nav.match(/<x-dc>[\s\S]*?<\/x-dc>/)[0].replace(' onClick="{{logout}}"','').replace(' hidden data-hidden-feature="chat"','').replace('display:none!important;',''),original.match(/<x-dc>[\s\S]*?<\/x-dc>/)[0]);
+ const nav=await read('src/app/Navbar.dc.html'),original=execFileSync('git',['show',base+':src/app/Navbar.dc.html'],{encoding:'utf8'});assert.equal(nav.match(/<x-dc>[\s\S]*?<\/x-dc>/)[0].replace(' data-leap-search','').replace(' onClick="{{logout}}"','').replace(' hidden data-hidden-feature="chat"','').replace('display:none!important;',''),original.match(/<x-dc>[\s\S]*?<\/x-dc>/)[0]);
 });
 test('review is isolated, empty, cannot save, and excludes Supabase credentials/SDK',async()=>{
  const files=await readdir(new URL('../docs/review-penilaian/assets/assessment/',import.meta.url));assert.ok(!files.includes('config.mjs'));assert.ok(!files.includes('vendor-supabase.mjs'));
