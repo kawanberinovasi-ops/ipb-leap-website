@@ -65,11 +65,11 @@ export function createLocalStore(storage, {uuid=localUUID,now=()=>new Date().toI
   const old=input.id?s.groups.find(g=>g.id===input.id&&g.cohort_id===c.id):null;if(input.id&&!old)throw Error('Kelompok tidak ditemukan.');
   if(s.groups.some(g=>g.id!==input.id&&g.cohort_id===c.id&&g.name.toLowerCase()===name.toLowerCase()))throw Error('Nama kelompok sudah digunakan pada cohort ini.');
   if(old&&old.field!==t.field&&s.members.some(m=>m.group_id===old.id&&m.active))throw Error('Track kelompok yang sudah memiliki mentee dipertahankan.');
-  for(const [key,role]of[['mentor_id','mentor'],['asmen_id','asmen']])if(input[key]&&!s.enrolments.some(e=>e.user_id===input[key]&&e.cohort_id===c.id&&e.role===role&&e.active&&s.profiles.some(p=>p.id===e.user_id&&p.active)))throw Error('Pilih pendamping aktif pada cohort yang sama.');
+  for(const [key,role]of[['mentor_id','mentor'],['asmen_id','asmen']])if(input[key]&&!s.enrolments.some(e=>e.user_id===input[key]&&e.cohort_id===c.id&&e.role===role&&e.active&&s.profiles.some(p=>p.id===e.user_id&&(p.active||p.pending_activation))))throw Error('Pilih pendamping terdaftar pada cohort yang sama.');
   const values={name,cohort_id:c.id,field:t.field,mentor_id:input.mentor_id||null,asmen_id:input.asmen_id||null,updated_at:now()};
   const g=old||{id:uuid(),active:false,created_at:now()};Object.assign(g,values);if(!old)s.groups.push(g);refreshGroups(s);return g;
  },(input.id?'Memperbarui kelompok ':'Menambahkan kelompok ')+text(input.name));}
- function refreshGroups(s){for(const g of s.groups)g.active=!!g.mentor_id&&!!g.asmen_id&&s.members.filter(m=>m.group_id===g.id&&m.active&&s.profiles.some(p=>p.id===m.user_id&&p.active)).length===5;}
+ function refreshGroups(s){const active=(user,role,c)=>s.profiles.some(p=>p.id===user&&p.active&&p.roles.includes(role))&&s.enrolments.some(e=>e.user_id===user&&e.role===role&&e.cohort_id===c&&e.active);for(const g of s.groups)g.active=active(g.mentor_id,'mentor',g.cohort_id)&&active(g.asmen_id,'asmen',g.cohort_id)&&s.members.filter(m=>m.group_id===g.id&&m.active&&active(m.user_id,'mentee',g.cohort_id)).length===5;}
  function workspace(cohortId,menteeId,actor=MANAGER){
   const s=read(),isManager=actor.id===MANAGER.id||actor.roles.includes('system')||actor.roles.includes('program')&&s.staff.some(x=>x.user_id===actor.id&&x.can_manage);
   const cohorts=s.cohorts.filter(c=>isManager||s.enrolments.some(e=>e.cohort_id===c.id&&e.user_id===actor.id&&e.active)),selectedCohort=cohortId||cohorts.at(-1)?.id||null;
