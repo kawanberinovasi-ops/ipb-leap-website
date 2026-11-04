@@ -1,0 +1,28 @@
+[
+  {"id":"business","track":"Entrepreneur / Business","label":"Entrepreneur","northStar":"Rp500 juta Cumulative Annual Revenue","kpis":[
+    {"id":"businessLegal","label":"1 entitas usaha legal terdaftar (CV / PT / UD / Koperasi)","unit":"entitas","target":1},
+    {"id":"businessClients","label":"Min. 10 klien/pelanggan berbayar terdokumentasi","unit":"klien/pelanggan","target":10},
+    {"id":"businessRevenue","label":"Min. Rp 50 juta rata-rata revenue/bulan di bulan ke-12","unit":"rupiah per bulan","target":50000000}
+  ]},
+  {"id":"professional","track":"Professional / Corporate / Bureaucracy","label":"Professional / Industri","northStar":"1 Career Breakthrough","kpis":[
+    {"id":"professionalInternship","label":"Min. 6 bulan magang aktif terdokumentasi","unit":"bulan","target":6},
+    {"id":"professionalContract","label":"1 kontrak kerja full-time diterima sebelum akhir periode","unit":"kontrak","target":1},
+    {"id":"professionalReferences","label":"Min. 2 rekomendasi profesional dari atasan/supervisor","unit":"rekomendasi","target":2}
+  ]},
+  {"id":"academic","track":"Academic & Research","label":"Akademisi & Riset","northStar":"1 Academic Breakthrough","kpis":[
+    {"id":"academicJournal","label":"Min. 1 publikasi jurnal terindeks (Sinta 2–4 atau setara)","unit":"publikasi","target":1},
+    {"id":"academicArticles","label":"Min. 5 artikel populer di platform publik (min. 1.000 pembaca)","unit":"artikel","target":5,"note":"Cakupan hitungan 1.000 pembaca perlu dijelaskan bersama Mentor pada cara ukur."},
+    {"id":"academicLoa","label":"1 Letter of Acceptance studi lanjut / beasiswa / program riset","unit":"Letter of Acceptance","target":1}
+  ]},
+  {"id":"public","track":"Politics / Public Leadership","label":"Birokrasi & Politik","northStar":"1 Political Breakthrough","kpis":[
+    {"id":"publicCommunity","label":"1 gerakan/komunitas dengan min. 200 anggota aktif terdokumentasi","unit":"gerakan/komunitas","target":1},
+    {"id":"publicRole","label":"1 posisi atau peran resmi di instansi / lembaga / partai terkait","unit":"posisi/peran","target":1},
+    {"id":"publicPolicy","label":"1 usulan kebijakan/program terdokumentasi & sudah diajukan","unit":"usulan","target":1}
+  ]},
+  {"id":"social","track":"Social & Community / Social Impact","label":"Sosial & Komunitas","northStar":"1 Sustainable Impact","kpis":[
+    {"id":"socialLegal","label":"1 entitas legal terdaftar (yayasan / komunitas / organisasi)","unit":"entitas","target":1},
+    {"id":"socialPrograms","label":"Min. 5 program/kegiatan terlaksana selama periode","unit":"program/kegiatan","target":5},
+    {"id":"socialBeneficiaries","label":"Min. 500 penerima manfaat langsung terverifikasi","unit":"penerima manfaat","target":500},
+    {"id":"socialFunding","label":"1 sumber pendanaan eksternal berhasil digalang","unit":"sumber pendanaan","target":1}
+  ]}
+]

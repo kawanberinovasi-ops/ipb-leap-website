@@ -16,27 +16,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/assessment/app.css">
+<link rel="stylesheet" href="../assets/grow/app.css">
 <style>
 [data-dc-host]{display:contents}
 html{scroll-behavior:smooth}
-
-body{margin:0;background:#F5F7FC}
-a{color:#3157A5}a:hover{color:#32306F}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes hop{0%{transform:translateY(0) rotate(0)}35%{transform:translateY(-22px) rotate(-8deg)}70%{transform:translateY(0)}85%{transform:translateY(-6px)}100%{transform:translateY(0)}}
-@keyframes pop{0%{transform:scale(.9)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
-.rise{animation:rise .5s cubic-bezier(.2,.9,.3,1.15) both}
-.hop{animation:hop .9s cubic-bezier(.3,1.4,.5,1) both}
-.pop{animation:pop .35s ease both}
-.seg{transition:all .15s}
-.seg:hover{border-color:#3157A5 !important}
-.btn{transition:transform .18s}
-.btn:hover{transform:translateY(-2px)}
-input[type=range]{accent-color:#3157A5}
-textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px rgba(49,87,165,.14)}
-@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
-
 
 body{margin:0}
 
@@ -46,11 +29,7 @@ body{margin:0}
 <noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
 <div id="app" data-page="Raport"></div>
 <template data-dc="Raport">
-<div style="min-height:100vh;background:#F5F7FC;font-family:'Plus Jakarta Sans',sans-serif;color:#0D0D1A">
-<div style="position:sticky;top:0;z-index:50"><dc-import name="Navbar" active="program"></dc-import></div>
-<section id="assessment"><main id="content" class="wrap" tabindex="-1"><p class="loading">Memeriksa akun dan ruang akses…</p></main>
-<dialog id="activation-dialog"><h2>Tautan aktivasi pribadi</h2><p id="activation-details"></p><input id="activation-link" readonly><button id="copy-activation">Salin</button><button id="close-activation">Tutup</button></dialog>
-<dialog id="copy-dialog"><h2>Salin teks ABC</h2><textarea id="copy-text" rows="12" readonly></textarea><button id="close-copy">Tutup</button></dialog></section></div>
+<div style="min-height:100vh"><div style="position:sticky;top:0;z-index:50"><dc-import name="Navbar" active="program" role="mentee"></dc-import></div><main id="grow-app" class="grow-wrap" data-view="report"><p>Memeriksa akun dan penugasan…</p></main></div>
 </template>
 <template data-dc="Navbar">
 <header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: {{c.ink}}; background: {{c.bar}}; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid {{c.line}}; box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
@@ -135,7 +114,7 @@ body{margin:0}
   </div>
 </header>
 </template>
-<script type="text/x-dc" data-dc="Raport" data-props='{}'>class Component extends DCLogic {componentDidMount(){const url=new URL('../assets/assessment/app.mjs?v=20261103-copy-evidence',location.href);import(url.href).then(m=>m.mount()).catch(()=>{document.querySelector('#content').textContent='Modul belum dapat dimuat. Muat ulang untuk mencoba kembali.';});} renderVals(){return {};}}</script>
+<script type="text/x-dc" data-dc="Raport" data-props='{}'>class Component extends DCLogic {componentDidMount(){import(new URL('../assets/grow/app.mjs?v=20261104-main',location.href).href).then(m=>m.mount()).catch(e=>{const main=document.querySelector('#grow-app');if(main)main.textContent='Halaman belum dapat dimuat: '+e.message;console.error(e);});}renderVals(){return {};}}</script>
 <script type="text/x-dc" data-dc="Navbar" data-props='{}'>
 class Component extends DCLogic {
   constructor(props) {
@@ -146,7 +125,7 @@ class Component extends DCLogic {
   renderVals() {
     const actor=window.leapAccount,granted=actor?.roles||[],selected=sessionStorage.getItem('ipbleap.ui.role'),serverRole=granted.includes(selected)?selected:granted[0];
     const role = actor ? ({program:'pengurus',finance:'bendahara',system:'superadmin'}[serverRole]||serverRole||'mentee') : (this.props.role ?? 'mentee');
-    const active = this.props.active ?? 'beranda';
+    const active = ['asmen','mentor'].includes(role)&&this.props.active==='program'?'kelompok':this.props.active??'beranda';
     const dark = (this.props.theme ?? 'light') === 'dark';
     const c = dark ? {
       bar: 'rgba(14,13,43,.82)', ink: '#ECEEFF', muted: '#9C9EC4', brand: '#C9D6F0', line: 'rgba(255,255,255,.08)', line2: 'rgba(255,255,255,.14)', chip: 'rgba(255,255,255,.06)', field: 'rgba(255,255,255,.06)', pop: '#1A1940', icon: '#C9D6F0', ring: '#0E0D2B', link: '#A3D6E6', navInk: '#C9CBEA', navOnBg: '#D4FF3A', navOnInk: '#0D0D1A',
@@ -163,18 +142,8 @@ class Component extends DCLogic {
     ];
     kel.pop();
     const assessmentLink=(label,desc,href,short,tint='#E4EBF8')=>({label,desc,href,short,tint});
-    const asmenFlow=[
-      assessmentLink('Mentoring','Catat detail sesi, kehadiran dan tindak lanjut','catat-sesi.html','MT'),
-      assessmentLink('Review','Periksa ABC dan catatan hasil mentoring mentee','kelompok-penilaian.html?view=review','RV'),
-      assessmentLink('Monitoring','Check-in, komitmen, proses dan bukti','kelompok-penilaian.html?view=monitoring','MO'),
-      assessmentLink('Penilaian','Proses, bukti dan 360-Degree Assessment','kelompok-penilaian.html?view=penilaian','PN','#EEFFB8')
-    ];
-    const mentorFlow=[
-      assessmentLink('Mentoring','Baca dan konfirmasi hasil mentoring mentee','kelompok-penilaian.html?view=mentoring','MT'),
-      assessmentLink('Review','Tinjau dan sepakati Personal Outcome Contract','kelompok-penilaian.html?view=review','RV'),
-      assessmentLink('Monitoring','Pantau tindakan, hasil dan bukti mentee','kelompok-penilaian.html?view=monitoring','MO'),
-      assessmentLink('Penilaian','Capaian KPI dan 360-Degree Assessment','kelompok-penilaian.html?view=penilaian','PN','#EEFFB8')
-    ];
+    const asmenFlow=[assessmentLink('Kelompok','Kelompok dan sesi mentoring','kelompok.html','KL'),assessmentLink('Review GROW','Tujuan dan milestone mentee','grow-canvas.html','GR'),assessmentLink('Review Catatan Mentee','Pembelajaran dan tindak lanjut mentee','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP')];
+    const mentorFlow=asmenFlow;
     const programP = { key: 'program', label: 'Program', children: [
       ...(role==='pengurus'?[{ label: 'Scan Absensi', desc: 'Scan QR dan rekap kehadiran per mentee', href: 'absensi-pengurus.html', short: 'QR', tint: '#EEFFB8' },{ label: 'Kelola Akun & Progres', desc: 'Akun, kelompok dan perjalanan tiap mentee', href: 'kelola-program.html', short: 'AK', tint: '#E7E6F3' }]:[]),
       { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
@@ -195,13 +164,7 @@ class Component extends DCLogic {
     const menus = {
       mentee: [
         { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
-        { key: 'program', label: 'Program', children: [
-          assessmentLink('Progres','Check-in dua mingguan, tindakan dan bukti','progres.html','PR'),
-          assessmentLink('Mentoring','Detail sesi dan hasil mentoring dalam Worksheet ABC','mentoring.html','MT'),
-          assessmentLink('Personal Outcome Contract','Outcome dan KPI sesuai track, pathway serta baseline','poc.html','PO'),
-          assessmentLink('Hasil KPI','Ajukan hasil aktual M3/M6/M9/M12 dan portfolio','hasil-kpi.html','HK'),
-          assessmentLink('Raport','Hasil penilaian yang sudah diterbitkan','raport.html','RP','#EEFFB8'),
-        ] }
+        { key: 'program', label: 'Program', children: [assessmentLink('GROW Canvas','Tujuan awal dan milestone tiga bulanan','grow-canvas.html','GR'),assessmentLink('Catat Mentoring','Pembelajaran, action dan tenggat','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP','#EEFFB8')] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
         { key: 'beranda', label: 'Beranda', href: 'kelompok.html' },
@@ -235,7 +198,7 @@ class Component extends DCLogic {
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
     };
     const p = people[role] || people.mentee;
-    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
+    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:grow-canvas|kelompok|poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
       const current=new URLSearchParams(location.search);for(const key of ['cohort','mentee','group','period','record','source'])if(current.has(key)&&!u.searchParams.has(key))u.searchParams.set(key,current.get(key));
       if(location.pathname.includes('/review-penilaian/'))u.searchParams.set('peran',role==='pengurus'?'program':role);
       return u.pathname+u.search;}return href;};

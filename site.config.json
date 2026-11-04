@@ -168,6 +168,10 @@
         },
         "Kehadiran": {
           "out": "app/kehadiran.html"
+        },
+        "GrowCanvas": {
+          "out": "app/grow-canvas.html",
+          "title": "GROW Canvas \u00b7 IPB LEAP"
         }
       }
     }

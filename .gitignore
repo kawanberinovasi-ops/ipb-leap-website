@@ -9,3 +9,6 @@ __pycache__/
 .local-management/
 
 .local-attendance*.sqlite3*
+
+prototypes/grow-canvas/docs/
+supabase/.temp/

@@ -9,15 +9,16 @@ export async function loadGroupContext(cohortId,groupId,preferred){
  const group=groups.find(g=>g.id===groupId)||groups[0]||null,cohort=base.cohorts.find(c=>c.id===(group?.cohort_id||base.selectedCohort));
  if(!group)return{actor,role,groups,group,cohort,profiles:base.profiles,people:[],logs:[],month:cohort?programMonth(cohort.starts_on):1};
  const ids=base.members.filter(m=>m.group_id===group.id&&m.active&&base.enrolments.some(e=>e.user_id===m.user_id&&e.role==='mentee'&&e.active)).map(m=>m.user_id);
- const [details,state]=await Promise.all([Promise.all(ids.map(id=>api.workspace(group.cohort_id,id))),api.rpc('erp_group_session_command',{p_action:'state',p_payload:{group:group.id}})]);
- const people=ids.map((id,i)=>({id,name:base.profiles.find(p=>p.id===id)?.display_name||'Nama belum tersedia',enrolment:base.enrolments.find(e=>e.user_id===id&&e.role==='mentee'),records:details[i].selectedMentee===id?details[i].records:[]}));
+ const [details,state]=await Promise.all([Promise.all(ids.map(async id=>({...await api.workspace(group.cohort_id,id),grow:await api.rpc('erp_grow_state',{p_cohort:group.cohort_id,p_mentee:id,p_role:role})}))),api.rpc('erp_group_session_command',{p_action:'state',p_payload:{group:group.id}})]);
+ const people=ids.map((id,i)=>({id,name:base.profiles.find(p=>p.id===id)?.display_name||'Nama belum tersedia',enrolment:base.enrolments.find(e=>e.user_id===id&&e.role==='mentee'),grow:details[i].grow,records:details[i].selectedMentee===id?details[i].records:[]}));
  return{actor,role,groups,group,cohort,profiles:base.profiles,people,logs:state.logs,month:programMonth(cohort.starts_on)};
 }
 export const saveGroupSession=p=>api.rpc('erp_group_session_command',{p_action:'save',p_payload:p});
 export function personSummary(person,logs,month){
- const submitted=person.records.filter(r=>r.month_no===month&&['abc','mentoring','checkin','actual','portfolio'].includes(r.kind)&&r.versions?.length&&r.versions.at(-1).status!=='Draft').sort((a,b)=>String(a.updated_at).localeCompare(String(b.updated_at)));
+ const submitted=[...person.records,...(person.grow?.notes||[]).filter(n=>n.status==='Diajukan').map(n=>({kind:'grow_note',month_no:n.month,updated_at:n.data.date,versions:[{status:n.status,data:n.data}]}))].filter(r=>r.month_no===month&&['grow_note','abc','mentoring','checkin','actual','portfolio'].includes(r.kind)&&r.versions?.length&&r.versions.at(-1).status!=='Draft').sort((a,b)=>String(a.updated_at).localeCompare(String(b.updated_at)));
  const checks=person.records.flatMap(r=>r.month_no===month?(r.checks||[]).filter(c=>c.kind==='process'):[]).sort((a,b)=>String(a.created_at).localeCompare(String(b.created_at)));
- const publications=person.records.filter(r=>r.kind==='review').flatMap(r=>(r.publications||[]).map(p=>({...p,period:r.month_no}))).filter(p=>typeof p.score?.total==='number').sort((a,b)=>a.period-b.period||a.number-b.number);
+ const published=(person.grow?.publications?.length?person.grow.publications:person.records.filter(r=>r.kind==='review').flatMap(r=>(r.publications||[]).map(p=>({...p,period:r.month_no}))));
+ const publications=published.filter(p=>typeof p.score?.total==='number').sort((a,b)=>a.period-b.period||(a.number||0)-(b.number||0));
  const attendance=logs.filter(s=>s.status==='Tercatat').flatMap(s=>s.data.attendance||[]).filter(a=>a.user_id===person.id&&['Hadir','Izin','Absen'].includes(a.status));
  return{last:submitted.at(-1)||null,process:checks.at(-1)?.data||null,publication:publications.at(-1)||null,attendance:attendance.length?Math.round(attendance.filter(a=>a.status==='Hadir').length*100/attendance.length):null};
 }
