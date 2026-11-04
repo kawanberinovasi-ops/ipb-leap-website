@@ -1,0 +1,10 @@
+data/
+__pycache__/
+verification/
+node_modules/
+.DS_Store
+*.sqlite3*
+.env
+.env.*
+*.log
+docs/

@@ -1,0 +1,185 @@
+{
+  "site": {
+    "url": "https://kawanberinovasi-ops.github.io/ipb-leap-website/",
+    "cname": "",
+    "description": "IPB LEAP (Leadership Acceleration Program) — program akselerasi kepemimpinan Himpunan Alumni IPB. Pemimpin Melahirkan Pemimpin. Make Your Leap."
+  },
+  "sections": [
+    {
+      "id": "public",
+      "src": "public",
+      "components": [
+        "PubNav",
+        "PubFooter"
+      ],
+      "pages": {
+        "PubHome": {
+          "out": "index.html",
+          "title": "IPB LEAP · Pemimpin Melahirkan Pemimpin"
+        },
+        "PubTentang": {
+          "out": "tentang.html",
+          "title": "Tentang IPB LEAP · Program Framework"
+        },
+        "PubMentor": {
+          "out": "mentor.html",
+          "title": "Our Mentor · IPB LEAP"
+        },
+        "PubMentorDetail": {
+          "out": "mentor-profil.html",
+          "title": "Profil Mentor · IPB LEAP"
+        },
+        "PubAsmen": {
+          "out": "asmen.html",
+          "title": "Our Asmen · IPB LEAP"
+        },
+        "PubAsmenDetail": {
+          "out": "asmen-profil.html",
+          "title": "Profil Asmen · IPB LEAP"
+        },
+        "PubMentee": {
+          "out": "mentee.html",
+          "title": "Our Mentee · IPB LEAP"
+        },
+        "PubMenteeDetail": {
+          "out": "mentee-profil.html",
+          "title": "Profil Mentee · IPB LEAP"
+        },
+        "PubKegiatan": {
+          "out": "kegiatan.html",
+          "title": "Kegiatan · IPB LEAP"
+        },
+        "PubShowcase": {
+          "out": "showcase.html",
+          "title": "Leap Showcase · IPB LEAP"
+        },
+        "PubPrestasi": {
+          "out": "prestasi.html",
+          "title": "Prestasi · IPB LEAP"
+        },
+        "PubEvent": {
+          "out": "event.html",
+          "title": "Event · IPB LEAP"
+        },
+        "PubKontak": {
+          "out": "kontak.html",
+          "title": "Kontak · IPB LEAP"
+        }
+      }
+    },
+    {
+      "id": "app",
+      "src": "app",
+      "components": [
+        "Navbar"
+      ],
+      "noindex": true,
+      "description": "Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.",
+      "banner": "",
+      "pages": {
+        "Main": {
+          "out": "app/index.html",
+          "title": "Masuk · IPB Leap Management System"
+        },
+        "BerandaMentee": {
+          "out": "app/beranda-mentee.html"
+        },
+        "Penilaian": {
+          "out": "app/penilaian.html"
+        },
+        "Monitoring": {
+          "out": "app/kelompok.html"
+        },
+        "MonitoringProgres": {
+          "out": "app/monitoring-progres.html"
+        },
+        "CatatSesi": {
+          "out": "app/catat-sesi.html"
+        },
+        "BerandaPengurus": {
+          "out": "app/beranda-pengurus.html"
+        },
+        "Pengumuman": {
+          "out": "app/pengumuman.html"
+        },
+        "KelolaEvent": {
+          "out": "app/kelola-event.html"
+        },
+        "Proker": {
+          "out": "app/proker.html"
+        },
+        "Template": {
+          "out": "app/template.html"
+        },
+        "FileManager": {
+          "out": "app/file-manager.html"
+        },
+        "Keuangan": {
+          "out": "app/keuangan.html"
+        },
+        "Kalender": {
+          "out": "app/kalender.html"
+        },
+        "Event": {
+          "out": "app/event.html"
+        },
+        "Chat": {
+          "out": "app/chat.html"
+        },
+        "Settings": {
+          "out": "app/pengaturan.html"
+        },
+        "SuperAdmin": {
+          "out": "app/super-admin.html"
+        },
+        "POC": {
+          "out": "app/poc.html"
+        },
+        "ABC": {
+          "out": "app/abc.html"
+        },
+        "Progres": {
+          "out": "app/progres.html"
+        },
+        "Raport": {
+          "out": "app/raport.html"
+        },
+        "KelompokPenilaian": {
+          "out": "app/kelompok-penilaian.html"
+        },
+        "Observer": {
+          "out": "app/observer.html"
+        },
+        "AksesPenilaian": {
+          "out": "app/akses-penilaian.html",
+          "title": "Akses Penilaian · IPB LEAP"
+        },
+        "Mentoring": {
+          "out": "app/mentoring.html"
+        },
+        "HasilKPI": {
+          "out": "app/hasil-kpi.html"
+        },
+        "KelolaProgram": {
+          "out": "app/kelola-program.html"
+        },
+        "AbsensiPengurus": {
+          "out": "app/absensi-pengurus.html"
+        },
+        "Kehadiran": {
+          "out": "app/kehadiran.html"
+        },
+        "GrowCanvas": {
+          "out": "app/grow-canvas.html",
+          "title": "GROW Canvas · IPB LEAP",
+          "desc": "Pratinjau lokal GROW Canvas IPB LEAP"
+        }
+      }
+    }
+  ],
+  "assets": {
+    "/_blob/d1185905fce3a282f8c2d64c19416648": "assets/logo-color.png",
+    "/_blob/3b740a84164b3fb26a17e9dc369c700e": "assets/logo-white.png"
+  },
+  "links": {}
+}

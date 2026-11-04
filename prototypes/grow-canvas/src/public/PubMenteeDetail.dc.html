@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>IPB LEAP · Profil Mentee</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E0D2B}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes blobA{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-120px,80px) scale(1.15)}66%{transform:translate(60px,140px) scale(.9)}}
+@keyframes blobC{0%,100%{transform:translate(0,0) scale(.9)}25%{transform:translate(160px,-60px) scale(1.1)}75%{transform:translate(-140px,90px) scale(1)}}
+@keyframes flow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes ringFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes gridMove{from{transform:translate(0,0)}to{transform:translate(34px,34px)}}
+@keyframes floatY{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-8px) rotate(var(--r,0deg))}}
+.floaty{animation:floatY 5s ease-in-out infinite}
+.gtext{background:linear-gradient(90deg,#FFFFFF 0%,#D4FF3A 25%,#A3D6E6 50%,#FFFFFF 75%,#D4FF3A 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:flow 5s linear infinite}
+.rise{animation:rise .7s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}.d4{animation-delay:.32s}.d5{animation-delay:.4s}
+.b-a{animation:blobA 18s ease-in-out infinite}.b-c{animation:blobC 24s ease-in-out infinite}
+.gridmove{animation:gridMove 6s linear infinite}
+.avring{background:linear-gradient(135deg,#D4FF3A,#A3D6E6,#6E5AE6,#D4FF3A);background-size:200% 200%;animation:ringFlow 5s ease-in-out infinite}
+.card{background:#FFFFFF;border-radius:22px;box-shadow:0 24px 50px -36px rgba(0,0,0,.6)}
+.ph{color:#A5A8C2}
+.btn{transition:transform .2s}.btn:hover{transform:translateY(-2px)}
+.feat{transition:transform .25s}.feat:hover{transform:translateY(-4px)}
+.tabb{cursor:pointer;border:0;background:transparent;font:inherit}
+@media (max-width: 1000px){.cols{flex-direction:column !important}.cols>div{flex-basis:auto !important}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="position: relative; overflow: hidden; background: linear-gradient(180deg, #32306F 0%, #24306F 35%, #1A1A4E 70%, #0E0D2B 100%); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50"><dc-import name="PubNav" active="komunitas" hint-size="100%,73px"></dc-import></div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden">
+    <div class="b-a" style="position: absolute; right: -10%; top: 2%; width: 700px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(163,214,230,.35), transparent 65%); filter: blur(60px)"></div>
+    <div class="b-c" style="position: absolute; left: -10%; top: 40%; width: 700px; height: 620px; border-radius: 50%; background: radial-gradient(circle, rgba(110,90,230,.4), transparent 65%); filter: blur(70px)"></div>
+    <div class="gridmove" style="position: absolute; inset: -60px; background-image: radial-gradient(rgba(255,255,255,.12) 1.2px, transparent 1.6px); background-size: 34px 34px; -webkit-mask-image: linear-gradient(180deg, #000, transparent 60%); mask-image: linear-gradient(180deg, #000, transparent 60%)"></div>
+  </div>
+
+  <main style="position: relative; max-width: 1280px; margin: 0 auto; padding: 32px 24px 110px; color: #FFFFFF">
+    <a href="PubMentee.dc.html" style="display: inline-flex; align-items: center; gap: 8px; color: #FFFFFF; font-size: 14px; font-weight: 700; text-decoration: none; opacity: .85">← Semua mentee</a>
+
+    <section class="cols" style="display: flex; gap: 56px; align-items: center; margin-top: 28px">
+      <div class="rise" style="flex: 0 0 380px; position: relative">
+        <div class="avring" style="aspect-ratio: 4 / 5; border-radius: 40px; padding: 4px; transform: rotate(-3deg)">
+          <div style="width: 100%; height: 100%; border-radius: 36px; background: linear-gradient(160deg,#3157A5,#32306F); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: rgba(255,255,255,.55)">
+            <svg aria-hidden="true" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path></svg>
+            <span style="font-size: 13px; font-weight: 700">Foto mentee</span>
+          </div>
+        </div>
+        <span class="floaty" style="position: absolute; right: -22px; top: 34px; padding: 10px 16px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; font-size: 13px; font-weight: 800; box-shadow: 0 16px 30px -12px rgba(0,0,0,.6); --r: 6deg">Entrepreneur</span>
+        <span class="floaty" style="position: absolute; left: -18px; bottom: 40px; padding: 10px 16px; border-radius: 999px; background: #FFFFFF; color: #32306F; font-size: 13px; font-weight: 800; box-shadow: 0 16px 30px -12px rgba(0,0,0,.6); --r: -5deg; animation-delay: -2s">Batch —</span>
+      </div>
+      <div class="rise d1" style="flex: 1; min-width: 0">
+        <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">MENTEE · FAKULTAS — · ANGKATAN —</span>
+        <h1 style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 72px; line-height: .92; letter-spacing: -.03em">Nama<br><span class="gtext">Mentee.</span></h1>
+        <p style="margin: 18px 0 0; font-size: 19px; font-weight: 600; color: rgba(255,255,255,.9)">Nama project · Pathway Entrepreneur</p>
+        <p style="margin: 8px 0 0; font-size: 15px; line-height: 1.65; color: rgba(255,255,255,.7); max-width: 560px">Target 12 bulan dalam satu kalimat, ditulis sendiri oleh mentee.</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 36px; margin-top: 28px">
+          <sc-for list="{{stats}}" as="t" hint-placeholder-count="3">
+            <div><span class="gtext" style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 44px; line-height: .9">{{t.v}}</span><span style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,.75)">{{t.l}}</span></div>
+          </sc-for>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px">
+          <a class="btn" href="PubShowcase.dc.html" style="height: 52px; padding: 0 24px; border-radius: 18px; background: #D4FF3A; color: #0D0D1A; font-weight: 800; font-size: 15px; text-decoration: none; display: flex; align-items: center">Dukung project-nya</a>
+          <a class="btn" href="#" aria-label="Profil LinkedIn" style="width: 52px; height: 52px; border-radius: 18px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); color: #FFFFFF; font-weight: 900; font-size: 15px; text-decoration: none; display: flex; align-items: center; justify-content: center">in</a>
+          <a class="btn" href="#" aria-label="Instagram" style="width: 52px; height: 52px; border-radius: 18px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.28); color: #FFFFFF; text-decoration: none; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <section style="margin-top: 96px">
+      <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">PROJECT &amp; CAPAIAN</span>
+      <h2 style="margin: 10px 0 28px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 42px; letter-spacing: -.02em">Lompatan yang sedang dibangun.</h2>
+      <div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: 150px; gap: 14px">
+        <sc-for list="{{featured}}" as="f" hint-placeholder-count="4">
+          <div class="feat rise" style="grid-column: {{f.c}}; grid-row: {{f.r}}; position: relative; border-radius: 28px; overflow: hidden; background: {{f.bg}}; color: {{f.ink}}; padding: 20px; display: flex; flex-direction: column; justify-content: space-between">
+            <span style="align-self: flex-start; padding: 5px 11px; border-radius: 999px; background: rgba(255,255,255,.85); color: #32306F; font-size: 11.5px; font-weight: 800">{{f.kind}}</span>
+            <span><strong style="display: block; font-size: 18px; opacity: .8">Judul {{f.kind}}</strong><span style="font-size: 13px; opacity: .65">Deskripsi singkat · Tahun</span></span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section class="cols" style="display: flex; gap: 56px; margin-top: 96px; align-items: flex-start">
+      <div style="flex: 1.3; min-width: 0">
+        <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">PERJALANAN DI IPB LEAP</span>
+        <h2 style="margin: 10px 0 28px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 42px; letter-spacing: -.02em">Dari Discover ke Showcase.</h2>
+        <ol style="list-style: none; margin: 0; padding: 0 0 0 30px; position: relative">
+          <span aria-hidden="true" style="position: absolute; left: 9px; top: 6px; bottom: 6px; width: 3px; border-radius: 3px; background: linear-gradient(180deg,#D4FF3A,#A3D6E6,rgba(163,214,230,0))"></span>
+          <sc-for list="{{exp}}" as="e" hint-placeholder-count="4">
+            <li class="rise" style="position: relative; padding: 0 0 30px">
+              <span aria-hidden="true" style="position: absolute; left: -28px; top: 4px; width: 18px; height: 18px; border-radius: 50%; background: {{e.dot}}; box-shadow: 0 0 0 5px rgba(212,255,58,.18)"></span>
+              <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .06em; color: #A3D6E6">{{e.when}}</span>
+              <strong style="display: block; margin-top: 4px; font-size: 20px">{{e.role}}</strong>
+              <span style="display: block; font-size: 14.5px; color: rgba(255,255,255,.75)">{{e.org}}</span>
+            </li>
+          </sc-for>
+        </ol>
+      </div>
+      <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 40px">
+        <div>
+          <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">MINAT &amp; KEAHLIAN</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px">
+            <sc-for list="{{skills}}" as="k" hint-placeholder-count="6"><span class="floaty" style="padding: 11px 16px; border-radius: 999px; background: {{k.bg}}; color: {{k.ink}}; font-size: 14px; font-weight: 800; --r: {{k.r}}deg; animation-duration: {{k.dur}}s">{{k.t}}</span></sc-for>
+          </div>
+        </div>
+        <div>
+          <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">PENDIDIKAN</span>
+          <div style="display: flex; gap: 14px; align-items: center; margin-top: 16px">
+            <span style="width: 56px; height: 56px; flex: none; border-radius: 18px; background: #FFFFFF; color: #32306F; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 16px; display: flex; align-items: center; justify-content: center">IPB</span>
+            <span><strong style="display: block; font-size: 17px">IPB University</strong><span style="font-size: 14px; color: rgba(255,255,255,.72)">Program Studi · Angkatan —</span></span>
+          </div>
+        </div>
+        <blockquote style="margin: 0; position: relative; padding: 28px; border-radius: 28px; background: linear-gradient(150deg,#3157A5,#32306F); overflow: hidden">
+          <span aria-hidden="true" style="position: absolute; left: 16px; top: -26px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 130px; color: rgba(212,255,58,.25)">“</span>
+          <span style="position: relative; display: block; font-size: 17px; line-height: 1.6; font-weight: 600; color: rgba(255,255,255,.7)">Cerita lompatan versi mentee sendiri akan tampil di sini.</span>
+          <span style="position: relative; display: block; margin-top: 12px; font-size: 13px; font-weight: 800; color: #D4FF3A">Nama Mentee · Batch —</span>
+        </blockquote>
+      </div>
+    </section>
+
+    <section style="margin-top: 96px">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 24px">
+        <h2 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 36px; letter-spacing: -.02em">Leapers lain di pathway ini</h2>
+        <a href="PubMentee.dc.html" style="font-size: 14px; font-weight: 800; color: #D4FF3A; text-decoration: none">Lihat semua →</a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px">
+        <sc-for list="{{others}}" as="o" hint-placeholder-count="4">
+          <a class="feat" href="PubMenteeDetail.dc.html" style="display: block; color: #FFFFFF; text-decoration: none">
+            <span style="display: block; aspect-ratio: 4 / 5; border-radius: 24px; background: {{o}}"></span>
+            <strong style="display: block; margin-top: 10px; font-size: 15px">Nama Mentee</strong>
+            <span style="font-size: 13px; color: rgba(255,255,255,.7)">Batch — · Fakultas —</span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  <dc-import name="PubFooter" hint-size="100%,420px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2300}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      stats: [{ v: '—', l: 'milestone tercapai' }, { v: '—%', l: 'progres target' }, { v: '—', l: 'sesi mentoring' }],
+      featured: [
+        { kind: 'Project', c: 'span 6', r: 'span 2', bg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', ink: '#FFFFFF' },
+        { kind: 'Milestone', c: 'span 3', r: 'span 1', bg: 'linear-gradient(135deg,#6E5AE6,#32306F)', ink: '#FFFFFF' },
+        { kind: 'Penghargaan', c: 'span 3', r: 'span 1', bg: 'linear-gradient(135deg,#D4FF3A,#EEFFB8)', ink: '#0D0D1A' },
+        { kind: 'Dokumentasi', c: 'span 6', r: 'span 1', bg: 'linear-gradient(135deg,#A3D6E6,#E3F3F8)', ink: '#0D0D1A' }
+      ],
+      exp: [
+        { when: 'FASE 01 · DISCOVER', role: 'Menetapkan target 12 bulan', org: 'Starting point → target', dot: '#D4FF3A' },
+        { when: 'FASE 02 · MATCH', role: 'Bergabung di Kelompok —', org: 'Mentor — · Asmen —', dot: '#A3D6E6' },
+        { when: 'FASE 03–05 · BUILD → ACCELERATE', role: 'Milestone yang dicapai', org: 'Diisi dari progres di platform', dot: '#A3D6E6' },
+        { when: 'FASE 06 · SHOWCASE', role: 'Tampil di Leap Showcase', org: 'Evidence hasil akhir', dot: '#FFFFFF' }
+      ],
+      skills: ['Keahlian 1', 'Keahlian 2', 'Keahlian 3', 'Akses jaringan', 'Keahlian 5', 'Keahlian 6'].map((t, i) => ({ t: t, bg: ['#D4FF3A', 'rgba(255,255,255,.14)', '#A3D6E6', 'rgba(255,255,255,.14)', '#FFFFFF', 'rgba(110,90,230,.6)'][i], ink: ['#0D0D1A', '#FFFFFF', '#0D0D1A', '#FFFFFF', '#32306F', '#FFFFFF'][i], r: [-3, 2, -1, 3, -2, 1][i], dur: (4.5 + i * 0.6).toFixed(1) })),
+      others: ['linear-gradient(160deg,#3157A5,#32306F)', 'linear-gradient(160deg,#A3D6E6,#3157A5)', 'linear-gradient(160deg,#6E5AE6,#32306F)', 'linear-gradient(160deg,#2FA3C7,#3157A5)']
+    };
+  }
+}
+</script>
+</body>
+</html>
