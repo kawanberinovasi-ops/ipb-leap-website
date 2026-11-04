@@ -172,6 +172,12 @@
         "GrowCanvas": {
           "out": "app/grow-canvas.html",
           "title": "GROW Canvas \u00b7 IPB LEAP"
+        },
+        "BerandaAsmen": {
+          "out": "app/beranda-asmen.html"
+        },
+        "BerandaMentor": {
+          "out": "app/beranda-mentor.html"
         }
       }
     }
