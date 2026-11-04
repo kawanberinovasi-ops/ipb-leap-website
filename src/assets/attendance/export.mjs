@@ -1,0 +1,8 @@
+// Export only a selected, server-authorized activity. Never include QR/card tokens.
+export function eligibleParticipants(state,cohort){return state.enrolments.filter(e=>e.cohort_id===cohort&&['mentee','asmen'].includes(e.role)&&e.active&&state.profiles.some(p=>p.id===e.user_id&&p.roles.includes(e.role)&&(p.active||p.pending_activation)));}
+const cell=value=>'"'+String(value??'').replace(/^[\s]*[=+@-]/,m=>"'"+m).replaceAll('"','""')+'"';
+const time=value=>value?new Intl.DateTimeFormat('id-ID',{timeZone:'Asia/Jakarta',dateStyle:'medium',timeStyle:'short'}).format(new Date(value))+' WIB':'';
+export function attendanceCSV(event,data,state){const rows=[['Kegiatan','Jenis','Cohort','Mulai (WIB)','Selesai (WIB)','Nama peserta','Email','Peran','Aktivasi akun','Kehadiran','Metode','Dicatat pertama','Diperbarui','Petugas']];
+ for(const member of data.participants.filter(p=>p.event_id===event.id)){const p=state.profiles.find(p=>p.id===member.user_id),e=state.enrolments.find(e=>e.user_id===member.user_id&&e.cohort_id===event.cohort_id),a=data.attendance.find(a=>a.event_id===event.id&&a.user_id===member.user_id);rows.push([event.name,event.kind,state.cohorts.find(c=>c.id===event.cohort_id)?.name||'',time(event.starts_at),time(event.ends_at),member.display_name,p?.email||'',e?.role==='asmen'?'Asmen':e?.role==='mentee'?'Mentee':e?.role||'',p?.active?'Aktif':p?.pending_activation?'Belum aktivasi':'Nonaktif',a?.status||'Belum tercatat',a?(a.method==='qr'?'Scan QR':'Manual'):'',time(a?.recorded_at),time(a?.updated_at),a?.operator||'']);}
+ return '\ufeff'+rows.map(row=>row.map(cell).join(',')).join('\r\n')+'\r\n';}
+export const exportName=event=>'Absensi-'+event.name.replace(/[^\p{L}\p{N}._-]+/gu,'-').slice(0,80)+'.csv';

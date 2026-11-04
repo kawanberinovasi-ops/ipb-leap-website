@@ -1,12 +1,14 @@
 import {portalWorkspace,activeAnnouncements,portalURL,stamp} from './api.mjs';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function searchEntries(actor,data={}){const roles=actor?.roles||[],role=roles.includes(data.uiRole)?data.uiRole:roles[0],items=[];const add=(title,file,description='Halaman')=>items.push({title,description,href:portalURL(file,data)});
- add('Beranda',role==='mentee'?'beranda-mentee.html':role==='system'?'super-admin.html':role==='asmen'?'beranda-asmen.html':role==='mentor'?'beranda-mentor.html':'beranda-pengurus.html');
+ add('Beranda',role==='mentee'?'beranda-mentee.html':role==='system'?'super-admin.html':role==='event'?'absensi-pengurus.html':role==='asmen'?'beranda-asmen.html':role==='mentor'?'beranda-mentor.html':'beranda-pengurus.html');
  if(roles.includes('mentee'))for(const[t,f]of[['Progres','progres'],['Mentoring · Worksheet ABC','mentoring'],['Personal Outcome Contract · KPI · Pathway','poc'],['Hasil KPI','hasil-kpi'],['Raport','raport'],['QR & Kehadiran saya','kehadiran']])add(t,f+'.html');
  if(roles.some(r=>['mentor','asmen'].includes(r)))add('Kelompok · Review · Monitoring · Penilaian','kelompok.html');
  if(data.canManage){add('Kelola akun & progres mentee','kelola-program.html');add('Buat pengumuman','pengumuman.html');}
+ if(roles.includes('asmen'))add('QR & Kehadiran saya','kehadiran.html');
+ if(roles.includes('event')){add('Kelola kegiatan','kegiatan-event.html');add('Absensi & Unduh rekap','absensi-pengurus.html');}
  if(roles.includes('program')&&data.canManage)add('Scan Absensi · Presensi','absensi-pengurus.html');
- add('Kalender','kalender.html');add('Event','event.html');add('Pengumuman','pengumuman.html');add('Pengaturan · Profil & ID Card','pengaturan.html');
+ add('Kalender','kalender.html');add('Event',role==='event'?'kegiatan-event.html':'event.html');add('Pengumuman','pengumuman.html');add('Pengaturan · Profil & ID Card','pengaturan.html');
  for(const a of activeAnnouncements(data))items.push({title:a.title,description:'Pengumuman · '+a.body,href:portalURL('pengumuman.html',data)+'#announcement-'+a.id});
  for(const e of data.activities||[])if(!e.cancelled)items.push({title:e.title,description:'Kalender · '+stamp(e.starts_at)+(e.location?' · '+e.location:''),href:portalURL('kalender.html',data,{event:e.id})});return items;}
 export function filterEntries(items,q){const terms=q.trim().toLocaleLowerCase('id-ID').split(/\s+/).filter(Boolean);return items.filter(i=>terms.every(t=>(i.title+' '+i.description).toLocaleLowerCase('id-ID').includes(t))).slice(0,30);}

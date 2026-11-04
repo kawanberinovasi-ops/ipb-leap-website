@@ -178,6 +178,10 @@
         },
         "BerandaMentor": {
           "out": "app/beranda-mentor.html"
+        },
+        "KegiatanEvent": {
+          "out": "app/kegiatan-event.html",
+          "title": "Kelola Kegiatan \u00b7 IPB LEAP"
         }
       }
     }
