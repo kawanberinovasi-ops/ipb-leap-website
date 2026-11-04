@@ -10,11 +10,11 @@ export async function openRepository({cohort=null,management=true}={}){
   throw Error('Masuk dengan akun IPB LEAP untuk melanjutkan.');
  }
  const actor=await api.bootstrap();if(!actor.active)throw Error('Akun belum diaktifkan.');
- const manage=management==='attendance'?actor.roles.includes('program')&&new URLSearchParams(location.search).get('mentee')!==actor.id:management;
+ const manage=management==='attendance'?false:management;
  let cache;
  const reload=async(c=cohort)=>{
   cohort=c;
-  cache=manage?await api.rpc('erp_management_workspace',{p_cohort:c||null}):await api.workspace(c||null);
+  cache=management==='attendance'?await api.rpc('erp_attendance_workspace',{p_cohort:c||null}):manage?await api.rpc('erp_management_workspace',{p_cohort:c||null}):await api.workspace(c||null);
   cache.revision??=cache.cohorts.find(x=>x.id===cache.selectedCohort)?.revision||0;
   cache.audit??=[];return cache;
  };
@@ -24,7 +24,7 @@ export async function openRepository({cohort=null,management=true}={}){
   async cohort(data){if(!actor.roles.includes('system'))throw Error('Super Admin menyiapkan cohort.');const result=await api.command('create_cohort',data);await reload(result.cohort);return cache.cohorts.find(c=>c.id===result.cohort);},
   async account(data,expected){validateTrack(data);if(data.id){await api.rpc('erp_management_command',{p_payload:{...data,action:'account',cohort:data.cohort_id,user:data.id},p_expected:expected});return null;}
    if(data.group_id)throw Error('Simpan akun terlebih dahulu, kemudian tempatkan ke kelompok melalui Edit.');
-   return api.accountCommand({action:'create',cohort:data.cohort_id,name:data.display_name,email:data.email,roles:[data.role],field:data.field,pathway:data.pathway,expected,...(data.initial_password?{initial_password:data.initial_password}:{})});
+   return api.accountCommand({action:'create',cohort:data.cohort_id,name:data.display_name,email:data.email,roles:[data.role],field:data.field,pathway:data.pathway,division:data.division,expected,...(data.initial_password?{initial_password:data.initial_password}:{})});
   },
   group:(data,expected)=>api.rpc('erp_management_command',{p_payload:{...data,action:'group',cohort:data.cohort_id},p_expected:expected}),
   reissue:(user,c)=>api.accountCommand({action:'reissue',user,cohort:c})

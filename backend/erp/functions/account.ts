@@ -37,10 +37,10 @@ Deno.serve(async req=>{
   const{data:me,error:sessionError}=await userClient.rpc('erp_bootstrap');if(sessionError)throw Error('Sesi akun tidak sah.');
   const managed=!!p.cohort,passwordLogin=action==='create'&&p.initial_password!==undefined;
   if(passwordLogin&&(!managed||typeof p.initial_password!=='string'||p.initial_password.length<12||p.initial_password.length>128))throw Error('Password awal harus 12–128 karakter pada pendaftaran cohort.');
-  const trusted={actor:verified.user.id,session:me.sessionId,...(managed?{cohort:p.cohort,roles:p.roles,operation:action,user:p.user,expected:p.expected,field:p.field,pathway:p.pathway,password_login:passwordLogin}:{})};await call('authorize',trusted,managed);
+  const trusted={actor:verified.user.id,session:me.sessionId,...(managed?{cohort:p.cohort,roles:p.roles,operation:action,user:p.user,expected:p.expected,field:p.field,pathway:p.pathway,password_login:passwordLogin,division:p.division}:{})};await call('authorize',trusted,managed);
   const activation=random(), activationHash=await hash(activation);let id=p.user;
   if(action==='create'){
-   if(typeof p.email!=='string'||!/^\S+@\S+\.\S+$/.test(p.email)||p.email.length>254||typeof p.name!=='string'||p.name.trim().length<2||!Array.isArray(p.roles)||!p.roles.length||p.roles.some((r:string)=>!['mentee','asmen','mentor','program','finance','system'].includes(r)))throw Error('Lengkapi nama, email, dan peran akun.');
+   if(typeof p.email!=='string'||!/^\S+@\S+\.\S+$/.test(p.email)||p.email.length>254||typeof p.name!=='string'||p.name.trim().length<2||!Array.isArray(p.roles)||!p.roles.length||p.roles.some((r:string)=>!['mentee','asmen','mentor','program','finance','system','event'].includes(r)))throw Error('Lengkapi nama, email, dan peran akun.');
    const{data,error}=await service.auth.admin.createUser({email:p.email.trim().toLowerCase(),email_confirm:true,user_metadata:{full_name:p.name.trim()},...(passwordLogin?{password:p.initial_password}:{})});
    if(error)throw Error('Akun belum dapat dibuat. Periksa email atau gunakan aktivasi ulang untuk akun yang sudah ada.');
    id=data.user.id;

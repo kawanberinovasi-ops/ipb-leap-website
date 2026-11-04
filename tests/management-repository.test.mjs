@@ -6,9 +6,9 @@ async function repository({local=false,roles=['mentee'],search='?mentee=own',ver
  const make=async(values)=>{const m=new vm.SyntheticModule(Object.keys(values),function(){for(const[k,v]of Object.entries(values))this.setExport(k,v);},{context});await m.link(()=>{});await m.evaluate();return m;};
  const apiModule=await make(api);const s=new vm.SourceTextModule(await read('management/repository.mjs'),{context,importModuleDynamically:()=>{calls.push('api-import');return apiModule;}});await s.link(()=>make({localStore:()=>cache,localActor:()=>actor,ACTOR_KEY:'test-only',TRACKS}));await s.evaluate();return{open:s.namespace.openRepository,calls,redirect:()=>redirected};
 }
-test('attendance keeps mentee context on shared login and only assigned management uses metadata endpoint',async()=>{
- const own=await repository();await own.open({management:'attendance'});assert.ok(own.calls.includes('subject'));assert.ok(!own.calls.includes('erp_management_workspace'));
- const manager=await repository({roles:['program'],search:'?mentee=someone'});await manager.open({management:'attendance'});assert.ok(manager.calls.includes('erp_management_workspace'));
+test('attendance uses its restricted roster endpoint for participants and operators without account metadata access',async()=>{
+ const own=await repository();await own.open({management:'attendance'});assert.ok(own.calls.includes('erp_attendance_workspace'));assert.ok(!own.calls.includes('erp_management_workspace'));
+ const manager=await repository({roles:['program'],search:'?mentee=someone'});await manager.open({management:'attendance'});assert.ok(manager.calls.includes('erp_attendance_workspace'));assert.ok(!manager.calls.includes('erp_management_workspace'));
 });
 test('local repository never loads live API, while missing production session goes to canonical login with next',async()=>{
  const local=await repository({local:true});assert.equal((await local.open()).local,true);assert.deepEqual(local.calls,[]);
