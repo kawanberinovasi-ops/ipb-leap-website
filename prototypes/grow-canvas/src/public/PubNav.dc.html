@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Navbar Publik</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; background: rgba(255,255,255,.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(50,48,111,.08); box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
+  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px">
+    <a href="PubHome.dc.html" aria-label="Beranda IPB LEAP" style="display: flex; align-items: center; text-decoration: none"><img src="/_blob/d1185905fce3a282f8c2d64c19416648" alt="IPB LEAP" style="height: 40px; width: auto"></a>
+
+    <nav aria-label="Menu utama" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2px">
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="7">
+        <div style="position: relative">
+          <sc-if value="{{it.isLink}}" hint-placeholder-val="{{ true }}">
+            <a href="{{it.href}}" aria-current="{{it.current}}" style="{{it.style}}">{{it.label}}</a>
+          </sc-if>
+          <sc-if value="{{it.hasChildren}}" hint-placeholder-val="{{ false }}">
+            <button type="button" onClick="{{it.toggle}}" aria-expanded="{{it.expanded}}" style="{{it.style}}">{{it.label}}
+              <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
+            </button>
+            <sc-if value="{{it.open}}" hint-placeholder-val="{{ false }}">
+              <div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 290px; padding: 8px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2; box-shadow: 0 24px 60px -24px rgba(50,48,111,.45); z-index: 60; display: flex; flex-direction: column; gap: 2px">
+                <sc-for list="{{it.children}}" as="ch" hint-placeholder-count="3">
+                  <a href="{{ch.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; text-decoration: none; color: #0D0D1A">
+                    <span style="width: 34px; height: 34px; flex: none; border-radius: 11px; background: {{ch.tint}}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #32306F">{{ch.short}}</span>
+                    <span style="display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 700">{{ch.label}}</span><span style="font-size: 12.5px; color: #6B6D8C; line-height: 1.4">{{ch.desc}}</span></span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-for>
+    </nav>
+
+    <div style="display: flex; gap: 8px">
+      <a href="Main.dc.html" style="height: 42px; padding: 0 16px; border-radius: 13px; border: 1px solid #D5DAEA; background: #FFFFFF; color: #0D0D1A; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center">Masuk</a>
+      <a href="PubEvent.dc.html" style="height: 42px; padding: 0 16px; border-radius: 13px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center">Ikut Event</a>
+    </div>
+  </div>
+</header>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["home","tentang","komunitas","kegiatan","showcase","prestasi","event","kontak"],"default":"home"},"$preview":{"width":1440,"height":80}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { open: null };
+  }
+  renderVals() {
+    const active = this.props.active ?? 'home';
+    const defs = [
+      { key: 'home', label: 'Beranda', href: 'PubHome.dc.html' },
+      { key: 'tentang', label: 'Tentang', href: 'PubTentang.dc.html' },
+      { key: 'komunitas', label: 'Komunitas', children: [
+        { label: 'Our Mentor', desc: 'Alumni IPB lintas profesi', href: 'PubMentor.dc.html', short: 'MT', tint: '#E7E6F3' },
+        { label: 'Our Asmen', desc: 'Associate Mentor tiap kelompok', href: 'PubAsmen.dc.html', short: 'AS', tint: '#E4EBF8' },
+        { label: 'Our Mentee', desc: 'Talenta muda di lima pathway', href: 'PubMentee.dc.html', short: 'MN', tint: '#E3F3F8' }
+      ] },
+      { key: 'kegiatan', label: 'Kegiatan', href: 'PubKegiatan.dc.html' },
+      { key: 'showcase', label: 'Leap Showcase', href: 'PubShowcase.dc.html' },
+      { key: 'prestasi', label: 'Prestasi', href: 'PubPrestasi.dc.html' },
+      { key: 'event', label: 'Event', href: 'PubEvent.dc.html' },
+      { key: 'kontak', label: 'Kontak', href: 'PubKontak.dc.html' }
+    ];
+    const items = defs.map((m) => {
+      const on = m.key === active;
+      const open = this.state.open === m.key;
+      return Object.assign({}, m, {
+        isLink: !m.children, hasChildren: !!m.children, open: open,
+        expanded: open ? 'true' : 'false', current: on ? 'page' : 'false',
+        style: 'display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 13px; border-radius: 12px; border: 0; font: inherit; font-size: 14px; cursor: pointer; text-decoration: none; ' + (on ? 'background: #32306F; color: #FFFFFF; font-weight: 700' : 'background: transparent; color: #33355A; font-weight: 600'),
+        toggle: () => this.setState({ open: open ? null : m.key })
+      });
+    });
+    return { items: items };
+  }
+}
+</script>
+</body>
+</html>

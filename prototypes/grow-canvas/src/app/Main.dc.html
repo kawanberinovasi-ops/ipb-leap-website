@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Masuk · IPB Leap Management System</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+[hidden]{display:none!important}body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes dash{0%{transform:translateX(-30%);opacity:0}30%{opacity:1}100%{transform:translateX(60%);opacity:0}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-8px) rotate(-3deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,255,58,.55)}50%{box-shadow:0 0 0 10px rgba(212,255,58,0)}}
+.rise{animation:rise .55s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.08s}.d2{animation-delay:.16s}.d3{animation-delay:.24s}
+.speed{animation:dash 2.6s ease-in-out infinite}
+.s2{animation-delay:.5s}.s3{animation-delay:1s}.s4{animation-delay:1.5s}
+.floaty{animation:floaty 4s ease-in-out infinite}
+.pulse{animation:pulse 2s infinite}
+.btn{transition:transform .18s, box-shadow .18s, background .18s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 28px -14px rgba(49,87,165,.8)}
+.field:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px rgba(49,87,165,.14)}
+.chip{transition:all .18s}
+.chip:hover{border-color:#3157A5 !important}
+@media (max-width: 600px){.login-panel{align-items:flex-start!important;padding:32px 20px!important}.login-panel input{font-size:16px}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div class="split" style="display: flex; min-height: 100vh; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; background: #F5F7FC">
+
+
+  <section class="login-panel" style="flex: 1 1 48%; display: flex; align-items: center; justify-content: center; padding: 48px 24px; min-width:0; box-sizing: border-box">
+    <div class="rise d1" style="width: 100%; max-width: 460px">
+
+      <img src="/_blob/d1185905fce3a282f8c2d64c19416648" alt="IPB LEAP" style="display:block;width:150px;height:auto;margin:0 0 28px;filter:drop-shadow(0 2px 3px rgba(49,87,165,.2))">
+      <h2 style="margin:0;font-size:32px;color:#32306F">Hai, selamat datang lagi</h2>
+      <p style="color:#55577A">Satu akun untuk seluruh IPB Leap Management System. Peran dan akses mengikuti penugasan akun yang sudah ada.</p>
+      <div id="auth-message" role="status" aria-live="polite" style="margin:16px 0;color:#3157A5"></div>
+      <form id="leap-login" style="display:grid;gap:16px">
+      <label>Email<input class="field" name="email" type="email" autocomplete="username" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
+      <label>Kata sandi<input class="field" name="password" type="password" autocomplete="current-password" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
+      <button class="btn" style="padding:16px;border:0;border-radius:16px;background:linear-gradient(135deg,#32306F,#3157A5);color:white;font:inherit;font-weight:700;font-size:16px;cursor:pointer">Masuk</button>
+      </form>
+      <form id="leap-activate" hidden style="display:grid;gap:16px">
+      <p id="activation-identity"></p>
+      <label id="setup-name" hidden>Nama lengkap<input name="name" autocomplete="name"></label>
+      <label>Kata sandi baru<input name="password" type="password" autocomplete="new-password" minlength="12" required></label>
+      <label>Ulangi kata sandi<input name="confirm" type="password" autocomplete="new-password" minlength="12" required></label>
+      <button>Aktifkan akun</button></form>
+      <form id="leap-password-change" hidden style="display:grid;gap:16px">
+      <h3 style="margin:0;color:#32306F">Ganti password awal</h3><p id="password-change-identity"></p>
+      <label>Password pribadi baru<input class="field" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
+      <label>Ulangi password baru<input class="field" name="confirm" type="password" autocomplete="new-password" minlength="12" maxlength="128" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
+      <button class="btn" style="padding:16px;border:0;border-radius:16px;background:linear-gradient(135deg,#32306F,#3157A5);color:white;font:inherit;font-weight:700;font-size:16px;cursor:pointer">Simpan password &amp; masuk</button></form>
+      <p style="font-size:13px;color:#6B6D8C;margin-top:24px">Belum punya akses atau lupa kata sandi? Hubungi pengelola untuk tautan aktivasi. Tidak ada email otomatis dari halaman ini.</p>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":920}}'>
+class Component extends DCLogic {componentDidMount(){import(new URL('../assets/assessment/login.mjs?v=20261103-password',location.href).href).then(m=>m.mount()).catch(()=>{document.querySelector('#auth-message').textContent='Layanan login belum dapat dimuat. Muat ulang untuk mencoba kembali.';});}renderVals(){return {};}}
+</script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>IPB LEAP · About Us</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0E0D2B}
+a{color:#D4FF3A}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes blobA{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-120px,80px) scale(1.15)}66%{transform:translate(60px,140px) scale(.9)}}
+@keyframes blobB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(220px,-120px) scale(1.2)}}
+@keyframes blobC{0%,100%{transform:translate(0,0) scale(.9)}25%{transform:translate(160px,-60px) scale(1.1)}75%{transform:translate(-140px,90px) scale(1)}}
+@keyframes gridMove{from{transform:translate(0,0)}to{transform:translate(34px,34px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spark{0%{opacity:0;transform:translateY(0) scale(.4)}20%{opacity:1}80%{opacity:.8}100%{opacity:0;transform:translateY(-120px) scale(1.1)}}
+@keyframes flow{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes comet{0%{left:0%;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:100%;opacity:0}}
+@keyframes pop{0%{opacity:0;transform:scale(.3)}70%{transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
+@keyframes ping{0%{transform:scale(1);opacity:.7}100%{transform:scale(2.4);opacity:0}}
+@keyframes floatY{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-10px) rotate(var(--r,0deg))}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.rise{animation:rise .7s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}
+.b-a{animation:blobA 18s ease-in-out infinite}.b-b{animation:blobB 22s ease-in-out infinite}.b-c{animation:blobC 26s ease-in-out infinite}
+.gridmove{animation:gridMove 6s linear infinite}
+.ring{animation:spin 26s linear infinite}.ring2{animation-duration:38s;animation-direction:reverse}
+.spark{animation-name:spark;animation-timing-function:ease-in-out;animation-iteration-count:infinite}
+.gtext{background:linear-gradient(90deg,#FFFFFF 0%,#D4FF3A 25%,#A3D6E6 50%,#FFFFFF 75%,#D4FF3A 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:flow 5s linear infinite}
+.track{transform-origin:left;animation:draw 1.8s cubic-bezier(.6,0,.2,1) .3s both}
+.trackfill{background:linear-gradient(90deg,#A3D6E6,#D4FF3A,#A3D6E6);background-size:200% 100%;animation:flow 3s linear infinite}
+.comet{animation:comet 4.5s cubic-bezier(.5,0,.5,1) 2.1s infinite}
+.node{animation:pop .6s cubic-bezier(.2,.9,.3,1.3) both}
+.ping{animation:ping 1.8s ease-out infinite}
+.floaty{animation:floatY 5s ease-in-out infinite}
+.marquee{animation:marquee 28s linear infinite}
+.phase{transition:transform .25s, background .25s}
+.phase:hover{transform:translateY(-6px);background:rgba(255,255,255,.12) !important}
+@keyframes glowPulse{0%,100%{box-shadow:0 20px 40px -18px rgba(212,255,58,.7),0 0 0 0 rgba(212,255,58,.45)}50%{box-shadow:0 20px 40px -18px rgba(212,255,58,.7),0 0 0 12px rgba(212,255,58,0)}}
+@keyframes nudgeX{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+.wacta{animation:glowPulse 2.2s ease-in-out infinite;transition:transform .2s}.wacta:hover{transform:translateY(-3px) scale(1.02)}
+.arrowmove{display:inline-block;animation:nudgeX 1.2s ease-in-out infinite}
+@keyframes chainIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:none}}
+@keyframes barUp{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.chainstep{animation:chainIn .6s cubic-bezier(.2,.9,.3,1.2) both}
+.barup{transform-origin:bottom;animation:barUp 1.2s cubic-bezier(.2,.9,.3,1.1) both}
+.pillar{transition:transform .25s}.pillar:hover{transform:translateY(-6px) scale(1.02)}
+.engine{transition:transform .25s}
+.engine:hover{transform:translateY(-6px) rotate(-1deg)}
+@media (max-width: 900px){.h1{font-size:52px !important}.tl{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.tlline{display:none}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div style="position: relative; overflow: hidden; background: linear-gradient(180deg, #32306F 0%, #2C3F8E 26%, #24306F 52%, #1A1A4E 78%, #0E0D2B 100%); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #FFFFFF">
+  <div style="position: sticky; top: 0; z-index: 50"><dc-import name="PubNav" active="tentang" hint-size="100%,73px"></dc-import></div>
+
+  <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden">
+    <div class="b-a" style="position: absolute; right: -8%; top: 0; width: 760px; height: 640px; border-radius: 50%; background: radial-gradient(circle, rgba(163,214,230,.45), transparent 65%); filter: blur(50px)"></div>
+    <div class="b-b" style="position: absolute; left: -12%; top: 18%; width: 700px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(212,255,58,.2), transparent 65%); filter: blur(60px)"></div>
+    <div class="b-c" style="position: absolute; left: 30%; top: 42%; width: 680px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(110,90,230,.45), transparent 65%); filter: blur(70px)"></div>
+    <div class="b-a" style="position: absolute; right: 5%; top: 70%; width: 600px; height: 520px; border-radius: 50%; background: radial-gradient(circle, rgba(49,87,165,.7), transparent 65%); filter: blur(60px); animation-delay: -7s"></div>
+    <div class="gridmove" style="position: absolute; inset: -60px; background-image: radial-gradient(rgba(255,255,255,.14) 1.2px, transparent 1.6px); background-size: 34px 34px; -webkit-mask-image: linear-gradient(180deg, #000, #000 60%, transparent); mask-image: linear-gradient(180deg, #000, #000 60%, transparent)"></div>
+    <div class="ring" style="position: absolute; right: -200px; top: -160px; width: 680px; height: 680px; border-radius: 50%; background: conic-gradient(from 0deg, transparent 0deg, rgba(212,255,58,.4) 40deg, transparent 90deg, rgba(163,214,230,.4) 200deg, transparent 260deg); -webkit-mask-image: radial-gradient(circle, transparent 62%, #000 63%, #000 64%, transparent 65%); mask-image: radial-gradient(circle, transparent 62%, #000 63%, #000 64%, transparent 65%)"></div>
+    <div class="ring ring2" style="position: absolute; left: -320px; top: 46%; width: 860px; height: 860px; border-radius: 50%; background: conic-gradient(from 90deg, transparent 0deg, rgba(255,255,255,.28) 60deg, transparent 120deg); -webkit-mask-image: radial-gradient(circle, transparent 66%, #000 67%, #000 67.6%, transparent 68.5%); mask-image: radial-gradient(circle, transparent 66%, #000 67%, #000 67.6%, transparent 68.5%)"></div>
+    <sc-for list="{{sparks}}" as="p" hint-placeholder-count="18">
+      <span class="spark" style="position: absolute; left: {{p.x}}%; top: {{p.y}}%; width: {{p.s}}px; height: {{p.s}}px; border-radius: 50%; background: {{p.c}}; box-shadow: 0 0 12px {{p.c}}; animation-duration: {{p.d}}s; animation-delay: {{p.delay}}s"></span>
+    </sc-for>
+  </div>
+
+  <section style="position: relative; max-width: 1360px; margin: 0 auto; padding: 88px 24px 40px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+    <div style="flex: 1 1 600px; min-width: 0">
+      <span class="rise" style="display: inline-block; font-size: 12.5px; font-weight: 800; letter-spacing: .12em; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25)">ABOUT US · IPB LEAP</span>
+      <h1 class="rise d1 h1" style="margin: 22px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 84px; line-height: .92; letter-spacing: -.03em">From Mentoring<br>to <span class="gtext">Acceleration.</span></h1>
+      <p class="rise d2" style="margin: 24px 0 0; font-size: 18px; line-height: 1.7; color: rgba(255,255,255,.86); max-width: 640px">IPB LEAP (Leadership Acceleration Program) adalah program Himpunan Alumni IPB yang sebelumnya dikenal sebagai Mentoring Leader. IPB LEAP exists to make promising IPB talents move faster.</p>
+    </div>
+    <div class="rise d3" style="flex: 1 1 380px; min-width: 0; position: relative; height: 360px">
+      <sc-for list="{{orbs}}" as="o" hint-placeholder-count="4">
+        <div class="floaty" style="position: absolute; left: {{o.x}}px; top: {{o.y}}px; --r: {{o.r}}deg; animation-duration: {{o.dur}}s; animation-delay: {{o.delay}}s">
+          <span class="gtext" style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: {{o.fs}}px; line-height: .85; letter-spacing: -.035em; filter: drop-shadow(0 10px 24px rgba(14,13,43,.5))">{{o.value}}</span>
+          <span style="display: inline-block; margin-top: 6px; padding: 5px 11px; border-radius: 999px; background: rgba(14,13,43,.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 12.5px; font-weight: 800">{{o.label}}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <div aria-hidden="true" style="position: relative; overflow: hidden; padding: 18px 0; margin: 24px 0 0; transform: rotate(-1.5deg); background: #D4FF3A; color: #0D0D1A">
+    <div class="marquee" style="display: flex; width: max-content; gap: 40px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 26px; white-space: nowrap">
+      <sc-for list="{{marq}}" as="m" hint-placeholder-count="12"><span>{{m}}</span><span>✦</span></sc-for>
+    </div>
+  </div>
+
+  <main style="position: relative; max-width: 1360px; margin: 0 auto; padding: 96px 24px 110px; display: flex; flex-direction: column; gap: 110px">
+    <section style="display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+      <div style="flex: 1 1 480px; min-width: 0">
+        <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">CERITA KAMI</span>
+        <h2 style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">7 batch, ±1.400 mentee, satu pertanyaan baru.</h2>
+        <p style="margin: 20px 0 0; font-size: 17px; line-height: 1.75; color: rgba(255,255,255,.82)">Selama 7 batch, Mentoring Leader (MenLead) membangun ruang mentoring lintas generasi alumni IPB. Sekitar 1.400 mentee telah dibina oleh para alumni yang berkarier di berbagai bidang.</p>
+        <p style="margin: 14px 0 0; font-size: 17px; line-height: 1.75; color: rgba(255,255,255,.82)">Kini pertanyaannya bukan lagi sekadar "bagaimana memastikan mentoring berjalan?", tetapi bagaimana talenta muda IPB bisa bergerak lebih cepat menuju hasil yang bermakna.</p>
+      </div>
+      <blockquote style="flex: 1 1 440px; min-width: 0; margin: 0; position: relative; padding: 40px 36px; border-radius: 34px; background: linear-gradient(150deg, #3157A5 0%, #32306F 70%); box-shadow: 0 40px 80px -40px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.15); overflow: hidden">
+        <span aria-hidden="true" class="b-a" style="position: absolute; right: -100px; top: -120px; width: 320px; height: 280px; border-radius: 50%; background: radial-gradient(circle, rgba(212,255,58,.35), transparent 65%); filter: blur(24px)"></span>
+        <span aria-hidden="true" style="position: absolute; left: 22px; top: -18px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 160px; line-height: 1; color: rgba(212,255,58,.25)">“</span>
+        <span style="position: relative; display: block; font-size: 23px; line-height: 1.5; font-weight: 700">Bagaimana talenta muda IPB mencapai sesuatu dalam 12 bulan yang biasanya membutuhkan 2–3 tahun jika berjalan sendiri?</span>
+        <span class="gtext" style="position: relative; display: block; margin-top: 18px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 26px">THAT IS ACCELERATION.</span>
+      </blockquote>
+    </section>
+
+    <section id="framework" style="position: relative; padding: 56px 48px; border-radius: 40px; background: linear-gradient(140deg, #3157A5 0%, #32306F 55%, #1A1A4E 100%); overflow: hidden; box-shadow: 0 50px 100px -50px rgba(0,0,0,.8)">
+      <span aria-hidden="true" class="b-a" style="position: absolute; right: -160px; top: -200px; width: 520px; height: 460px; border-radius: 50%; background: radial-gradient(circle, rgba(212,255,58,.3), transparent 65%); filter: blur(40px)"></span>
+      <span aria-hidden="true" class="ring" style="position: absolute; left: -220px; bottom: -300px; width: 600px; height: 600px; border-radius: 50%; background: conic-gradient(from 0deg, transparent, rgba(163,214,230,.45) 60deg, transparent 140deg); -webkit-mask-image: radial-gradient(circle, transparent 64%, #000 65%, #000 66%, transparent 67%); mask-image: radial-gradient(circle, transparent 64%, #000 65%, #000 66%, transparent 67%)"></span>
+      <div style="position: relative">
+        <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">PROGRAM FRAMEWORK · NORTH STAR</span>
+        <h2 style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 64px; line-height: .95; letter-spacing: -.025em">Accelerate <span class="gtext">Real Progress.</span></h2>
+        <p style="margin: 18px 0 0; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.84); max-width: 720px">Keberhasilan IPB LEAP diukur dari seberapa jauh seseorang bergerak dari titik awal menuju hasil yang bermakna. Quality over quantity: lebih baik 100 orang benar-benar bergerak daripada 300 orang hanya mengikuti kegiatan.</p>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 30px">
+          <sc-for list="{chain}" as="c" hint-placeholder-count="4">
+            <span class="chainstep" style="display: flex; align-items: center; gap: 12px; animation-delay: {c.delay}s"><span style="padding: 14px 22px; border-radius: 18px; background: {c.bg}; color: {c.ink}; font-weight: 900; font-size: 16px">{c.t}</span><span class="arrowmove" style="color: #D4FF3A; font-weight: 900; font-size: 20px; opacity: {c.arrow}">→</span></span>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">ACCELERATION ECOSYSTEM</span>
+      <h2 style="margin: 12px 0 36px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">Enam pilar akselerasi.</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px">
+        <sc-for list="{pillars}" as="p" hint-placeholder-count="6">
+          <div class="pillar rise" style="position: relative; padding: 24px 22px; border-radius: 26px; background: {p.bg}; color: {p.ink}; min-height: 170px; display: flex; flex-direction: column; animation-delay: {p.delay}s">
+            <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; opacity: .65">{p.no}</span>
+            <strong style="margin-top: auto; font-size: 18px; letter-spacing: .05em">{p.name}</strong>
+            <span style="margin-top: 6px; font-size: 13.5px; line-height: 1.5; opacity: .82">{p.desc}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section>
+      <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">FIVE PATHWAYS</span>
+      <h2 style="margin: 12px 0 36px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">Lima pathway, lima tujuan.</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
+        <sc-for list="{pathways}" as="w" hint-placeholder-count="5">
+          <div class="engine rise" style="position: relative; overflow: hidden; padding: 26px; min-height: 260px; border-radius: 30px; background: {w.bg}; color: {w.ink}; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(0,0,0,.7); animation-delay: {w.delay}s">
+            <span aria-hidden="true" style="position: absolute; right: -10px; bottom: -36px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 150px; line-height: 1; opacity: .13">{w.no}</span>
+            <span style="position: relative; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px">{w.no}</span>
+            <strong style="position: relative; margin-top: 8px; font-size: 15px; letter-spacing: .05em">{w.name}</strong>
+            <span style="position: relative; margin-top: auto; font-size: 20px; font-weight: 800">{w.goal}</span>
+            <span style="position: relative; margin-top: 4px; font-size: 13.5px; line-height: 1.5; opacity: .82">{w.desc}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section>
+      <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">TIMELINE PROGRAM</span>
+      <h2 style="margin: 12px 0 8px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">12 bulan, 6 fase melompat.</h2>
+      <p style="margin: 0 0 44px; font-size: 16px; color: rgba(255,255,255,.75); max-width: 640px">Perjalanan setiap mentee dari menemukan arah sampai menunjukkan hasil nyata.</p>
+      <div style="position: relative">
+        <div class="tlline" aria-hidden="true" style="position: absolute; left: 8%; right: 8%; top: 27px; height: 6px; border-radius: 6px; background: rgba(255,255,255,.12)">
+          <div class="track trackfill" style="position: absolute; inset: 0; border-radius: 6px"></div>
+          <span class="comet" style="position: absolute; top: -7px; width: 20px; height: 20px; margin-left: -10px; border-radius: 50%; background: #FFFFFF; box-shadow: 0 0 0 6px rgba(212,255,58,.35), 0 0 30px 8px rgba(212,255,58,.7)"></span>
+        </div>
+        <ol class="tl" style="position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px">
+          <sc-for list="{{phases}}" as="f" hint-placeholder-count="6">
+            <li style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px">
+              <span class="node" style="position: relative; width: 60px; height: 60px; border-radius: 50%; background: {{f.bg}}; color: {{f.ink}}; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 20px; box-shadow: 0 14px 30px -10px rgba(0,0,0,.6); animation-delay: {{f.delay}}s">
+                <span aria-hidden="true" class="ping" style="position: absolute; inset: 0; border-radius: 50%; border: 2px solid {{f.bg}}; animation-delay: {{f.delay}}s"></span>{{f.no}}
+              </span>
+              <div class="phase rise" style="width: 100%; padding: 20px 16px; border-radius: 24px; background: rgba(255,255,255,.06); animation-delay: {{f.delay}}s">
+                <strong style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 22px; color: {{f.title}}">{{f.name}}</strong>
+                <span style="display: block; margin-top: 8px; font-size: 13.5px; line-height: 1.55; color: rgba(255,255,255,.78)">{{f.desc}}</span>
+              </div>
+            </li>
+          </sc-for>
+        </ol>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
+      <div style="flex: 1 1 380px; min-width: 0">
+        <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">LEARN LESS. EXPERIENCE MORE.</span>
+        <h2 style="margin: 12px 0 12px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">70% belajar dengan turun langsung.</h2>
+        <p style="margin: 0; font-size: 16px; line-height: 1.7; color: rgba(255,255,255,.8)">Kurikulum dirancang mundur dari hasil: KPI 12 bulan, lalu milestone, pengalaman, akses, mentor, baru materi. Setiap aktivitas harus menjawab: ini mempercepat bagian mana?</p>
+      </div>
+      <div style="flex: 1 1 520px; min-width: 0; display: flex; align-items: flex-end; gap: 14px; height: 320px">
+        <sc-for list="{comp}" as="c" hint-placeholder-count="3">
+          <div style="flex: {c.flex}; display: flex; flex-direction: column; justify-content: flex-end; height: 100%">
+            <div class="barup" style="height: {c.h}%; border-radius: 26px; background: {c.bg}; color: {c.ink}; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); animation-delay: {c.delay}s">
+              <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: {c.fs}px; line-height: .9">{c.v}</span>
+              <span style="font-size: 13px; font-weight: 700; line-height: 1.4">{c.t}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section>
+      <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">LEADERSHIP IS A VALUE</span>
+      <h2 style="margin: 12px 0 36px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">Nilai yang kami pegang.</h2>
+      <p style="margin: -20px 0 36px; font-size: 17px; font-style: italic; font-weight: 700; color: rgba(255,255,255,.82); max-width: 680px">"We don't repeatedly teach leadership. We create situations where people have to lead."</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px">
+        <sc-for list="{{engines}}" as="e" hint-placeholder-count="6">
+          <div class="engine rise" style="position: relative; overflow: hidden; padding: 28px; min-height: 200px; border-radius: 30px; background: {{e.bg}}; color: {{e.ink}}; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(0,0,0,.7); animation-delay: {{e.delay}}s">
+            <span aria-hidden="true" style="position: absolute; right: -14px; top: -30px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 140px; line-height: 1; opacity: .14">{{e.no}}</span>
+            <span style="position: relative; font-size: 12px; font-weight: 800; letter-spacing: .1em; color: {{e.kick}}">{{e.tag}}</span>
+            <strong style="position: relative; display: block; margin-top: auto; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 26px; line-height: 1.05">{{e.title}}</strong>
+            <span style="position: relative; margin-top: 8px; font-size: 14px; line-height: 1.5; opacity: .82">{{e.desc}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+      <div style="flex: 1 1 520px; min-width: 0">
+        <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">UNFAIR ADVANTAGE</span>
+        <h2 style="margin: 12px 0 14px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 56px; line-height: .95; letter-spacing: -.02em"><span class="gtext">IPB Alumni</span><br>Network.</h2>
+        <p style="margin: 0; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.82); max-width: 560px">Kekuatan terbesar IPB LEAP bukan kelas, modul, atau event, tetapi akses kepada alumni IPB lintas generasi dan profesi. Mentor adalah access enabler.</p>
+        <div style="margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px">
+          <a class="wacta" href="{{waGroup}}" target="_blank" rel="noopener" style="position: relative; display: inline-flex; align-items: center; gap: 12px; height: 60px; padding: 0 26px 0 12px; border-radius: 20px; background: #D4FF3A; color: #0D0D1A; font-weight: 800; font-size: 16px; text-decoration: none; box-shadow: 0 20px 40px -18px rgba(212,255,58,.7)">
+            <span style="width: 40px; height: 40px; border-radius: 13px; background: #0D0D1A; color: #D4FF3A; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg></span>
+            Gabung grup mentee Batch 1–8 sekarang
+            <span aria-hidden="true" class="arrowmove">→</span>
+          </a>
+          <span style="font-size: 13.5px; color: rgba(255,255,255,.72); max-width: 260px; line-height: 1.5">Untuk alumni mentee IPB LEAP / Mentoring Leader Batch 1 sampai 8, via WhatsApp.</span>
+        </div>
+      </div>
+      <div style="flex: 1 1 440px; min-width: 0; display: flex; flex-wrap: wrap; gap: 10px">
+        <sc-for list="{{access}}" as="a" hint-placeholder-count="8">
+          <span class="floaty" style="padding: 12px 18px; border-radius: 999px; background: {{a.bg}}; color: {{a.ink}}; font-size: 15px; font-weight: 800; --r: {{a.r}}deg; animation-duration: {{a.dur}}s; animation-delay: {{a.delay}}s">{{a.t}}</span>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  <dc-import name="PubFooter" hint-size="100%,420px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const sc = ['#D4FF3A', '#A3D6E6', '#FFFFFF'];
+    const sparks = Array.from({ length: 18 }, (_, i) => ({ x: ((i * 37) % 97) + 1, y: ((i * 29) % 90) + 4, s: 2 + (i % 4), c: sc[i % 3], d: (5 + (i % 5) * 1.3).toFixed(1), delay: (-(i * 0.7)).toFixed(1) }));
+    const words = ['Pemimpin Melahirkan Pemimpin', 'Make Your Leap', 'Direction', 'People', 'Access', 'Experience', 'Opportunity', 'Accountability'];
+    return {
+      waGroup: 'https://wa.me/6285559070165?text=' + encodeURIComponent('Halo, saya alumni mentee IPB LEAP / Mentoring Leader dan ingin bergabung ke grup mentee Batch 1-8.'),
+      chain: [
+        { t: 'Starting Point', bg: 'rgba(255,255,255,.12)', ink: '#FFFFFF', arrow: 1, delay: '.2' },
+        { t: 'Target', bg: 'rgba(255,255,255,.12)', ink: '#FFFFFF', arrow: 1, delay: '.4' },
+        { t: 'Milestone', bg: 'rgba(255,255,255,.12)', ink: '#FFFFFF', arrow: 1, delay: '.6' },
+        { t: 'Evidence', bg: '#D4FF3A', ink: '#0D0D1A', arrow: 0, delay: '.8' }
+      ],
+      pillars: [
+        { no: '01', name: 'DIRECTION', desc: 'Tahu apa yang benar-benar ingin dikejar.', bg: 'rgba(255,255,255,.1)', ink: '#FFFFFF', delay: '0' },
+        { no: '02', name: 'PEOPLE', desc: 'Bertemu orang yang sudah lebih dulu sampai.', bg: 'rgba(163,214,230,.22)', ink: '#FFFFFF', delay: '.06' },
+        { no: '03', name: 'ACCESS', desc: 'Membuka pintu yang sulit dijangkau sendiri.', bg: '#3157A5', ink: '#FFFFFF', delay: '.12' },
+        { no: '04', name: 'EXPERIENCE', desc: 'Mengerjakan sesuatu secara nyata.', bg: '#6E5AE6', ink: '#FFFFFF', delay: '.18' },
+        { no: '05', name: 'OPPORTUNITY', desc: 'Mendapat kesempatan yang mempercepat perjalanan.', bg: '#A3D6E6', ink: '#0D0D1A', delay: '.24' },
+        { no: '06', name: 'ACCOUNTABILITY', desc: 'Ada orang yang memastikan mereka terus bergerak.', bg: '#D4FF3A', ink: '#0D0D1A', delay: '.3' }
+      ],
+      pathways: [
+        { no: '01', name: 'ENTREPRENEUR', goal: 'Bisnis bertumbuh', desc: 'Revenue tahunan yang terukur.', bg: 'linear-gradient(150deg,#D4FF3A,#EEFFB8)', ink: '#0D0D1A', delay: '0' },
+        { no: '02', name: 'AKADEMISI & PENELITI', goal: 'Academic breakthrough', desc: 'Riset, publikasi, konferensi, atau studi lanjut.', bg: 'linear-gradient(150deg,#A3D6E6,#E3F3F8)', ink: '#0D0D1A', delay: '.08' },
+        { no: '03', name: 'PROFESSIONAL & BIROKRAT', goal: 'Career breakthrough', desc: 'Pekerjaan, promosi, transisi karier, CPNS/PPPK/BUMN.', bg: 'linear-gradient(150deg,#3157A5,#32306F)', ink: '#FFFFFF', delay: '.16' },
+        { no: '04', name: 'POLITIK', goal: 'Political breakthrough', desc: 'Project, organisasi, kampanye, atau peluang strategis.', bg: 'linear-gradient(150deg,#6E5AE6,#32306F)', ink: '#FFFFFF', delay: '.24' },
+        { no: '05', name: 'SOSIAL & KOMUNITAS', goal: 'Sustainable impact', desc: 'Inisiatif berjalan dengan dampak terukur.', bg: 'linear-gradient(150deg,#FFFFFF,#E4EBF8)', ink: '#32306F', delay: '.32' }
+      ],
+      comp: [
+        { v: '10%', t: 'Essential learning', flex: 1, h: 34, fs: 34, bg: '#A3D6E6', ink: '#0D0D1A', delay: '.1' },
+        { v: '20%', t: 'Mentor, asmen, alumni, peer', flex: 1.3, h: 56, fs: 46, bg: '#3157A5', ink: '#FFFFFF', delay: '.3' },
+        { v: '70%', t: 'Real-world experience: bisnis, riset, karier, project, politik, komunitas', flex: 2.2, h: 100, fs: 84, bg: '#D4FF3A', ink: '#0D0D1A', delay: '.5' }
+      ],
+      sparks: sparks,
+      marq: words.concat(words),
+      orbs: [
+        { value: '7', label: 'batch Mentoring Leader', x: 20, y: 10, fs: 96, r: -6, dur: 6, delay: 0 },
+        { value: '±1.400', label: 'mentee telah dibina', x: 150, y: 140, fs: 72, r: 3, dur: 7.5, delay: -1.2 },
+        { value: '12', label: 'bulan akselerasi', x: 10, y: 250, fs: 62, r: 5, dur: 8, delay: -2.4 },
+        { value: '5', label: 'pathway', x: 300, y: 20, fs: 58, r: -4, dur: 6.8, delay: -3.1 }
+      ],
+      phases: [
+        { no: '01', name: 'Discover', desc: 'Kenali diri, tetapkan arah dan target 12 bulan.', bg: '#A3D6E6', ink: '#0D0D1A', title: '#A3D6E6', delay: '0.4' },
+        { no: '02', name: 'Match', desc: 'Dipasangkan dengan mentor, asmen, dan kelompok.', bg: '#FFFFFF', ink: '#32306F', title: '#FFFFFF', delay: '0.7' },
+        { no: '03', name: 'Build', desc: 'Kerjakan project atau milestone nyata sesuai pathway.', bg: '#3157A5', ink: '#FFFFFF', title: '#A3D6E6', delay: '1.0' },
+        { no: '04', name: 'Access', desc: 'Buka network, institusi, pasar, dan peluang alumni.', bg: '#6E5AE6', ink: '#FFFFFF', title: '#FFFFFF', delay: '1.3' },
+        { no: '05', name: 'Accelerate', desc: 'Dorong capaian dengan monitoring dan akuntabilitas.', bg: '#A3D6E6', ink: '#0D0D1A', title: '#A3D6E6', delay: '1.6' },
+        { no: '06', name: 'Showcase', desc: 'Tunjukkan hasil dan evidence di Leap Showcase.', bg: '#D4FF3A', ink: '#0D0D1A', title: '#D4FF3A', delay: '1.9' }
+      ],
+      engines: [
+        { no: '01', tag: 'VALUE', title: 'Ownership', desc: 'Tanggung jawab penuh atas perjalanan sendiri.', bg: 'linear-gradient(150deg,#32306F,#3157A5)', ink: '#FFFFFF', kick: '#A3D6E6', delay: '0' },
+        { no: '02', tag: 'VALUE', title: 'Integrity', desc: 'Dapat dipercaya, kata dan tindakan sejalan.', bg: 'linear-gradient(150deg,#A3D6E6,#E3F3F8)', ink: '#0D0D1A', kick: '#3157A5', delay: '.08' },
+        { no: '03', tag: 'VALUE', title: 'Courage', desc: 'Berani mencoba hal baru dan keluar dari zona nyaman.', bg: 'linear-gradient(150deg,#6E5AE6,#32306F)', ink: '#FFFFFF', kick: '#D4FF3A', delay: '.16' },
+        { no: '04', tag: 'VALUE', title: 'Growth', desc: 'Terus berkembang dari setiap pengalaman.', bg: 'linear-gradient(150deg,#3157A5,#2FA3C7)', ink: '#FFFFFF', kick: '#D4FF3A', delay: '.24' },
+        { no: '05', tag: 'VALUE', title: 'Collaboration', desc: 'Tumbuh bersama mentor, asmen, dan sesama Leapers.', bg: 'linear-gradient(150deg,#FFFFFF,#E4EBF8)', ink: '#32306F', kick: '#3157A5', delay: '.32' },
+        { no: '06', tag: 'VALUE', title: 'Impact', desc: 'Menghasilkan perubahan yang nyata dan terukur.', bg: 'linear-gradient(150deg,#D4FF3A,#EEFFB8)', ink: '#0D0D1A', kick: '#3A4A00', delay: '.4' }
+      ],
+      access: ['Network', 'Opportunity', 'Market', 'Company', 'Research', 'Institution', 'Investor', 'Partnership'].map((t, i) => ({
+        t: t, bg: ['rgba(255,255,255,.12)', '#D4FF3A', 'rgba(163,214,230,.25)', '#FFFFFF'][i % 4], ink: ['#FFFFFF', '#0D0D1A', '#FFFFFF', '#32306F'][i % 4],
+        r: [(-3), 2, (-1), 3][i % 4], dur: (4.5 + (i % 4) * 0.8).toFixed(1), delay: (-(i * 0.5)).toFixed(1)
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

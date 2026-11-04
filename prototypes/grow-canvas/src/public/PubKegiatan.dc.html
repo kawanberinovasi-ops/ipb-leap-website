@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>IPB LEAP · Kegiatan Mentoring</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.rise{animation:rise .55s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.08s}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+</helmet>
+<div style="background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50"><dc-import name="PubNav" active="kegiatan" hint-size="100%,73px"></dc-import></div>
+
+  <section style="max-width: 1360px; margin: 0 auto; padding: 72px 24px 24px">
+    <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #3157A5">KEGIATAN MENTORING</span>
+    <h1 class="rise" style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 64px; line-height: .96; letter-spacing: -.025em; color: #32306F">Belajar dengan turun langsung.</h1>
+    <p class="rise d1" style="margin: 16px 0 0; font-size: 17px; line-height: 1.65; color: #55577A; max-width: 640px">70% perjalanan IPB LEAP adalah pengalaman nyata. Ini dokumentasi kegiatan offline dari batch ke batch.</p>
+  </section>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 16px 24px 96px">
+    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px">
+      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #32306F; color: #FFFFFF; font-size: 13px; font-weight: 800; display: flex; align-items: center">Semua</span>
+      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Pelantikan</span>
+      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Bootcamp</span>
+      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Sesi mentoring</span>
+      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Kunjungan lapangan</span>
+      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Graduation</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 190px; gap: 14px">
+      <sc-for list="{{slots}}" as="s" hint-placeholder-count="8">
+        <div style="grid-column: span {{s.c}}; grid-row: span {{s.r}}; border-radius: 24px; border: 1.5px dashed #C9CFE2; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: #A5A8C2">
+          <svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="3"></rect><circle cx="12" cy="13" r="3.5"></circle><path d="M8 6l1.5-2h5L16 6"></path></svg>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin: 16px 0 0; font-size: 13px; color: #8A8CA8">Foto belum diunggah.</p>
+  </main>
+  <dc-import name="PubFooter" hint-size="100%,420px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { slots: [{ c: 2, r: 2 }, { c: 1, r: 1 }, { c: 1, r: 2 }, { c: 1, r: 1 }, { c: 1, r: 1 }, { c: 2, r: 1 }, { c: 1, r: 1 }, { c: 1, r: 1 }] };
+  }
+}
+</script>
+</body>
+</html>

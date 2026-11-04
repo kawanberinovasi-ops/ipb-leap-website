@@ -1,0 +1,18 @@
+export const catalog=await fetch('/assets/grow/catalog.json').then(r=>r.json());
+const query=new URLSearchParams(location.search);
+export const demo=query.get('demo')==='assessment';
+export const workspaceUrl=()=>'/api/local/workspace?track='+track+'&role='+role+(demo?'&demo=assessment':'');
+export const role=['mentee','asmen','mentor'].includes(query.get('role'))?query.get('role'):sessionStorage.getItem('grow.preview.role')||'mentee';
+export const track=demo?'social':catalog.some(t=>t.id===query.get('track'))?query.get('track'):sessionStorage.getItem('grow.preview.track')||'social';
+sessionStorage.setItem('grow.preview.role',role);sessionStorage.setItem('grow.preview.track',track);sessionStorage.setItem('ipbleap.ui.role',role);
+export const currentTrack=catalog.find(t=>t.id===track);
+export function href(file,extra={}){const u=new URL(file,location.href);const legacy=/\/(progres|monitoring-progres|penilaian)\.html$/.exec(u.pathname);if(legacy){u.pathname=u.pathname.replace(/[^/]+$/,'raport.html');u.hash=legacy[1]==='penilaian'?'penilaian':'tindak-lanjut';}u.search='';u.searchParams.set('role',role);u.searchParams.set('track',track);if(demo)u.searchParams.set('demo','assessment');for(const [k,v]of Object.entries(extra))if(v!==undefined)u.searchParams.set(k,v);return u.pathname+u.search+u.hash;}
+export function boot(){
+ window.leapAccount={id:'preview-'+role,display_name:'Pratinjau '+({mentee:'Mentee',asmen:'Asmen',mentor:'Mentor'}[role]),roles:[role],active:true};window.dispatchEvent(new CustomEvent('leap:account'));
+ if(document.querySelector('#local-preview-controls'))return;
+ const css=document.createElement('link');css.rel='stylesheet';css.href='/assets/grow/app.css';document.head.append(css);
+ const bar=document.createElement('aside');bar.id='local-preview-controls';bar.setAttribute('aria-label','Pengaturan pratinjau lokal');bar.innerHTML=`<div><strong>${demo?'Latihan penilaian · Contoh':'GROW Canvas · Lokal'}</strong><span>${demo?'Contoh terpisah dari isianmu · Tanggal latihan 4 Nov 2026':'Role simulasi · data tersimpan di komputer ini'}</span></div><label>Tampilan<select id="preview-role" aria-label="Tampilan">${[['mentee','Mentee'],['asmen','Asmen'],['mentor','Mentor']].map(([v,l])=>`<option value="${v}" ${v===role?'selected':''}>${l}</option>`).join('')}</select></label><label>Track uji<select id="preview-track" aria-label="Track uji" ${demo?'disabled':''}>${catalog.map(t=>`<option value="${t.id}" ${t.id===track?'selected':''}>${t.label}</option>`).join('')}</select></label>`;
+ document.body.prepend(bar);
+ const switcher=document.createElement('a');switcher.className='preview-mode-link';switcher.textContent=demo?'Kembali ke isian saya':'Coba alur penilaian';switcher.href='/app/raport.html?role='+role+'&track=social&period=3'+(demo?'':'&demo=assessment');bar.append(switcher);
+ for(const el of bar.querySelectorAll('select'))el.onchange=()=>{const nextRole=bar.querySelector('#preview-role').value,nextTrack=bar.querySelector('#preview-track').value;let pathname=location.pathname;if(pathname.endsWith('beranda-mentee.html')&&nextRole!=='mentee')pathname='/app/kelompok.html';if(pathname.endsWith('kelompok.html')&&nextRole==='mentee')pathname='/app/grow-canvas.html';const u=new URL(pathname,location.origin);u.searchParams.set('role',nextRole);u.searchParams.set('track',nextTrack);if(demo)u.searchParams.set('demo','assessment');const existing=new URLSearchParams(location.search);if(existing.has('period'))u.searchParams.set('period',existing.get('period'));if(nextTrack===track&&existing.has('note'))u.searchParams.set('note',existing.get('note'));location.assign(u.pathname+u.search);};
+}

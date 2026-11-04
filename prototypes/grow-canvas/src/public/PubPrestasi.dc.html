@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>IPB LEAP · Achievement</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.rise{animation:rise .55s cubic-bezier(.2,.9,.3,1.15) both}
+.d1{animation-delay:.08s}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+</helmet>
+<div style="background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50"><dc-import name="PubNav" active="prestasi" hint-size="100%,73px"></dc-import></div>
+
+  <section style="position: relative; overflow: hidden; background: #D4FF3A">
+    <div style="max-width: 1360px; margin: 0 auto; padding: 72px 24px">
+      <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #3A4A00">ACHIEVEMENT</span>
+      <h1 class="rise" style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 68px; line-height: .95; letter-spacing: -.025em; color: #0D0D1A">Mereka sudah melompat.</h1>
+      <p class="rise d1" style="margin: 16px 0 0; font-size: 17px; line-height: 1.65; color: #2B3600; max-width: 640px">Capaian para mentee dan alumni IPB LEAP: pendanaan project, juara lomba, beasiswa, karier, dan dampak sosial.</p>
+    </div>
+  </section>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 48px 24px 96px">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px">
+      <sc-for list="{{slots}}" as="s" hint-placeholder-count="6">
+        <div style="border-radius: 28px; overflow: hidden; background: #FFFFFF; border: 1.5px dashed #C9CFE2">
+          <div style="height: 220px; display: flex; align-items: center; justify-content: center; color: #A5A8C2; background: #FAFBFD">
+            <svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"></path><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"></path></svg>
+          </div>
+          <div style="padding: 18px"><div style="height: 14px; width: 70%; border-radius: 7px; background: #EEF1F8"></div><div style="height: 10px; width: 45%; border-radius: 5px; background: #EEF1F8; margin-top: 10px"></div></div>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin: 16px 0 0; font-size: 13px; color: #8A8CA8">Foto dan data prestasi belum diunggah.</p>
+  </main>
+  <dc-import name="PubFooter" hint-size="100%,420px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic { renderVals() { return { slots: [1, 2, 3, 4, 5, 6] }; } }
+</script>
+</body>
+</html>

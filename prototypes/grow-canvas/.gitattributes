@@ -1,0 +1,2 @@
+src/assets/assessment/vendor-supabase.mjs -whitespace
+src/assets/attendance/vendor/** -whitespace

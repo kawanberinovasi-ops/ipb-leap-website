@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Buat Pengumuman · IPB Leap Management System</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="../assets/portal/app.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes fly{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(18px,-18px) rotate(-10deg)}}
+.rise{animation:rise .45s cubic-bezier(.2,.9,.3,1.15) both}
+.chip{transition:all .15s}
+.chip:hover{transform:translateY(-1px)}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px rgba(49,87,165,.14)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+</style>
+</helmet>
+<div data-portal-shell style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="pengurus" active="program" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 22px">
+    <div>
+      <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Program · broadcast</span>
+      <h1 style="margin: 6px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 48px; letter-spacing: -.02em; color: #32306F; line-height: 1">{{heading}}</h1>
+    </div>
+
+    <p role="alert" style="color:#943B26">{{error}}</p><label>Cohort <select onChange="{{onCohort}}"><template data-dc-each="{{cohorts}}" data-as="c"><option value="{{c.id}}" selected="{{c.selected}}">{{c.name}}</option></template></select></label><button type="button" onClick="{{onReload}}" style="align-self:flex-start;padding:10px 16px;border:1px solid #D5DAEA;border-radius:12px;background:white;color:#32306F;font:inherit;font-weight:700">Muat ulang pengumuman</button>
+    <sc-if value="{{canManage}}">
+    <div style="display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+      <section class="rise" style="flex: 999 1 600px; min-width: 0; padding: 26px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45); display: flex; flex-direction: column; gap: 18px">
+        <div>
+          <span style="display: block; font-size: 14px; font-weight: 800; margin-bottom: 10px">Kirim ke</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <sc-for list="{{roles}}" as="r" hint-placeholder-count="5">
+              <button class="chip" type="button" onClick="{{r.toggle}}" aria-pressed="{{r.pressed}}" style="{{r.style}}"><span style="{{r.box}}">{{r.mark}}</span>{{r.label}} <span style="opacity: .7; font-weight: 600">{{r.count}}</span></button>
+            </sc-for>
+          </div>
+          <span style="display: block; font-size: 13px; font-weight: 700; color: #6B6D8C; margin: 14px 0 8px">Atau pilih lebih spesifik</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 10px; border-radius: 16px; border: 1.5px solid #D5DAEA; min-height: 48px; align-items: center">
+            <sc-for list="{{specifics}}" as="x" hint-placeholder-count="2">
+              <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; padding: 6px 6px 6px 10px; border-radius: 10px; background: {{x.bg}}; color: {{x.ink}}">{{x.label}}<button type="button" onClick="{{x.remove}}" aria-label="Hapus {{x.label}}" style="width: 20px; height: 20px; border-radius: 6px; border: 0; background: rgba(255,255,255,.7); cursor: pointer; font-size: 12px">×</button></span>
+            </sc-for>
+            <select aria-label="Tambah penerima" onChange="{{addSpecific}}" style="flex: 1; min-width: 200px; height: 34px; border: 0; font: inherit; font-size: 13.5px; color: #55577A; background: transparent">
+              <option value="">+ Kelompok atau orang…</option><template data-dc-each="{{specificOptions}}" data-as="o"><option value="{{o.value}}">{{o.label}}</option></template>
+            </select>
+          </div>
+          <p style="margin: 10px 0 0; font-size: 13px; font-weight: 700; color: #3157A5">Penerima aktif saat ini: {{total}} orang</p>
+        </div>
+
+        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 800">Judul<input data-announcement-title type="text" value="{{title}}" onChange="{{onTitle}}" style="height: 50px; padding: 0 14px; border-radius: 14px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 16px; font-weight: 700"></label>
+        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 800">Isi pengumuman
+          <span style="display: flex; gap: 4px; padding: 6px; border-radius: 12px 12px 0 0; border: 1.5px solid #D5DAEA; border-bottom: 0; background: #F8F9FD"><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900">B</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-style: italic; font-weight: 700">I</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700">•</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #3157A5">@</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></span></span>
+          <textarea data-announcement-body rows="6" value="{{body}}" onChange="{{onBody}}" style="margin-top: -8px; resize: vertical; padding: 14px; border-radius: 0 0 14px 14px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14.5px; line-height: 1.55"></textarea>
+        </label>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 8px">
+          <button type="button" disabled style="height: 40px; padding: 0 14px; border-radius: 12px; border: 1.5px dashed #A3B4DA; background: transparent; font: inherit; font-weight: 700; font-size: 13px; color: #3157A5; cursor: pointer">+ Lampiran / dokumen (belum tersedia)</button>
+          <button type="button" disabled style="height: 40px; padding: 0 14px; border-radius: 12px; border: 1.5px dashed #A3B4DA; background: transparent; font: inherit; font-weight: 700; font-size: 13px; color: #3157A5; cursor: pointer">+ Tautkan event (belum tersedia)</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; padding: 16px; border-radius: 20px; background: #F8F9FD">
+          <div>
+            <span style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 8px">Kanal</span>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox" checked="" disabled=""> In-app (selalu)</label>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox" disabled> Email (belum terhubung)</label>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox" disabled> Push notification + suara (belum terhubung)</label>
+          </div>
+          <div>
+            <span style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 8px">Waktu kirim</span>
+            <div role="group" style="display: flex; gap: 4px; padding: 4px; border-radius: 12px; background: #E9EDF7">
+              <button type="button" onClick="{{now}}" aria-pressed="{{nowPressed}}" style="{{nowStyle}}">Sekarang</button>
+              <button type="button" onClick="{{later}}" aria-pressed="{{laterPressed}}" style="{{laterStyle}}">Jadwalkan</button>
+            </div>
+            <sc-if value="{{isLater}}" hint-placeholder-val="{{ false }}">
+              <input type="datetime-local" value="{{publishAt}}" onChange="{{onPublishAt}}" aria-label="Jadwal kirim" title="Waktu Asia/Jakarta (WIB)" style="margin-top: 8px; width: 100%; box-sizing: border-box; height: 42px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 13.5px">
+            </sc-if>
+          </div>
+          <div>
+            <span style="display: block; font-size: 13px; font-weight: 800; margin-bottom: 8px">Tampilan</span>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox" checked="{{pinned}}" onChange="{{onPinned}}"> Sematkan di beranda</label>
+            <label style="display: flex; gap: 8px; font-size: 14px; padding: 4px 0"><input type="checkbox" checked="{{important}}" onChange="{{onImportant}}"> Tandai penting (badge merah)</label>
+          </div>
+        </div>
+      </section>
+
+      <aside style="flex: 1 1 340px; min-width: 0; position: sticky; top: 96px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-size: 13px; font-weight: 800; color: #6B6D8C">Pratinjau di HP penerima</span>
+        <div style="padding: 14px; border-radius: 32px; background: #0D0D1A; box-shadow: 0 30px 60px -30px rgba(13,13,26,.8)">
+          <div style="border-radius: 22px; background: #F5F7FC; padding: 16px; min-height: 300px">
+            <div style="display: flex; gap: 10px; align-items: center; padding: 12px; border-radius: 16px; background: rgba(255,255,255,.9); box-shadow: 0 10px 20px -14px rgba(0,0,0,.4)">
+              <img src="/_blob/d1185905fce3a282f8c2d64c19416648" alt="" style="width: 34px; height: auto">
+              <span style="flex: 1; min-width: 0"><strong style="display: block; font-size: 12.5px">IPB LEAP · sekarang</strong><span style="display: block; font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{title}}</span></span>
+            </div>
+            <div style="margin-top: 14px; padding: 16px; border-radius: 18px; background: #FFFFFF; border: 1px solid #E3E7F2">
+              <span style="font-size: 11px; font-weight: 800; letter-spacing: .08em; padding: 4px 8px; border-radius: 6px; background: #D4FF3A; color: #0D0D1A">PENGUMUMAN</span>
+              <strong style="display: block; font-size: 16px; margin-top: 10px">{{title}}</strong>
+              <p style="margin: 8px 0 0; font-size: 13.5px; line-height: 1.55; color: #33355A; white-space: pre-line">{{body}}</p>
+              <span style="display: block; margin-top: 10px; font-size: 12px; color: #6B6D8C">Dari {{actorName}} · untuk {{toLabel}}</span>
+            </div>
+          </div>
+        </div>
+        <sc-if value="{{notSent}}" hint-placeholder-val="{{ true }}">
+          <button class="btn" type="button" onClick="{{send}}" disabled="{{busy}}" style="height: 54px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25)">{{sendLabel}}</button>
+        </sc-if>
+        <sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 20px; background: #EEFFB8; font-size: 14px"><span style="width: 40px; height: 40px; border-radius: 14px; background: #D4FF3A; border: 2px solid #0D0D1A; display: flex; align-items: center; justify-content: center; font-weight: 900">✓</span><span><strong style="display: block">Pengumuman tersimpan</strong>Terbit sesuai jadwal di aplikasi. Tidak ada email atau push yang dikirim.</span></div>
+        </sc-if>
+      </aside>
+    </div>
+
+    <section style="padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+      <h2 style="margin: 0 0 14px; font-size: 19px; font-weight: 800">Riwayat pengumuman</h2>
+      <div style="overflow-x: auto">
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 680px">
+          <thead><tr style="text-align: left; color: #6B6D8C; font-size: 12.5px"><th style="padding: 10px 12px; font-weight: 700">Judul</th><th style="padding: 10px 12px; font-weight: 700">Penerima</th><th style="padding: 10px 12px; font-weight: 700">Dikirim</th><th style="padding: 10px 12px; font-weight: 700">Status</th></tr></thead>
+          <tbody>
+            <template data-dc-each="{{history}}" data-as="h">
+              <tr style="border-top: 1px solid #F0F2F8"><td style="padding: 12px; font-weight: 700">{{h.title}}</td><td style="padding: 12px; color: #55577A">{{h.to}}</td><td style="padding: 12px; color: #55577A">{{h.when}}</td><td style="padding:12px">{{h.status}}<sc-if value="{{h.canWithdraw}}"><button type="button" onClick="{{h.withdraw}}">Tarik</button></sc-if></td></tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    </sc-if>
+    <sc-if value="{{readOnly}}"><section style="padding:24px;border-radius:28px;background:white;border:1px solid #E3E7F2"><sc-if value="{{noNews}}"><p>Belum ada pengumuman pengurus untuk akunmu.</p></sc-if><sc-for list="{{news}}" as="a"><article id="{{a.anchor}}" style="padding:20px 0;border-bottom:1px solid #E3E7F2"><h2>{{a.title}}</h2><small>{{a.when}}</small><p style="white-space:pre-wrap;line-height:1.7">{{a.body}}</p></article></sc-for></section></sc-if>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+ constructor(props){super(props);this.state={portal:null,loading:true,error:'',sel:{},specifics:[],when:'now',sent:false,title:'',body:'',publishAt:'',pinned:true,important:false,busy:false};}
+ componentDidMount(){import(new URL('../assets/portal/publisher.mjs',location.href).href).then(m=>{this._publisher=m;return m.mountPublisher(this);}).catch(e=>this.setState({error:e.message}));}
+ renderVals(){return this._publisher?this._publisher.publisherView(this):{heading:'Pengumuman',error:this.state.error||'Memuat…',canManage:false,readOnly:false,cohorts:[]};}
+}
+</script>
+</body>
+</html>

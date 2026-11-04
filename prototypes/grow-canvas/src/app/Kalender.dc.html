@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Kalender · IPB Leap Management System</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="../assets/portal/app.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F5F7FC}
+a{color:#3157A5}a:hover{color:#32306F}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.96) translateY(8px)}100%{opacity:1;transform:none}}
+.rise{animation:rise .45s cubic-bezier(.2,.9,.3,1.15) both}
+.pop{animation:pop .28s cubic-bezier(.2,.9,.3,1.2) both}
+.ev{transition:transform .15s, filter .15s}
+.ev:hover{transform:translateX(2px);filter:brightness(.97)}
+.btn{transition:transform .18s}
+.btn:hover{transform:translateY(-2px)}
+input:focus,select:focus{outline:none;border-color:#3157A5 !important}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
+.calendar-shell input{box-sizing:border-box;max-width:100%}.calendar-shell input[type=date],.calendar-shell input[type=time]{padding:12px;border:1px solid #D5DAEA;border-radius:12px;font:inherit}
+@media(max-width:600px){.calendar-shell main{padding:20px 16px!important}.calendar-shell main aside{max-width:none!important;flex-basis:100%!important}.calendar-shell h1{font-size:25px!important}.calendar-shell [role=tablist]{flex-wrap:wrap}.calendar-shell input{font-size:16px!important}.calendar-shell main>section{padding:12px!important}.calendar-shell input[type=search]{width:100%!important}}
+</style>
+</helmet>
+<div class="calendar-shell" data-portal-shell style="min-height: 100vh; background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
+  <div style="position: sticky; top: 0; z-index: 50">
+    <dc-import name="Navbar" role="mentee" active="kalender" hint-size="100%,73px"></dc-import>
+  </div>
+
+  <main style="max-width: 1360px; margin: 0 auto; padding: 24px 24px 64px; display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+
+    <aside style="flex: 1 1 240px; max-width: 280px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+      <button class="btn" type="button" onClick="{{openCreate}}" style="height: 52px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 16px 30px -18px rgba(50,48,111,.9)">+ Jadwal pribadi</button>
+      <div style="padding: 18px; border-radius: 24px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px"><strong style="font-size: 14px">Kalender saya</strong><button type="button" onClick="{{openCreate}}" aria-label="Tambah jadwal pribadi" style="width: 28px; height: 28px; border-radius: 8px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800; color: #3157A5">+</button></div>
+        <div style="display: flex; flex-direction: column; gap: 4px">
+          <sc-for list="{{cals}}" as="c" hint-placeholder-count="4">
+            <button type="button" onClick="{{c.toggle}}" aria-pressed="{{c.pressed}}" style="display: flex; align-items: center; gap: 10px; padding: 8px 6px; border-radius: 10px; border: 0; background: transparent; font: inherit; font-size: 13.5px; cursor: pointer; color: #0D0D1A; text-align: left">
+              <span style="width: 18px; height: 18px; border-radius: 6px; flex: none; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 11px; font-weight: 900; background: {{c.boxBg}}; border: 2px solid {{c.color}}; box-sizing: border-box">{{c.mark}}</span>
+              <span style="flex: 1; font-weight: 600">{{c.name}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="padding: 18px; border-radius: 24px; background: #E3F3F8; font-size: 13px; line-height: 1.5; color: #1F5566">
+        <div style="display: flex; align-items: center; gap: 8px; font-weight: 800; color: #0D0D1A; margin-bottom: 4px"><span style="width: 8px; height: 8px; border-radius: 50%; background: #8A8CA8"></span>Sinkron Google Calendar</div>
+        Belum terhubung. Kalender menampilkan jadwal pribadi, kelompok, dan kegiatan program yang tersedia untuk akunmu.
+      </div>
+    </aside>
+
+    <section class="rise" style="flex: 999 1 640px; min-width: 0; padding: 22px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45)">
+      <p role="alert" style="color:#943B26">{{error}}</p><sc-if value="{{noActivity}}"><p>Belum ada jadwal yang tersedia untuk akunmu.</p></sc-if>
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px">
+        <div class="calendar-heading" style="display: flex; align-items: center; gap: 10px">
+          <h1 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px; letter-spacing: -.02em; color: #32306F">{{monthLabel}}</h1>
+          <button type="button" aria-label="Bulan sebelumnya" onClick="{{previous}}" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">‹</button>
+          <button type="button" aria-label="Bulan berikutnya" onClick="{{next}}" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">›</button>
+          <button type="button" onClick="{{today}}" style="height: 36px; padding: 0 12px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font: inherit; font-weight: 700; font-size: 13px">Hari ini</button>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center">
+          <label style="position: relative"><span style="position: absolute; left: -9999px">Cari event</span><input type="search" value="{{search}}" onInput="{{onSearch}}" placeholder="Cari jadwal atau lokasi" style="height: 38px; width: 220px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 13px"></label>
+          <div role="tablist" aria-label="Tampilan" style="display: flex; gap: 3px; padding: 4px; border-radius: 12px; background: #E9EDF7">
+            <sc-for list="{{views}}" as="v" hint-placeholder-count="4">
+              <button type="button" role="tab" aria-selected="{{v.selected}}" onClick="{{v.pick}}" style="{{v.style}}">{{v.label}}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <sc-if value="{{isMonth}}" hint-placeholder-val="{{ true }}">
+        <div>
+          <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); font-size: 12px; font-weight: 800; color: #8A8CA8; letter-spacing: .06em; padding-bottom: 8px">
+            <span style="padding: 0 8px">SEN</span><span style="padding: 0 8px">SEL</span><span style="padding: 0 8px">RAB</span><span style="padding: 0 8px">KAM</span><span style="padding: 0 8px">JUM</span><span style="padding: 0 8px">SAB</span><span style="padding: 0 8px">MIN</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid #EDF0F7; border-left: 1px solid #EDF0F7">
+            <sc-for list="{{days}}" as="d" hint-placeholder-count="35">
+              <div style="min-height: 118px; padding: 6px; border-right: 1px solid #EDF0F7; border-bottom: 1px solid #EDF0F7; background: {{d.bg}}; box-sizing: border-box; display: flex; flex-direction: column; gap: 4px; min-width: 0">
+                <span style="{{d.numStyle}}">{{d.n}}</span>
+                <sc-for list="{{d.events}}" as="e" hint-placeholder-count="1">
+                  <button class="ev" type="button" onClick="{{e.open}}" style="{{e.style}}"><span style="font-weight: 800">{{e.time}}</span> {{e.title}}</button>
+                </sc-for>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{isAgenda}}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <sc-for list="{{agenda}}" as="e" hint-placeholder-count="8">
+            <button class="ev" type="button" onClick="{{e.open}}" style="display: flex; align-items: center; gap: 16px; padding: 14px 16px; border-radius: 18px; border: 1px solid #EDF0F7; background: #FFFFFF; font: inherit; cursor: pointer; text-align: left; color: #0D0D1A">
+              <span style="width: 54px; flex: none; font-weight: 800; color: #32306F; font-size: 14px">{{e.dateLabel}}</span>
+              <span style="width: 10px; height: 10px; border-radius: 50%; background: {{e.color}}; flex: none"></span>
+              <span style="flex: 1"><strong style="font-size: 14.5px">{{e.title}}</strong><span style="display: block; font-size: 12.5px; color: #6B6D8C">{{e.time}} · {{e.where}}</span></span>
+              <span style="font-size: 12px; font-weight: 700; color: #6B6D8C">{{e.calName}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{isOther}}" hint-placeholder-val="{{ false }}">
+        <div style="padding: 48px; text-align: center; color: #6B6D8C; font-size: 14px; border: 1.5px dashed #D5DAEA; border-radius: 20px">Tampilan {{viewLabel}} mengikuti pola yang sama. Coba Bulan atau Agenda di prototype ini.</div>
+      </sc-if>
+    </section>
+
+    <sc-if value="{{hasSel}}" hint-placeholder-val="{{ false }}">
+      <aside class="pop" style="flex: 1 1 300px; max-width: 340px; min-width: 0; position: sticky; top: 96px; padding: 22px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 30px 60px -30px rgba(50,48,111,.6)">
+        <div style="display: flex; justify-content: space-between; gap: 8px">
+          <span style="font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 8px; background: {{sel.tint}}; color: {{sel.ink}}">{{sel.calName}}</span>
+          <button type="button" onClick="{{closeSel}}" aria-label="Tutup" style="width: 32px; height: 32px; border-radius: 10px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer">×</button>
+        </div>
+        <h2 style="margin: 14px 0 6px; font-size: 21px; font-weight: 800; color: #0D0D1A">{{sel.title}}</h2>
+        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; color: #33355A">
+          <span>{{sel.dateLabel}}</span>
+          <span>{{sel.where}}</span>
+          <span style="color: #6B6D8C">Pengingat email dan notifikasi belum dihubungkan.</span>
+        </div>
+        <p style="font-size:13px;color:#6B6D8C">{{sel.guests}}</p><p style="font-size:13px;color:#6B6D8C">Kehadiran kegiatan dicatat oleh pengurus melalui QR presensi.</p>
+      </aside>
+    </sc-if>
+
+    <sc-if value="{{showCreate}}" hint-placeholder-val="{{ false }}">
+      <div style="position: fixed; inset: 0; z-index: 80; background: rgba(13,13,26,.4); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 24px">
+        <div class="pop" role="dialog" aria-label="Buat event" style="width: 100%; max-width: 560px; max-height: 90vh; overflow: auto; padding: 26px; border-radius: 30px; background: rgba(255,255,255,.96); border: 1px solid rgba(255,255,255,.8); box-shadow: 0 40px 80px -30px rgba(13,13,26,.6)">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px"><h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #32306F">Event baru</h2><button type="button" onClick="{{closeCreate}}" aria-label="Tutup" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer">×</button></div>
+          <form data-personal-event style="display:grid;gap:16px" onSubmit="{{preventSubmit}}">
+            <p>Jadwal ini hanya terlihat olehmu. Jadwal kelompok dan program dikelola melalui penugasan yang sudah ada.</p>
+            <label>Judul<input name="title" aria-label="Judul event" value="{{form.title}}" required maxlength="160" style="width:100%;box-sizing:border-box;padding:14px;border:1px solid #D5DAEA;border-radius:14px;font:inherit"></label>
+            <label>Tanggal<input name="date" type="date" value="{{form.date}}" required></label><label>Mulai · WIB<input name="start" type="time" value="{{form.start}}" required></label><label>Selesai · WIB<input name="end" type="time" value="{{form.end}}" required></label>
+            <label>Lokasi (opsional)<input name="location" value="{{form.location}}" maxlength="300"></label><p role="alert" style="color:#943B26">{{error}}</p>
+            <button class="btn" type="button" onClick="{{saveCreate}}" disabled="{{busy}}" style="padding:14px;border:0;border-radius:14px;background:linear-gradient(135deg,#32306F,#3157A5);color:white;font:inherit;font-weight:800">Simpan jadwal pribadi</button>
+          </form>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{hasSel}}"><sc-if value="{{canCancel}}"><button type="button" onClick="{{cancelPersonal}}" style="padding:12px;border:1px solid #E5484D;border-radius:14px;color:#943B26;background:white">Batalkan jadwal pribadi</button></sc-if></sc-if>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1200}}'>
+class Component extends DCLogic {
+ constructor(props){super(props);this.state={portal:null,hidden:{},view:'bulan',sel:new URLSearchParams(location.search).get('event'),create:false,form:{},search:'',error:'',busy:false};}
+ componentDidMount(){import(new URL('../assets/portal/calendar.mjs',location.href).href).then(m=>{this._calendar=m;return m.mountCalendar(this);}).catch(e=>this.setState({error:e.message}));}
+ componentWillUnmount(){window.removeEventListener('focus',this._refreshCalendar);}
+ renderVals(){return this._calendar?{...this._calendar.calendarView(this),preventSubmit:e=>{e.preventDefault();this._calendar.calendarView(this).saveCreate();}}:{monthLabel:'Memuat kalender…',error:this.state.error,cals:[],views:[],days:[],agenda:[],hasSel:false,isMonth:true,showCreate:false};}
+}
+</script>
+</body>
+</html>
