@@ -127,7 +127,7 @@ body{margin:0}
   </div>
 </header>
 </template>
-<script type="text/x-dc" data-dc="MonitoringProgres" data-props='{}'>class Component extends DCLogic {componentDidMount(){import(new URL('../assets/groups/app.mjs?v=20261103-live',location.href).href).then(m=>m.mount()).catch(()=>{document.querySelector('#group-app').textContent='Halaman belum dapat dimuat. Muat ulang untuk mencoba kembali.';});}renderVals(){return {};}}</script>
+<script type="text/x-dc" data-dc="MonitoringProgres" data-props='{}'>class Component extends DCLogic {componentDidMount(){import(new URL('../assets/groups/app.mjs?v=20261103-live',location.href).href).then(m=>m.mount()).catch(error=>{console.error('Kelompok belum dapat dimuat',error);const target=document.querySelector('#group-app');if(target)target.textContent='Halaman belum dapat dimuat: '+(error?.message||'Muat ulang untuk mencoba kembali.');});}renderVals(){return {};}}</script>
 <script type="text/x-dc" data-dc="Navbar" data-props='{}'>
 class Component extends DCLogic {
   constructor(props) {
