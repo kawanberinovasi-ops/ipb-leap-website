@@ -7,3 +7,5 @@ Mode latihan menyediakan satu kasus yang dapat dinilai Asmen dan Mentor sampai r
 Validasi: 16 pengujian model/alur lulus, build 44 halaman berhasil, pemeriksaan sintaks JavaScript lulus, alur browser telah dicoba sampai raport terbit, dan kartu total diverifikasi pada browser desktop. Catatan rinci ada di `VERIFICATION.md`.
 
 Branch ini tidak mengubah halaman produksi pada akar `src/` atau `docs/`. API Python/SQLite dan role simulasi masih untuk pratinjau; integrasi identitas akun, penugasan, penyimpanan multi-pengguna, dan kewenangan produksi belum termasuk. Merge PR ini menyimpan prototype di repository, bukan mengaktifkan GROW pada situs utama.
+
+Catatan anotasi terbaru ada di `CATATAN-ANOTASI.md`. Perubahan navigasi menjadi dropdown atas saja dan penghapusan kalimat pengantar Kelompok masih tercatat sebagai pekerjaan berikutnya. Pengujian role, penugasan, penyimpanan, serta pemisahan data latihan menunggu backend terhubung. Ketiganya belum dinyatakan selesai pada PR ini.

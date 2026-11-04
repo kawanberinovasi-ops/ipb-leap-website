@@ -8,6 +8,10 @@ Branch lokal: `codex/grow-canvas-preview-20261104`.
 
 Dasar branch: `main` pada commit `d358989e910f8e0be6de3381543abc4899a4daba`, diperiksa 4 November 2026. Seluruh perubahan branch ini berada di `prototypes/grow-canvas/`. Halaman produksi di `src/` dan `docs/` pada akar repository tidak ditimpa.
 
+## Catatan terbaru dari anotasi
+
+Lihat `CATATAN-ANOTASI.md`: navigasi modul cukup di dropdown atas untuk semua peran; pengaturan pratinjau perlu diuji ulang menggunakan backend dan akun asli; kalimat pengantar Kelompok dihapus pada pembaruan berikutnya. Status ketiganya **tercatat, belum diterapkan**. Catatan ini tidak mengubah hasil validasi kode pratinjau sebelumnya.
+
 ## Hasil yang direview
 
 - GROW Canvas sebagai pegangan awal, North Star tetap, katalog KPI dari gambar sumber, milestone M3/M6/M9/M12.

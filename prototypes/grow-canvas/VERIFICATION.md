@@ -11,3 +11,5 @@
 - Hanya folder `prototypes/grow-canvas/` yang ditambahkan pada branch; source dan hasil build produksi di akar repository tidak diubah.
 
 Belum dilakukan: push ke GitHub, PR daring, merge, deployment, autentikasi multi-pengguna, koneksi data produksi, atau penerapan migrasi. GitHub Pages tidak menjalankan API Python lokal.
+
+Pembaruan dokumentasi anotasi: `CATATAN-ANOTASI.md` mencatat tiga masukan lanjutan. Belum ada perubahan kode atau pengujian UI baru untuk masukan tersebut; hasil pemeriksaan di atas tetap merujuk kode pratinjau yang sudah ada.
