@@ -8,7 +8,10 @@ export async function mount(){
  async function refresh(){if(busy)return;busy=true;const button=root.querySelector('[data-refresh]');if(button)button.disabled=true;
  try{
   const actor=await mountSession();if(!actor)return;
-  const role=root.dataset.role;if(!actor.roles?.includes(role))throw Error('Halaman ini memerlukan penugasan '+(role==='asmen'?'Asmen':'Mentor')+'. Buka Beranda sesuai peran akunmu.');
+  const requested=root.dataset.role,roles=actor.roles||[],preferred=sessionStorage.getItem('ipbleap.ui.role');
+  const role=roles.includes(requested)?requested:['asmen','mentor'].find(r=>r===preferred&&roles.includes(r))||roles.find(r=>['asmen','mentor'].includes(r));
+  if(!['asmen','mentor'].includes(role))throw Error('Beranda pendamping hanya tersedia untuk akun Asmen atau Mentor yang ditugaskan.');
+  if(role!==requested){root.dataset.role=role;document.title='Beranda '+(role==='asmen'?'Asmen':'Mentor')+' · IPB LEAP';const u=new URL(location.href);u.pathname=u.pathname.replace(/beranda-(?:asmen|mentor)\.html$/,'beranda-'+role+'.html');history.replaceState(null,'',u.pathname+u.search+u.hash);}
   const home=await loadStaffHome(actor,role,new URLSearchParams(location.search).get('cohort')),s=homeSummary(home);
   sessionStorage.setItem('ipbleap.ui.role',role);window.leapCohortName=home.cohort.name;window.dispatchEvent(new CustomEvent('leap:account'));
   const href=(file,extra={})=>{const u=new URL('../../app/'+file,import.meta.url);for(const[k,v]of Object.entries({cohort:home.cohort.id,...extra}))if(v!==undefined&&v!==null)u.searchParams.set(k,v);return u.pathname+u.search;};
