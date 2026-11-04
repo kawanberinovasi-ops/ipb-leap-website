@@ -489,7 +489,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { open: null, notif: false, me: false };
   }
-  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));if(!location.pathname.includes('/review-penilaian/'))import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).then(()=>import(new URL('../assets/portal/search.mjs',location.href).href)).then(m=>m.mountSearch()).catch(()=>{});}
+  componentDidMount(){window.addEventListener('leap:account',()=>this.setState({open:null,notif:false,me:false}));if(!location.pathname.includes('/review-penilaian/'))import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).then(()=>import(new URL('../assets/portal/search.mjs?v=20261104-home',location.href).href)).then(m=>m.mountSearch()).catch(()=>{});}
   renderVals() {
     const actor=window.leapAccount,granted=actor?.roles||[],selected=sessionStorage.getItem('ipbleap.ui.role'),serverRole=granted.includes(selected)?selected:granted[0];
     const role = actor ? ({program:'pengurus',finance:'bendahara',system:'superadmin'}[serverRole]||serverRole||'mentee') : (this.props.role ?? 'mentee');
@@ -535,7 +535,7 @@ class Component extends DCLogic {
         { key: 'program', label: 'Program', children: [assessmentLink('GROW Canvas','Tujuan awal dan milestone tiga bulanan','grow-canvas.html','GR'),assessmentLink('Catat Mentoring','Pembelajaran, action dan tenggat','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP','#EEFFB8')] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
-        { key: 'beranda', label: 'Beranda', href: 'kelompok.html' },
+        { key: 'beranda', label: 'Beranda', href: 'beranda-asmen.html' },
         { key: 'kelompok', label: 'Kelompok', children: asmenFlow }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'kelompok.html' }]),
       pengurus: [
@@ -556,7 +556,7 @@ class Component extends DCLogic {
         { key: 'audit', label: 'Audit Log', href: 'super-admin.html' }
       ]
     };
-    menus.mentor = [menus.asmen[0],{key:'kelompok',label:'Kelompok',children:mentorFlow}].concat(tail,[menus.asmen.at(-1)]);
+    menus.mentor = [{key:'beranda',label:'Beranda',href:'beranda-mentor.html'},{key:'kelompok',label:'Kelompok',children:mentorFlow}].concat(tail,[menus.asmen.at(-1)]);
     const people = {
       mentee: { name: 'Akun mentee', subtitle: 'Mentee', initials: 'M', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
       asmen: { name: 'Akun Asmen', subtitle: 'Asisten Mentor', initials: 'A', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
@@ -566,7 +566,7 @@ class Component extends DCLogic {
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
     };
     const p = people[role] || people.mentee;
-    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:grow-canvas|kelompok|poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
+    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:beranda-asmen|beranda-mentor|grow-canvas|kelompok|poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
       const current=new URLSearchParams(location.search);for(const key of ['cohort','mentee','group','period','record','source'])if(current.has(key)&&!u.searchParams.has(key))u.searchParams.set(key,current.get(key));
       if(location.pathname.includes('/review-penilaian/'))u.searchParams.set('peran',role==='pengurus'?'program':role);
       return u.pathname+u.search;}return href;};

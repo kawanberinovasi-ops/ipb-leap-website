@@ -27,7 +27,7 @@ RPC: `erp_grow_state` dan `erp_grow_command`. Tidak ada service credential di br
 
 ## Verifikasi
 
-- `npm test`: 101 pengujian lulus, termasuk alur SQL GROW, akses peran, draft privat, KPI palsu, skor, sumber berubah, publikasi, dan penolakan lintas mentee.
+- `npm test`: 106 pengujian lulus, termasuk alur SQL GROW, akses peran, draft privat, KPI palsu, skor, sumber berubah, publikasi, dan penolakan lintas mentee.
 - Browser dengan PostgreSQL sementara: pengajuan mentee → pemeriksaan Asmen → kesepakatan Mentor → catatan → hasil action → poin Asmen → review Mentor → publikasi → readback mentee. Contoh perhitungan terisolasi 25 + 52,5 = 77,5.
 - Backend terpasang: transaksi uji yang seluruhnya di-ROLLBACK meluluskan alur yang sama dan penolakan peran yang salah. Setelah rollback: profil tetap 126, workspace GROW 0, event GROW 0, akun sementara 0. Berkas verifikasi manual: `backend/erp/verification/grow-rollback-smoke.sql`.
 - Akses anonim ke RPC ditolak; authenticated tidak dapat membaca/menulis tabel langsung; RLS kedua tabel aktif. Tidak ada data ABC/POC yang diubah.
@@ -41,3 +41,7 @@ Advisor keamanan tidak menemukan temuan baru pada objek GROW. Temuan sebelumnya 
 Source: `kawanberinovasi-ops/ipb-leap-website`, build `/docs`. Hosting domain: `dickyadisaputrash2112-byte/ipbleap.com`, branch main pada root. Hasil build aplikasi dikirim ke hosting dengan domain OG URL `https://ipbleap.com/`; berkas publik dan CNAME hosting tidak ditimpa.
 
 Jika perlu pemulihan, revert commit frontend pada hosting/source. Pertahankan tabel dan data GROW agar jawaban peserta tidak hilang. Jangan melakukan drop atau konversi data sebagai rollback tampilan. Hak penerapan yang digunakan berasal dari koneksi pemilik masing-masing repository.
+
+## Beranda pendamping
+
+Asmen dan Mentor memiliki route Beranda terpisah: `app/beranda-asmen.html` dan `app/beranda-mentor.html`. Login, logo, menu Beranda, serta hasil pencarian mengarah ke Beranda sesuai role akun. Halaman Kelompok dan menu review tetap terpisah. Ringkasan memanfaatkan workspace, penugasan kelompok, GROW, sesi, dan portal yang sudah ada tanpa migrasi atau penulisan data baru. Prioritas Asmen memuat pengajuan GROW dan action dengan pemeriksaan yang belum ada/usang; prioritas Mentor memuat kesepakatan GROW, review milestone, dan dukungan mentee. Kegagalan sebagian data ditampilkan sebagai belum tersedia, bukan dianggap nol. Scan QR tidak ditambahkan pada role Asmen.
