@@ -10,6 +10,8 @@
 - Export tidak menyertakan database, backup, env, kredensial, atau pola private key/token rahasia yang diperiksa. Pengujian menggunakan database sementara.
 - Hanya folder `prototypes/grow-canvas/` yang ditambahkan pada branch; source dan hasil build produksi di akar repository tidak diubah.
 
-Belum dilakukan: push ke GitHub, PR daring, merge, deployment, autentikasi multi-pengguna, koneksi data produksi, atau penerapan migrasi. GitHub Pages tidak menjalankan API Python lokal.
+Belum dilakukan: merge, deployment, autentikasi multi-pengguna, koneksi data produksi, atau penerapan migrasi. GitHub Pages tidak menjalankan API Python lokal.
 
-Pembaruan dokumentasi anotasi: `CATATAN-ANOTASI.md` mencatat tiga masukan lanjutan. Belum ada perubahan kode atau pengujian UI baru untuk masukan tersebut; hasil pemeriksaan di atas tetap merujuk kode pratinjau yang sudah ada.
+Pembaruan anotasi: menu modul di isi halaman sudah dihapus dan dropdown atas diuji untuk Mentee/Asmen/Mentor. Tautan dropdown mempertahankan peran, track, dan periode. Kalimat pengantar Kelompok beserta paragraf kosongnya sudah tidak ada pada Asmen/Mentor; akses Catat Sesi tetap tersedia. Pengujian backend dengan akun asli tetap menunggu integrasi.
+
+Bukti pembaruan navigasi: `review-assets/navigasi-dropdown-mentor.png`. Uji browser untuk anotasi menggunakan viewport desktop 1280 px; uji ponsel belum dikonfirmasi. Tidak ada perhitungan atau data pengguna yang diubah oleh pembaruan navigasi.

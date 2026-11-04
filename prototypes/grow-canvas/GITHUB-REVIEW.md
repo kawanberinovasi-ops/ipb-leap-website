@@ -10,7 +10,7 @@ Dasar branch: `main` pada commit `d358989e910f8e0be6de3381543abc4899a4daba`, dip
 
 ## Catatan terbaru dari anotasi
 
-Lihat `CATATAN-ANOTASI.md`: navigasi modul cukup di dropdown atas untuk semua peran; pengaturan pratinjau perlu diuji ulang menggunakan backend dan akun asli; kalimat pengantar Kelompok dihapus pada pembaruan berikutnya. Status ketiganya **tercatat, belum diterapkan**. Catatan ini tidak mengubah hasil validasi kode pratinjau sebelumnya.
+Lihat `CATATAN-ANOTASI.md`: navigasi modul cukup di dropdown atas untuk semua peran; pengaturan pratinjau perlu diuji ulang menggunakan backend dan akun asli; kalimat pengantar Kelompok sudah dihapus. Status anotasi 1 dan 3 **diterapkan pada pratinjau lokal**; anotasi 2 menunggu integrasi backend.
 
 ## Hasil yang direview
 
@@ -48,13 +48,13 @@ Mode latihan harus tetap terpisah dan tidak muncul sebagai aktivitas atau nilai 
 
 ## Push berikutnya
 
-Paket ini disiapkan tanpa push, merge, atau deployment. Push branch pratinjau tidak sama dengan meluncurkan GROW ke IPB LEAP.
+Perubahan diajukan melalui branch pratinjau pada fork `adisaputradicky21/ipb-leap-website` dan draft PR ke repository utama. Akun aktif belum memiliki izin push langsung ke upstream. Push branch pratinjau tidak sama dengan meluncurkan GROW ke IPB LEAP.
 
 Pada checkout yang sudah disiapkan, periksa commit dan jalankan:
 
 ```sh
 git show --stat HEAD
-git push -u origin codex/grow-canvas-preview-20261104
+git push -u fork codex/grow-canvas-preview-20261104
 ```
 
 Gunakan draft PR ke `main` dengan uraian di `PR-DESCRIPTION.md`. Apabila `main` berubah sebelum push, sinkronkan branch dan ulangi pemeriksaan yang terdampak.

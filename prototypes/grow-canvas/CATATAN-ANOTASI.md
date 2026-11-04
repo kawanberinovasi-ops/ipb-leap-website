@@ -1,10 +1,10 @@
 # Catatan anotasi — 4 November 2026
 
-Status: tercatat untuk pembaruan berikutnya. Tiga anotasi ini belum diterapkan pada tampilan atau diuji dengan backend produksi. Kode pratinjau yang sudah dikemas tetap menjadi dasar review.
+Status: anotasi tampilan nomor 1 dan 3 sudah diterapkan serta diperiksa pada pratinjau lokal. Anotasi nomor 2 tetap menjadi pengujian integrasi setelah backend dan akun asli terhubung.
 
 ## 1. Navigasi modul cukup di dropdown atas
 
-Hapus baris menu modul yang berulang di dalam halaman (`main#grow-app > nav.tabs`). Akses antarmodul cukup melalui satu dropdown pada navigasi atas, mengikuti peran akun:
+Sudah dihapus: baris menu modul yang berulang di dalam halaman (`main#grow-app > nav.tabs`). Akses antarmodul cukup melalui satu dropdown pada navigasi atas, mengikuti peran akun:
 
 | Peran | Dropdown atas | Isi |
 |---|---|---|
@@ -34,7 +34,7 @@ Kriteria selesai integrasi: hasil diuji menggunakan backend dan akun asli; kelul
 
 ## 3. Hapus kalimat pengantar Kelompok
 
-Pada halaman Kelompok Asmen/Mentor, hapus kalimat:
+Sudah dihapus dari halaman Kelompok Asmen/Mentor:
 
 > Baca GROW, pantau action, dan tanggapi kebutuhan mentee.
 
@@ -44,4 +44,4 @@ Kriteria selesai frontend: kalimat tersebut tidak muncul pada kedua peran; eleme
 
 ## Batas perubahan
 
-Catatan ini tidak mengubah KPI, North Star, milestone, bobot penilaian, data, atau status publikasi. Raport terbit tetap menampilkan satu total nilai /100 sesuai perubahan sebelumnya. Belum ada push, merge, atau deployment yang dilakukan untuk anotasi ini.
+Catatan ini tidak mengubah KPI, North Star, milestone, bobot penilaian, data, atau status publikasi. Raport terbit tetap menampilkan satu total nilai /100 sesuai perubahan sebelumnya. Perubahan disiapkan pada branch pratinjau untuk draft PR. Tidak ada merge atau deployment situs utama.
