@@ -127,7 +127,7 @@ class Component extends DCLogic {
   renderVals() {
     const actor=window.leapAccount,granted=actor?.roles||[],selected=sessionStorage.getItem('ipbleap.ui.role'),serverRole=granted.includes(selected)?selected:granted[0];
     const role = actor ? ({program:'pengurus',finance:'bendahara',system:'superadmin'}[serverRole]||serverRole||'mentee') : (this.props.role ?? 'mentee');
-    const active = this.props.active ?? 'beranda';
+    const active = ['asmen','mentor'].includes(role)&&this.props.active==='program'?'kelompok':this.props.active??'beranda';
     const dark = (this.props.theme ?? 'light') === 'dark';
     const c = dark ? {
       bar: 'rgba(14,13,43,.82)', ink: '#ECEEFF', muted: '#9C9EC4', brand: '#C9D6F0', line: 'rgba(255,255,255,.08)', line2: 'rgba(255,255,255,.14)', chip: 'rgba(255,255,255,.06)', field: 'rgba(255,255,255,.06)', pop: '#1A1940', icon: '#C9D6F0', ring: '#0E0D2B', link: '#A3D6E6', navInk: '#C9CBEA', navOnBg: '#D4FF3A', navOnInk: '#0D0D1A',
@@ -144,18 +144,8 @@ class Component extends DCLogic {
     ];
     kel.pop();
     const assessmentLink=(label,desc,href,short,tint='#E4EBF8')=>({label,desc,href,short,tint});
-    const asmenFlow=[
-      assessmentLink('Mentoring','Catat detail sesi, kehadiran dan tindak lanjut','catat-sesi.html','MT'),
-      assessmentLink('Review','Periksa ABC dan catatan hasil mentoring mentee','kelompok-penilaian.html?view=review','RV'),
-      assessmentLink('Monitoring','Check-in, komitmen, proses dan bukti','kelompok-penilaian.html?view=monitoring','MO'),
-      assessmentLink('Penilaian','Proses, bukti dan 360-Degree Assessment','kelompok-penilaian.html?view=penilaian','PN','#EEFFB8')
-    ];
-    const mentorFlow=[
-      assessmentLink('Mentoring','Baca dan konfirmasi hasil mentoring mentee','kelompok-penilaian.html?view=mentoring','MT'),
-      assessmentLink('Review','Tinjau dan sepakati Personal Outcome Contract','kelompok-penilaian.html?view=review','RV'),
-      assessmentLink('Monitoring','Pantau tindakan, hasil dan bukti mentee','kelompok-penilaian.html?view=monitoring','MO'),
-      assessmentLink('Penilaian','Capaian KPI dan 360-Degree Assessment','kelompok-penilaian.html?view=penilaian','PN','#EEFFB8')
-    ];
+    const asmenFlow=[assessmentLink('Kelompok','Kelompok dan sesi mentoring','kelompok.html','KL'),assessmentLink('Review GROW','Tujuan dan milestone mentee','grow-canvas.html','GR'),assessmentLink('Review Catatan Mentee','Pembelajaran dan tindak lanjut mentee','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP')];
+    const mentorFlow=asmenFlow;
     const programP = { key: 'program', label: 'Program', children: [
       ...(role==='pengurus'?[{ label: 'Scan Absensi', desc: 'Scan QR dan rekap kehadiran per mentee', href: 'absensi-pengurus.html', short: 'QR', tint: '#EEFFB8' },{ label: 'Kelola Akun & Progres', desc: 'Akun, kelompok dan perjalanan tiap mentee', href: 'kelola-program.html', short: 'AK', tint: '#E7E6F3' }]:[]),
       { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'monitoring-progres.html', short: 'MO', tint: '#E4EBF8' },
@@ -176,13 +166,7 @@ class Component extends DCLogic {
     const menus = {
       mentee: [
         { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
-        { key: 'program', label: 'Program', children: [
-          assessmentLink('Progres','Check-in dua mingguan, tindakan dan bukti','progres.html','PR'),
-          assessmentLink('Mentoring','Detail sesi dan hasil mentoring dalam Worksheet ABC','mentoring.html','MT'),
-          assessmentLink('Personal Outcome Contract','Outcome dan KPI sesuai track, pathway serta baseline','poc.html','PO'),
-          assessmentLink('Hasil KPI','Ajukan hasil aktual M3/M6/M9/M12 dan portfolio','hasil-kpi.html','HK'),
-          assessmentLink('Raport','Hasil penilaian yang sudah diterbitkan','raport.html','RP','#EEFFB8'),
-        ] }
+        { key: 'program', label: 'Program', children: [assessmentLink('GROW Canvas','Tujuan awal dan milestone tiga bulanan','grow-canvas.html','GR'),assessmentLink('Catat Mentoring','Pembelajaran, action dan tenggat','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP','#EEFFB8')] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
         { key: 'beranda', label: 'Beranda', href: 'kelompok.html' },
@@ -216,7 +200,7 @@ class Component extends DCLogic {
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
     };
     const p = people[role] || people.mentee;
-    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
+    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:grow-canvas|kelompok|poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
       const current=new URLSearchParams(location.search);for(const key of ['cohort','mentee','group','period','record','source'])if(current.has(key)&&!u.searchParams.has(key))u.searchParams.set(key,current.get(key));
       if(location.pathname.includes('/review-penilaian/'))u.searchParams.set('peran',role==='pengurus'?'program':role);
       return u.pathname+u.search;}return href;};

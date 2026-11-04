@@ -17,9 +17,7 @@ test('Program/Kelompok menus route each role to their own tasks, preserving orig
  const source=await read('src/app/Navbar.dc.html'),logic=source.match(/<script type="text\/x-dc"[^>]*>([\s\S]*?)<\/script>/)[1];
  for(const role of ['mentee','asmen','mentor']){const dom=new JSDOM('',{url:'https://example.test/review-penilaian/app/penilaian.html',runScripts:'outside-only'});class Base{constructor(props){this.props=props;}}
  const C=new dom.window.Function('DCLogic',logic+';return Component;')(Base),component=new C({role}),values=component.renderVals(),labels=values.items.flatMap(x=>(x.children||[]).map(c=>c.label));
- if(role==='mentee'){assert.ok(labels.includes('Mentoring'));assert.ok(labels.includes('Raport'));assert.ok(!labels.includes('Review capaian'));}
- if(role==='asmen'){assert.ok(labels.includes('Review'));assert.ok(labels.includes('Monitoring'));assert.ok(!labels.includes('Review capaian'));}
- if(role==='mentor'){assert.ok(labels.includes('Review'));assert.ok(labels.includes('Penilaian'));}
+ if(role==='mentee')assert.deepEqual(Array.from(labels),['GROW Canvas','Catat Mentoring','Raport']);else assert.deepEqual(Array.from(labels),['Kelompok','Review GROW','Review Catatan Mentee','Raport']);
  for(const item of values.items)for(const child of item.children||[])if(/(?:abc|poc|penilaian|progres|raport)\.html/.test(child.href))assert.equal(new URL(child.href,dom.window.location).searchParams.get('peran'),role);
  dom.window.close();}
 });
