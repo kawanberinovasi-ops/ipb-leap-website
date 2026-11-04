@@ -49,3 +49,13 @@ test('GROW rejects forged KPI, role changes, inconsistent points and future publ
   await assert.rejects(cmd(db,'mentor','publish',{period:3}),/sebelum akhir milestone/);
  }finally{await db.close();}
 });
+test('multiple KPIs persist through agreement and every KPI is required for the published average',async()=>{
+ const db=await setup();try{
+  const c=canvas();c.kpis.push({id:'socialPrograms',baseline:'0',measurement:'VERIFIED PROGRAM REPORTS',milestones:{3:'1 program',6:'2 programs',9:'4 programs',12:catalog.find(t=>t.id==='social').kpis.find(k=>k.id==='socialPrograms').label}});
+  let s=await cmd(db,'mentee','canvas_save',c);assert.equal(s.canvas.data.kpis.length,2);await as(db,'mentee');assert.deepEqual((await state(db)).canvas.data.kpis,c.kpis);
+  await cmd(db,'mentee','canvas_submit',c);await cmd(db,'asmen','canvas_check',{decision:'Siap dibahas Mentor',comment:'BOTH KPIS COMPLETE'});s=await cmd(db,'mentor','canvas_agree',{comment:'TWO TARGETS AGREED'});assert.equal(s.canvas.data.kpis.length,2);
+  const n=await note(db);await complete(db,n);await assert.rejects(cmd(db,'mentor','review_save',review()),/semua KPI/);
+  const r=review();r.items.push({id:'socialPrograms',actual:'1 program',evidence:'PROGRAM REPORT',level:100,reason:'TARGET ACHIEVED'});await cmd(db,'mentor','review_save',r);s=await cmd(db,'mentor','publish',{period:3});assert.equal(s.publications.at(-1).score.mentor,61.25);assert.equal(s.publications.at(-1).score.total,86.25);assert.equal(s.publications.at(-1).review.items.length,2);
+  await as(db,'mentee');s=await state(db);assert.equal(s.publications.at(-1).canvas.data.kpis.length,2);assert.equal(s.scores['3'].total,86.25);
+ }finally{await db.close();}
+});

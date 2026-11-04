@@ -11,6 +11,8 @@ GROW memakai identitas Supabase dan penugasan IPB LEAP yang sudah ada. Halaman l
 - Penerbitan periode menunggu akhir milestone cohort. Snapshot terbit menyimpan target dan sumber saat terbit; perubahan hasil berikutnya membatalkan pemeriksaan/review aktif yang sudah usang tanpa menimpa snapshot tersebut.
 - Raport GROW tidak mengubah status kelulusan maupun endpoint keputusan akhir tim penilaian sebelumnya.
 
+Mentee dapat menambahkan beberapa KPI dari katalog track melalui tombol `+ Tambah KPI`. Masing-masing menyimpan baseline, cara ukur, dan empat milestone sendiri. Penambahan/penghapusan KPI mempertahankan isian KPI lainnya; KPI yang sama tidak bisa ditambahkan dua kali. Review Mentor wajib mencakup semua KPI terpilih dan poin Mentor memakai rata-rata capaian KPI.
+
 Menu modul berada hanya pada dropdown atas. Mentee: GROW Canvas, Catat Mentoring, Raport. Pendamping: Kelompok, Review GROW, Review Catatan Mentee, Raport. Catat Sesi pendamping tetap menggunakan roster kelompok asli dan penyimpanan sesi yang sudah ada. Data ABC/POC lama tetap tersedia melalui tautan riwayat pada Kelompok; tidak dikonversi atau dihapus.
 
 Selector role/track lokal dan mode latihan tidak dikirim ke aplikasi utama. Parameter `role`, `track`, atau `demo` pada alamat tidak memberikan kewenangan. Scope server memeriksa sesi aktif, profil, enrolment mentee, serta penugasan pendamping. Track berasal dari enrolment, bukan isian bebas atau metadata pengguna.
@@ -25,7 +27,7 @@ RPC: `erp_grow_state` dan `erp_grow_command`. Tidak ada service credential di br
 
 ## Verifikasi
 
-- `npm test`: 99 pengujian lulus, termasuk alur SQL GROW, akses peran, draft privat, KPI palsu, skor, sumber berubah, publikasi, dan penolakan lintas mentee.
+- `npm test`: 101 pengujian lulus, termasuk alur SQL GROW, akses peran, draft privat, KPI palsu, skor, sumber berubah, publikasi, dan penolakan lintas mentee.
 - Browser dengan PostgreSQL sementara: pengajuan mentee → pemeriksaan Asmen → kesepakatan Mentor → catatan → hasil action → poin Asmen → review Mentor → publikasi → readback mentee. Contoh perhitungan terisolasi 25 + 52,5 = 77,5.
 - Backend terpasang: transaksi uji yang seluruhnya di-ROLLBACK meluluskan alur yang sama dan penolakan peran yang salah. Setelah rollback: profil tetap 126, workspace GROW 0, event GROW 0, akun sementara 0. Berkas verifikasi manual: `backend/erp/verification/grow-rollback-smoke.sql`.
 - Akses anonim ke RPC ditolak; authenticated tidak dapat membaca/menulis tabel langsung; RLS kedua tabel aktif. Tidak ada data ABC/POC yang diubah.
