@@ -4,7 +4,7 @@ import {buildOperation} from '../assessment/domain.mjs';
 export const STORAGE_KEY = 'ipbleap.local.management.v1';
 export const ACTOR_KEY = 'ipbleap.local.actor';
 export const MANAGER = {id:'00000000-0000-4000-8000-000000000000',display_name:'Pengelola lokal',roles:['program'],active:true};
-export const ROLES = {mentee:'Mentee',asmen:'Asisten Mentor',mentor:'Mentor',program:'Pengurus / Pengelola',finance:'Bendahara',event:'Tim Event',system:'Super Admin'};
+export const ROLES = {mentee:'Mentee',asmen:'Asisten Mentor',mentor:'Mentor',program:'Pengurus / Pengelola',finance:'Bendahara',event:'Project Management & Monitoring Lead',system:'Super Admin'};
 const empty = () => ({format:1,revision:0,profiles:[],cohorts:[],enrolments:[],groups:[],members:[],records:[],sessions:[],staff:[],audit:[],receipts:[]});
 const text = s => String(s ?? '').trim();
 const requireValue = (v,label) => {if(!text(v))throw Error('Lengkapi '+label+'.');return text(v);};

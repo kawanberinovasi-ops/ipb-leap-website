@@ -212,7 +212,7 @@ class Component extends DCLogic {
     menus.mentor = [{key:'beranda',label:'Beranda',href:'beranda-mentor.html'},{key:'kelompok',label:'Kelompok',children:mentorFlow}].concat(tail,[menus.asmen.at(-1)]);
     menus.event=[{key:'beranda',label:'Beranda',href:'absensi-pengurus.html'},{key:'program',label:'Kegiatan & Absensi',children:[assessmentLink('Kelola kegiatan','Tambah aktivitas dan peserta','kegiatan-event.html','EV'),assessmentLink('Absensi & Rekap','Scan, catat dan unduh per kegiatan','absensi-pengurus.html','QR')]},{key:'kalender',label:'Kalender',href:'kalender.html'}];
     const people = {
-      event:{name:'Tim Event',subtitle:'Operation & Communication',initials:'EV',avatarBg:'linear-gradient(135deg,#32306F,#3157A5)',roleLabel:'Tim Event',roleBg:'#E3F3F8',roleInk:'#1F5566'},
+      event:{name:'Project Management & Monitoring Lead',subtitle:'Operation & Communication',initials:'EV',avatarBg:'linear-gradient(135deg,#32306F,#3157A5)',roleLabel:'PMM Lead',roleBg:'#E3F3F8',roleInk:'#1F5566'},
       mentee: { name: 'Akun mentee', subtitle: 'Mentee', initials: 'M', avatarBg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', roleLabel: 'Mentee', roleBg: '#E3F3F8', roleInk: '#1F5566' },
       asmen: { name: 'Akun Asmen', subtitle: 'Asisten Mentor', initials: 'A', avatarBg: 'linear-gradient(135deg,#32306F,#3157A5)', roleLabel: 'Asmen', roleBg: '#E4EBF8', roleInk: '#3157A5' },
       mentor: { name: 'Akun Mentor', subtitle: 'Mentor', initials: 'M', avatarBg: 'linear-gradient(135deg,#0D0D1A,#32306F)', roleLabel: 'Mentor', roleBg: '#E7E6F3', roleInk: '#32306F' },
@@ -241,7 +241,7 @@ class Component extends DCLogic {
     });
     return Object.assign({}, p, {
       c: c,
-      ...(actor?{name:actor.display_name,subtitle:granted.map(r=>({mentee:'Mentee',asmen:'Asmen',mentor:'Mentor',program:'Pengurus',finance:'Bendahara',system:'Super Admin',event:'Tim Event'}[r]||r)).join(' · '),initials:(actor.display_name||'').split(/\s+/).slice(0,2).map(n=>n[0]).join('')}:{}),
+      ...(actor?{name:actor.display_name,subtitle:granted.map(r=>({mentee:'Mentee',asmen:'Asmen',mentor:'Mentor',program:'Pengurus',finance:'Bendahara',system:'Super Admin',event:'Project Management & Monitoring Lead'}[r]||r)).join(' · '),initials:(actor.display_name||'').split(/\s+/).slice(0,2).map(n=>n[0]).join('')}:{}),
       logout: async(e)=>{e.preventDefault();if(location.pathname.includes('/review-penilaian/')){location.href='index.html';return;}try{await(await import(new URL('../assets/assessment/session.mjs',location.href).href)).signOut(e);}catch(error){alert(error.message||'Belum berhasil keluar. Coba lagi.');}},
       items: items,
       homeHref: items[0].href,
