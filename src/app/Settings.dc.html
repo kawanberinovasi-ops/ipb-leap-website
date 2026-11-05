@@ -79,8 +79,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
           <div style="{{s.card}}">
             <h2 style="{{s.h2}}">Profil &amp; data pribadi</h2>
             <p style="{{s.sub}}">Nama, email, dan peran mengikuti akun login kamu.</p>
-            <sc-if value="{{profileMessage}}" hint-placeholder-val="{{ false }}">
-              <p role="status" style="{{s.sub}}">{{profileMessage}}</p>
+            <sc-if value="{{profileLoadMessage}}" hint-placeholder-val="{{ false }}">
+              <p role="status" style="{{s.sub}}">{{profileLoadMessage}}</p>
             </sc-if>
             <sc-if value="{{profileLoadFailed}}" hint-placeholder-val="{{ false }}">
               <button type="button" onClick="{{retryProfile}}" style="{{s.secondary}};margin-top:12px">Muat ulang profil</button>
@@ -112,7 +112,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
               <input type="text" name="interests" maxlength="624" value="{{profile.interests}}" placeholder="Contoh: Riset, Kewirausahaan" style="{{s.input}}">
               <span style="{{s.hint}}">Pisahkan minat dengan koma.</span>
             </label>
-            <div style="display: flex; justify-content: flex-end; margin-top: 22px"><button class="btn" type="submit" style="{{s.primary}}">{{profileSaveLabel}}</button></div>
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 22px">
+              <p id="profile-save-result" role="status" aria-atomic="true" style="{{profileResultStyle}}">{{profileSaveResult}}</p>
+              <button class="btn" type="submit" style="{{s.primary}}">{{profileSaveLabel}}</button>
+            </div>
               </fieldset>
             </form>
           </div>
@@ -371,7 +374,7 @@ class Component extends DCLogic {
       const saved=await api.rpc('erp_profile_details',{p_patch:patch});
       if(this._profileRequest!==request)return;
       const updated=profileFields(saved,actor.display_name);
-      this.setState({profile:updated,originalProfile:updated,profileStatus:'ready',profileMessage:'Perubahan profil tersimpan.'});
+      this.setState({profile:updated,originalProfile:updated,profileStatus:'ready',profileMessage:'Data profil berhasil disimpan.'});
     }catch(error){
       if(this._profileRequest!==request)return;
       this.setState({profileStatus:'ready',profileMessage:error.message||'Perubahan profil belum tersimpan. Coba lagi.'});
@@ -499,7 +502,10 @@ class Component extends DCLogic {
       profile: st.profile,
       profileDisabled: st.profileStatus!=='ready',
       profileLoadFailed: st.profileStatus==='failed',
-      profileMessage: st.profileStatus==='loading'?'Memuat profil…':st.profileMessage,
+      profileLoadMessage: st.profileStatus==='loading'?'Memuat profil…':st.profileStatus==='failed'?st.profileMessage:'',
+      profileSaveResult: st.profileStatus==='ready'?st.profileMessage:'',
+      profileResultStyle: 'margin:0;font-size:14px;font-weight:700;color:' +
+        (st.profileMessage==='Data profil berhasil disimpan.'?(dark?'#B6E5BF':'#166534'):t.muted),
       profileSaveLabel: st.profileStatus==='saving'?'Menyimpan…':'Simpan perubahan',
       retryProfile: () => { if(st.actor)this.loadProfile(st.actor); },
       editProfile: ({target}) => {
