@@ -78,35 +78,43 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
         <sc-if value="{{is.profil}}" hint-placeholder-val="{{ true }}">
           <div style="{{s.card}}">
             <h2 style="{{s.h2}}">Profil &amp; data pribadi</h2>
-            <p style="{{s.sub}}">Nama, email, dan peran mengikuti akun login kamu. Penyimpanan profil tambahan belum dihubungkan.</p>
+            <p style="{{s.sub}}">Nama, email, dan peran mengikuti akun login kamu.</p>
+            <sc-if value="{{profileMessage}}" hint-placeholder-val="{{ false }}">
+              <p role="status" style="{{s.sub}}">{{profileMessage}}</p>
+            </sc-if>
+            <sc-if value="{{profileLoadFailed}}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{retryProfile}}" style="{{s.secondary}};margin-top:12px">Muat ulang profil</button>
+            </sc-if>
+            <form onSubmit="{{saveProfile}}" onInput="{{editProfile}}">
+              <fieldset disabled="{{profileDisabled}}" style="border:0;padding:0;margin:0;min-width:0">
             <div class="settings-fields" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px">
               <label style="{{s.label}}">Nama lengkap<input type="text" value="{{person.name}}" readonly style="{{s.input}}"></label>
-              <label style="{{s.label}}">Nama panggilan<input type="text" value="{{person.nick}}" style="{{s.input}}"></label>
+              <label style="{{s.label}}">Nama panggilan<input type="text" name="nick" maxlength="80" value="{{profile.nick}}" style="{{s.input}}"></label>
               <label style="{{s.label}}">Email <span style="font-size: 11.5px; font-weight: 800; color: #16A34A">Email akun</span><input type="email" value="{{person.email}}" disabled="" style="{{s.inputOff}}"></label>
-              <label style="{{s.label}}">Nomor WhatsApp<input type="tel" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
+              <label style="{{s.label}}">Nomor WhatsApp<input type="tel" name="whatsapp" maxlength="40" value="{{profile.whatsapp}}" placeholder="Belum diisi" style="{{s.input}}"></label>
               <sc-if value="{{isStudent}}" hint-placeholder-val="{{ true }}">
-                <label style="{{s.label}}">Fakultas / Prodi<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
+                <label style="{{s.label}}">Fakultas / Prodi<input type="text" name="study" maxlength="160" value="{{profile.study}}" placeholder="Belum diisi" style="{{s.input}}"></label>
               </sc-if>
               <sc-if value="{{isStudent}}" hint-placeholder-val="{{ true }}">
-                <label style="{{s.label}}">NIM · Angkatan<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
+                <label style="{{s.label}}">NIM · Angkatan<input type="text" name="student_number" maxlength="100" value="{{profile.student_number}}" placeholder="Belum diisi" style="{{s.input}}"></label>
               </sc-if>
               <sc-if value="{{isMentor}}" hint-placeholder-val="{{ false }}">
-                <label style="{{s.label}}">Instansi<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
+                <label style="{{s.label}}">Instansi<input type="text" name="institution" maxlength="160" value="{{profile.institution}}" placeholder="Belum diisi" style="{{s.input}}"></label>
               </sc-if>
               <sc-if value="{{isMentor}}" hint-placeholder-val="{{ false }}">
-                <label style="{{s.label}}">Jabatan · Alumni angkatan<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
+                <label style="{{s.label}}">Jabatan · Alumni angkatan<input type="text" name="position" maxlength="160" value="{{profile.position}}" placeholder="Belum diisi" style="{{s.input}}"></label>
               </sc-if>
-              <label style="{{s.label}}">Domisili<input type="text" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
-              <label style="{{s.label}}">LinkedIn<input type="url" value="" placeholder="Belum diisi" style="{{s.input}}"></label>
+              <label style="{{s.label}}">Domisili<input type="text" name="city" maxlength="120" value="{{profile.city}}" placeholder="Belum diisi" style="{{s.input}}"></label>
+              <label style="{{s.label}}">LinkedIn<input type="url" name="linkedin" maxlength="500" value="{{profile.linkedin}}" placeholder="Belum diisi" style="{{s.input}}"></label>
             </div>
-            <label style="{{s.label}}; margin-top: 16px">Bio singkat<textarea rows="3" style="{{s.input}}; height: auto; padding: 12px 14px; resize: vertical"></textarea></label>
-            <div style="margin-top: 16px">
-              <span style="{{s.labelText}}">Minat</span>
-              <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px">
-                <span style="{{s.hint}}">Belum ada minat tersimpan.</span><span style="{{s.chip}}">+ Tambah</span>
-              </div>
-            </div>
-            <div style="display: flex; justify-content: flex-end; margin-top: 22px"><button class="btn" type="button" onClick="{{save}}" style="{{s.primary}}">Simpan perubahan</button></div>
+            <label style="{{s.label}}; margin-top: 16px">Bio singkat<textarea name="bio" rows="3" maxlength="1500" style="{{s.input}}; height: auto; padding: 12px 14px; resize: vertical">{{profile.bio}}</textarea></label>
+            <label style="{{s.label}}; margin-top: 16px">Minat
+              <input type="text" name="interests" maxlength="624" value="{{profile.interests}}" placeholder="Contoh: Riset, Kewirausahaan" style="{{s.input}}">
+              <span style="{{s.hint}}">Pisahkan minat dengan koma.</span>
+            </label>
+            <div style="display: flex; justify-content: flex-end; margin-top: 22px"><button class="btn" type="submit" style="{{s.primary}}">{{profileSaveLabel}}</button></div>
+              </fieldset>
+            </form>
           </div>
         </sc-if>
 
@@ -287,6 +295,18 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+const emptyProfile = {
+  nick: '', whatsapp: '', study: '', student_number: '', institution: '',
+  position: '', city: '', linkedin: '', bio: '', interests: ''
+};
+function profileFields(saved, displayName) {
+  return {
+    ...emptyProfile,
+    ...saved,
+    nick: saved.nick ?? (displayName || '').split(/\s+/)[0],
+    interests: (saved.interests || []).join(', ')
+  };
+}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
@@ -294,19 +314,68 @@ class Component extends DCLogic {
       tab: 'profil', role: '', actor: null, theme: 'light', flipped: false, photo: null, toast: null,
       sw: { motion: false, contrast: false, sound: true, digest: true, dnd: false, otp: true, pub: true, pubEvent: true, pubProject: true, pubScore: false },
       notif: { chat: [1, 0, 1], undangan: [1, 1, 1], penilaian: [1, 1, 1], update: [1, 1, 0], pengumuman: [1, 1, 1], task: [1, 0, 1] },
-      sound: 'leap'
+      sound: 'leap', profile: emptyProfile, originalProfile: emptyProfile, profileStatus: 'loading', profileMessage: ''
     };
   }
   componentDidMount() {
     this._accountChanged=()=>{
       const actor=window.leapAccount;
-      if(!actor?.active||!actor.roles?.length){this.setState({actor:null,role:''});return;}
+      if(!actor?.active||!actor.roles?.length){
+        this._profileRequest=null;
+        this._profileUser=null;
+        this.setState({actor:null,role:'',profile:emptyProfile,originalProfile:emptyProfile,profileStatus:'loading',profileMessage:''});
+        return;
+      }
       const requested=sessionStorage.getItem('ipbleap.ui.role');
       const role=actor.roles.includes(requested)?requested:actor.roles[0];
       this.setState({actor,role:({program:'pengurus',finance:'bendahara',system:'superadmin'}[role]||role)});
+      if(this._profileUser!==actor.id)this.loadProfile(actor);
     };
     window.addEventListener('leap:account',this._accountChanged);
     import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).then(this._accountChanged);
+  }
+  async loadProfile(actor) {
+    this._profileUser=actor.id;
+    const request=Symbol();
+    this._profileRequest=request;
+    this.setState({profile:emptyProfile,originalProfile:emptyProfile,profileStatus:'loading',profileMessage:''});
+    try {
+      const api=await import(new URL('../assets/assessment/api.mjs',location.href).href);
+      const saved=await api.rpc('erp_profile_details');
+      if(this._profileRequest!==request)return;
+      const profile=profileFields(saved,actor.display_name);
+      this.setState({profile,originalProfile:profile,profileStatus:'ready'});
+    } catch(error) {
+      if(this._profileRequest!==request)return;
+      this.setState({profileStatus:'failed',profileMessage:error.message||'Profil belum dapat dimuat.'});
+    }
+  }
+  async saveProfile(event) {
+    event.preventDefault();
+    const {actor,profile,originalProfile,profileStatus}=this.state;
+    if(!actor||profileStatus!=='ready')return;
+    const patch={};
+    for(const [key,value] of Object.entries(profile)){
+      if(value!==originalProfile[key])patch[key]=key==='interests'
+        ? value.split(',').map(item=>item.trim()).filter(Boolean)
+        : value.trim();
+    }
+    if(!Object.keys(patch).length){
+      this.setState({profileMessage:'Tidak ada perubahan untuk disimpan.'});
+      return;
+    }
+    const request=this._profileRequest;
+    this.setState({profileStatus:'saving',profileMessage:''});
+    try{
+      const api=await import(new URL('../assets/assessment/api.mjs',location.href).href);
+      const saved=await api.rpc('erp_profile_details',{p_patch:patch});
+      if(this._profileRequest!==request)return;
+      const updated=profileFields(saved,actor.display_name);
+      this.setState({profile:updated,originalProfile:updated,profileStatus:'ready',profileMessage:'Perubahan profil tersimpan.'});
+    }catch(error){
+      if(this._profileRequest!==request)return;
+      this.setState({profileStatus:'ready',profileMessage:error.message||'Perubahan profil belum tersimpan. Coba lagi.'});
+    }
   }
   beep(kind) {
     try {
@@ -330,7 +399,7 @@ class Component extends DCLogic {
     clearTimeout(this._tt);
     this._tt = setTimeout(() => this.setState({ toast: null }), 2400);
   }
-  componentWillUnmount() { clearTimeout(this._tt);window.removeEventListener('leap:account',this._accountChanged); }
+  componentWillUnmount() { this._profileRequest=null;clearTimeout(this._tt);window.removeEventListener('leap:account',this._accountChanged); }
   renderVals() {
     const st = this.state;
     const sysDark = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -427,7 +496,17 @@ class Component extends DCLogic {
       otpSw: sw(st.sw.otp, flipSw('otp'), 'OTP'),
       onSound: (e) => { this.setState({ sound: e.target.value }); this.beep(e.target.value); },
       testSound: () => this.beep(st.sound),
-      save: () => this.showToast('Perubahan belum disimpan. Penyimpanan profil tambahan belum dihubungkan.'),
+      profile: st.profile,
+      profileDisabled: st.profileStatus!=='ready',
+      profileLoadFailed: st.profileStatus==='failed',
+      profileMessage: st.profileStatus==='loading'?'Memuat profil…':st.profileMessage,
+      profileSaveLabel: st.profileStatus==='saving'?'Menyimpan…':'Simpan perubahan',
+      retryProfile: () => { if(st.actor)this.loadProfile(st.actor); },
+      editProfile: ({target}) => {
+        if(st.profileStatus==='ready'&&Object.hasOwn(emptyProfile,target.name))
+          this.setState({profile:{...this.state.profile,[target.name]:target.value},profileMessage:''});
+      },
+      saveProfile: event => this.saveProfile(event),
       toast: !!st.toast, toastText: st.toast || ''
     };
   }
