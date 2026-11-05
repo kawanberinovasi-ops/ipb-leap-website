@@ -91,6 +91,20 @@ body{margin:0}
 
 
 body{margin:0}
+.leap-public-toggle,.leap-public-mobile-login{display:none}
+.leap-public-pending{color:#55577A;cursor:default}
+.leap-public-pending small{font-weight:700;color:#55577A}
+@media(max-width:960px){
+  .leap-public-header>.leap-public-bar{min-height:60px!important;padding:0 16px!important;flex-wrap:nowrap!important}
+  .leap-public-bar>a img{height:34px!important}
+  .leap-public-header .leap-public-actions{display:none!important}
+  .leap-public-toggle{display:inline-flex;align-items:center;gap:8px;min-height:44px;border:1px solid #D5DAEA;border-radius:12px;padding:0 12px;background:#FFF;color:#32306F;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
+  .leap-public-bar>.leap-public-menu{display:none!important;position:absolute;z-index:60;inset:100% 0 auto;box-sizing:border-box;max-height:calc(100vh - 60px);max-height:calc(100dvh - 60px);overflow-y:auto;overscroll-behavior:contain;padding:10px 16px 16px;background:#FFF;border-bottom:1px solid #E3E7F2;box-shadow:0 12px 24px #32306F22}
+  .leap-public-bar>.leap-public-menu[data-open=true]{display:flex!important;flex-direction:column;flex-wrap:nowrap!important;justify-content:flex-start!important}
+  .leap-public-menu>div>a,.leap-public-menu>div>button,.leap-public-menu .leap-public-pending,.leap-public-menu>.leap-public-mobile-login{min-height:44px!important;box-sizing:border-box;width:100%}
+  .leap-public-menu .leap-public-submenu{position:static!important;transform:none!important;width:auto!important;margin:2px 0 6px 12px;box-shadow:none!important}
+  .leap-public-menu>.leap-public-mobile-login{display:flex;align-items:center;justify-content:center;margin-top:8px;padding:0 13px;border-radius:12px;background:#32306F;color:#FFF;font-size:14px;font-weight:800;text-decoration:none}
+}
 
 </style>
 </head>
@@ -125,7 +139,7 @@ body{margin:0}
         <span class="floaty rise d1" style="display: inline-block; margin-top: 22px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 26px; color: #0D0D1A; background: #D4FF3A; padding: 8px 20px; border-radius: 999px">Make Your Leap</span>
         <p class="rise d2" style="margin: 26px 0 0; font-size: 18px; line-height: 1.65; color: rgba(255,255,255,.88); max-width: 560px">Talenta muda IPB tidak kekurangan materi. Mereka butuh akselerasi: arah yang jelas, orang yang sudah lebih dulu sampai, akses, dan pengalaman nyata.</p>
         <div class="rise d3" style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px">
-          <a class="btn" href="event.html" style="height: 54px; padding: 0 24px; border-radius: 18px; background: #FFFFFF; color: #32306F; font-weight: 800; font-size: 16px; text-decoration: none; display: flex; align-items: center">Lihat event terbuka</a>
+          <span style="height: 54px; padding: 0 24px; border-radius: 18px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.84); font-weight: 700; cursor: default; font-size: 16px; text-decoration: none; display: flex; align-items: center">Event segera hadir</span>
           <a class="btn" href="tentang.html" style="height: 54px; padding: 0 22px; border-radius: 18px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); color: #FFFFFF; font-weight: 700; font-size: 16px; text-decoration: none; display: flex; align-items: center">Kenali programnya</a>
         </div>
       </div>
@@ -215,30 +229,29 @@ body{margin:0}
         <article class="rise b7 r2" style="border-radius: 32px; padding: 4px 0; background: transparent; display: flex; flex-direction: column; gap: 20px">
           <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px">
             <h3 style="margin: 0; font-size: 20px; font-weight: 800">Event terdekat</h3>
-            <a href="event.html" style="font-size: 14px; font-weight: 800; color: #D4FF3A; text-decoration: none">Semua event →</a>
+            <span style="font-size: 14px; font-weight: 800; cursor: default; color: #D4FF3A; text-decoration: none">Segera hadir</span>
           </div>
           <sc-if value="{{hasNext}}" hint-placeholder-val="{{ true }}">
-            <a class="lift" href="event.html" style="position: relative; overflow: hidden; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 18px; padding: 26px; border-radius: 26px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; text-decoration: none">
+            <div style="position: relative; overflow: hidden; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 18px; padding: 26px; border-radius: 26px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; text-decoration: none">
               <span aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(320px 200px at 100% 0%, rgba(212,255,58,.28), transparent 70%)"></span>
               <span style="position: relative; display: flex; flex-direction: column; gap: 8px; min-width: 0">
-                <span style="display: flex; flex-wrap: wrap; gap: 6px"><span style="padding: 4px 10px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; font-size: 12px; font-weight: 800">{{next.status}}</span><span style="padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 12px; font-weight: 700">{{next.mode}}</span><span style="padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 12px; font-weight: 700">{{next.org}}</span></span>
+                <span style="display: flex; flex-wrap: wrap; gap: 6px"><span style="padding: 4px 10px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; font-size: 12px; font-weight: 800">Info kegiatan</span><span style="padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 12px; font-weight: 700">{{next.mode}}</span><span style="padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 12px; font-weight: 700">{{next.org}}</span></span>
                 <strong style="font-size: 28px; line-height: 1.1; letter-spacing: -.01em">{{next.title}}</strong>
                 <span style="font-size: 14px; color: rgba(255,255,255,.82)">{{next.when}} · {{next.place}}</span>
-                <span style="font-size: 13px; font-weight: 700; color: #D4FF3A">Daftar sampai {{next.close}}</span>
               </span>
               <span style="position: relative; text-align: right">
                 <span class="gtext" style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 72px; line-height: .9">{{next.left}}</span>
                 <span style="font-size: 13px; font-weight: 700; color: rgba(255,255,255,.8)">{{next.leftLabel}}</span>
               </span>
-            </a>
+            </div>
           </sc-if>
           <div role="list" style="display: flex; flex-direction: column; gap: 10px">
             <sc-for list="{{upcoming}}" as="e" hint-placeholder-count="3">
-              <a role="listitem" class="row" href="event.html" style="display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,.07); color: #FFFFFF; text-decoration: none">
+              <div role="listitem" style="display: flex; align-items: center; gap: 16px; padding: 12px; border-radius: 20px; background: rgba(255,255,255,.07); color: #FFFFFF; text-decoration: none">
                 <span style="width: 58px; height: 58px; flex: none; border-radius: 16px; background: {{e.bg}}; color: {{e.ink}}; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1"><strong style="font-size: 22px">{{e.day}}</strong><span style="font-size: 11px; font-weight: 800; letter-spacing: .06em">{{e.mon}}</span></span>
                 <span style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px"><strong style="font-size: 15.5px">{{e.title}}</strong><span style="font-size: 13px; color: rgba(255,255,255,.68)">{{e.org}} · {{e.time}} · {{e.mode}}</span></span>
                 <span style="flex: none; padding: 5px 10px; border-radius: 999px; background: rgba(212,255,58,.16); border: 1px solid rgba(212,255,58,.35); font-size: 12px; font-weight: 800; color: #D4FF3A">{{e.left}}</span>
-              </a>
+              </div>
             </sc-for>
           </div>
         </article>
@@ -275,8 +288,8 @@ body{margin:0}
         </article>
 
         <sc-for list="{{teasers}}" as="t" hint-placeholder-count="3">
-          <a class="rise nudge b6 {{t.d}}" href="{{t.href}}" style="border-radius: 32px; padding: 4px 0; background: transparent; color: #FFFFFF; text-decoration: none; display: flex; flex-direction: column; gap: 12px; min-height: 190px">
-            <span style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; font-weight: 800; letter-spacing: .1em; color: #A3D6E6">{{t.kicker}}</span><span style="font-size: 14px; font-weight: 800; color: #D4FF3A">→</span></span>
+          <article class="rise b6 {{t.d}}" style="border-radius: 32px; padding: 4px 0; background: transparent; color: #FFFFFF; text-decoration: none; display: flex; flex-direction: column; gap: 12px; min-height: 190px">
+            <span style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 12px; font-weight: 800; letter-spacing: .1em; color: #A3D6E6">{{t.kicker}}</span><span style="font-size: 14px; font-weight: 800; color: #D4FF3A">Segera hadir</span></span>
             <strong style="font-size: 20px; color: #FFFFFF">{{t.title}}</strong>
             <span style="display: flex; gap: 8px; margin-top: auto">
               <sc-for list="{{t.dots}}" as="x" hint-placeholder-count="3">
@@ -284,7 +297,7 @@ body{margin:0}
               </sc-for>
             </span>
             <span style="font-size: 13px; color: rgba(255,255,255,.55)">{{t.note}}</span>
-          </a>
+          </article>
         </sc-for>
 
         <a class="rise nudge b12" href="kegiatan.html" style="border-radius: 32px; padding: 4px 0; background: transparent; color: #FFFFFF; text-decoration: none; display: flex; flex-direction: column; gap: 16px">
@@ -305,10 +318,10 @@ body{margin:0}
       <div aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(420px 260px at 100% 0%, rgba(212,255,58,.2), transparent 70%)"></div>
       <div style="position: relative">
         <h2 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 44px; line-height: 1; letter-spacing: -.02em">Siap make your leap?</h2>
-        <p style="margin: 12px 0 0; font-size: 16px; color: rgba(255,255,255,.85)">Ikuti event terbuka atau hubungi tim IPB LEAP.</p>
+        <p style="margin: 12px 0 0; font-size: 16px; color: rgba(255,255,255,.85)">Hubungi tim IPB LEAP untuk informasi program dan kegiatan.</p>
       </div>
       <div style="position: relative; display: flex; flex-wrap: wrap; gap: 10px">
-        <a class="btn" href="event.html" style="height: 52px; padding: 0 22px; border-radius: 16px; background: #D4FF3A; color: #0D0D1A; font-weight: 800; text-decoration: none; display: flex; align-items: center">Lihat event</a>
+        <span style="height: 52px; padding: 0 22px; border-radius: 16px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.84); font-weight: 700; cursor: default; text-decoration: none; display: flex; align-items: center">Event segera hadir</span>
         <a class="btn" href="kontak.html" style="height: 52px; padding: 0 22px; border-radius: 16px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.3); color: #FFFFFF; font-weight: 700; text-decoration: none; display: flex; align-items: center">Hubungi kami</a>
       </div>
     </section>
@@ -339,7 +352,7 @@ body{margin:0}
     <div style="display: flex; flex-wrap: wrap; gap: 40px; font-size: 14px">
       <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Tentang</strong><a href="tentang.html" style="color: rgba(255,255,255,.72); text-decoration: none">About Us</a><a href="tentang.html#framework" style="color: rgba(255,255,255,.72); text-decoration: none">Program Framework</a></div>
       <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Komunitas</strong><a href="mentor.html" style="color: rgba(255,255,255,.72); text-decoration: none">Our Mentor</a><a href="asmen.html" style="color: rgba(255,255,255,.72); text-decoration: none">Our Asmen</a><a href="mentee.html" style="color: rgba(255,255,255,.72); text-decoration: none">Our Mentee</a></div>
-      <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Program</strong><a href="kegiatan.html" style="color: rgba(255,255,255,.72); text-decoration: none">Kegiatan</a><a href="showcase.html" style="color: rgba(255,255,255,.72); text-decoration: none">Leap Showcase</a><a href="prestasi.html" style="color: rgba(255,255,255,.72); text-decoration: none">Prestasi</a><a href="event.html" style="color: rgba(255,255,255,.72); text-decoration: none">Event</a><a href="app/index.html" style="color: rgba(255,255,255,.72); text-decoration: none">Masuk platform</a></div>
+      <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Program</strong><a href="kegiatan.html" style="color: rgba(255,255,255,.72); text-decoration: none">Kegiatan</a><span style="color: rgba(255,255,255,.72); text-decoration: none">Leap Showcase · Segera hadir</span><span style="color: rgba(255,255,255,.72); text-decoration: none">Prestasi · Segera hadir</span><span style="color: rgba(255,255,255,.72); text-decoration: none">Event · Segera hadir</span><a href="app/index.html" style="color: rgba(255,255,255,.72); text-decoration: none">Masuk platform</a></div>
       <div style="display: flex; flex-direction: column; gap: 10px; max-width: 280px"><strong style="color: #FFFFFF">Kontak</strong>
         <a href="mailto:mentoringleaderhaipb@gmail.com" style="color: rgba(255,255,255,.72); text-decoration: none; display: flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A3D6E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="m3 7 9 6 9-6"></path></svg>mentoringleaderhaipb@gmail.com</a>
         <a href="https://wa.me/6285559070165" style="color: rgba(255,255,255,.72); text-decoration: none; display: flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4FF3A" stroke-width="2" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>0855-5907-0165 (M. Fauzan Ramdani)</a>
@@ -354,22 +367,29 @@ body{margin:0}
 </footer>
 </template>
 <template data-dc="PubNav">
-<header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; background: rgba(255,255,255,.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(50,48,111,.08); box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
-  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px">
+<header class="leap-public-header" onKeyDown="{{onKeyDown}}" style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; background: rgba(255,255,255,.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(50,48,111,.08); box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
+  <div class="leap-public-bar" style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px">
     <a href="index.html" aria-label="Beranda IPB LEAP" style="display: flex; align-items: center; text-decoration: none"><img src="assets/logo-color.png" alt="IPB LEAP" style="height: 40px; width: auto"></a>
 
-    <nav aria-label="Menu utama" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2px">
+    <button class="leap-public-toggle" type="button" aria-expanded="{{menuExpanded}}" aria-controls="leap-public-menu" onClick="{{toggleMenu}}">
+      <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      {{menuLabel}}
+    </button>
+    <nav id="leap-public-menu" class="leap-public-menu" data-open="{{menuExpanded}}" aria-label="Menu utama" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2px">
       <sc-for list="{{items}}" as="it" hint-placeholder-count="7">
         <div style="position: relative">
           <sc-if value="{{it.isLink}}" hint-placeholder-val="{{ true }}">
             <a href="{{it.href}}" aria-current="{{it.current}}" style="{{it.style}}">{{it.label}}</a>
+          </sc-if>
+          <sc-if value="{{it.pending}}" hint-placeholder-val="{{ false }}">
+            <span class="leap-public-pending" style="display:flex;align-items:center;gap:8px;min-height:40px;padding:0 13px;font-size:14px;font-weight:600">{{it.label}} <small>Segera hadir</small></span>
           </sc-if>
           <sc-if value="{{it.hasChildren}}" hint-placeholder-val="{{ false }}">
             <button type="button" onClick="{{it.toggle}}" aria-expanded="{{it.expanded}}" style="{{it.style}}">{{it.label}}
               <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
             </button>
             <sc-if value="{{it.open}}" hint-placeholder-val="{{ false }}">
-              <div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 290px; padding: 8px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2; box-shadow: 0 24px 60px -24px rgba(50,48,111,.45); z-index: 60; display: flex; flex-direction: column; gap: 2px">
+              <div class="leap-public-submenu" style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 290px; padding: 8px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2; box-shadow: 0 24px 60px -24px rgba(50,48,111,.45); z-index: 60; display: flex; flex-direction: column; gap: 2px">
                 <sc-for list="{{it.children}}" as="ch" hint-placeholder-count="3">
                   <a href="{{ch.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; text-decoration: none; color: #0D0D1A">
                     <span style="width: 34px; height: 34px; flex: none; border-radius: 11px; background: {{ch.tint}}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #32306F">{{ch.short}}</span>
@@ -381,11 +401,11 @@ body{margin:0}
           </sc-if>
         </div>
       </sc-for>
+      <a class="leap-public-mobile-login" href="app/index.html">Masuk</a>
     </nav>
 
-    <div style="display: flex; gap: 8px">
+    <div class="leap-public-actions" style="display: flex; gap: 8px">
       <a href="app/index.html" style="height: 42px; padding: 0 16px; border-radius: 13px; border: 1px solid #D5DAEA; background: #FFFFFF; color: #0D0D1A; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center">Masuk</a>
-      <a href="event.html" style="height: 42px; padding: 0 16px; border-radius: 13px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center">Ikut Event</a>
     </div>
   </div>
 </header>
@@ -465,9 +485,9 @@ class Component extends DCLogic {
       { no: '05', label: 'Our Asmen', desc: 'Pendamping harian tiap kelompok.', href: 'asmen.html', bg: '#FFFFFF', ink: '#0D0D1A' },
       { no: '06', label: 'Our Mentee', desc: 'Talenta muda yang sedang melompat.', href: 'mentee.html', bg: '#A3D6E6', ink: '#0D0D1A' },
       { no: '07', label: 'Kegiatan', desc: 'Dokumentasi mentoring offline.', href: 'kegiatan.html', bg: '#FFFFFF', ink: '#0D0D1A' },
-      { no: '08', label: 'Leap Showcase', desc: 'Karya, usaha, dan project mentee.', href: 'showcase.html', bg: '#D4FF3A', ink: '#0D0D1A' },
-      { no: '09', label: 'Prestasi', desc: 'Capaian para Leapers.', href: 'prestasi.html', bg: '#FFFFFF', ink: '#0D0D1A' },
-      { no: '10', label: 'Event', desc: 'Event terbuka, daftar tanpa akun.', href: 'event.html', bg: '#3157A5', ink: '#FFFFFF' },
+      { no: '08', label: 'Leap Showcase', desc: 'Karya, usaha, dan project mentee.', bg: '#D4FF3A', ink: '#0D0D1A' },
+      { no: '09', label: 'Prestasi', desc: 'Capaian para Leapers.', bg: '#FFFFFF', ink: '#0D0D1A' },
+      { no: '10', label: 'Event', desc: 'Segera hadir.', bg: '#3157A5', ink: '#FFFFFF' },
       { no: '11', label: 'Kontak', desc: 'Email dan WhatsApp tim IPB LEAP.', href: 'kontak.html', bg: '#FFFFFF', ink: '#0D0D1A' }
     ];
     const k = st.cnt;
@@ -495,14 +515,11 @@ class Component extends DCLogic {
     }).filter((e) => e.dleft >= 0).sort((a, b) => a.t - b.t);
     const next = evs[0] ? Object.assign({}, evs[0], { left: evs[0].dleft === 0 ? '0' : String(evs[0].dleft) }) : {};
     const news = [
-      { tag: 'Event', title: 'Pendaftaran Leadership Camp 2026 dibuka sampai 2 November.', href: 'event.html', tagBg: '#D4FF3A', tagInk: '#0D0D1A' },
-      { tag: 'Event', title: 'Workshop CV & LinkedIn bareng CDA IPB, daftar sebelum 30 Oktober.', href: 'event.html', tagBg: '#D4FF3A', tagInk: '#0D0D1A' },
       { tag: 'Program', title: 'Mentoring Leader kini bertransformasi menjadi IPB LEAP.', href: 'tentang.html', tagBg: '#A3D6E6', tagInk: '#0D0D1A' },
-      { tag: 'Showcase', title: 'Leap Showcase segera menampilkan karya nyata para mentee.', href: 'showcase.html', tagBg: '#FFFFFF', tagInk: '#32306F' }
     ];
     const teasers = [
-      { kicker: 'LEAP SHOWCASE', title: 'Karya mentee', note: 'Belum ada karya yang ditampilkan.', href: 'showcase.html', d: 'd1', dots: [1, 2, 3] },
-      { kicker: 'ACHIEVEMENT', title: 'Prestasi terbaru', note: 'Data prestasi belum diunggah.', href: 'prestasi.html', d: 'd2', dots: [1, 2, 3] }
+      { kicker: 'LEAP SHOWCASE', title: 'Karya mentee', note: 'Belum ada karya yang ditampilkan.', d: 'd1', dots: [1, 2, 3] },
+      { kicker: 'ACHIEVEMENT', title: 'Prestasi terbaru', note: 'Data prestasi belum diunggah.', d: 'd2', dots: [1, 2, 3] }
     ];
     const gallery = this.gSlots.map((g, i) => ({ c: g.c, r: g.r, bg: photos[st.gIdx[i] % photos.length].bg, src: photos[st.gIdx[i] % photos.length].src, label: photos[st.gIdx[i] % photos.length].label, position: photos[st.gIdx[i] % photos.length].position, anim: st.gFlip[i] ? 'swapA' : 'swapB' }));
     return {
@@ -535,7 +552,7 @@ class Component extends DCLogic {
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { open: null };
+    this.state = { open: null, mobileOpen: false };
   }
   renderVals() {
     const active = this.props.active ?? 'home';
@@ -548,22 +565,38 @@ class Component extends DCLogic {
         { label: 'Our Mentee', desc: 'Talenta muda di lima pathway', href: 'mentee.html', short: 'MN', tint: '#E3F3F8' }
       ] },
       { key: 'kegiatan', label: 'Kegiatan', href: 'kegiatan.html' },
-      { key: 'showcase', label: 'Leap Showcase', href: 'showcase.html' },
-      { key: 'prestasi', label: 'Prestasi', href: 'prestasi.html' },
-      { key: 'event', label: 'Event', href: 'event.html' },
+      { key: 'showcase', label: 'Leap Showcase', pending: true },
+      { key: 'prestasi', label: 'Prestasi', pending: true },
+      { key: 'event', label: 'Event', pending: true },
       { key: 'kontak', label: 'Kontak', href: 'kontak.html' }
     ];
     const items = defs.map((m) => {
       const on = m.key === active;
       const open = this.state.open === m.key;
       return Object.assign({}, m, {
-        isLink: !m.children, hasChildren: !!m.children, open: open,
+        isLink: !m.children && !m.pending, hasChildren: !!m.children, open: open,
         expanded: open ? 'true' : 'false', current: on ? 'page' : 'false',
         style: 'display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 13px; border-radius: 12px; border: 0; font: inherit; font-size: 14px; cursor: pointer; text-decoration: none; ' + (on ? 'background: #32306F; color: #FFFFFF; font-weight: 700' : 'background: transparent; color: #33355A; font-weight: 600'),
         toggle: () => this.setState({ open: open ? null : m.key })
       });
     });
-    return { items: items };
+    return {
+      items,
+      menuExpanded: String(this.state.mobileOpen),
+      menuLabel: this.state.mobileOpen ? 'Tutup' : 'Menu',
+      toggleMenu: () => this.setState({ mobileOpen: !this.state.mobileOpen, open: null }),
+      onKeyDown: (event) => {
+        if (event.key !== 'Escape') return;
+        const toggle = event.currentTarget.querySelector('.leap-public-toggle');
+        if (this.state.mobileOpen && getComputedStyle(toggle).display !== 'none') {
+          this.setState({ mobileOpen: false, open: null });
+          toggle.focus();
+        } else if (this.state.open) {
+          this.setState({ open: null });
+          event.currentTarget.querySelector('.leap-public-submenu')?.previousElementSibling?.focus();
+        }
+      },
+    };
   }
 }
 </script>

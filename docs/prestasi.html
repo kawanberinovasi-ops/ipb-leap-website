@@ -31,6 +31,20 @@ body{margin:0}
 
 
 body{margin:0}
+.leap-public-toggle,.leap-public-mobile-login{display:none}
+.leap-public-pending{color:#55577A;cursor:default}
+.leap-public-pending small{font-weight:700;color:#55577A}
+@media(max-width:960px){
+  .leap-public-header>.leap-public-bar{min-height:60px!important;padding:0 16px!important;flex-wrap:nowrap!important}
+  .leap-public-bar>a img{height:34px!important}
+  .leap-public-header .leap-public-actions{display:none!important}
+  .leap-public-toggle{display:inline-flex;align-items:center;gap:8px;min-height:44px;border:1px solid #D5DAEA;border-radius:12px;padding:0 12px;background:#FFF;color:#32306F;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
+  .leap-public-bar>.leap-public-menu{display:none!important;position:absolute;z-index:60;inset:100% 0 auto;box-sizing:border-box;max-height:calc(100vh - 60px);max-height:calc(100dvh - 60px);overflow-y:auto;overscroll-behavior:contain;padding:10px 16px 16px;background:#FFF;border-bottom:1px solid #E3E7F2;box-shadow:0 12px 24px #32306F22}
+  .leap-public-bar>.leap-public-menu[data-open=true]{display:flex!important;flex-direction:column;flex-wrap:nowrap!important;justify-content:flex-start!important}
+  .leap-public-menu>div>a,.leap-public-menu>div>button,.leap-public-menu .leap-public-pending,.leap-public-menu>.leap-public-mobile-login{min-height:44px!important;box-sizing:border-box;width:100%}
+  .leap-public-menu .leap-public-submenu{position:static!important;transform:none!important;width:auto!important;margin:2px 0 6px 12px;box-shadow:none!important}
+  .leap-public-menu>.leap-public-mobile-login{display:flex;align-items:center;justify-content:center;margin-top:8px;padding:0 13px;border-radius:12px;background:#32306F;color:#FFF;font-size:14px;font-weight:800;text-decoration:none}
+}
 
 </style>
 </head>
@@ -87,7 +101,7 @@ body{margin:0}
     <div style="display: flex; flex-wrap: wrap; gap: 40px; font-size: 14px">
       <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Tentang</strong><a href="tentang.html" style="color: rgba(255,255,255,.72); text-decoration: none">About Us</a><a href="tentang.html#framework" style="color: rgba(255,255,255,.72); text-decoration: none">Program Framework</a></div>
       <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Komunitas</strong><a href="mentor.html" style="color: rgba(255,255,255,.72); text-decoration: none">Our Mentor</a><a href="asmen.html" style="color: rgba(255,255,255,.72); text-decoration: none">Our Asmen</a><a href="mentee.html" style="color: rgba(255,255,255,.72); text-decoration: none">Our Mentee</a></div>
-      <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Program</strong><a href="kegiatan.html" style="color: rgba(255,255,255,.72); text-decoration: none">Kegiatan</a><a href="showcase.html" style="color: rgba(255,255,255,.72); text-decoration: none">Leap Showcase</a><a href="prestasi.html" style="color: rgba(255,255,255,.72); text-decoration: none">Prestasi</a><a href="event.html" style="color: rgba(255,255,255,.72); text-decoration: none">Event</a><a href="app/index.html" style="color: rgba(255,255,255,.72); text-decoration: none">Masuk platform</a></div>
+      <div style="display: flex; flex-direction: column; gap: 9px"><strong style="color: #FFFFFF">Program</strong><a href="kegiatan.html" style="color: rgba(255,255,255,.72); text-decoration: none">Kegiatan</a><span style="color: rgba(255,255,255,.72); text-decoration: none">Leap Showcase · Segera hadir</span><span style="color: rgba(255,255,255,.72); text-decoration: none">Prestasi · Segera hadir</span><span style="color: rgba(255,255,255,.72); text-decoration: none">Event · Segera hadir</span><a href="app/index.html" style="color: rgba(255,255,255,.72); text-decoration: none">Masuk platform</a></div>
       <div style="display: flex; flex-direction: column; gap: 10px; max-width: 280px"><strong style="color: #FFFFFF">Kontak</strong>
         <a href="mailto:mentoringleaderhaipb@gmail.com" style="color: rgba(255,255,255,.72); text-decoration: none; display: flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#A3D6E6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="m3 7 9 6 9-6"></path></svg>mentoringleaderhaipb@gmail.com</a>
         <a href="https://wa.me/6285559070165" style="color: rgba(255,255,255,.72); text-decoration: none; display: flex; gap: 8px; align-items: center"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4FF3A" stroke-width="2" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>0855-5907-0165 (M. Fauzan Ramdani)</a>
@@ -102,22 +116,29 @@ body{margin:0}
 </footer>
 </template>
 <template data-dc="PubNav">
-<header style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; background: rgba(255,255,255,.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(50,48,111,.08); box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
-  <div style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px">
+<header class="leap-public-header" onKeyDown="{{onKeyDown}}" style="position: relative; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A; background: rgba(255,255,255,.82); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(50,48,111,.08); box-shadow: 0 10px 30px -24px rgba(50,48,111,.5)">
+  <div class="leap-public-bar" style="max-width: 1360px; margin: 0 auto; padding: 0 24px; min-height: 72px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px">
     <a href="index.html" aria-label="Beranda IPB LEAP" style="display: flex; align-items: center; text-decoration: none"><img src="assets/logo-color.png" alt="IPB LEAP" style="height: 40px; width: auto"></a>
 
-    <nav aria-label="Menu utama" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2px">
+    <button class="leap-public-toggle" type="button" aria-expanded="{{menuExpanded}}" aria-controls="leap-public-menu" onClick="{{toggleMenu}}">
+      <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      {{menuLabel}}
+    </button>
+    <nav id="leap-public-menu" class="leap-public-menu" data-open="{{menuExpanded}}" aria-label="Menu utama" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2px">
       <sc-for list="{{items}}" as="it" hint-placeholder-count="7">
         <div style="position: relative">
           <sc-if value="{{it.isLink}}" hint-placeholder-val="{{ true }}">
             <a href="{{it.href}}" aria-current="{{it.current}}" style="{{it.style}}">{{it.label}}</a>
+          </sc-if>
+          <sc-if value="{{it.pending}}" hint-placeholder-val="{{ false }}">
+            <span class="leap-public-pending" style="display:flex;align-items:center;gap:8px;min-height:40px;padding:0 13px;font-size:14px;font-weight:600">{{it.label}} <small>Segera hadir</small></span>
           </sc-if>
           <sc-if value="{{it.hasChildren}}" hint-placeholder-val="{{ false }}">
             <button type="button" onClick="{{it.toggle}}" aria-expanded="{{it.expanded}}" style="{{it.style}}">{{it.label}}
               <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
             </button>
             <sc-if value="{{it.open}}" hint-placeholder-val="{{ false }}">
-              <div style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 290px; padding: 8px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2; box-shadow: 0 24px 60px -24px rgba(50,48,111,.45); z-index: 60; display: flex; flex-direction: column; gap: 2px">
+              <div class="leap-public-submenu" style="position: absolute; top: 48px; left: 50%; transform: translateX(-50%); width: 290px; padding: 8px; border-radius: 20px; background: #FFFFFF; border: 1px solid #E3E7F2; box-shadow: 0 24px 60px -24px rgba(50,48,111,.45); z-index: 60; display: flex; flex-direction: column; gap: 2px">
                 <sc-for list="{{it.children}}" as="ch" hint-placeholder-count="3">
                   <a href="{{ch.href}}" style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 14px; text-decoration: none; color: #0D0D1A">
                     <span style="width: 34px; height: 34px; flex: none; border-radius: 11px; background: {{ch.tint}}; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: #32306F">{{ch.short}}</span>
@@ -129,11 +150,11 @@ body{margin:0}
           </sc-if>
         </div>
       </sc-for>
+      <a class="leap-public-mobile-login" href="app/index.html">Masuk</a>
     </nav>
 
-    <div style="display: flex; gap: 8px">
+    <div class="leap-public-actions" style="display: flex; gap: 8px">
       <a href="app/index.html" style="height: 42px; padding: 0 16px; border-radius: 13px; border: 1px solid #D5DAEA; background: #FFFFFF; color: #0D0D1A; font-weight: 700; font-size: 14px; text-decoration: none; display: flex; align-items: center">Masuk</a>
-      <a href="event.html" style="height: 42px; padding: 0 16px; border-radius: 13px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center">Ikut Event</a>
     </div>
   </div>
 </header>
@@ -150,7 +171,7 @@ class Component extends DCLogic {
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { open: null };
+    this.state = { open: null, mobileOpen: false };
   }
   renderVals() {
     const active = this.props.active ?? 'home';
@@ -163,22 +184,38 @@ class Component extends DCLogic {
         { label: 'Our Mentee', desc: 'Talenta muda di lima pathway', href: 'mentee.html', short: 'MN', tint: '#E3F3F8' }
       ] },
       { key: 'kegiatan', label: 'Kegiatan', href: 'kegiatan.html' },
-      { key: 'showcase', label: 'Leap Showcase', href: 'showcase.html' },
-      { key: 'prestasi', label: 'Prestasi', href: 'prestasi.html' },
-      { key: 'event', label: 'Event', href: 'event.html' },
+      { key: 'showcase', label: 'Leap Showcase', pending: true },
+      { key: 'prestasi', label: 'Prestasi', pending: true },
+      { key: 'event', label: 'Event', pending: true },
       { key: 'kontak', label: 'Kontak', href: 'kontak.html' }
     ];
     const items = defs.map((m) => {
       const on = m.key === active;
       const open = this.state.open === m.key;
       return Object.assign({}, m, {
-        isLink: !m.children, hasChildren: !!m.children, open: open,
+        isLink: !m.children && !m.pending, hasChildren: !!m.children, open: open,
         expanded: open ? 'true' : 'false', current: on ? 'page' : 'false',
         style: 'display: flex; align-items: center; gap: 6px; height: 40px; padding: 0 13px; border-radius: 12px; border: 0; font: inherit; font-size: 14px; cursor: pointer; text-decoration: none; ' + (on ? 'background: #32306F; color: #FFFFFF; font-weight: 700' : 'background: transparent; color: #33355A; font-weight: 600'),
         toggle: () => this.setState({ open: open ? null : m.key })
       });
     });
-    return { items: items };
+    return {
+      items,
+      menuExpanded: String(this.state.mobileOpen),
+      menuLabel: this.state.mobileOpen ? 'Tutup' : 'Menu',
+      toggleMenu: () => this.setState({ mobileOpen: !this.state.mobileOpen, open: null }),
+      onKeyDown: (event) => {
+        if (event.key !== 'Escape') return;
+        const toggle = event.currentTarget.querySelector('.leap-public-toggle');
+        if (this.state.mobileOpen && getComputedStyle(toggle).display !== 'none') {
+          this.setState({ mobileOpen: false, open: null });
+          toggle.focus();
+        } else if (this.state.open) {
+          this.setState({ open: null });
+          event.currentTarget.querySelector('.leap-public-submenu')?.previousElementSibling?.focus();
+        }
+      },
+    };
   }
 }
 </script>

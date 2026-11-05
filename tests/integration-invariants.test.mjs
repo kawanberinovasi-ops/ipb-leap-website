@@ -1,13 +1,24 @@
 import{test}from'node:test';import assert from'node:assert/strict';import{readFile,readdir}from'node:fs/promises';import{execFileSync}from'node:child_process';
 const read=p=>readFile(new URL('../'+p,import.meta.url),'utf8');
-const normalizeHome=s=>s.replace(/const photos = \[[\s\S]*?\];/,'const photos = [];').replace('; object-position: {{c.position}}','').replace('src: p.src, position: p.position, hasSrc:','src: p.src, hasSrc:').replace('bg: photos[st.gIdx[i] % photos.length].bg, src: photos[st.gIdx[i] % photos.length].src, label: photos[st.gIdx[i] % photos.length].label, position: photos[st.gIdx[i] % photos.length].position, anim:','bg: photos[st.gIdx[i] % photos.length].bg, anim:').replace('<img class="{{g.anim}}" src="{{g.src}}" alt="{{g.label}}" loading="lazy" decoding="async" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: {{g.position}}">','<span class="{{g.anim}}" style="position: absolute; inset: 0; display: block; background: {{g.bg}}"></span>').replace('Dokumentasi Kick-off 2025 dan wisuda Mentoring Leader Batch 6.','Foto kegiatan offline menyusul.');
 
 test('frontend/backend calculation rules remain byte-identical and 360 never adds a second score',async()=>{
  const [browser,server]=await Promise.all([read('src/assets/assessment/domain.mjs'),read('backend/erp/functions/domain.mjs')]);assert.equal(browser,server);assert.equal(server.includes('observerRefs'),false);
 });
-test('unrelated public pages remain byte-identical and all ERP routes remain available',async()=>{
- const config=JSON.parse(await read('site.config.json'));for(const p of Object.values(config.sections[0].pages).filter(p=>!['tentang.html','mentor.html','asmen.html','mentee.html','kegiatan.html'].includes(p.out))){const original=execFileSync('git',['show','268c72681e65a53015b28ccd0ba064b1b7b303f8:docs/'+p.out],{encoding:'utf8'});const actual=await read('docs/'+p.out);assert.equal(p.out==='index.html'?normalizeHome(actual):actual,p.out==='index.html'?normalizeHome(original):original,p.out);}
+test('public page content outside the shared navigation is preserved and ERP routes remain available',async()=>{
+ const baseline='46f740703bcc629971cf33d14c4b42d4038cafb1';
+ const removePublicChrome=html=>html
+   .replace(/\nbody\{margin:0\}\n\.leap-public-toggle[\s\S]*?(?=\n\n)/,'\nbody{margin:0}')
+   .replace(/<template data-dc="(?:PubNav|PubFooter)">[\s\S]*?<\/template>/g,'')
+   .replace(/<script type="text\/x-dc" data-dc="(?:PubNav|PubFooter)"[\s\S]*?<\/script>/g,'');
+ const config=JSON.parse(await read('site.config.json'));
+ for(const {out} of Object.values(config.sections[0].pages)){
+   if(['index.html','mentee-profil.html'].includes(out))continue;
+   const original=execFileSync('git',['show',baseline+':docs/'+out],{encoding:'utf8'});
+   assert.equal(removePublicChrome(await read('docs/'+out)),removePublicChrome(original),out);
+ }
  const home=await read('docs/index.html');
+ assert.doesNotMatch(home,/href="(?:showcase|prestasi|event)\.html"/);
+ assert.match(home,/class="leap-public-toggle"[^>]+aria-controls="leap-public-menu"/);
  for(const out of ['tentang.html','mentor.html','asmen.html','mentee.html','kegiatan.html'])assert.ok(home.includes(out),out);
  for(const out of ['tentang.html','kegiatan.html']){
    const actual=await read('docs/'+out);assert.ok(!actual.includes('/_blob/'),out);
