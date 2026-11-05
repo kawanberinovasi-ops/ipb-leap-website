@@ -1,0 +1,32 @@
+.leap-mobile-nav,.leap-mobile-menu{display:none}
+@media(max-width:980px){
+  html:has(.leap-mobile-nav){scroll-padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  body:has(.leap-mobile-nav){padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+  body:has(.leap-mobile-nav) header.leap-erp-header{padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px);padding-top:env(safe-area-inset-top,0px)}
+  body:has(.leap-mobile-nav) header.leap-erp-header>div{min-height:60px!important;padding:0 14px!important}
+  body:has(.leap-mobile-nav) header.leap-erp-header>div>div:first-child{width:100%;justify-content:space-between;gap:8px!important}
+  body:has(.leap-mobile-nav) header.leap-erp-header>div>div:first-child a{min-width:0;gap:7px!important}
+  body:has(.leap-mobile-nav) header.leap-erp-header>div>div:first-child img{height:32px!important;flex:none}
+  body:has(.leap-mobile-nav) header.leap-erp-header>div>div:first-child a>span>span:last-child{font-size:9px!important}
+  body:has(.leap-mobile-nav) header.leap-erp-header>div>div:first-child button{white-space:nowrap;flex:none}
+  body:has(.leap-mobile-nav) header.leap-erp-header>div>nav,body:has(.leap-mobile-nav) header.leap-erp-header>div>div:last-child{display:none!important}
+  .leap-mobile-nav,.leap-mobile-menu{--leap-nav-ink:#32306f;--leap-nav-text:#0d0d1a;--leap-nav-muted:#55577a;--leap-nav-paper:#fff;--leap-nav-line:#e3e7f2;--leap-nav-tint:#e9eefb;font:600 14px/1.35 'Plus Jakarta Sans',system-ui,sans-serif;color:var(--leap-nav-text);background:var(--leap-nav-paper)}
+  .leap-mobile-nav[data-theme=dark],.leap-mobile-menu[data-theme=dark]{--leap-nav-ink:#d6dfff;--leap-nav-text:#eef0ff;--leap-nav-muted:#b7bddc;--leap-nav-paper:#1a1940;--leap-nav-line:#3a3962;--leap-nav-tint:#32306f}
+  .leap-mobile-nav{display:flex;justify-content:center;position:fixed;z-index:65;inset:auto 0 0;box-sizing:border-box;border-top:1px solid var(--leap-nav-line);box-shadow:0 -8px 28px rgba(50,48,111,.09);padding:4px max(6px,env(safe-area-inset-right,0px)) calc(4px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))}
+  .leap-mobile-nav>a,.leap-mobile-nav>button{appearance:none;box-sizing:border-box;min-width:0;max-width:160px;min-height:55px;flex:1 1 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:0;border-radius:12px;background:none;color:var(--leap-nav-muted);font:800 10.5px/1.25 'Plus Jakarta Sans',system-ui,sans-serif;text-align:center;text-decoration:none;cursor:pointer;padding:1px 2px}
+  .leap-mobile-nav .leap-mobile-icon{display:grid;place-items:center;width:40px;height:28px;border-radius:10px}
+  .leap-mobile-nav [data-active=true]{color:var(--leap-nav-ink)}
+  .leap-mobile-nav [data-active=true] .leap-mobile-icon{background:var(--leap-nav-tint)}
+  .leap-mobile-nav :focus-visible,.leap-mobile-menu :focus-visible{outline:2px solid #3157a5;outline-offset:1px}
+  .leap-mobile-menu[open]{display:block;position:fixed;inset:auto 0 0;box-sizing:border-box;width:min(100%,520px);max-width:100%;max-height:min(75vh,75dvh);margin:0 auto;border:1px solid var(--leap-nav-line);border-radius:24px 24px 0 0;padding:16px max(14px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));overflow:auto;overscroll-behavior:contain;box-shadow:0 -12px 40px #16143d2e}
+  .leap-mobile-menu::backdrop{background:#14143366}
+  .leap-mobile-menu h2{margin:0;color:var(--leap-nav-ink);font-size:20px;font-weight:800}
+  .leap-mobile-menu p{margin:3px 0 0;color:var(--leap-nav-muted);font-size:12px}
+  .leap-mobile-menu .leap-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+  .leap-mobile-menu .leap-sheet-close{display:grid;place-items:center;width:44px;height:44px;flex:none;border:0;border-radius:14px;background:var(--leap-nav-tint);color:var(--leap-nav-ink);cursor:pointer}
+  .leap-mobile-menu .leap-sheet-links{display:grid;gap:4px}
+  .leap-mobile-menu .leap-sheet-link{box-sizing:border-box;display:flex;align-items:center;gap:11px;min-height:48px;width:100%;border:0;border-radius:14px;padding:8px 10px;background:none;color:inherit;text-decoration:none;text-align:left;font:inherit;cursor:pointer}
+  .leap-mobile-menu .leap-sheet-link:hover,.leap-mobile-menu [aria-current=page]{background:var(--leap-nav-tint)}
+  .leap-mobile-menu .leap-sheet-link svg{flex:none;color:var(--leap-nav-ink)}
+  .leap-mobile-menu small{display:block;color:var(--leap-nav-muted);font-size:12px;margin-top:2px}
+}

@@ -14,6 +14,7 @@
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,900;1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 [data-dc-host]{display:contents}
@@ -62,7 +63,27 @@ a{color:#D4FF3A}
 .pillar{transition:transform .25s}.pillar:hover{transform:translateY(-6px) scale(1.02)}
 .engine{transition:transform .25s}
 .engine:hover{transform:translateY(-6px) rotate(-1deg)}
-@media (max-width: 900px){.h1{font-size:52px !important}.tl{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.tlline{display:none}}
+.heroimg{display:block;width:100%;height:auto;-webkit-mask-image:linear-gradient(180deg,#000 94%,transparent);mask-image:linear-gradient(180deg,#000 94%,transparent)}
+.herowrap{position:relative}
+.arus{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;filter:drop-shadow(0 0 6px rgba(255,255,255,.75))}
+.arus path{fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:13 87;stroke-dashoffset:100;opacity:0;animation:arus 2.6s cubic-bezier(.55,0,.9,.6) infinite}
+@keyframes arus{0%{stroke-dashoffset:100;opacity:0}18%{opacity:1}85%{opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes sapu{0%{left:-45%}55%,100%{left:120%}}
+@keyframes isi{0%{transform:scaleX(0)}70%,100%{transform:scaleX(1)}}
+.pil{display:inline-flex;align-items:center;gap:12px;padding:10px 18px;border-radius:999px;background:rgba(212,255,58,.12);border:1px solid rgba(212,255,58,.45);color:#D4FF3A;font-size:13px;font-weight:800;letter-spacing:.08em}
+.titik{position:relative;width:9px;height:9px;border-radius:50%;background:#D4FF3A}
+.statgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:40px;text-align:left}
+.stat{position:relative;overflow:hidden;box-sizing:border-box;padding:26px 24px 28px;border-radius:26px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);transition:transform .25s,background .25s}
+.stat:hover{transform:translateY(-6px);background:rgba(255,255,255,.12)}
+.stat::before{content:"";position:absolute;top:0;left:-45%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(212,255,58,.2),transparent);animation:sapu 5s ease-in-out infinite;animation-delay:var(--d)}
+.stat::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:#D4FF3A;transform-origin:left;animation:isi 5s ease-out infinite;animation-delay:var(--d)}
+@media (max-width: 900px){.statgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.stat{padding:18px 12px}.stat .gtext{font-size:clamp(34px,11vw,52px)!important}.tentang-main{padding-top:56px!important;gap:64px!important}.tentang-main h2{font-size:clamp(31px,8vw,46px)!important}}
+.srhide{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.kol3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.kol6{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:16px}
+@media (max-width: 900px){.h1{font-size:52px !important}.tl{grid-template-columns:repeat(2,minmax(0,1fr)) !important}.tlline{display:none}.kol3,.kol6{grid-template-columns:repeat(2,minmax(0,1fr))}.jalur{grid-column:span 1 !important}}
+@media (max-width: 560px){.kol3,.kol6{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
 
 
@@ -77,7 +98,7 @@ body{margin:0}
 <noscript><p style="padding:24px;font-family:sans-serif">Aktifkan JavaScript untuk melihat halaman ini.</p></noscript>
 <div id="app" data-page="PubTentang"></div>
 <template data-dc="PubTentang">
-<div style="position: relative; overflow: hidden; background: linear-gradient(180deg, #32306F 0%, #2C3F8E 26%, #24306F 52%, #1A1A4E 78%, #0E0D2B 100%); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #FFFFFF">
+<div style="position: relative; overflow: hidden; background: linear-gradient(180deg, #1E3FA8 0%, #2C3F8E 26%, #24306F 52%, #1A1A4E 78%, #0E0D2B 100%); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #FFFFFF">
   <div style="position: sticky; top: 0; z-index: 50"><dc-import name="PubNav" active="tentang" hint-size="100%,73px"></dc-import></div>
 
   <div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; overflow: hidden">
@@ -93,19 +114,26 @@ body{margin:0}
     </sc-for>
   </div>
 
-  <section style="position: relative; max-width: 1360px; margin: 0 auto; padding: 88px 24px 40px; display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
-    <div style="flex: 1 1 600px; min-width: 0">
-      <span class="rise" style="display: inline-block; font-size: 12.5px; font-weight: 800; letter-spacing: .12em; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25)">ABOUT US · IPB LEAP</span>
-      <h1 class="rise d1 h1" style="margin: 22px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 84px; line-height: .92; letter-spacing: -.03em">From Mentoring<br>to <span class="gtext">Acceleration.</span></h1>
-      <p class="rise d2" style="margin: 24px 0 0; font-size: 18px; line-height: 1.7; color: rgba(255,255,255,.86); max-width: 640px">IPB LEAP (Leadership Acceleration Program) adalah program Himpunan Alumni IPB yang sebelumnya dikenal sebagai Mentoring Leader. IPB LEAP exists to make promising IPB talents move faster.</p>
-    </div>
-    <div class="rise d3" style="flex: 1 1 380px; min-width: 0; position: relative; height: 360px">
-      <sc-for list="{{orbs}}" as="o" hint-placeholder-count="4">
-        <div class="floaty" style="position: absolute; left: {{o.x}}px; top: {{o.y}}px; --r: {{o.r}}deg; animation-duration: {{o.dur}}s; animation-delay: {{o.delay}}s">
-          <span class="gtext" style="display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: {{o.fs}}px; line-height: .85; letter-spacing: -.035em; filter: drop-shadow(0 10px 24px rgba(14,13,43,.5))">{{o.value}}</span>
-          <span style="display: inline-block; margin-top: 6px; padding: 5px 11px; border-radius: 999px; background: rgba(14,13,43,.45); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 12.5px; font-weight: 800">{{o.label}}</span>
-        </div>
-      </sc-for>
+  <div class="herowrap">
+    <h1 class="srhide">From Mentoring to Acceleration.</h1>
+    <img class="heroimg" src="assets/photos/leap-about-hero.jpg" alt="Seseorang berjalan menjauh di jalan biru, melangkah di atas marka jalan bertuliskan From Mentoring To Acceleration">
+    <svg class="arus" aria-hidden="true" viewBox="0 0 2000 840" preserveAspectRatio="none"><path pathLength="100" stroke="#FFFFFF" d="M790 231 L-20 523" style="animation-delay: 0.0s"></path><path pathLength="100" stroke="#FFFFFF" d="M790 231 L-20 523" style="animation-delay: 1.3s"></path><path pathLength="100" stroke="#FFFFFF" d="M1210 231 L2020 523" style="animation-delay: 0.9s"></path><path pathLength="100" stroke="#FFFFFF" d="M1210 231 L2020 523" style="animation-delay: 2.2s"></path><path pathLength="100" stroke="#A3D6E6" d="M790 185 L-20 303" style="animation-delay: 0.37s"></path><path pathLength="100" stroke="#A3D6E6" d="M790 185 L-20 303" style="animation-delay: 1.67s"></path><path pathLength="100" stroke="#A3D6E6" d="M1210 185 L2020 303" style="animation-delay: 1.27s"></path><path pathLength="100" stroke="#A3D6E6" d="M1210 185 L2020 303" style="animation-delay: 2.57s"></path><path pathLength="100" stroke="#D4FF3A" d="M790 269 L-20 711" style="animation-delay: 0.74s"></path><path pathLength="100" stroke="#D4FF3A" d="M790 269 L-20 711" style="animation-delay: 2.04s"></path><path pathLength="100" stroke="#D4FF3A" d="M1210 269 L2020 711" style="animation-delay: 1.64s"></path><path pathLength="100" stroke="#D4FF3A" d="M1210 269 L2020 711" style="animation-delay: 2.94s"></path></svg>
+  </div>
+
+  <section style="position: relative; max-width: 1360px; margin: 0 auto; padding: 0 24px 36px; box-sizing: border-box">
+
+    <div style="text-align: center; padding-top: 8px">
+      <span class="pil rise"><span class="titik"><span aria-hidden="true" class="ping" style="position: absolute; inset: 0; border-radius: 50%; border: 2px solid #D4FF3A"></span></span>IPB LEAP · LEADERSHIP ACCELERATION PROGRAM</span>
+      <p class="rise d1" style="margin: 22px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: clamp(28px, 3.4vw, 46px); line-height: 1.12; letter-spacing: -.02em">IPB LEAP exists to make promising IPB talents <span class="gtext">move faster.</span></p>
+      <p class="rise d2" style="margin: 16px 0 0; font-size: 17px; line-height: 1.6; color: rgba(255,255,255,.84)">IPB LEAP (Leadership Acceleration Program) adalah program Himpunan Alumni IPB yang sebelumnya dikenal sebagai Mentoring Leader.</p>
+      <div class="statgrid">
+        <sc-for list="{{orbs}}" as="o" hint-placeholder-count="4">
+          <div class="stat rise" style="--d: {{o.delay}}s; animation-delay: {{o.up}}s">
+            <span class="gtext" style="position: relative; display: block; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 60px; line-height: 1; letter-spacing: -.03em">{{o.value}}</span>
+            <span style="position: relative; display: block; margin-top: 10px; font-size: 14.5px; font-weight: 700; color: rgba(255,255,255,.84)">{{o.label}}</span>
+          </div>
+        </sc-for>
+      </div>
     </div>
   </section>
 
@@ -115,12 +143,13 @@ body{margin:0}
     </div>
   </div>
 
-  <main style="position: relative; max-width: 1360px; margin: 0 auto; padding: 96px 24px 110px; display: flex; flex-direction: column; gap: 110px">
-    <section style="display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
+  <main class="tentang-main" style="position: relative; max-width: 1360px; margin: 0 auto; padding: 96px 24px 110px; display: flex; flex-direction: column; gap: 110px">
+    <section>
+      <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">CERITA KAMI</span>
+      <h2 style="margin: 12px 0 28px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">7 batch, ±1.400 mentee, satu pertanyaan baru.</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 48px; align-items: center">
       <div style="flex: 1 1 480px; min-width: 0">
-        <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">CERITA KAMI</span>
-        <h2 style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">7 batch, ±1.400 mentee, satu pertanyaan baru.</h2>
-        <p style="margin: 20px 0 0; font-size: 17px; line-height: 1.75; color: rgba(255,255,255,.82)">Selama 7 batch, Mentoring Leader (MenLead) membangun ruang mentoring lintas generasi alumni IPB. Sekitar 1.400 mentee telah dibina oleh para alumni yang berkarier di berbagai bidang.</p>
+        <p style="margin: 0; font-size: 17px; line-height: 1.75; color: rgba(255,255,255,.82)">Selama 7 batch, Mentoring Leader (MenLead) membangun ruang mentoring lintas generasi alumni IPB. Sekitar 1.400 mentee telah dibina oleh para alumni yang berkarier di berbagai bidang.</p>
         <p style="margin: 14px 0 0; font-size: 17px; line-height: 1.75; color: rgba(255,255,255,.82)">Kini pertanyaannya bukan lagi sekadar "bagaimana memastikan mentoring berjalan?", tetapi bagaimana talenta muda IPB bisa bergerak lebih cepat menuju hasil yang bermakna.</p>
       </div>
       <blockquote style="flex: 1 1 440px; min-width: 0; margin: 0; position: relative; padding: 40px 36px; border-radius: 34px; background: linear-gradient(150deg, #3157A5 0%, #32306F 70%); box-shadow: 0 40px 80px -40px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.15); overflow: hidden">
@@ -129,6 +158,7 @@ body{margin:0}
         <span style="position: relative; display: block; font-size: 23px; line-height: 1.5; font-weight: 700">Bagaimana talenta muda IPB mencapai sesuatu dalam 12 bulan yang biasanya membutuhkan 2–3 tahun jika berjalan sendiri?</span>
         <span class="gtext" style="position: relative; display: block; margin-top: 18px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 26px">THAT IS ACCELERATION.</span>
       </blockquote>
+      </div>
     </section>
 
     <section id="framework" style="position: relative; padding: 56px 48px; border-radius: 40px; background: linear-gradient(140deg, #3157A5 0%, #32306F 55%, #1A1A4E 100%); overflow: hidden; box-shadow: 0 50px 100px -50px rgba(0,0,0,.8)">
@@ -137,10 +167,10 @@ body{margin:0}
       <div style="position: relative">
         <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">PROGRAM FRAMEWORK · NORTH STAR</span>
         <h2 style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 64px; line-height: .95; letter-spacing: -.025em">Accelerate <span class="gtext">Real Progress.</span></h2>
-        <p style="margin: 18px 0 0; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.84); max-width: 720px">Keberhasilan IPB LEAP diukur dari seberapa jauh seseorang bergerak dari titik awal menuju hasil yang bermakna. Quality over quantity: lebih baik 100 orang benar-benar bergerak daripada 300 orang hanya mengikuti kegiatan.</p>
+        <p style="margin: 18px 0 0; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.84)">Keberhasilan IPB LEAP diukur dari seberapa jauh seseorang bergerak dari titik awal menuju hasil yang bermakna. Quality over quantity: lebih baik 100 orang benar-benar bergerak daripada 300 orang hanya mengikuti kegiatan.</p>
         <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 30px">
-          <sc-for list="{chain}" as="c" hint-placeholder-count="4">
-            <span class="chainstep" style="display: flex; align-items: center; gap: 12px; animation-delay: {c.delay}s"><span style="padding: 14px 22px; border-radius: 18px; background: {c.bg}; color: {c.ink}; font-weight: 900; font-size: 16px">{c.t}</span><span class="arrowmove" style="color: #D4FF3A; font-weight: 900; font-size: 20px; opacity: {c.arrow}">→</span></span>
+          <sc-for list="{{chain}}" as="c" hint-placeholder-count="4">
+            <span class="chainstep" style="display: flex; align-items: center; gap: 12px; animation-delay: {{c.delay}}s"><span style="padding: 14px 22px; border-radius: 18px; background: {{c.bg}}; color: {{c.ink}}; font-weight: 900; font-size: 16px">{{c.t}}</span><span class="arrowmove" style="color: #D4FF3A; font-weight: 900; font-size: 20px; opacity: {{c.arrow}}">→</span></span>
           </sc-for>
         </div>
       </div>
@@ -149,12 +179,12 @@ body{margin:0}
     <section>
       <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">ACCELERATION ECOSYSTEM</span>
       <h2 style="margin: 12px 0 36px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">Enam pilar akselerasi.</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px">
-        <sc-for list="{pillars}" as="p" hint-placeholder-count="6">
-          <div class="pillar rise" style="position: relative; padding: 24px 22px; border-radius: 26px; background: {p.bg}; color: {p.ink}; min-height: 170px; display: flex; flex-direction: column; animation-delay: {p.delay}s">
-            <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; opacity: .65">{p.no}</span>
-            <strong style="margin-top: auto; font-size: 18px; letter-spacing: .05em">{p.name}</strong>
-            <span style="margin-top: 6px; font-size: 13.5px; line-height: 1.5; opacity: .82">{p.desc}</span>
+      <div class="kol3">
+        <sc-for list="{{pillars}}" as="p" hint-placeholder-count="6">
+          <div class="pillar rise" style="position: relative; padding: 24px 24px; border-radius: 26px; background: {{p.bg}}; color: {{p.ink}}; min-height: 148px; box-sizing: border-box; display: flex; flex-direction: column; animation-delay: {{p.delay}}s">
+            <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; opacity: .65">{{p.no}}</span>
+            <strong style="margin-top: auto; font-size: 18px; letter-spacing: .05em">{{p.name}}</strong>
+            <span style="margin-top: 6px; font-size: 14.5px; line-height: 1.5; opacity: .85">{{p.desc}}</span>
           </div>
         </sc-for>
       </div>
@@ -163,14 +193,14 @@ body{margin:0}
     <section>
       <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">FIVE PATHWAYS</span>
       <h2 style="margin: 12px 0 36px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">Lima pathway, lima tujuan.</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px">
-        <sc-for list="{pathways}" as="w" hint-placeholder-count="5">
-          <div class="engine rise" style="position: relative; overflow: hidden; padding: 26px; min-height: 260px; border-radius: 30px; background: {w.bg}; color: {w.ink}; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(0,0,0,.7); animation-delay: {w.delay}s">
-            <span aria-hidden="true" style="position: absolute; right: -10px; bottom: -36px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 150px; line-height: 1; opacity: .13">{w.no}</span>
-            <span style="position: relative; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px">{w.no}</span>
-            <strong style="position: relative; margin-top: 8px; font-size: 15px; letter-spacing: .05em">{w.name}</strong>
-            <span style="position: relative; margin-top: auto; font-size: 20px; font-weight: 800">{w.goal}</span>
-            <span style="position: relative; margin-top: 4px; font-size: 13.5px; line-height: 1.5; opacity: .82">{w.desc}</span>
+      <div class="kol6">
+        <sc-for list="{{pathways}}" as="w" hint-placeholder-count="5">
+          <div class="engine rise jalur" style="grid-column: span {{w.span}}; position: relative; overflow: hidden; padding: 26px; min-height: 220px; box-sizing: border-box; border-radius: 30px; background: {{w.bg}}; color: {{w.ink}}; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(0,0,0,.7); animation-delay: {{w.delay}}s">
+            <span aria-hidden="true" style="position: absolute; right: -10px; bottom: -36px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 150px; line-height: 1; opacity: .13">{{w.no}}</span>
+            <span style="position: relative; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px">{{w.no}}</span>
+            <strong style="position: relative; margin-top: 8px; font-size: 15px; letter-spacing: .05em">{{w.name}}</strong>
+            <span style="position: relative; margin-top: auto; font-size: 20px; font-weight: 800">{{w.goal}}</span>
+            <span style="position: relative; margin-top: 4px; font-size: 14.5px; line-height: 1.5; opacity: .85">{{w.desc}}</span>
           </div>
         </sc-for>
       </div>
@@ -179,7 +209,7 @@ body{margin:0}
     <section>
       <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">TIMELINE PROGRAM</span>
       <h2 style="margin: 12px 0 8px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">12 bulan, 6 fase melompat.</h2>
-      <p style="margin: 0 0 44px; font-size: 16px; color: rgba(255,255,255,.75); max-width: 640px">Perjalanan setiap mentee dari menemukan arah sampai menunjukkan hasil nyata.</p>
+      <p style="margin: 0 0 44px; font-size: 16px; color: rgba(255,255,255,.75)">Perjalanan setiap mentee dari menemukan arah sampai menunjukkan hasil nyata.</p>
       <div style="position: relative">
         <div class="tlline" aria-hidden="true" style="position: absolute; left: 8%; right: 8%; top: 27px; height: 6px; border-radius: 6px; background: rgba(255,255,255,.12)">
           <div class="track trackfill" style="position: absolute; inset: 0; border-radius: 6px"></div>
@@ -201,29 +231,31 @@ body{margin:0}
       </div>
     </section>
 
-    <section style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
+    <section>
+      <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">LEARN LESS. EXPERIENCE MORE.</span>
+      <h2 style="margin: 12px 0 28px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">70% belajar dengan turun langsung.</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center">
       <div style="flex: 1 1 380px; min-width: 0">
-        <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">LEARN LESS. EXPERIENCE MORE.</span>
-        <h2 style="margin: 12px 0 12px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">70% belajar dengan turun langsung.</h2>
         <p style="margin: 0; font-size: 16px; line-height: 1.7; color: rgba(255,255,255,.8)">Kurikulum dirancang mundur dari hasil: KPI 12 bulan, lalu milestone, pengalaman, akses, mentor, baru materi. Setiap aktivitas harus menjawab: ini mempercepat bagian mana?</p>
       </div>
       <div style="flex: 1 1 520px; min-width: 0; display: flex; align-items: flex-end; gap: 14px; height: 320px">
-        <sc-for list="{comp}" as="c" hint-placeholder-count="3">
-          <div style="flex: {c.flex}; display: flex; flex-direction: column; justify-content: flex-end; height: 100%">
-            <div class="barup" style="height: {c.h}%; border-radius: 26px; background: {c.bg}; color: {c.ink}; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); animation-delay: {c.delay}s">
-              <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: {c.fs}px; line-height: .9">{c.v}</span>
-              <span style="font-size: 13px; font-weight: 700; line-height: 1.4">{c.t}</span>
+        <sc-for list="{{comp}}" as="c" hint-placeholder-count="3">
+          <div style="flex: {{c.flex}}; display: flex; flex-direction: column; justify-content: flex-end; height: 100%">
+            <div class="barup" style="height: {{c.h}}%; box-sizing: border-box; border-radius: 26px; background: {{c.bg}}; color: {{c.ink}}; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); animation-delay: {{c.delay}}s">
+              <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: {{c.fs}}px; line-height: .9">{{c.v}}</span>
+              <span style="font-size: 13px; font-weight: 700; line-height: 1.4">{{c.t}}</span>
             </div>
           </div>
         </sc-for>
+      </div>
       </div>
     </section>
 
     <section>
       <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">LEADERSHIP IS A VALUE</span>
       <h2 style="margin: 12px 0 36px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">Nilai yang kami pegang.</h2>
-      <p style="margin: -20px 0 36px; font-size: 17px; font-style: italic; font-weight: 700; color: rgba(255,255,255,.82); max-width: 680px">"We don't repeatedly teach leadership. We create situations where people have to lead."</p>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px">
+      <p style="margin: -20px 0 36px; font-size: 17px; font-style: italic; font-weight: 700; color: rgba(255,255,255,.82)">"We don't repeatedly teach leadership. We create situations where people have to lead."</p>
+      <div class="kol3">
         <sc-for list="{{engines}}" as="e" hint-placeholder-count="6">
           <div class="engine rise" style="position: relative; overflow: hidden; padding: 28px; min-height: 200px; border-radius: 30px; background: {{e.bg}}; color: {{e.ink}}; display: flex; flex-direction: column; box-shadow: 0 30px 60px -36px rgba(0,0,0,.7); animation-delay: {{e.delay}}s">
             <span aria-hidden="true" style="position: absolute; right: -14px; top: -30px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 140px; line-height: 1; opacity: .14">{{e.no}}</span>
@@ -239,14 +271,14 @@ body{margin:0}
       <div style="flex: 1 1 520px; min-width: 0">
         <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #D4FF3A">UNFAIR ADVANTAGE</span>
         <h2 style="margin: 12px 0 14px; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 56px; line-height: .95; letter-spacing: -.02em"><span class="gtext">IPB Alumni</span><br>Network.</h2>
-        <p style="margin: 0; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.82); max-width: 560px">Kekuatan terbesar IPB LEAP bukan kelas, modul, atau event, tetapi akses kepada alumni IPB lintas generasi dan profesi. Mentor adalah access enabler.</p>
+        <p style="margin: 0; font-size: 17px; line-height: 1.7; color: rgba(255,255,255,.82)">Kekuatan terbesar IPB LEAP bukan kelas, modul, atau event, tetapi akses kepada alumni IPB lintas generasi dan profesi. Mentor adalah access enabler.</p>
         <div style="margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px">
           <a class="wacta" href="{{waGroup}}" target="_blank" rel="noopener" style="position: relative; display: inline-flex; align-items: center; gap: 12px; height: 60px; padding: 0 26px 0 12px; border-radius: 20px; background: #D4FF3A; color: #0D0D1A; font-weight: 800; font-size: 16px; text-decoration: none; box-shadow: 0 20px 40px -18px rgba(212,255,58,.7)">
             <span style="width: 40px; height: 40px; border-radius: 13px; background: #0D0D1A; color: #D4FF3A; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg></span>
             Gabung grup mentee Batch 1–8 sekarang
             <span aria-hidden="true" class="arrowmove">→</span>
           </a>
-          <span style="font-size: 13.5px; color: rgba(255,255,255,.72); max-width: 260px; line-height: 1.5">Untuk alumni mentee IPB LEAP / Mentoring Leader Batch 1 sampai 8, via WhatsApp.</span>
+          <span style="font-size: 13.5px; color: rgba(255,255,255,.72); line-height: 1.5">Untuk alumni mentee IPB LEAP / Mentoring Leader Batch 1 sampai 8, via WhatsApp.</span>
         </div>
       </div>
       <div style="flex: 1 1 440px; min-width: 0; display: flex; flex-wrap: wrap; gap: 10px">
@@ -355,11 +387,11 @@ class Component extends DCLogic {
         { no: '06', name: 'ACCOUNTABILITY', desc: 'Ada orang yang memastikan mereka terus bergerak.', bg: '#D4FF3A', ink: '#0D0D1A', delay: '.3' }
       ],
       pathways: [
-        { no: '01', name: 'ENTREPRENEUR', goal: 'Bisnis bertumbuh', desc: 'Revenue tahunan yang terukur.', bg: 'linear-gradient(150deg,#D4FF3A,#EEFFB8)', ink: '#0D0D1A', delay: '0' },
-        { no: '02', name: 'AKADEMISI & PENELITI', goal: 'Academic breakthrough', desc: 'Riset, publikasi, konferensi, atau studi lanjut.', bg: 'linear-gradient(150deg,#A3D6E6,#E3F3F8)', ink: '#0D0D1A', delay: '.08' },
-        { no: '03', name: 'PROFESSIONAL & BIROKRAT', goal: 'Career breakthrough', desc: 'Pekerjaan, promosi, transisi karier, CPNS/PPPK/BUMN.', bg: 'linear-gradient(150deg,#3157A5,#32306F)', ink: '#FFFFFF', delay: '.16' },
-        { no: '04', name: 'POLITIK', goal: 'Political breakthrough', desc: 'Project, organisasi, kampanye, atau peluang strategis.', bg: 'linear-gradient(150deg,#6E5AE6,#32306F)', ink: '#FFFFFF', delay: '.24' },
-        { no: '05', name: 'SOSIAL & KOMUNITAS', goal: 'Sustainable impact', desc: 'Inisiatif berjalan dengan dampak terukur.', bg: 'linear-gradient(150deg,#FFFFFF,#E4EBF8)', ink: '#32306F', delay: '.32' }
+        { no: '01', span: 2, name: 'ENTREPRENEUR', goal: 'Bisnis bertumbuh', desc: 'Revenue tahunan yang terukur.', bg: 'linear-gradient(150deg,#D4FF3A,#EEFFB8)', ink: '#0D0D1A', delay: '0' },
+        { no: '02', span: 2, name: 'AKADEMISI & PENELITI', goal: 'Academic breakthrough', desc: 'Riset, publikasi, konferensi, atau studi lanjut.', bg: 'linear-gradient(150deg,#A3D6E6,#E3F3F8)', ink: '#0D0D1A', delay: '.08' },
+        { no: '03', span: 2, name: 'PROFESSIONAL & BIROKRAT', goal: 'Career breakthrough', desc: 'Pekerjaan, promosi, transisi karier, CPNS/PPPK/BUMN.', bg: 'linear-gradient(150deg,#3157A5,#32306F)', ink: '#FFFFFF', delay: '.16' },
+        { no: '04', span: 3, name: 'POLITIK', goal: 'Political breakthrough', desc: 'Project, organisasi, kampanye, atau peluang strategis.', bg: 'linear-gradient(150deg,#6E5AE6,#32306F)', ink: '#FFFFFF', delay: '.24' },
+        { no: '05', span: 3, name: 'SOSIAL & KOMUNITAS', goal: 'Sustainable impact', desc: 'Inisiatif berjalan dengan dampak terukur.', bg: 'linear-gradient(150deg,#FFFFFF,#E4EBF8)', ink: '#32306F', delay: '.32' }
       ],
       comp: [
         { v: '10%', t: 'Essential learning', flex: 1, h: 34, fs: 34, bg: '#A3D6E6', ink: '#0D0D1A', delay: '.1' },
@@ -369,10 +401,10 @@ class Component extends DCLogic {
       sparks: sparks,
       marq: words.concat(words),
       orbs: [
-        { value: '7', label: 'batch Mentoring Leader', x: 20, y: 10, fs: 96, r: -6, dur: 6, delay: 0 },
-        { value: '±1.400', label: 'mentee telah dibina', x: 150, y: 140, fs: 72, r: 3, dur: 7.5, delay: -1.2 },
-        { value: '12', label: 'bulan akselerasi', x: 10, y: 250, fs: 62, r: 5, dur: 8, delay: -2.4 },
-        { value: '5', label: 'pathway', x: 300, y: 20, fs: 58, r: -4, dur: 6.8, delay: -3.1 }
+        { up: .1, value: '7', label: 'batch Mentoring Leader', x: 20, y: 10, fs: 96, r: -6, dur: 6, delay: 0 },
+        { up: .2, value: '±1.400', label: 'mentee telah dibina', x: 150, y: 140, fs: 72, r: 3, dur: 7.5, delay: -1.2 },
+        { up: .3, value: '12', label: 'bulan akselerasi', x: 10, y: 250, fs: 62, r: 5, dur: 8, delay: -2.4 },
+        { up: .4, value: '5', label: 'pathway', x: 300, y: 20, fs: 58, r: -4, dur: 6.8, delay: -3.1 }
       ],
       phases: [
         { no: '01', name: 'Discover', desc: 'Kenali diri, tetapkan arah dan target 12 bulan.', bg: '#A3D6E6', ink: '#0D0D1A', title: '#A3D6E6', delay: '0.4' },

@@ -15,7 +15,14 @@ a{color:#3157A5}a:hover{color:#32306F}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .rise{animation:rise .55s cubic-bezier(.2,.9,.3,1.15) both}
 .d1{animation-delay:.08s}
-@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+.galeri{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:240px;gap:14px}
+.lapis{height:100%;display:flex;flex-direction:column}
+.bingkai{flex:1 1 0;min-height:0;overflow:hidden}
+.bingkai img{transition:transform .35s ease}
+.foto:hover .bingkai img{transform:scale(1.045)}
+@media (max-width: 900px){.galeri{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width: 560px){.galeri{grid-template-columns:minmax(0,1fr);grid-auto-rows:300px}.galeri-titel{font-size:clamp(36px,10vw,56px)!important}.foto{grid-column:span 1 !important;grid-row:span 1 !important}}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important}}
 </style>
 </helmet>
 <div style="background: #F5F7FC; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #0D0D1A">
@@ -23,35 +30,39 @@ a{color:#3157A5}a:hover{color:#32306F}
 
   <section style="max-width: 1360px; margin: 0 auto; padding: 72px 24px 24px">
     <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #3157A5">KEGIATAN MENTORING</span>
-    <h1 class="rise" style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 64px; line-height: .96; letter-spacing: -.025em; color: #32306F">Belajar dengan turun langsung.</h1>
-    <p class="rise d1" style="margin: 16px 0 0; font-size: 17px; line-height: 1.65; color: #55577A; max-width: 640px">70% perjalanan IPB LEAP adalah pengalaman nyata. Ini dokumentasi kegiatan offline dari batch ke batch.</p>
+    <h1 class="rise galeri-titel" style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 64px; line-height: .96; letter-spacing: -.025em; color: #32306F">Belajar dengan turun langsung.</h1>
+    <p class="rise d1" style="margin: 16px 0 0; font-size: 17px; line-height: 1.65; color: #55577A">70% perjalanan IPB LEAP adalah pengalaman nyata. Ini dokumentasi kegiatan offline dari batch ke batch.</p>
   </section>
 
   <main style="max-width: 1360px; margin: 0 auto; padding: 16px 24px 96px">
-    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px">
-      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #32306F; color: #FFFFFF; font-size: 13px; font-weight: 800; display: flex; align-items: center">Semua</span>
-      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Pelantikan</span>
-      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Bootcamp</span>
-      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Sesi mentoring</span>
-      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Kunjungan lapangan</span>
-      <span style="height: 38px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1.5px solid #E3E7F2; font-size: 13px; font-weight: 700; display: flex; align-items: center">Graduation</span>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 190px; gap: 14px">
-      <sc-for list="{{slots}}" as="s" hint-placeholder-count="8">
-        <div style="grid-column: span {{s.c}}; grid-row: span {{s.r}}; border-radius: 24px; border: 1.5px dashed #C9CFE2; background: #FFFFFF; display: flex; align-items: center; justify-content: center; color: #A5A8C2">
-          <svg aria-hidden="true" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="3"></rect><circle cx="12" cy="13" r="3.5"></circle><path d="M8 6l1.5-2h5L16 6"></path></svg>
+    <div class="galeri">
+      <sc-for list="{{slots}}" as="s" hint-placeholder-count="6">
+        <div class="foto" style="grid-column: span {{s.c}}; grid-row: span {{s.r}}; position: relative; border-radius: 24px; overflow: hidden; background: #FFFFFF; border: 1.5px solid #E3E7F2">
+          <figure class="lapis" style="margin: 0; background: #FFFFFF;">
+            <div class="bingkai"><img loading="{{s.loading}}" decoding="async" src="{{s.src}}" alt="{{s.alt}}" style="width: 100%; height: 100%; display: block; object-fit: cover; object-position: {{s.pos}}"></div>
+            <figcaption style="padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 2px">
+              <span style="font-size: 13.5px; font-weight: 800; line-height: 1.3; color: #32306F">{{s.cap}}</span>
+              <span style="font-size: 12.5px; line-height: 1.4; color: #55577A">{{s.desc}}</span>
+            </figcaption>
+          </figure>
         </div>
       </sc-for>
     </div>
-    <p style="margin: 16px 0 0; font-size: 13px; color: #8A8CA8">Foto belum diunggah.</p>
   </main>
   <dc-import name="PubFooter" hint-size="100%,420px"></dc-import>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2100}}'>
 class Component extends DCLogic {
   renderVals() {
-    return { slots: [{ c: 2, r: 2 }, { c: 1, r: 1 }, { c: 1, r: 2 }, { c: 1, r: 1 }, { c: 1, r: 1 }, { c: 2, r: 1 }, { c: 1, r: 1 }, { c: 1, r: 1 }] };
+    return { slots: [
+      [2, 2, "IMG-20250227-WA0034.jpg", "50% 75%", "Kebersamaan peserta · Kick-off 2025", "Foto bersama peserta"],
+      [1, 1, "IMG-20250227-WA0036.jpg", "50% 70%", "Tim kegiatan · Kick-off 2025", "Dokumentasi tim kegiatan"],
+      [1, 2, "IMG_7574.JPG", "center", "Peserta wisuda · Batch 6", "Dokumentasi peserta wisuda"],
+      [1, 1, "IMG_7590.JPG", "center", "Sambutan pada acara wisuda · Batch 6", "Suasana sambutan di acara wisuda"],
+      [2, 1, "IMG_7560.JPG", "center", "Rangkaian wisuda · Batch 6", "Dokumentasi rangkaian acara"],
+      [2, 1, "IMG_7582.JPG", "center", "Kebersamaan alumni · Batch 6", "Dokumentasi kebersamaan alumni"]
+    ].map(([c,r,file,pos,cap,desc],i)=>({c,r,src:"assets/photos/"+file,pos,cap,desc,alt:cap,loading:i<2?"eager":"lazy"})) };
   }
 }
 </script>

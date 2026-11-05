@@ -129,11 +129,12 @@ def build_page(name, meta):
     banner = '' if name in ('KelolaProgram','AbsensiPengurus','Kehadiran') else section.get('banner', '')
     if banner:
         banner = banner.replace('{home}', rel('index.html', out))
+    viewport_fit = ', viewport-fit=cover' if 'Navbar' in comps else ''
     html = f'''<!doctype html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1{viewport_fit}">
 <title>{title}</title>
 <meta name="description" content="{desc}">
 {robots}<meta property="og:title" content="{title}">
