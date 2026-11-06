@@ -1,4 +1,4 @@
-import {localStore,localActor,ACTOR_KEY,TRACKS} from './store.mjs?v=20261103-group-planning';
+import {localStore,localActor,ACTOR_KEY,TRACKS} from './store.mjs?v=20261107-group-roster';
 
 export const isLocal=()=>document.documentElement.dataset.leapLocal==='true';
 export async function openRepository({cohort=null,management=true}={}){
@@ -27,6 +27,7 @@ export async function openRepository({cohort=null,management=true}={}){
    return api.accountCommand({action:'create',cohort:data.cohort_id,name:data.display_name,email:data.email,roles:[data.role],field:data.field,pathway:data.pathway,division:data.division,expected,...(data.initial_password?{initial_password:data.initial_password}:{})});
   },
   group:(data,expected)=>api.rpc('erp_management_command',{p_payload:{...data,action:'group',cohort:data.cohort_id},p_expected:expected}),
+  archiveGroup:(id,cohort,expected)=>api.rpc('erp_management_command',{p_payload:{action:'group_archive',cohort,id},p_expected:expected}),
   reissue:(user,c)=>api.accountCommand({action:'reissue',user,cohort:c})
  };
  return {store,actor,local:false};

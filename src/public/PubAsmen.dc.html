@@ -31,8 +31,6 @@ body{margin:0;background:#0E0D2B}
 .skl{background:linear-gradient(90deg,#EEF1F8 0%,#F8FAFD 50%,#EEF1F8 100%);background-size:1000px 100%;animation:shimmer 2.2s linear infinite}
 .mcard{transition:transform .35s cubic-bezier(.2,.9,.3,1.3)}
 .mcard:hover{transform:translateY(-8px) rotate(-1deg)}
-.mcard:hover .mview{opacity:1;transform:none}
-.mview{opacity:0;transform:translateY(10px);transition:opacity .25s, transform .25s}
 @keyframes orbitSpin{to{transform:rotate(360deg)}}
 @keyframes pulseR{0%,100%{box-shadow:0 0 0 14px rgba(212,255,58,.14),0 30px 60px -20px rgba(0,0,0,.7)}50%{box-shadow:0 0 0 26px rgba(212,255,58,.05),0 30px 60px -20px rgba(0,0,0,.7)}}
 .orbit{animation:orbitSpin 40s linear infinite}
@@ -75,37 +73,20 @@ body{margin:0;background:#0E0D2B}
   </section>
 
   <main style="position: relative; max-width: 1360px; margin: 0 auto; padding: 24px 24px 110px">
-    <div role="tablist" aria-label="Filter pathway" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px">
-      <sc-for list="{{filters}}" as="f" hint-placeholder-count="6">
-        <button type="button" role="tab" class="chip" aria-selected="{{f.sel}}" onClick="{{f.pick}}" style="height: 42px; padding: 0 16px; border-radius: 999px; border: 1px solid {{f.bd}}; background: {{f.bg}}; color: {{f.ink}}; font: inherit; font-size: 13.5px; font-weight: 800; cursor: pointer">{{f.label}} <span style="opacity: .6; margin-left: 4px">{{f.count}}</span></button>
-      </sc-for>
-    </div>
-
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 40px 26px; padding-bottom: 40px">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr)); gap: 40px 26px; padding-bottom: 40px">
       <sc-for list="{{shown}}" as="m" hint-placeholder-count="8">
-        <a class="mcard rise" href="PubAsmenDetail.dc.html" aria-label="{{m.aria}}" style="position: relative; display: block; color: inherit; text-decoration: none; animation-delay: {{m.delay}}s; margin-top: {{m.off}}px">
-          <span style="position: absolute; z-index: 3; right: -10px; top: -14px; padding: 7px 12px; border-radius: 12px; background: #0E0D2B; border: 1.5px solid {{m.tagBg}}; color: #FFFFFF; font-size: 12px; font-weight: 800; transform: rotate(6deg)">{{m.group}}</span>
+        <article class="mcard rise" style="position: relative; animation-delay: {{m.delay}}s; margin-top: {{m.off}}px">
           <div style="position: relative; aspect-ratio: 4 / 5; border-radius: 28px; overflow: hidden; padding: 3px; background: {{m.ring}}; transform: rotate({{m.tilt}}deg)">
-            <div style="position: relative; width: 100%; height: 100%; border-radius: 25px; overflow: hidden; background: {{m.photoBg}}">
-              <sc-if value="{{m.hasPhoto}}" hint-placeholder-val="{{ false }}">
-                <img src="{{m.photo}}" alt="{{m.name}}" style="width: 100%; height: 100%; object-fit: cover">
-              </sc-if>
-              <sc-if value="{{m.noPhoto}}" hint-placeholder-val="{{ true }}">
-                <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,.5)"><svg aria-hidden="true" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path></svg></div>
-              </sc-if>
-              <div style="position: absolute; inset: auto 0 0 0; height: 55%; background: linear-gradient(180deg, transparent, rgba(14,13,43,.92))"></div>
-              <span style="position: absolute; left: 14px; top: 14px; padding: 5px 10px; border-radius: 999px; background: {{m.tagBg}}; color: {{m.tagInk}}; font-size: 11px; font-weight: 800; letter-spacing: .06em">{{m.pathway}}</span>
-              <div style="position: absolute; left: 16px; right: 16px; bottom: 16px">
-                <strong style="display: block; font-size: 18px">{{m.name}}</strong>
-                <span style="display: block; font-size: 13px; color: rgba(255,255,255,.75)">{{m.headline}}</span>
-                <span class="mview" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 12px; border-radius: 999px; background: #D4FF3A; color: #0D0D1A; font-size: 12.5px; font-weight: 800">Lihat profil →</span>
+            <div style="position: relative; width: 100%; height: 100%; border-radius: 25px; overflow: hidden; background: #15143A">
+              <img src="{{m.photo}}" alt="" width="{{m.width}}" height="{{m.height}}" loading="lazy" decoding="async" style="display: block; width: 100%; height: 100%; object-fit: cover; object-position: {{m.position}}">
+              <div style="position: absolute; inset: auto 0 0 0; padding: 46px 16px 16px; background: linear-gradient(180deg, transparent, rgba(14,13,43,.96))">
+                <strong style="display: block; font-size: 18px; overflow-wrap: anywhere">{{m.name}}</strong>
               </div>
             </div>
           </div>
-        </a>
+        </article>
       </sc-for>
     </div>
-    <p style="margin: 22px 0 0; font-size: 13px; color: rgba(255,255,255,.55)">Foto dan profil asmen menyusul. Hanya asmen yang mengizinkan profilnya tampil publik yang akan ditampilkan.</p>
   </main>
 
 
@@ -114,29 +95,28 @@ body{margin:0;background:#0E0D2B}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2200}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { f: 'all', sel: null }; }
   renderVals() {
-    const P = {
-      ent: { label: 'Entrepreneur', bg: '#D4FF3A', ink: '#0D0D1A', ring: 'linear-gradient(140deg,#D4FF3A,#A3D6E6)', photo: 'linear-gradient(160deg,#3157A5,#32306F)', cover: 'linear-gradient(120deg,#32306F,#3157A5 60%,#A3D6E6)' },
-      aka: { label: 'Akademisi', bg: '#A3D6E6', ink: '#0D0D1A', ring: 'linear-gradient(140deg,#A3D6E6,#FFFFFF)', photo: 'linear-gradient(160deg,#2FA3C7,#32306F)', cover: 'linear-gradient(120deg,#0E0D2B,#3157A5 60%,#A3D6E6)' },
-      pro: { label: 'Professional', bg: '#FFFFFF', ink: '#32306F', ring: 'linear-gradient(140deg,#FFFFFF,#3157A5)', photo: 'linear-gradient(160deg,#3157A5,#0E0D2B)', cover: 'linear-gradient(120deg,#32306F,#6E5AE6 60%,#A3D6E6)' },
-      pol: { label: 'Politik', bg: '#6E5AE6', ink: '#FFFFFF', ring: 'linear-gradient(140deg,#6E5AE6,#D4FF3A)', photo: 'linear-gradient(160deg,#6E5AE6,#32306F)', cover: 'linear-gradient(120deg,#1A1A4E,#6E5AE6 60%,#D4FF3A)' },
-      sos: { label: 'Sosial', bg: '#EEFFB8', ink: '#32306F', ring: 'linear-gradient(140deg,#EEFFB8,#6E5AE6)', photo: 'linear-gradient(160deg,#2FA3C7,#3157A5)', cover: 'linear-gradient(120deg,#3157A5,#2FA3C7 60%,#EEFFB8)' }
-    };
-    const order = ['ent', 'aka', 'pro', 'pol', 'sos', 'ent', 'pro', 'aka', 'sos', 'pol', 'pro', 'ent'];
-    const all = order.map((k, i) => ({ id: i, k: k, name: 'Nama Asmen', headline: 'Fakultas · Angkatan', photo: '' }));
-    const counts = {}; all.forEach((m) => { counts[m.k] = (counts[m.k] || 0) + 1; });
-    const fdefs = [{ key: 'all', label: 'Semua', count: all.length }].concat(Object.keys(P).map((k) => ({ key: k, label: P[k].label, count: counts[k] || 0 })));
-    const filters = fdefs.map((f) => {
-      const on = this.state.f === f.key;
-      return Object.assign({}, f, { sel: on ? 'true' : 'false', bg: on ? '#D4FF3A' : 'rgba(255,255,255,.08)', ink: on ? '#0D0D1A' : '#FFFFFF', bd: on ? '#D4FF3A' : 'rgba(255,255,255,.22)', pick: () => this.setState({ f: f.key }) });
-    });
-    const shown = all.filter((m) => this.state.f === 'all' || m.k === this.state.f).map((m, i) => {
-      const p = P[m.k];
-      return Object.assign({}, m, { pathway: p.label, tagBg: p.bg, tagInk: p.ink, ring: p.ring, photoBg: p.photo, hasPhoto: !!m.photo, noPhoto: !m.photo, aria: 'Lihat profil ' + m.name, group: 'Kelompok ' + String(m.id + 1).padStart(2, '0'), tilt: [-2, 1.5, -1, 2][i % 4], off: [0, 36, 12, 48][i % 4], delay: (i * 0.05).toFixed(2), open: () => this.setState({ sel: m.id }) });
-    });
-    const sm = this.state.sel === null ? null : all[this.state.sel];
-    const sel = sm ? Object.assign({}, sm, { pathway: P[sm.k].label, tagBg: P[sm.k].bg, tagInk: P[sm.k].ink, photoBg: P[sm.k].photo, cover: P[sm.k].cover, pathwayLabel: 'Pathway ' + P[sm.k].label }) : {};
+    const portraits = [
+        {"name": "Adnan", "position": "50% 35%", "photo": "assets/photos/asmen/adnan.webp", "width": 480, "height": 640},
+        {"name": "Ammar Syuhada", "position": "50% 48%", "photo": "assets/photos/asmen/ammar-syuhada.webp", "width": 427, "height": 640},
+        {"name": "Fiona Hanberia Innayah", "position": "50% 30%", "photo": "assets/photos/asmen/fiona-hanberia-innayah.webp", "width": 394, "height": 640},
+        {"name": "Jassuanto", "position": "50% 36%", "photo": "assets/photos/asmen/jassuanto.webp", "width": 288, "height": 640},
+        {"name": "Mochammad Rochman Alfath", "position": "50% 30%", "photo": "assets/photos/asmen/mochammad-rochman-alfath.webp", "width": 427, "height": 640},
+        {"name": "Muhammad Umar Jiaul Haq", "position": "50% 35%", "photo": "assets/photos/asmen/muhammad-umar-jiaul-haq.webp", "width": 640, "height": 360},
+        {"name": "Rahmatina T Oktari (Tari)", "position": "50% 32%", "photo": "assets/photos/asmen/rahmatina-t-oktari.webp", "width": 572, "height": 640},
+        {"name": "Richky S Kartaatmaja", "position": "50% 35%", "photo": "assets/photos/asmen/richky-s-kartaatmaja.webp", "width": 640, "height": 640},
+        {"name": "Rizka Nurul Afifa", "position": "50% 35%", "photo": "assets/photos/asmen/rizka-nurul-afifa.webp", "width": 480, "height": 640},
+        {"name": "Syah Deva Ammurabi", "position": "50% 35%", "photo": "assets/photos/asmen/syah-deva-ammurabi.webp", "width": 300, "height": 300},
+        {"name": "Tri Restu Wahyuning Tyas", "position": "50% 22%", "photo": "assets/photos/asmen/tri-restu-wahyuning-tyas.webp", "width": 428, "height": 640}
+      ];
+    const frames = ['#D4FF3A,#A3D6E6','#A3D6E6,#FFFFFF','#FFFFFF,#3157A5','#6E5AE6,#D4FF3A'];
+    const shown = portraits.map((portrait, i) => ({
+      ...portrait,
+      ring: 'linear-gradient(140deg,' + frames[i % frames.length] + ')',
+      tilt: [-2, 1.5, -1, 2][i % 4],
+      off: [0, 36, 12, 48][i % 4],
+      delay: (i * 0.05).toFixed(2)
+    }));
     const orbit = [
       { t: 'Mentor', s: 72, m: '-36px', a: -90, bg: '#FFFFFF', ink: '#32306F' },
       { t: 'Mentee', s: 56, m: '-28px', a: -18, bg: '#3157A5', ink: '#FFFFFF' },
@@ -146,7 +126,7 @@ class Component extends DCLogic {
       { t: '+1', s: 44, m: '-22px', a: 252, bg: 'rgba(255,255,255,.2)', ink: '#FFFFFF' }
     ];
     orbit.forEach((o) => { const r = o.a * Math.PI / 180; o.x = Math.round(180 + 180 * Math.cos(r) - o.s / 2 - 1); o.y = Math.round(180 + 180 * Math.sin(r) - o.s / 2 - 1); });
-    return { orbit: orbit, filters: filters, shown: shown, hasSel: !!sm, sel: sel, close: () => this.setState({ sel: null }), slots3: [1, 2, 3], slots5: [90, 120, 80, 140, 100] };
+    return { orbit, shown };
   }
 }
 </script>

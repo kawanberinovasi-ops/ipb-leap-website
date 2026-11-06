@@ -1,6 +1,6 @@
 import {menteeRoster} from './roster.mjs';
 import {periods,phaseName,phaseDates,phaseEnd} from './phases.mjs';
-import{boot,href,track,role,loadWorkspace,sendCommand,scope,currentTrack as t}from './context.mjs';
+import{boot,href,track,role,loadWorkspace,sendCommand,scope,currentTrack as t}from './context.mjs?v=20261107-group-review';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateLabel=date=>date?new Intl.DateTimeFormat('id-ID',{dateStyle:'long',timeZone:'UTC'}).format(new Date(date+'T00:00:00Z')):'Tanggal belum diisi';
 const fmt=n=>typeof n==='number'?n.toLocaleString('id-ID',{maximumFractionDigits:2}):'—';
@@ -29,14 +29,28 @@ const responseText=r=>r?`<div class="notice space">${badge(r.status)}<p>${esc(r.
 
 export async function mount(){
  const root=document.querySelector('#grow-app'),view=['actions','assessment','report'].includes(root.dataset.view)?'report':root.dataset.view;let w,editor=null,noteEditor=null,openOutcomeId=null,busy=false,dirty=false,period=Number(new URLSearchParams(location.search).get('period'))||3;
- try{if(!await boot({allowRoster:true}))return;}catch(e){root.textContent=e.message;return;}
+ try{if(!await boot({allowRoster:true,requireTrack:view!=='review'}))return;}catch(e){root.textContent=e.message;return;}
  if(!periods.includes(period))period=3;if(view==='report')document.title='Raport · IPB LEAP';
- const rosterTitle=({canvas:'Review GROW',mentoring:'Review Catatan Mentee',report:'Raport'})[view]||'Review GROW';
+ const rosterTitle=({review:'Review Mentee',canvas:'Review GROW',mentoring:'Review Catatan Mentee',report:'Raport'})[view]||'Review GROW';
  if(scope.picking){
   root.innerHTML=menteeRoster(scope,rosterTitle,subject=>href(location.pathname,subject));
   return;
  }
- const staffBack=role!=='mentee'?link('← Daftar mentee',location.pathname,{mentee:null,group:null}):'';
+ if(view==='review'){
+  if(!['asmen','mentor'].includes(role)){root.textContent='Review Mentee tersedia untuk Asmen dan Mentor.';return;}
+  const person=scope.people.find(p=>p.id===scope.mentee);
+  const links=[
+   ['Leadership Model Canvas','development-model-canvas.html'],
+   ['GROW Canvas','grow-canvas.html'],
+   ['Catatan Mentee','mentoring.html']
+  ];
+  root.innerHTML=`<header class="rise"><p class="eyebrow">Review Mentee · ${esc(scope.group?.name||scope.cohort.name)}</p><h1>${esc(person.name)}</h1></header>
+   ${link('← Daftar mentee','review-mentee.html',{mentee:null,group:null})}
+   <section class="card stack space"><h2>Dokumen dan catatan</h2>
+   <div class="actions">${links.map(([label,page])=>link(label,page)).join('')}</div></section>`;
+  return;
+ }
+ const staffBack=role==='mentee'?'':view==='report'?link('← Daftar mentee',location.pathname,{mentee:null,group:null}):link('← Review Mentee','review-mentee.html');
  const value=(f,n)=>String(f.elements.namedItem(n)?.value||'');
  const canEdit=()=>role==='mentee'&&(!w.canvas||['Draft','Perlu perbaikan'].includes(w.canvas.status));
  const agreed=()=>w.canvas?.status==='Disepakati';
