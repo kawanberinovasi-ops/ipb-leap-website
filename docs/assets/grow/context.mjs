@@ -19,7 +19,7 @@ export async function boot({requireTrack=true,allowRoster=false}={}){
  role=own&&(!query.has('mentee')||query.get('mentee')===actor.id)&&candidate==='mentee'?'mentee': ['asmen','mentor'].includes(candidate)?candidate:own?'mentee':actor.roles.find(r=>['asmen','mentor'].includes(r))||'program';
  const staff=['asmen','mentor'].includes(role);
  const picking=allowRoster&&staff&&!query.has('mentee');
- const groups=base.groups.filter(g=>g.active!==false&&g.cohort_id===cohort.id&&(role==='mentee'?base.members.some(m=>m.group_id===g.id&&m.user_id===actor.id&&m.active):g[role==='asmen'?'asmen_id':'mentor_id']===actor.id));
+ const groups=base.groups.filter(g=>!g.archived_at&&g.cohort_id===cohort.id&&(role==='mentee'?base.members.some(m=>m.group_id===g.id&&m.user_id===actor.id&&m.active):g[role==='asmen'?'asmen_id':'mentor_id']===actor.id));
  if(query.has('group')&&!groups.some(g=>g.id===query.get('group')))throw Error('Kelompok ini tidak ditugaskan kepada akunmu.');
  const group=groups.find(g=>g.id===query.get('group'))||groups.find(g=>query.has('mentee')&&base.members.some(m=>m.active&&m.group_id===g.id&&m.user_id===query.get('mentee')))||(picking?null:groups[0])||null;
  const people=role==='mentee'?[{id:actor.id,name:actor.display_name}]:base.members.filter(m=>m.active&&groups.some(g=>g.id===m.group_id)&&(!group||m.group_id===group.id)&&enrolled.some(e=>e.user_id===m.user_id&&e.role==='mentee')).map(m=>({id:m.user_id,groupId:m.group_id,name:base.profiles.find(p=>p.id===m.user_id)?.display_name||'Nama belum tersedia'}));

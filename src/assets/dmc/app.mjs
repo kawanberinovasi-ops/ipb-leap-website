@@ -1,6 +1,6 @@
 import {menteeRoster} from '../grow/roster.mjs';
 import {rpc} from '../assessment/api.mjs';
-import {boot, href, role, scope} from '../grow/context.mjs';
+import {boot, href, role, scope} from '../grow/context.mjs?v=20261107-group-review';
 import {blocks, blockLimit} from './blocks.mjs';
 
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, char =>
@@ -51,7 +51,7 @@ export async function mount() {
       <p class="sub">Petakan rencana pengembangan dalam sembilan blok sebagai bekal mengisi GROW Canvas.</p>
       <p class="sub">${esc(people?.name)}${scope.enrolment?.field ? ' · '+esc(scope.enrolment.field) : ''}</p>
     </header>
-    ${editable?'':`<div class="dmc-scope"><a class="button" href="${esc(href(page,{mentee:null,group:null}))}">← Daftar mentee</a>
+    ${editable?'':`<div class="dmc-scope"><a class="button" href="${esc(href('review-mentee.html'))}">← Review Mentee</a>
       ${scope.groups.length>1 ? picker('group','Kelompok',scope.groups,scope.group.id) : ''}
       ${picker('mentee','Mentee',scope.people,scope.mentee)}
     </div>`}

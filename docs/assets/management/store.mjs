@@ -43,7 +43,7 @@ export function createLocalStore(storage, {uuid=localUUID,now=()=>new Date().toI
   if(s.profiles.some(p=>p.email===email&&p.id!==input.id))throw Error('Email ini sudah terdaftar pada data lokal.');
   const t=trackFor(input.field);if(input.role==='mentee'&&(!t||(input.pathway&&!t.pathways.includes(input.pathway))))throw Error('Pilih track dan pathway yang sesuai bila sudah ditetapkan.');
   const g=s.groups.find(g=>g.id===input.group_id);
-  if(input.group_id&&(!g||g.cohort_id!==c.id||input.role!=='mentee'||g.field!==t?.field))throw Error('Kelompok harus sesuai cohort dan track mentee.');
+  if(input.group_id&&(!g||g.archived_at||g.cohort_id!==c.id||input.role!=='mentee'||g.field!==t?.field))throw Error('Kelompok harus sesuai cohort dan track mentee.');
   const id=p?.id||uuid(),active=input.active!==false;
   if(g&&s.members.filter(m=>m.group_id===g.id&&m.active&&m.user_id!==id).length>=5)throw Error('Kelompok ini sudah berisi lima mentee.');
   if(p){Object.assign(p,{display_name:name,email,active,updated_at:now(),revision:(p.revision||0)+1});}
@@ -62,13 +62,32 @@ export function createLocalStore(storage, {uuid=localUUID,now=()=>new Date().toI
  },(input.id?'Memperbarui akun ':'Menambahkan akun lokal ')+text(input.display_name));}
  function group(input,expected){return commit(expected,s=>{
   const name=requireValue(input.name,'nama kelompok'),c=s.cohorts.find(c=>c.id===input.cohort_id),t=trackFor(input.field);if(!c||!t)throw Error('Pilih cohort dan track kelompok.');
-  const old=input.id?s.groups.find(g=>g.id===input.id&&g.cohort_id===c.id):null;if(input.id&&!old)throw Error('Kelompok tidak ditemukan.');
+  const old=input.id?s.groups.find(g=>g.id===input.id&&g.cohort_id===c.id&&!g.archived_at):null;if(input.id&&!old)throw Error('Kelompok tidak ditemukan.');
   if(s.groups.some(g=>g.id!==input.id&&g.cohort_id===c.id&&g.name.toLowerCase()===name.toLowerCase()))throw Error('Nama kelompok sudah digunakan pada cohort ini.');
   if(old&&old.field!==t.field&&s.members.some(m=>m.group_id===old.id&&m.active))throw Error('Track kelompok yang sudah memiliki mentee dipertahankan.');
   for(const [key,role]of[['mentor_id','mentor'],['asmen_id','asmen']])if(input[key]&&!s.enrolments.some(e=>e.user_id===input[key]&&e.cohort_id===c.id&&e.role===role&&e.active&&s.profiles.some(p=>p.id===e.user_id&&(p.active||p.pending_activation))))throw Error('Pilih pendamping terdaftar pada cohort yang sama.');
   const values={name,cohort_id:c.id,field:t.field,mentor_id:input.mentor_id||null,asmen_id:input.asmen_id||null,updated_at:now()};
-  const g=old||{id:uuid(),active:false,created_at:now()};Object.assign(g,values);if(!old)s.groups.push(g);refreshGroups(s);return g;
+  const g=old||{id:uuid(),active:false,created_at:now()};
+  const chosen=input.mentee_ids||[];
+  if(!Array.isArray(chosen)||new Set(chosen).size!==chosen.length)throw Error('Pilih daftar mentee tanpa duplikasi.');
+  const activeMembers=s.members.filter(m=>m.active&&m.group_id===g.id);
+  if(new Set([...activeMembers.map(m=>m.user_id),...chosen]).size>5)throw Error('Kelompok maksimal lima mentee.');
+  for(const id of chosen){
+   const enrolled=s.enrolments.some(e=>e.user_id===id&&e.cohort_id===c.id&&e.role==='mentee'&&e.active&&e.field===t.field);
+   const assignable=s.profiles.some(p=>p.id===id&&(p.active||p.pending_activation));
+   const assigned=s.members.some(m=>m.user_id===id&&m.active&&m.group_id!==g.id&&s.groups.some(k=>k.id===m.group_id&&k.cohort_id===c.id));
+   if(!enrolled||!assignable||assigned)throw Error('Pilih mentee terdaftar yang sesuai track dan belum memiliki kelompok lain.');
+   if(!activeMembers.some(m=>m.user_id===id))s.members.push({id:uuid(),user_id:id,group_id:g.id,active:true,joined_at:now()});
+  }
+  Object.assign(g,values);if(!old)s.groups.push(g);refreshGroups(s);return g;
  },(input.id?'Memperbarui kelompok ':'Menambahkan kelompok ')+text(input.name));}
+ function archiveGroup(id,cohortId,expected){return commit(expected,s=>{
+  const g=s.groups.find(g=>g.id===id&&g.cohort_id===cohortId&&!g.archived_at);
+  if(!g)throw Error('Kelompok aktif tidak ditemukan pada cohort ini.');
+  const archivedAt=now();
+  for(const m of s.members)if(m.group_id===g.id&&m.active)Object.assign(m,{active:false,left_at:archivedAt});
+  Object.assign(g,{active:false,archived_at:archivedAt,mentor_id:null,asmen_id:null});
+ },'Mengarsipkan kelompok');}
  function refreshGroups(s){const active=(user,role,c)=>s.profiles.some(p=>p.id===user&&p.active&&p.roles.includes(role))&&s.enrolments.some(e=>e.user_id===user&&e.role===role&&e.cohort_id===c&&e.active);for(const g of s.groups)g.active=active(g.mentor_id,'mentor',g.cohort_id)&&active(g.asmen_id,'asmen',g.cohort_id)&&s.members.filter(m=>m.group_id===g.id&&m.active&&active(m.user_id,'mentee',g.cohort_id)).length===5;}
  function workspace(cohortId,menteeId,actor=MANAGER){
   const s=read(),isManager=actor.id===MANAGER.id||actor.roles.includes('system')||actor.roles.includes('program')&&s.staff.some(x=>x.user_id===actor.id&&x.can_manage);
@@ -96,7 +115,7 @@ export function createLocalStore(storage, {uuid=localUUID,now=()=>new Date().toI
    r.updated_at=now();const result={ok:true,revision:s.revision+1};s.receipts.push({id:p.request,payload:JSON.stringify(p),result});s.receipts=s.receipts.slice(-200);return result;
   },null);
  }
- return {read,cohort,account,group,workspace,recordCommand};
+ return {read,cohort,account,group,archiveGroup,workspace,recordCommand};
 }
 
 export function participantProgress(s,userId,cohortId){

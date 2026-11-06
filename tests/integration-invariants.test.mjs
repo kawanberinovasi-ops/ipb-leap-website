@@ -12,11 +12,19 @@ test('public page content outside the shared navigation is preserved and ERP rou
    .replace(/<script type="text\/x-dc" data-dc="(?:PubNav|PubFooter)"[\s\S]*?<\/script>/g,'');
  const config=JSON.parse(await read('site.config.json'));
  for(const {out} of Object.values(config.sections[0].pages)){
-   if(['index.html','mentee-profil.html'].includes(out))continue;
+   if(['index.html','asmen.html','mentee-profil.html'].includes(out))continue;
    const original=execFileSync('git',['show',baseline+':docs/'+out],{encoding:'utf8'});
    assert.equal(removePublicChrome(await read('docs/'+out)),removePublicChrome(original),out);
  }
  const home=await read('docs/index.html');
+ const asmen=await read('docs/asmen.html');
+ const portraits=[...new Set(asmen.match(/assets\/photos\/asmen\/[\w-]+\.webp/g))];
+ assert.ok(portraits.length>0);
+ assert.doesNotMatch(asmen,/Filter pathway|Nama Asmen|Fakultas · Angkatan/);
+ for(const photo of portraits){
+   assert.ok((await readFile(new URL('../docs/'+photo,import.meta.url))).length,photo);
+   assert.ok(!home.includes(photo),photo);
+ }
  assert.doesNotMatch(home,/href="(?:showcase|prestasi|event)\.html"/);
  assert.match(home,/class="leap-public-toggle"[^>]+aria-controls="leap-public-menu"/);
  for(const out of ['tentang.html','mentor.html','asmen.html','mentee.html','kegiatan.html'])assert.ok(home.includes(out),out);

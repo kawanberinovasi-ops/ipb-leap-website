@@ -8,7 +8,8 @@ test('groups can be planned with empty or pending staff and mentees without acti
  await db.exec(`alter table auth.users add column encrypted_password text;alter table auth.sessions add column created_at timestamptz default now();
  alter table erp_private.activations add column user_id uuid,add column token_hash text,add column expires_at timestamptz,add column used_at timestamptz,add column created_by uuid;alter table erp_private.activations alter column id set default gen_random_uuid();
  delete from erp_group_members;delete from erp_groups;`);
- for(const file of ['management-attendance','managed-accounts','enrolment-pathway-optional','initial-password','group-planning'])await db.exec(await readFile(new URL('../backend/erp/integrations/'+file+'.sql',import.meta.url),'utf8'));
+ for(const file of ['management-attendance','managed-accounts','enrolment-pathway-optional','initial-password','group-planning','group-live-data'])await db.exec(await readFile(new URL('../backend/erp/integrations/'+file+'.sql',import.meta.url),'utf8'));
+ await db.exec(await readFile(new URL('../supabase/migrations/20261106232153_group_roster_management.sql',import.meta.url),'utf8'));
  await db.query("update auth.users set encrypted_password='TEST INITIAL HASH' where id in ($1,$2)",[id(1),id(2)]);
  await db.query('update erp_profiles set active=false where id in ($1,$2)',[id(1),id(2)]);await db.query('insert into erp_private.password_setup(user_id) values($1),($2)',[id(1),id(2)]);
  const field='Entrepreneur / Business';await db.query('update erp_enrolments set field=$1,pathway=$2 where role=$3',[field,'','mentee']);
@@ -33,5 +34,26 @@ test('groups can be planned with empty or pending staff and mentees without acti
  await as(db,'asmen');assert.equal((await db.query('select erp_private.staff_for($1,$2,$3) yes',[id(20),id(1),'asmen'])).rows[0].yes,false,'old initial-password session stays blocked');
  await db.exec('reset role');await db.query('insert into auth.sessions(id,user_id)values($1,$2)',[id(700),id(2)]);await db.query("select set_config('request.jwt.claims',$1,false)",[JSON.stringify({sub:id(2),session_id:id(700),role:'authenticated'})]);await db.exec('set role authenticated');assert.equal((await db.query('select erp_private.staff_for($1,$2,$3) yes',[id(20),id(1),'asmen'])).rows[0].yes,true);
  await command({action:'account',user:id(2),role:'asmen',display_name:'asmen',email:'asmen@example.test',active:false});await db.exec('reset role');assert.equal((await db.query('select active from erp_groups where id=$1',[group.id])).rows[0].active,false);
+ const second={action:'group',id:id(302),name:'TEST SECOND GROUP',field,mentor_id:'',asmen_id:'',mentee_ids:[id(505),id(1)]};
+ await assert.rejects(command(second),/kelompok lain/);
+ await db.exec('reset role');
+ assert.equal((await db.query('select count(*)::int n from erp_groups where id=$1',[second.id])).rows[0].n,0,'roster failure rolls back group creation');
+ await assert.rejects(command({...second,mentee_ids:[id(505),id(505)]}),/satu kali/);
+ await as(db,'mentor');
+ await assert.rejects(db.query("select erp_management_command($1,0)",[JSON.stringify({action:'group_archive',cohort:id(20),id:group.id})]),/ditugaskan/);
+ await db.query("select erp_group_session_command('save',$1)",[JSON.stringify({group:group.id,id:id(303),expected:0,status:'Draft',data:{kind:'group',attendance:[{user_id:id(1),status:''}],actions:[]}})]);
+ await command({action:'group_archive',id:group.id});
+ await db.exec('reset role');
+ const archived=(await db.query('select * from erp_groups where id=$1',[group.id])).rows[0];
+ assert.ok(archived.archived_at);
+ assert.equal(archived.mentor_id,null);
+ assert.equal((await db.query('select count(*)::int n from erp_group_members where group_id=$1 and left_at is not null',[group.id])).rows[0].n,5);
+ assert.equal((await db.query('select count(*)::int n from erp_group_session_logs where group_id=$1',[group.id])).rows[0].n,1,'group session history survives archive');
+ await as(db,'mentor');
+ await assert.rejects(db.query("select erp_group_session_command('state',$1)",[JSON.stringify({group:group.id})]),/pendamping/);
+ await assert.rejects(command(group),/Kelompok tidak cocok/);
+ await command({...second,mentor_id:id(3)});
+ await db.exec('reset role');
+ assert.deepEqual((await db.query('select user_id from erp_group_members where group_id=$1 and active order by user_id',[second.id])).rows.map(row=>row.user_id),[id(1),id(505)]);
  for(const actor of ['mentee','asmen','mentor','finance','assessor']){await as(db,actor);await assert.rejects(db.query('select erp_management_command($1,0)',[JSON.stringify({...group,cohort:id(20)})]),/ditugaskan|Masuk/);}
 });

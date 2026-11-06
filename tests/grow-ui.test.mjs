@@ -3,7 +3,7 @@ import * as phases from '../src/assets/grow/phases.mjs';
 import {test} from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';import {readFile} from 'node:fs/promises';import {JSDOM} from 'jsdom';
 const read=p=>readFile(new URL('../src/assets/grow/'+p,import.meta.url),'utf8');
 const catalog=JSON.parse(await read('catalog.json')),track=catalog.find(t=>t.id==='social');
-async function module(code,context,deps,url='https://example.test/assets/grow/app.mjs'){const m=new vm.SourceTextModule(code,{context,identifier:url,initializeImportMeta:x=>x.url=url});await m.link(spec=>{const values=deps[spec.split('/').at(-1)];if(!values)throw Error('Unexpected import '+spec);return new vm.SyntheticModule(Object.keys(values),function(){for(const[k,v]of Object.entries(values))this.setExport(k,v);},{context});});await m.evaluate();return m.namespace;}
+async function module(code,context,deps,url='https://example.test/assets/grow/app.mjs'){const m=new vm.SourceTextModule(code,{context,identifier:url,initializeImportMeta:x=>x.url=url});await m.link(spec=>{const values=deps[spec.split('?')[0].split('/').at(-1)];if(!values)throw Error('Unexpected import '+spec);return new vm.SyntheticModule(Object.keys(values),function(){for(const[k,v]of Object.entries(values))this.setExport(k,v);},{context});});await m.evaluate();return m.namespace;}
 const scores={3:{asmen:25,mentor:52.5,total:77.5,checked:1,eligible:1,waiting:0},6:{asmen:null,mentor:null,total:null,checked:0,eligible:0,waiting:0},9:{asmen:null,mentor:null,total:null,checked:0,eligible:0,waiting:0},12:{asmen:null,mentor:null,total:null,checked:0,eligible:0,waiting:0}};
 function state(){return{today:'2026-11-04',revision:5,canvas:{status:'Disepakati',version:1,data:{goal:'TEST GOAL',why:'TEST WHY',reality:'TEST REALITY',options:'TEST OPTIONS',wayForward:'TEST WAY',mentorNeed:'Tidak ada',kpis:[{id:'socialBeneficiaries',baseline:'0',measurement:'VERIFIED RECORDS',milestones:{3:'100',6:'250',9:'375',12:'500'}}]}},canvasHistory:[],supportReplies:{},sessions:[],notes:[{id:'NOTE',period:3,status:'Diajukan',data:{date:'2026-11-02',due:'2026-11-04',learning:'TEST LEARNING',action:'TEST ACTION'},outcome:{status:'Selesai',result:'TEST RESULT',completed:'2026-11-04'},outcomeRevision:1}],reviews:{},scores:structuredClone(scores),publications:[{period:3,canvasVersion:1,canvas:{data:{kpis:[{id:'socialBeneficiaries',milestones:{3:'100'}}]}},review:{items:[{id:'socialBeneficiaries',actual:'75',level:75,reason:'75 of 100'}]},score:{asmen:25,mentor:52.5,total:77.5},at:'2026-11-04T10:00:00+07:00'}]};}
 async function ui(role,view='report',initial=state()){
@@ -104,7 +104,7 @@ test('review rosters include only mentees assigned to the signed-in staff accoun
   const profiles=['A','B','C'].map(id=>({id,display_name:id}));
   const base={selectedCohort:'C',cohorts:[{id:'C',name:'Batch 2026'}],profiles,
    enrolments:profiles.map(p=>({cohort_id:'C',user_id:p.id,role:'mentee',active:true})),
-   groups:groupIds.map(id=>({id,name:id,cohort_id:'C',[role+'_id']:id==='OTHER'?'ANOTHER':'STAFF'})),
+   groups:groupIds.map(id=>({id,name:id,cohort_id:'C',active:false,[role+'_id']:id==='OTHER'?'ANOTHER':'STAFF'})),
    members:profiles.map((p,i)=>({user_id:p.id,group_id:groupIds[i],active:true}))};
   const m=await module(await read('context.mjs'),dom.getInternalVMContext(),{'api.mjs':{workspace:async()=>base,rpc:async()=>{}},'session.mjs':{mountSession:async()=>actor}},'https://example.test/assets/grow/context.mjs');
   await m.boot({allowRoster:true});
@@ -115,5 +115,16 @@ test('review rosters include only mentees assigned to the signed-in staff accoun
   assert.deepEqual(links.map(link=>new URL(link.href).searchParams.get('mentee')),['A','B']);
   assert.ok(links.every(link=>new URL(link.href).searchParams.get('period')==='6'));
   dom.window.close();
+ }
+});
+
+test('Review Mentee keeps the selected mentee on all three review links for both staff roles',async()=>{
+ for(const role of ['asmen','mentor']){
+  const v=await ui(role,'review');
+  assert.equal(v.d.querySelector('h1').textContent,'ACTUAL ASSIGNED NAME');
+  const links=[...v.d.querySelectorAll('.card a')];
+  assert.deepEqual(links.map(a=>a.textContent),['Leadership Model Canvas','GROW Canvas','Catatan Mentee']);
+  assert.ok(links.every(a=>new URL(a.href).searchParams.get('mentee')==='M'));
+  v.dom.window.close();
  }
 });
