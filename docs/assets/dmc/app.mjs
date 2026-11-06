@@ -1,3 +1,4 @@
+import {menteeRoster} from '../grow/roster.mjs';
 import {rpc} from '../assessment/api.mjs';
 import {boot, href, role, scope} from '../grow/context.mjs';
 import {blocks, blockLimit} from './blocks.mjs';
@@ -26,11 +27,16 @@ function cards(values, editable) {
 
 export async function mount() {
   const root = document.querySelector('#dmc-app');
-  if (!await boot({requireTrack:false})) {
+  if (!await boot({requireTrack:false,allowRoster:true})) {
     root.textContent = 'Akun belum dapat diperiksa.';
     return;
   }
   if (!['mentee','asmen','mentor'].includes(role)) throw Error('Fitur ini tersedia untuk Mentee, Asmen, dan Mentor.');
+
+  if (scope.picking) {
+    root.innerHTML = menteeRoster(scope,'Leadership Model Canvas',subject=>href(page,subject));
+    return;
+  }
 
   const editable = role === 'mentee';
   const args = {p_cohort:scope.cohort.id, p_mentee:scope.mentee};
@@ -45,7 +51,7 @@ export async function mount() {
       <p class="sub">Petakan rencana pengembangan dalam sembilan blok sebagai bekal mengisi GROW Canvas.</p>
       <p class="sub">${esc(people?.name)}${scope.enrolment?.field ? ' · '+esc(scope.enrolment.field) : ''}</p>
     </header>
-    ${editable?'':`<div class="dmc-scope">
+    ${editable?'':`<div class="dmc-scope"><a class="button" href="${esc(href(page,{mentee:null,group:null}))}">← Daftar mentee</a>
       ${scope.groups.length>1 ? picker('group','Kelompok',scope.groups,scope.group.id) : ''}
       ${picker('mentee','Mentee',scope.people,scope.mentee)}
     </div>`}
@@ -63,7 +69,7 @@ export async function mount() {
       '<section class="card"><h2>Canvas belum dibagikan</h2><p class="sub">Canvas akan muncul setelah mentee membagikannya.</p></section>'}`;
 
   root.querySelector('[name=group]')?.addEventListener('change', event => {
-    location.assign(href(page,{group:event.target.value,mentee:undefined}));
+    location.assign(href(page,{group:event.target.value,mentee:null}));
   });
   root.querySelector('[name=mentee]')?.addEventListener('change', event => {
     location.assign(href(page,{mentee:event.target.value}));

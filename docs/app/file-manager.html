@@ -166,9 +166,7 @@ body{margin:0}
         <img src="{{c.logo}}" alt="" style="height: 38px; width: auto">
         <span style="display: flex; flex-direction: column; line-height: 1.05"><span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; color: {{c.brand}}; letter-spacing: -.01em">LEAP</span><span style="font-size: 10.5px; font-weight: 700; color: {{c.muted}}; letter-spacing: .06em; text-transform: uppercase">Management System</span></span>
       </a>
-      <button type="button" style="height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; font: inherit; font-size: 12.5px; font-weight: 700; color: {{c.brand}}; display: flex; align-items: center; gap: 6px; cursor: pointer">Batch 2026
-        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
-      </button>
+      <span class="leap-batch-label" style="height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; font: inherit; font-size: 12.5px; font-weight: 700; color: {{c.brand}}; display: flex; align-items: center; white-space: nowrap">Batch 2026</span>
     </div>
 
     <nav aria-label="Menu utama" style="flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px">
@@ -462,12 +460,15 @@ class Component extends DCLogic {
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
     };
     const p = people[role] || people.mentee;
-    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:kegiatan-event|absensi-pengurus|kehadiran)\.html$/.test(u.pathname)){const cohort=new URLSearchParams(location.search).get('cohort');if(cohort)u.searchParams.set('cohort',cohort);return u.pathname+u.search;}if(/(?:beranda-asmen|beranda-mentor|grow-canvas|development-model-canvas|kelompok|poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
+    const scopedHref=(href,staffMenu=false)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:kegiatan-event|absensi-pengurus|kehadiran)\.html$/.test(u.pathname)){const cohort=new URLSearchParams(location.search).get('cohort');if(cohort)u.searchParams.set('cohort',cohort);return u.pathname+u.search;}if(/(?:beranda-asmen|beranda-mentor|grow-canvas|development-model-canvas|kelompok|poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
       const current=new URLSearchParams(location.search);for(const key of ['cohort','mentee','group','period','record','source'])if(current.has(key)&&!u.searchParams.has(key))u.searchParams.set(key,current.get(key));
       if(location.pathname.includes('/review-penilaian/'))u.searchParams.set('peran',role==='pengurus'?'program':role);
+      else if(staffMenu&&/\/(?:grow-canvas|mentoring|raport|development-model-canvas)\.html$/.test(u.pathname)){
+        for(const key of ['mentee','group','record','source'])u.searchParams.delete(key);
+      }
       return u.pathname+u.search;}return href;};
     const items = (menus[role] || menus.mentee).filter(m=>!['chat','task'].includes(m.key)).map((m) => {
-      m=Object.assign({},m,{href:scopedHref(m.href),children:m.children?.map(ch=>Object.assign({},ch,{href:scopedHref(ch.href)}))});
+      m=Object.assign({},m,{href:scopedHref(m.href),children:m.children?.map(ch=>Object.assign({},ch,{href:scopedHref(ch.href,m.key==='kelompok'&&['asmen','mentor'].includes(role))}))});
       const on = m.key === active;
       const open = this.state.open === m.key;
       return Object.assign({}, m, {

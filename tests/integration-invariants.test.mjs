@@ -36,6 +36,8 @@ test('shared logout hook preserves original Navbar style, hero and unrelated mod
  const paths=execFileSync('git',['ls-tree','-r','--name-only',base,'docs/app'],{encoding:'utf8'}).trim().split('\n').filter(p=>!['docs/app/catat-sesi.html','docs/app/monitoring-progres.html','docs/app/penilaian.html','docs/app/kelompok.html','docs/app/index.html','docs/app/beranda-mentee.html','docs/app/pengaturan.html','docs/app/event.html','docs/app/kalender.html','docs/app/pengumuman.html'].includes(p));
  const withoutMobile=s=>s.replace(' class="leap-erp-header"','').replace('<link rel="stylesheet" href="../assets/navigation/mobile.css?v=20261105">\n','').replace(', viewport-fit=cover','');
  const withoutRevisedControls=s=>s
+  .replace(/^      <button type="button" style="height: 32px;[^\n]*>Batch 2026[\s\S]*?^      <\/button>/m,'      Batch 2026')
+  .replace(/^      <span class="leap-batch-label"[^\n]*<\/span>/m,'      Batch 2026')
   .replace(/      <button type="button" aria-label="Tambah cepat"[\s\S]*?^      <\/button>\n/m,'')
   .replace(/^      <button type="button" onClick="{{toggleNotif}}"[\s\S]*?^      <\/button>\n/m,'')
   .replace(/^      <sc-if value="{{notifOpen}}"[\s\S]*?^      <\/sc-if>\n/m,'');

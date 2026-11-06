@@ -20,3 +20,16 @@ body{margin:0;background:#F5F7FC;color:#0D0D1A;font-family:'Plus Jakarta Sans',s
 .grow-wrap .report-appreciation h3{font-size:clamp(18px,3vw,25px)}
 .grow-wrap .report-appreciation .eyebrow,.grow-wrap .report-progress{color:#dce9ff}
 .grow-wrap .report-appreciation .score{color:#fff}
+
+.grow-wrap .roster-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px;list-style:none;margin:0;padding:0}
+.grow-wrap .roster-list .button{width:100%;justify-content:space-between;text-align:left;overflow-wrap:anywhere}
+.grow-wrap .meeting-entry{padding:0;border:1px solid #D6DDEF;border-radius:16px;background:#fff;overflow:hidden}
+.grow-wrap .meeting-entry summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;list-style:none}
+.grow-wrap .meeting-entry summary::-webkit-details-marker{display:none}
+.grow-wrap .meeting-entry summary>span:first-child{min-width:0;flex:1;overflow-wrap:anywhere}
+.grow-wrap .meeting-entry summary strong,.grow-wrap .meeting-entry summary small{display:block}
+.grow-wrap .meeting-entry summary::after{content:'';width:8px;height:8px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);margin-right:4px}
+.grow-wrap .meeting-entry[open] summary::after{transform:rotate(225deg)}
+.grow-wrap .meeting-body{padding:16px;border-top:1px solid #E4E9F3}
+.grow-wrap #canvas-message{scroll-margin-block:88px;margin:0}
+.grow-wrap #canvas-form :is(input,textarea)::placeholder{color:#68708B;opacity:1}
