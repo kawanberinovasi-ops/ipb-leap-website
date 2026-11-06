@@ -16,3 +16,7 @@ body{margin:0;background:#F5F7FC;color:#0D0D1A;font-family:'Plus Jakarta Sans',s
 .grow-wrap .phase-button{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
 .grow-wrap .phase-button small,.grow-wrap .phase-period{font-size:.8em;font-weight:500}
 .grow-wrap .phase-period{color:#6A738C;display:block}
+.grow-wrap .report-appreciation{margin:14px 0;padding:22px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#32306f,#3157a5)}
+.grow-wrap .report-appreciation h3{font-size:clamp(18px,3vw,25px)}
+.grow-wrap .report-appreciation .eyebrow,.grow-wrap .report-progress{color:#dce9ff}
+.grow-wrap .report-appreciation .score{color:#fff}

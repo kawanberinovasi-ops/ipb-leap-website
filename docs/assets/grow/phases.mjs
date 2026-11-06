@@ -21,3 +21,11 @@ export function phaseDates(period, startsOn) {
   const firstYear = first.getUTCFullYear(), lastYear = last.getUTCFullYear();
   return `${month.format(first)}${firstYear === lastYear ? '' : ' ' + firstYear}–${month.format(last)} ${lastYear}`;
 }
+
+// Match the publication boundary in erp_grow_command, including short months.
+export function phaseEnd(period, startsOn) {
+  if (!periods.includes(period) || !/^\d{4}-\d{2}-\d{2}$/.test(startsOn ?? '')) return '';
+  const [year, month, day] = startsOn.split('-').map(Number);
+  const lastDay = new Date(Date.UTC(year, month + period, 0)).getUTCDate();
+  return new Date(Date.UTC(year, month + period - 1, Math.min(day, lastDay) - 1)).toISOString().slice(0, 10);
+}

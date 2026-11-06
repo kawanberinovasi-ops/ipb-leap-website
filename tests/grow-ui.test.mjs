@@ -37,3 +37,42 @@ test('mentee adds multiple track KPIs without losing existing fields and saves e
  v.d.querySelector('[data-action="remove-kpi:socialLegal"]').click();assert.equal(v.d.querySelectorAll('[data-canvas-kpi]').length,3);assert.ok(v.d.querySelector('[name=additionalKpi] option[value=socialLegal]'));assert.equal(v.d.querySelector('[name="kpi.socialPrograms.m6"]').value,'SECOND KPI M6');
  v.fail();v.d.querySelector('[data-action=save-canvas]').click();for(let i=0;i<5;i++)await new Promise(setImmediate);const sent=v.sent[0];assert.equal(sent.action,'canvas_save');assert.equal(sent.expected,5);assert.equal(sent.data.kpis.length,3);assert.equal(sent.data.goal,'KEEP MY GOAL');assert.equal(sent.data.kpis.find(k=>k.id==='socialBeneficiaries').baseline,'7');assert.equal(sent.data.kpis.find(k=>k.id==='socialPrograms').milestones[6],'SECOND KPI M6');assert.equal(v.d.querySelectorAll('[data-canvas-kpi]').length,3);v.dom.window.close();
 });
+
+test('mentoring shows topic and session date without dropping a legacy draft theme on save',async()=>{
+ const initial=state();
+ initial.notes[0].data.topic='Persiapan proposal';
+ initial.notes.push({id:'DRAFT',status:'Draft',period:3,data:{theme:'Legacy',topic:'Diskusi progres'}});
+ const v=await ui('mentee','mentoring',initial);
+ assert.equal(v.d.querySelector('[name=theme]'),null);
+ assert.match(v.d.querySelector('#grow-app').textContent,/Persiapan proposal.*2 November 2026/s);
+ v.d.querySelector('[data-action="edit-note:DRAFT"]').click();
+ v.d.querySelector('[data-action="save-note"]').click();
+ assert.equal(v.sent[0].data.data.theme,'Legacy');
+ assert.equal(v.sent[0].data.data.topic,'Diskusi progres');
+ v.dom.window.close();
+});
+
+test('saving a follow-up confirms beside its form and keeps the form open',async()=>{
+ const v=await ui('mentee');
+ v.d.querySelector('.outcome-form').dispatchEvent(new v.dom.window.Event('submit',{cancelable:true}));
+ await new Promise(setImmediate);
+ assert.equal(v.sent[0].action,'outcome_save');
+ assert.equal(v.d.querySelector('#outcome-message-NOTE').textContent,'Tindak lanjut berhasil disimpan.');
+ assert.equal(v.d.querySelector('.outcome-form').closest('details').open,true);
+ v.dom.window.close();
+});
+
+test('Mentor sees opening date before publication and can publish on the last day with a complete score',async()=>{
+ const early=await ui('mentor');
+ assert.equal(early.d.querySelector('[data-action=publish]').disabled,true);
+ assert.match(early.d.querySelector('#grow-app').textContent,/mulai 31 Januari 2027/);
+ early.dom.window.close();
+ const initial=state();
+ initial.today='2027-01-31';
+ initial.publications[0].score.total=85;
+ const ready=await ui('mentor','report',initial);
+ assert.equal(ready.d.querySelector('[data-action=publish]').disabled,false);
+ assert.match(ready.d.querySelector('#hasil-terbit').textContent,/Kerja bagus/);
+ ready.dom.window.close();
+ assert.equal(phases.phaseEnd(3,'2026-11-30'),'2027-02-27');
+});

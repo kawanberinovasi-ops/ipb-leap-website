@@ -192,6 +192,14 @@ const server=http.createServer(async(req,res)=>{
     const currentEmail=email.get(role)||role+'@example.test';
     await as(database,role);
     if(name==='qa_actor')return{id:id(actors[role]),display_name:names[role],roles:[role],active:true,email:currentEmail};
+    if(name==='erp_portal_workspace'){
+     if(args.p_cohort&&args.p_cohort!==id(20))throw Error('Batch tidak tersedia.');
+     const workspace=(await database.query('select erp_workspace($1,$2) result',[id(20),null])).rows[0].result;
+     return {...workspace,canManage:false,activities:[],announcements:scenario==='terisi'?[{
+      id:id(70),title:'Pengumuman contoh IPB LEAP',body:'Ini contoh pengumuman untuk menguji notifikasi.',
+      publish_at:'2026-11-01T00:00:00Z',withdrawn_at:null,audience_all:true,roles:[],group_ids:[],user_ids:[],pinned:true,important:false,
+     }]:[]};
+    }
     if(name==='qa_email_request'){
      if(!/^[^\s@]+@[^\s@]+$/.test(args.email)||args.email===currentEmail)throw Error('Masukkan email baru yang valid.');
      pendingEmail.set(role,args.email);
