@@ -12,3 +12,27 @@ body{margin:0;background:#F5F7FC;color:#0D0D1A;font-family:'Plus Jakarta Sans',s
 @media(max-width:700px){#local-preview-controls .preview-mode-link{grid-column:1/-1}.grow-wrap .practice-guide .section-title{align-items:flex-start;flex-direction:column}}
 
 .grow-wrap .published-total{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+
+.grow-wrap .phase-button{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.grow-wrap .phase-button small,.grow-wrap .phase-period{font-size:.8em;font-weight:500}
+.grow-wrap .phase-period{color:#6A738C;display:block}
+.grow-wrap .report-appreciation{margin:14px 0;padding:22px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#32306f,#3157a5)}
+.grow-wrap .report-appreciation h3{font-size:clamp(18px,3vw,25px)}
+.grow-wrap .report-appreciation .eyebrow,.grow-wrap .report-progress{color:#dce9ff}
+.grow-wrap .report-appreciation .score{color:#fff}
+
+.grow-wrap .roster-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,176px),1fr));gap:12px;list-style:none;margin:0;padding:0}
+.grow-wrap .roster-tile{width:100%;height:100%;min-height:100px;flex-direction:column;align-items:flex-start;justify-content:center;gap:10px;padding:14px;background:#F5F7FC;text-align:left;overflow-wrap:anywhere}
+.grow-wrap .roster-tile:focus-visible{outline:2px solid #3157A5;outline-offset:3px}
+.grow-wrap .roster-initials{display:grid;place-items:center;min-width:34px;height:34px;padding-inline:6px;border-radius:10px;background:#E4EBF8;color:#32306F;font-size:13px;font-weight:800}
+@media(max-width:640px){.grow-wrap .roster-list{grid-template-columns:repeat(auto-fill,minmax(min(100%,128px),1fr))}}
+.grow-wrap .meeting-entry{padding:0;border:1px solid #D6DDEF;border-radius:16px;background:#fff;overflow:hidden}
+.grow-wrap .meeting-entry summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;list-style:none}
+.grow-wrap .meeting-entry summary::-webkit-details-marker{display:none}
+.grow-wrap .meeting-entry summary>span:first-child{min-width:0;flex:1;overflow-wrap:anywhere}
+.grow-wrap .meeting-entry summary strong,.grow-wrap .meeting-entry summary small{display:block}
+.grow-wrap .meeting-entry summary::after{content:'';width:8px;height:8px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);margin-right:4px}
+.grow-wrap .meeting-entry[open] summary::after{transform:rotate(225deg)}
+.grow-wrap .meeting-body{padding:16px;border-top:1px solid #E4E9F3}
+.grow-wrap #canvas-message{scroll-margin-block:88px;margin:0}
+.grow-wrap #canvas-form :is(input,textarea)::placeholder{color:#68708B;opacity:1}

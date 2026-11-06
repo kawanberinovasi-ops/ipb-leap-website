@@ -126,7 +126,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
           <thead><tr style="text-align: left; color: #6B6D8C; font-size: 12.5px"><th style="padding: 10px 12px; font-weight: 700">Judul</th><th style="padding: 10px 12px; font-weight: 700">Penerima</th><th style="padding: 10px 12px; font-weight: 700">Dikirim</th><th style="padding: 10px 12px; font-weight: 700">Status</th></tr></thead>
           <tbody>
             <template data-dc-each="{{history}}" data-as="h">
-              <tr style="border-top: 1px solid #F0F2F8"><td style="padding: 12px; font-weight: 700">{{h.title}}</td><td style="padding: 12px; color: #55577A">{{h.to}}</td><td style="padding: 12px; color: #55577A">{{h.when}}</td><td style="padding:12px">{{h.status}}<sc-if value="{{h.canWithdraw}}"><button type="button" onClick="{{h.withdraw}}">Tarik</button></sc-if></td></tr>
+              <tr id="{{h.anchor}}" style="border-top: 1px solid #F0F2F8"><td style="padding: 12px; font-weight: 700">{{h.title}}</td><td style="padding: 12px; color: #55577A">{{h.to}}</td><td style="padding: 12px; color: #55577A">{{h.when}}</td><td style="padding:12px">{{h.status}}<sc-if value="{{h.canWithdraw}}"><button type="button" onClick="{{h.withdraw}}">Tarik</button></sc-if></td></tr>
             </template>
           </tbody>
         </table>

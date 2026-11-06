@@ -47,3 +47,22 @@ Jika perlu pemulihan, revert commit frontend pada hosting/source. Pertahankan ta
 Asmen dan Mentor memiliki route Beranda terpisah: `app/beranda-asmen.html` dan `app/beranda-mentor.html`. Login, logo, menu Beranda, serta hasil pencarian mengarah ke Beranda sesuai role akun. Halaman Kelompok dan menu review tetap terpisah. Ringkasan memanfaatkan workspace, penugasan kelompok, GROW, sesi, dan portal yang sudah ada tanpa migrasi atau penulisan data baru. Prioritas Asmen memuat pengajuan GROW dan action dengan pemeriksaan yang belum ada/usang; prioritas Mentor memuat kesepakatan GROW, review milestone, dan dukungan mentee. Kegagalan sebagian data ditampilkan sebagai belum tersedia, bukan dianggap nol. Scan QR tidak ditambahkan pada role Asmen.
 
 Jika pendamping membuka URL Beranda role lain, frontend memakai role pendamping yang benar-benar dimiliki akun dan menormalkan alamat ke Beranda role tersebut tanpa menghapus parameter batch/kelompok. Akun selain Asmen/Mentor tetap ditolak. Ini hanya pemilihan tampilan; cakupan data tetap diperiksa oleh API penugasan.
+
+## Pratinjau Leadership Model Canvas dan ganti email
+
+Jalankan `npm ci`, `npm run build`, lalu `node tools/preview-dmc.mjs`. Buka
+`http://127.0.0.1:8793/` untuk versi kosong dan contoh terisi. Setiap versi
+menyediakan tab Mentee, Asmen, dan Mentor. Pratinjau membaca file hasil build
+dan memakai data uji di memori. Simulasi konfirmasi email ada di halaman
+Pengaturan pada bilah pratinjau lokal.
+
+Migrasi Leadership Model Canvas menyediakan `erp_dmc_state` dan
+`erp_dmc_save` dengan penyimpanan terpisah dan pemeriksaan penugasan yang sama dengan GROW. Kontrak UI memakai ID
+cohort dan mentee. Hanya pemilik yang boleh mengubah draft. Asmen dan Mentor
+yang ditugaskan menerima versi terakhir yang dibagikan, tanpa draft.
+Penyimpanan menerima revisi yang diharapkan untuk mendeteksi konflik. ID
+sembilan blok dan batas teks ada di `src/assets/dmc/blocks.mjs`.
+
+Uji konfirmasi perubahan email Supabase Auth, izin URL kembali, serta
+sinkronisasi email login dan email profil setelah konfirmasi sebelum rilis.
+Pratinjau tidak mengirim email sungguhan.

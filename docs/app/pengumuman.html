@@ -145,7 +145,7 @@ body{margin:0}
           <thead><tr style="text-align: left; color: #6B6D8C; font-size: 12.5px"><th style="padding: 10px 12px; font-weight: 700">Judul</th><th style="padding: 10px 12px; font-weight: 700">Penerima</th><th style="padding: 10px 12px; font-weight: 700">Dikirim</th><th style="padding: 10px 12px; font-weight: 700">Status</th></tr></thead>
           <tbody>
             <template data-dc-each="{{history}}" data-as="h">
-              <tr style="border-top: 1px solid #F0F2F8"><td style="padding: 12px; font-weight: 700">{{h.title}}</td><td style="padding: 12px; color: #55577A">{{h.to}}</td><td style="padding: 12px; color: #55577A">{{h.when}}</td><td style="padding:12px">{{h.status}}<sc-if value="{{h.canWithdraw}}"><button type="button" onClick="{{h.withdraw}}">Tarik</button></sc-if></td></tr>
+              <tr id="{{h.anchor}}" style="border-top: 1px solid #F0F2F8"><td style="padding: 12px; font-weight: 700">{{h.title}}</td><td style="padding: 12px; color: #55577A">{{h.to}}</td><td style="padding: 12px; color: #55577A">{{h.when}}</td><td style="padding:12px">{{h.status}}<sc-if value="{{h.canWithdraw}}"><button type="button" onClick="{{h.withdraw}}">Tarik</button></sc-if></td></tr>
             </template>
           </tbody>
         </table>
@@ -165,9 +165,7 @@ body{margin:0}
         <img src="{{c.logo}}" alt="" style="height: 38px; width: auto">
         <span style="display: flex; flex-direction: column; line-height: 1.05"><span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 15px; color: {{c.brand}}; letter-spacing: -.01em">LEAP</span><span style="font-size: 10.5px; font-weight: 700; color: {{c.muted}}; letter-spacing: .06em; text-transform: uppercase">Management System</span></span>
       </a>
-      <button type="button" style="height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; font: inherit; font-size: 12.5px; font-weight: 700; color: {{c.brand}}; display: flex; align-items: center; gap: 6px; cursor: pointer">Batch 2026
-        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="m6 9 6 6 6-6"></path></svg>
-      </button>
+      <span class="leap-batch-label" style="height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; font: inherit; font-size: 12.5px; font-weight: 700; color: {{c.brand}}; display: flex; align-items: center; white-space: nowrap">Batch 2026</span>
     </div>
 
     <nav aria-label="Menu utama" style="flex: 1 1 auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px">
@@ -200,16 +198,13 @@ body{margin:0}
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
         <span>Cari</span><span style="font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 6px; background: {{c.chip}}; border: 1px solid {{c.line2}}">⌘K</span>
       </button>
-      <button type="button" aria-label="Tambah cepat" title="Task, note, atau event baru" style="width: 40px; height: 40px; border-radius: 12px; border: 0; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.3)">
-        <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>
-      </button>
       <a hidden data-hidden-feature="chat" href="chat.html" aria-label="Chat, 5 pesan baru" style="display:none!important;position: relative; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: {{c.icon}}">
         <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"></path></svg>
         <span style="position: absolute; top: 4px; right: 3px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; border-radius: 9px; background: #3157A5; color: #FFFFFF; font-size: 10.5px; font-weight: 800; display: flex; align-items: center; justify-content: center; border: 2px solid {{c.ring}}">5</span>
       </a>
-      <button type="button" onClick="{{toggleNotif}}" aria-label="Notifikasi, 3 belum dibaca" aria-expanded="{{notifExpanded}}" style="position: relative; width: 40px; height: 40px; border-radius: 12px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: {{c.icon}}; cursor: pointer">
+      <button type="button" onClick="{{toggleNotif}}" aria-label="{{notifLabel}}" aria-expanded="{{notifExpanded}}" style="position: relative; width: 40px; height: 40px; border-radius: 12px; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; color: {{c.icon}}; cursor: pointer">
         <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"></path><path d="M10 20a2 2 0 0 0 4 0"></path></svg>
-        <span style="position: absolute; top: 6px; right: 7px; width: 10px; height: 10px; border-radius: 50%; background: #D4FF3A; border: 2px solid #32306F"></span>
+        <sc-if value="{{hasUnread}}"><span style="position: absolute; top: 6px; right: 7px; width: 10px; height: 10px; border-radius: 50%; background: #D4FF3A; border: 2px solid #32306F"></span></sc-if>
       </button>
       <button type="button" onClick="{{toggleMe}}" aria-expanded="{{meExpanded}}" aria-label="Menu akun" style="display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 6px 0 4px; border-radius: 999px; border: 1px solid {{c.line2}}; background: {{c.chip}}; cursor: pointer; font: inherit">
         <span style="width: 34px; height: 34px; border-radius: 50%; background: {{avatarBg}}; color: #FFFFFF; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center">{{initials}}</span>
@@ -218,11 +213,16 @@ body{margin:0}
 
       <sc-if value="{{notifOpen}}" hint-placeholder-val="{{ false }}">
         <div style="position: absolute; top: 56px; right: 40px; width: 360px; padding: 16px; border-radius: 22px; background: {{c.pop}}; border: 1px solid {{c.line2}}; box-shadow: 0 24px 60px -24px rgba(13,13,26,.55); z-index: 60">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px"><strong style="font-size: 15px">Notifikasi</strong><span style="font-size: 12.5px; font-weight: 700; color: {{c.link}}">Tandai dibaca</span></div>
-          <div style="display: flex; flex-direction: column">
-            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Periode penilaian Oktober ditutup <strong>H-3</strong>. Masih ada 2 form.<br><span style="color: {{c.muted}}; font-size: 12px">10 menit lalu</span></span></div>
-            <div style="display: flex; gap: 12px; padding: 12px 4px; border-bottom: 1px solid {{c.line}}"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Kamu diundang ke <strong>Sesi Mentoring #6</strong>, Sab 18 Okt 09.00.<br><span style="color: {{c.muted}}; font-size: 12px">1 jam lalu</span></span></div>
-            <div style="display: flex; gap: 12px; padding: 12px 4px"><span style="width: 8px; height: 8px; margin-top: 6px; border-radius: 50%; background: #3157A5; flex: none"></span><span style="font-size: 13.5px; line-height: 1.5">Pendaftaran <strong>Leadership Camp</strong> dibuka hari ini.<br><span style="color: {{c.muted}}; font-size: 12px">3 jam lalu</span></span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px">
+            <strong style="font-size:15px">Notifikasi</strong>
+            <sc-if value="{{hasUnread}}"><button type="button" onClick="{{markNotifications}}" style="padding:8px;border:0;background:transparent;font:inherit;font-size:12.5px;font-weight:700;color:{{c.link}};cursor:pointer">Tandai dibaca</button></sc-if>
+          </div>
+          <p role="status" style="margin:0;color:{{c.muted}};font-size:13px">{{notifMessage}}</p>
+          <div style="display:flex;flex-direction:column;max-height:360px;overflow:auto">
+            <sc-for list="{{notifications}}" as="item"><a href="{{item.href}}" onClick="{{item.mark}}" style="display:block;padding:12px 4px;border-bottom:1px solid {{c.line}};color:{{c.ink}};text-decoration:none;overflow-wrap:anywhere">
+              <sc-if value="{{item.unread}}"><span aria-label="Belum dibaca" style="display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;background:#3157A5"></span></sc-if>
+              <strong style="font-size:13.5px">{{item.title}}</strong><br><small style="color:{{c.muted}}">{{item.when}}</small>
+            </a></sc-for>
           </div>
         </div>
       </sc-if>
@@ -250,15 +250,59 @@ class Component extends DCLogic {
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { open: null, notif: false, me: false };
+    this.state = { open: null, notif: false, me: false, notifications:[], readIds:[], notifMessage:'' };
   }
   componentDidMount(){
     const review=location.pathname.includes('/review-penilaian/');
     const mobile=review?null:import(new URL('../assets/navigation/mobile.mjs?v=20261105',location.href).href);
     const updateMobile=()=>mobile?.then(m=>m.mountMobileNavigation(this.renderVals())).catch(()=>{});
-    window.addEventListener('leap:account',()=>{this.setState({open:null,notif:false,me:false});updateMobile();});
+    window.addEventListener('leap:account',()=>{
+      const actor=window.leapAccount?.id;
+      if(this._notificationActor!==actor){
+        this._notificationActor=actor;
+        this._notificationRequest=null;
+        this._notificationKey=null;
+        this.setState({notifications:[],readIds:[],notifMessage:''});
+      }
+      this.setState({open:null,notif:false,me:false});
+      updateMobile();
+    });
     updateMobile();
     if(!review)import(new URL('../assets/assessment/session.mjs',location.href).href).then(m=>m.mountSession()).then(()=>import(new URL('../assets/portal/search.mjs?v=20261104-event',location.href).href)).then(m=>m.mountSearch()).catch(()=>{});
+  }
+  async toggleNotifications() {
+    const open=!this.state.notif;
+    this.setState({notif:open,me:false,open:null});
+    if(!open)return;
+    const actor=window.leapAccount;
+    if(!actor?.id||location.pathname.includes('/review-penilaian/')){
+      this.setState({notifMessage:'Belum ada notifikasi.'});
+      return;
+    }
+    const request=Symbol();
+    this._notificationRequest=request;
+    this.setState({notifMessage:'Memuat notifikasi…'});
+    try{
+      const {portalWorkspace,activeAnnouncements,portalURL,stamp}=await import(new URL('../assets/portal/api.mjs',location.href).href);
+      const data=await portalWorkspace();
+      if(this._notificationRequest!==request||window.leapAccount?.id!==actor.id)return;
+      this._notificationKey='ipbleap.notifications.read.'+actor.id+'.'+data.selectedCohort;
+      let readIds=this.state.readIds;
+      try{readIds=JSON.parse(localStorage.getItem(this._notificationKey)||'[]');}catch{}
+      if(!Array.isArray(readIds))readIds=[];
+      const notifications=activeAnnouncements(data).map(a=>({
+        id:a.id,title:a.title,when:stamp(a.publish_at),
+        href:portalURL('pengumuman.html',data)+'#announcement-'+encodeURIComponent(a.id),
+      }));
+      this.setState({notifications,readIds,notifMessage:notifications.length?'':'Belum ada notifikasi.'});
+    }catch{
+      if(this._notificationRequest===request)this.setState({notifMessage:'Notifikasi belum dapat dimuat. Tutup dan buka kembali untuk mencoba lagi.'});
+    }
+  }
+  markNotifications(ids) {
+    const readIds=[...new Set([...this.state.readIds,...ids])];
+    try{localStorage.setItem(this._notificationKey,JSON.stringify(readIds));}catch{}
+    this.setState({readIds});
   }
   renderVals() {
     const actor=window.leapAccount,granted=actor?.roles||[],selected=sessionStorage.getItem('ipbleap.ui.role'),serverRole=granted.includes(selected)?selected:granted[0];
@@ -280,7 +324,7 @@ class Component extends DCLogic {
     ];
     kel.pop();
     const assessmentLink=(label,desc,href,short,tint='#E4EBF8')=>({label,desc,href,short,tint});
-    const asmenFlow=[assessmentLink('Kelompok','Kelompok dan sesi mentoring','kelompok.html','KL'),assessmentLink('Review GROW','Tujuan dan milestone mentee','grow-canvas.html','GR'),assessmentLink('Review Catatan Mentee','Pembelajaran dan tindak lanjut mentee','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP')];
+    const asmenFlow=[assessmentLink('Kelompok','Kelompok dan sesi mentoring','kelompok.html','KL'),assessmentLink('Leadership Model Canvas','Pemetaan mentee yang sudah dibagikan','development-model-canvas.html','LM'),assessmentLink('Review GROW','Tujuan dan milestone mentee','grow-canvas.html','GR'),assessmentLink('Review Catatan Mentee','Pembelajaran dan tindak lanjut mentee','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP')];
     const mentorFlow=asmenFlow;
     const programP = { key: 'program', label: 'Program', children: [
       ...(role==='pengurus'?[{ label: 'Scan Absensi', desc: 'Scan QR dan rekap kehadiran per mentee', href: 'absensi-pengurus.html', short: 'QR', tint: '#EEFFB8' },{ label: 'Kelola Akun & Progres', desc: 'Akun, kelompok dan perjalanan tiap mentee', href: 'kelola-program.html', short: 'AK', tint: '#E7E6F3' }]:[]),
@@ -302,7 +346,7 @@ class Component extends DCLogic {
     const menus = {
       mentee: [
         { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
-        { key: 'program', label: 'Program', children: [assessmentLink('GROW Canvas','Tujuan awal dan milestone tiga bulanan','grow-canvas.html','GR'),assessmentLink('Catat Mentoring','Pembelajaran, action dan tenggat','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP','#EEFFB8')] }
+        { key: 'program', label: 'Program', children: [assessmentLink('Leadership Model Canvas','Petakan rencana pengembangan','development-model-canvas.html','LM'),assessmentLink('GROW Canvas','Tujuan awal dan milestone tiga bulanan','grow-canvas.html','GR'),assessmentLink('Catat Mentoring','Pembelajaran, action dan tenggat','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP','#EEFFB8')] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
         { key: 'beranda', label: 'Beranda', href: 'beranda-asmen.html' },
@@ -338,12 +382,15 @@ class Component extends DCLogic {
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
     };
     const p = people[role] || people.mentee;
-    const scopedHref=(href)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:kegiatan-event|absensi-pengurus|kehadiran)\.html$/.test(u.pathname)){const cohort=new URLSearchParams(location.search).get('cohort');if(cohort)u.searchParams.set('cohort',cohort);return u.pathname+u.search;}if(/(?:beranda-asmen|beranda-mentor|grow-canvas|kelompok|poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
+    const scopedHref=(href,staffMenu=false)=>{if(!href)return href;const u=new URL(href,location.href);if(/(?:kegiatan-event|absensi-pengurus|kehadiran)\.html$/.test(u.pathname)){const cohort=new URLSearchParams(location.search).get('cohort');if(cohort)u.searchParams.set('cohort',cohort);return u.pathname+u.search;}if(/(?:beranda-asmen|beranda-mentor|grow-canvas|development-model-canvas|kelompok|poc|abc|mentoring|hasil-kpi|catat-sesi|progres|penilaian|raport|observer|kelompok-penilaian)\.html$/.test(u.pathname)){
       const current=new URLSearchParams(location.search);for(const key of ['cohort','mentee','group','period','record','source'])if(current.has(key)&&!u.searchParams.has(key))u.searchParams.set(key,current.get(key));
       if(location.pathname.includes('/review-penilaian/'))u.searchParams.set('peran',role==='pengurus'?'program':role);
+      else if(staffMenu&&/\/(?:grow-canvas|mentoring|raport|development-model-canvas)\.html$/.test(u.pathname)){
+        for(const key of ['mentee','group','record','source'])u.searchParams.delete(key);
+      }
       return u.pathname+u.search;}return href;};
     const items = (menus[role] || menus.mentee).filter(m=>!['chat','task'].includes(m.key)).map((m) => {
-      m=Object.assign({},m,{href:scopedHref(m.href),children:m.children?.map(ch=>Object.assign({},ch,{href:scopedHref(ch.href)}))});
+      m=Object.assign({},m,{href:scopedHref(m.href),children:m.children?.map(ch=>Object.assign({},ch,{href:scopedHref(ch.href,m.key==='kelompok'&&['asmen','mentor'].includes(role))}))});
       const on = m.key === active;
       const open = this.state.open === m.key;
       return Object.assign({}, m, {
@@ -356,6 +403,7 @@ class Component extends DCLogic {
         toggle: () => this.setState({ open: open ? null : m.key, notif: false, me: false })
       });
     });
+    const unread=this.state.notifications.filter(item=>!this.state.readIds.includes(item.id));
     return Object.assign({}, p, {
       c: c,
       ...(actor?{name:actor.display_name,subtitle:granted.map(r=>({mentee:'Mentee',asmen:'Asmen',mentor:'Mentor',program:'Pengurus',finance:'Bendahara',system:'Super Admin',event:'Project Management & Monitoring Lead'}[r]||r)).join(' · '),initials:(actor.display_name||'').split(/\s+/).slice(0,2).map(n=>n[0]).join('')}:{}),
@@ -367,7 +415,12 @@ class Component extends DCLogic {
       meOpen: this.state.me,
       notifExpanded: this.state.notif ? 'true' : 'false',
       meExpanded: this.state.me ? 'true' : 'false',
-      toggleNotif: () => this.setState({ notif: !this.state.notif, me: false, open: null }),
+      notifLabel: unread.length ? 'Notifikasi, '+unread.length+' belum dibaca' : 'Notifikasi',
+      hasUnread: unread.length>0,
+      notifMessage: this.state.notifMessage,
+      notifications: this.state.notifications.map(item=>({...item,unread:!this.state.readIds.includes(item.id),mark:()=>this.markNotifications([item.id])})),
+      markNotifications: () => this.markNotifications(unread.map(item=>item.id)),
+      toggleNotif: () => this.toggleNotifications(),
       toggleMe: () => this.setState({ me: !this.state.me, notif: false, open: null })
     });
   }

@@ -246,7 +246,20 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
             <div style="{{s.card}}">
               <h2 style="{{s.h2}}">Akun &amp; keamanan</h2>
               <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 14px">
-                <div style="{{s.row}}"><span><strong style="display: block">Email login</strong><span style="{{s.hint}}">{{person.email}}</span></span><button type="button" style="{{s.secondary}}">Ganti email</button></div>
+                <div style="{{s.row}}"><span><strong style="display: block">Email login</strong><span style="{{s.hint}}">{{person.email}}</span></span><button type="button" style="{{s.secondary}}" onClick="{{openEmail}}" aria-expanded="{{emailOpen}}" disabled="{{emailDisabled}}">Ganti email</button></div>
+                <sc-if value="{{emailOpen}}" hint-placeholder-val="{{ false }}">
+                  <form aria-label="Ganti email login" onSubmit="{{saveEmail}}" style="display:grid;gap:12px;max-width:460px;padding:12px 4px">
+                    <label style="{{s.label}}">Email baru
+                      <input type="email" name="newEmail" autocomplete="email" required maxlength="254" disabled="{{emailBusy}}" style="{{s.input}};width:100%">
+                    </label>
+                    <p style="{{s.sub}}">Email login yang sekarang tetap digunakan sampai perubahan dikonfirmasi.</p>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap">
+                      <button type="submit" style="{{s.primary}}" disabled="{{emailBusy}}">{{emailSubmitLabel}}</button>
+                      <button type="button" style="{{s.secondary}}" disabled="{{emailBusy}}" onClick="{{closeEmail}}">Batal</button>
+                    </div>
+                  </form>
+                </sc-if>
+                <p role="status" style="{{s.sub}}">{{emailMessage}}</p>
                 <div style="{{s.row}}"><span><strong style="display: block">Password</strong><span style="{{s.hint}}">Terakhir diganti 2 bulan lalu</span></span><button type="button" style="{{s.secondary}}">Ganti password</button></div>
                 <div style="{{s.row}}"><span><strong style="display: block">Masuk dengan kode OTP</strong><span style="{{s.hint}}">Login tanpa password lewat kode ke email</span></span><button type="button" role="switch" aria-checked="{{otpSw.checked}}" aria-label="Login OTP" onClick="{{otpSw.toggle}}" style="{{otpSw.track}}"><span style="{{otpSw.knob}}"></span></button></div>
               </div>
@@ -317,7 +330,8 @@ class Component extends DCLogic {
       tab: 'profil', role: '', actor: null, theme: 'light', flipped: false, photo: null, toast: null,
       sw: { motion: false, contrast: false, sound: true, digest: true, dnd: false, otp: true, pub: true, pubEvent: true, pubProject: true, pubScore: false },
       notif: { chat: [1, 0, 1], undangan: [1, 1, 1], penilaian: [1, 1, 1], update: [1, 1, 0], pengumuman: [1, 1, 1], task: [1, 0, 1] },
-      sound: 'leap', profile: emptyProfile, originalProfile: emptyProfile, profileStatus: 'loading', profileMessage: ''
+      sound: 'leap', profile: emptyProfile, originalProfile: emptyProfile, profileStatus: 'loading', profileMessage: '',
+      emailOpen: false, emailBusy: false, emailMessage: ''
     };
   }
   componentDidMount() {
@@ -326,7 +340,7 @@ class Component extends DCLogic {
       if(!actor?.active||!actor.roles?.length){
         this._profileRequest=null;
         this._profileUser=null;
-        this.setState({actor:null,role:'',profile:emptyProfile,originalProfile:emptyProfile,profileStatus:'loading',profileMessage:''});
+        this.setState({actor:null,role:'',profile:emptyProfile,originalProfile:emptyProfile,profileStatus:'loading',profileMessage:'',emailOpen:false,emailBusy:false,emailMessage:''});
         return;
       }
       const requested=sessionStorage.getItem('ipbleap.ui.role');
@@ -378,6 +392,34 @@ class Component extends DCLogic {
     }catch(error){
       if(this._profileRequest!==request)return;
       this.setState({profileStatus:'ready',profileMessage:error.message||'Perubahan profil belum tersimpan. Coba lagi.'});
+    }
+  }
+  async saveEmail(event) {
+    event.preventDefault();
+    const {actor,emailBusy}=this.state;
+    if(!actor||emailBusy)return;
+    const input=event.currentTarget.elements.newEmail;
+    if(!input.reportValidity())return;
+    const email=input.value.trim().toLowerCase();
+    if(email===actor.email?.toLowerCase()){
+      this.setState({emailMessage:'Masukkan email yang berbeda dari email login saat ini.'});
+      return;
+    }
+    this.setState({emailBusy:true,emailMessage:''});
+    try{
+      const {client,errorText}=await import(new URL('../assets/assessment/api.mjs',location.href).href);
+      if(!client)throw Error('Layanan akun belum dapat dihubungi.');
+      const redirect=new URL('pengaturan.html',location.href);
+      const {error}=await client.auth.updateUser({email},{emailRedirectTo:redirect.href});
+      if(error)throw Error(errorText(error));
+      if(this.state.actor?.id===actor.id)this.setState({
+        emailBusy:false,emailOpen:false,
+        emailMessage:'Permintaan ganti email terkirim. Periksa kotak masuk untuk konfirmasi.'
+      });
+    }catch(error){
+      if(this.state.actor?.id===actor.id)this.setState({
+        emailBusy:false,emailMessage:error.message||'Permintaan ganti email belum berhasil. Coba lagi.'
+      });
     }
   }
   beep(kind) {
@@ -513,6 +555,14 @@ class Component extends DCLogic {
           this.setState({profile:{...this.state.profile,[target.name]:target.value},profileMessage:''});
       },
       saveProfile: event => this.saveProfile(event),
+      emailOpen: st.emailOpen,
+      emailBusy: st.emailBusy,
+      emailDisabled: !actor || st.emailBusy,
+      emailMessage: st.emailMessage,
+      emailSubmitLabel: st.emailBusy ? 'Mengirim…' : 'Kirim konfirmasi',
+      openEmail: () => this.setState({emailOpen:true,emailMessage:''}),
+      closeEmail: () => this.setState({emailOpen:false,emailMessage:''}),
+      saveEmail: event => this.saveEmail(event),
       toast: !!st.toast, toastText: st.toast || ''
     };
   }
