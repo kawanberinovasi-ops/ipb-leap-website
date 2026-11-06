@@ -2,16 +2,18 @@
 import assert from 'node:assert/strict';
 import http from 'node:http';import path from 'node:path';import fs from 'node:fs/promises';
 import {createDB,as,id,actors} from '../tests/fixtures/database.mjs';
-import {blocks,blockLimit} from '../src/assets/dmc/blocks.mjs';
+import {blocks} from '../src/assets/dmc/blocks.mjs';
 const root=path.resolve('docs');
 const profileSql=await fs.readFile('backend/erp/integrations/profile-details.sql','utf8');
 const groupsSql=await fs.readFile('backend/erp/integrations/group-live-data.sql','utf8');
-const migration=(await fs.readdir('supabase/migrations')).find(x=>x.endsWith('_grow_canvas_authenticated.sql'));
-const growSql=await fs.readFile('supabase/migrations/'+migration,'utf8');
+const migrations=await fs.readdir('supabase/migrations');
+const [growSql,canvasSql]=await Promise.all(['_grow_canvas_authenticated.sql','_leadership_model_canvas.sql'].map(suffix=>
+ fs.readFile('supabase/migrations/'+migrations.find(name=>name.endsWith(suffix)),'utf8')));
 async function createCase(){
  const database=await createDB();
  await database.exec(groupsSql);
  await database.exec(growSql);
+ await database.exec(canvasSql);
  await database.exec(profileSql);
  await database.query("update erp_enrolments set field='Social & Community / Social Impact' where user_id=$1",[id(1)]);
  return database;
@@ -72,10 +74,11 @@ const sampleBlocks=Object.fromEntries(blocks.map(({id},index)=>[id,[
  'Sekolah menyiapkan ruang. Karang taruna membantu mengajak peserta.',
  'Anggaran untuk transportasi, cetak modul, dan akses internet.',
 ][index]]));
-const freshCanvas=()=>({revision:0,draft:null,shared:null});
+await as(db,'mentee');
+await db.query('select erp_dmc_save($1,$2,$3,true,0)',[id(20),id(1),sampleBlocks]);
 const cases={
- kosong:{label:'Versi kosong',db:blank,canvas:freshCanvas(),email:new Map(),pendingEmail:new Map()},
- terisi:{label:'Contoh terisi',db,canvas:{...freshCanvas(),revision:1,shared:sampleBlocks},email:new Map(),pendingEmail:new Map()},
+ kosong:{label:'Versi kosong',db:blank,email:new Map(),pendingEmail:new Map()},
+ terisi:{label:'Contoh terisi',db,email:new Map(),pendingEmail:new Map()},
 };
 const port=Number(process.env.IPBLEAP_PREVIEW_PORT||8793);
 const origin='http://127.0.0.1:'+port;
@@ -154,6 +157,9 @@ export const command=()=>{throw Error('Fitur ini berada di luar ruang konsultasi
 `;
 const operations={
  erp_profile_details:['select erp_profile_details($1::jsonb) result',a=>[a.p_patch?JSON.stringify(a.p_patch):null]],
+ erp_group_session_command:['select erp_group_session_command($1,$2::jsonb) result',a=>[a.p_action,JSON.stringify(a.p_payload)]],
+ erp_dmc_state:['select erp_dmc_state($1,$2,$3) result',a=>[a.p_cohort,a.p_mentee,a.p_role]],
+ erp_dmc_save:['select erp_dmc_save($1,$2,$3::jsonb,$4,$5) result',a=>[a.p_cohort,a.p_mentee,JSON.stringify(a.p_blocks),a.p_share,a.p_expected]],
  erp_workspace:['select erp_workspace($1,$2) result',a=>[a.p_cohort,a.p_mentee]],
  erp_grow_state:['select erp_grow_state($1,$2,$3) result',a=>[a.p_cohort,a.p_mentee,a.p_role]],
  erp_grow_command:['select erp_grow_command($1,$2,$3,$4::jsonb,$5) result',a=>[a.p_cohort,a.p_mentee,a.p_action,JSON.stringify(a.p_data),a.p_expected]],
@@ -188,7 +194,7 @@ const server=http.createServer(async(req,res)=>{
    const {name,args={}}=JSON.parse(raw);
    const result=await run(async()=>{
     const fixture=cases[scenario];
-    const {db:database,canvas,email,pendingEmail}=fixture;
+    const {db:database,email,pendingEmail}=fixture;
     const currentEmail=email.get(role)||role+'@example.test';
     await as(database,role);
     if(name==='qa_actor')return{id:id(actors[role]),display_name:names[role],roles:[role],active:true,email:currentEmail};
@@ -210,27 +216,6 @@ const server=http.createServer(async(req,res)=>{
      email.set(role,pendingEmail.get(role));
      pendingEmail.delete(role);
      return {};
-    }
-    if(['erp_dmc_state','erp_dmc_save'].includes(name)){
-     if(args.p_cohort!==id(20)||args.p_mentee!==id(1))throw Error('Mentee tidak ditugaskan kepada akunmu.');
-     if(name==='erp_dmc_state'){
-      if(args.p_role!==role)throw Error('Peran akun tidak sesuai.');
-      return role==='mentee'?canvas:{shared:canvas.shared};
-     }
-     if(role!=='mentee')throw Error('Hanya mentee yang dapat menyimpan canvas.');
-     if(canvas.revision!==args.p_expected)throw Error('Canvas berubah di tab lain. Salin isian lalu muat ulang.');
-     const values=Object.fromEntries(blocks.map(({id})=>{
-      const value=args.p_blocks?.[id];
-      if(typeof value!=='string'||value.length>blockLimit)throw Error('Isian blok tidak valid.');
-      return [id,value.trim()];
-     }));
-     if(args.p_share){
-      if(!Object.values(values).some(Boolean))throw Error('Isi minimal satu blok sebelum membagikan canvas.');
-      canvas.shared=values;
-      canvas.draft=null;
-     }else{canvas.draft=values;}
-     canvas.revision++;
-     return canvas;
     }
     if(!Object.hasOwn(operations,name))throw Error('Fitur ini berada di luar ruang konsultasi.');
     const [sql,values]=operations[name];

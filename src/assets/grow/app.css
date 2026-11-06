@@ -21,8 +21,11 @@ body{margin:0;background:#F5F7FC;color:#0D0D1A;font-family:'Plus Jakarta Sans',s
 .grow-wrap .report-appreciation .eyebrow,.grow-wrap .report-progress{color:#dce9ff}
 .grow-wrap .report-appreciation .score{color:#fff}
 
-.grow-wrap .roster-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:10px;list-style:none;margin:0;padding:0}
-.grow-wrap .roster-list .button{width:100%;justify-content:space-between;text-align:left;overflow-wrap:anywhere}
+.grow-wrap .roster-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,176px),1fr));gap:12px;list-style:none;margin:0;padding:0}
+.grow-wrap .roster-tile{width:100%;height:100%;min-height:100px;flex-direction:column;align-items:flex-start;justify-content:center;gap:10px;padding:14px;background:#F5F7FC;text-align:left;overflow-wrap:anywhere}
+.grow-wrap .roster-tile:focus-visible{outline:2px solid #3157A5;outline-offset:3px}
+.grow-wrap .roster-initials{display:grid;place-items:center;min-width:34px;height:34px;padding-inline:6px;border-radius:10px;background:#E4EBF8;color:#32306F;font-size:13px;font-weight:800}
+@media(max-width:640px){.grow-wrap .roster-list{grid-template-columns:repeat(auto-fill,minmax(min(100%,128px),1fr))}}
 .grow-wrap .meeting-entry{padding:0;border:1px solid #D6DDEF;border-radius:16px;background:#fff;overflow:hidden}
 .grow-wrap .meeting-entry summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;list-style:none}
 .grow-wrap .meeting-entry summary::-webkit-details-marker{display:none}

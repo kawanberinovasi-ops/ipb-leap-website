@@ -56,8 +56,8 @@ menyediakan tab Mentee, Asmen, dan Mentor. Pratinjau membaca file hasil build
 dan memakai data uji di memori. Simulasi konfirmasi email ada di halaman
 Pengaturan pada bilah pratinjau lokal.
 
-Sebelum penggabungan ke produksi, sambungkan `erp_dmc_state` dan
-`erp_dmc_save` ke penyimpanan dan penugasan akun. Kontrak UI memakai ID
+Migrasi Leadership Model Canvas menyediakan `erp_dmc_state` dan
+`erp_dmc_save` dengan penyimpanan terpisah dan pemeriksaan penugasan yang sama dengan GROW. Kontrak UI memakai ID
 cohort dan mentee. Hanya pemilik yang boleh mengubah draft. Asmen dan Mentor
 yang ditugaskan menerima versi terakhir yang dibagikan, tanpa draft.
 Penyimpanan menerima revisi yang diharapkan untuk mendeteksi konflik. ID
