@@ -9,7 +9,7 @@ export function href(file,extra={}){
  u.search='';for(const[k,v]of Object.entries({cohort:scope.cohort?.id,mentee:scope.mentee,group:scope.group?.id,period:query.get('period')||undefined,...extra}))if(v!==undefined&&v!==null)u.searchParams.set(k,v);
  return u.pathname+u.search+u.hash;
 }
-export async function boot(){
+export async function boot({requireTrack=true}={}){
  const actor=await mountSession();if(!actor)return false;
  const preferred=sessionStorage.getItem('ipbleap.ui.role'),candidate=actor.roles.includes(preferred)?preferred:actor.roles[0];
  const base=await workspace(query.get('cohort'),null);
@@ -25,8 +25,8 @@ export async function boot(){
  if(!mentee)throw Error('Belum ada mentee ditugaskan. Pengurus perlu melengkapi penempatan kelompok.');
  if(!people.some(p=>p.id===mentee))throw Error('Mentee ini tidak ditugaskan kepada akunmu.');
  const enrolment=enrolled.find(e=>e.role==='mentee'&&e.user_id===mentee);
- currentTrack=catalog.find(t=>t.track===enrolment?.field);if(!currentTrack)throw Error('Track mentee belum ditetapkan. Hubungi pengelola.');track=currentTrack.id;
- scope={actor,cohort,group,people,mentee,enrolment};window.leapCohortName=cohort.name;sessionStorage.setItem('ipbleap.ui.role',role);window.dispatchEvent(new CustomEvent('leap:account'));return true;
+ currentTrack=catalog.find(t=>t.track===enrolment?.field);if(requireTrack&&!currentTrack)throw Error('Track mentee belum ditetapkan. Hubungi pengelola.');track=currentTrack?.id;
+ scope={actor,cohort,group,groups,people,mentee,enrolment};window.leapCohortName=cohort.name;sessionStorage.setItem('ipbleap.ui.role',role);window.dispatchEvent(new CustomEvent('leap:account'));return true;
 }
 export const loadWorkspace=()=>rpc('erp_grow_state',{p_cohort:scope.cohort.id,p_mentee:scope.mentee,p_role:role});
 export const sendCommand=(action,data,expected)=>rpc('erp_grow_command',{p_cohort:scope.cohort.id,p_mentee:scope.mentee,p_action:action,p_data:data,p_expected:expected});

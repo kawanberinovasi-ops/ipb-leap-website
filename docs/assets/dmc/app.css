@@ -1,0 +1,10 @@
+.dmc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grow-wrap .dmc-grid .card{padding:20px;border-radius:20px}
+.dmc-grid label{height:100%}
+.dmc-grid textarea{margin-top:auto}
+.dmc-grid .help{margin-bottom:8px}
+.dmc-scope{display:flex;align-items:end;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+.dmc-scope label{flex:0 1 320px}
+@media(max-width:900px){.dmc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.dmc-grid{grid-template-columns:minmax(0,1fr)}}
+#dmc-result[hidden]{display:none}

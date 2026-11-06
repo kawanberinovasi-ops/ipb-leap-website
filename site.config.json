@@ -169,6 +169,10 @@
         "Kehadiran": {
           "out": "app/kehadiran.html"
         },
+        "DevelopmentModelCanvas": {
+          "out": "app/development-model-canvas.html",
+          "title": "Development Model Canvas · IPB LEAP"
+        },
         "GrowCanvas": {
           "out": "app/grow-canvas.html",
           "title": "GROW Canvas \u00b7 IPB LEAP"

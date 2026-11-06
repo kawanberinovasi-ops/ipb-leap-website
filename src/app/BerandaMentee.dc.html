@@ -190,7 +190,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { displayName:'…', groupPeople:[], announcements:[], update: false, sent: false, done: {} };
   }
-  componentDidMount(){this._homeReport=e=>this.setState(e.detail);this._homePortal=e=>this.setState(e.detail);window.addEventListener('leap:report',this._homeReport);window.addEventListener('leap:home',this._homePortal);import(new URL('../assets/assessment/home.mjs?v=20261104-grow',location.href).href).then(m=>m.mountHome());}
+  componentDidMount(){this._homeReport=e=>this.setState(e.detail);this._homePortal=e=>this.setState(e.detail);window.addEventListener('leap:report',this._homeReport);window.addEventListener('leap:home',this._homePortal);import(new URL('../assets/assessment/home.mjs?v=20261106-phases',location.href).href).then(m=>m.mountHome());}
   componentWillUnmount(){window.removeEventListener('leap:report',this._homeReport);window.removeEventListener('leap:home',this._homePortal);window.leapHomeCleanup?.();}
   renderVals() {
     const defs = this.state.todo||[];
