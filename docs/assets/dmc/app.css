@@ -1,10 +1,31 @@
-.dmc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.dmc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .grow-wrap .dmc-grid .card{padding:20px;border-radius:20px}
 .dmc-grid label{height:100%}
-.dmc-grid textarea{margin-top:auto}
+.dmc-grid textarea{flex:1}
 .dmc-grid .help{margin-bottom:8px}
+.dmc-block-title{display:flex;align-items:flex-start;gap:8px;overflow-wrap:anywhere}
+.dmc-grid .step-label{flex:0 0 28px;width:28px;height:28px;margin:0}
 .dmc-scope{display:flex;align-items:end;flex-wrap:wrap;gap:12px;margin-bottom:18px}
 .dmc-scope label{flex:0 1 320px}
-@media(max-width:900px){.dmc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1000px){
+  .dmc-grid{
+    grid-template-columns:repeat(10,minmax(0,1fr));
+    grid-template-areas:
+      "partners partners activities activities value value engagement engagement audience audience"
+      "partners partners resources  resources  value value channels   channels   audience audience"
+      "costs    costs    costs      costs      costs outcomes outcomes outcomes outcomes outcomes";
+    gap:12px;
+  }
+  .grow-wrap .dmc-grid .card{padding:16px}
+  .dmc-grid [data-block="partners"]{grid-area:partners}
+  .dmc-grid [data-block="activities"]{grid-area:activities}
+  .dmc-grid [data-block="value"]{grid-area:value}
+  .dmc-grid [data-block="engagement"]{grid-area:engagement}
+  .dmc-grid [data-block="audience"]{grid-area:audience}
+  .dmc-grid [data-block="resources"]{grid-area:resources}
+  .dmc-grid [data-block="channels"]{grid-area:channels}
+  .dmc-grid [data-block="costs"]{grid-area:costs}
+  .dmc-grid [data-block="outcomes"]{grid-area:outcomes}
+}
 @media(max-width:600px){.dmc-grid{grid-template-columns:minmax(0,1fr)}}
 #dmc-result[hidden]{display:none}

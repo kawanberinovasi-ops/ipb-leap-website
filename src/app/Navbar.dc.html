@@ -176,7 +176,7 @@ class Component extends DCLogic {
     ];
     kel.pop();
     const assessmentLink=(label,desc,href,short,tint='#E4EBF8')=>({label,desc,href,short,tint});
-    const asmenFlow=[assessmentLink('Kelompok','Kelompok dan sesi mentoring','Monitoring.dc.html','KL'),assessmentLink('Development Model Canvas','Pemetaan mentee yang sudah dibagikan','DevelopmentModelCanvas.dc.html','DM'),assessmentLink('Review GROW','Tujuan dan milestone mentee','GrowCanvas.dc.html','GR'),assessmentLink('Review Catatan Mentee','Pembelajaran dan tindak lanjut mentee','Mentoring.dc.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','Raport.dc.html','RP')];
+    const asmenFlow=[assessmentLink('Kelompok','Kelompok dan sesi mentoring','Monitoring.dc.html','KL'),assessmentLink('Leadership Model Canvas','Pemetaan mentee yang sudah dibagikan','DevelopmentModelCanvas.dc.html','LM'),assessmentLink('Review GROW','Tujuan dan milestone mentee','GrowCanvas.dc.html','GR'),assessmentLink('Review Catatan Mentee','Pembelajaran dan tindak lanjut mentee','Mentoring.dc.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','Raport.dc.html','RP')];
     const mentorFlow=asmenFlow;
     const programP = { key: 'program', label: 'Program', children: [
       ...(role==='pengurus'?[{ label: 'Scan Absensi', desc: 'Scan QR dan rekap kehadiran per mentee', href: 'AbsensiPengurus.dc.html', short: 'QR', tint: '#EEFFB8' },{ label: 'Kelola Akun & Progres', desc: 'Akun, kelompok dan perjalanan tiap mentee', href: 'KelolaProgram.dc.html', short: 'AK', tint: '#E7E6F3' }]:[]),
@@ -198,7 +198,7 @@ class Component extends DCLogic {
     const menus = {
       mentee: [
         { key: 'beranda', label: 'Beranda', href: 'BerandaMentee.dc.html' },
-        { key: 'program', label: 'Program', children: [assessmentLink('Development Model Canvas','Petakan rencana pengembangan','DevelopmentModelCanvas.dc.html','DM'),assessmentLink('GROW Canvas','Tujuan awal dan milestone tiga bulanan','GrowCanvas.dc.html','GR'),assessmentLink('Catat Mentoring','Pembelajaran, action dan tenggat','Mentoring.dc.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','Raport.dc.html','RP','#EEFFB8')] }
+        { key: 'program', label: 'Program', children: [assessmentLink('Leadership Model Canvas','Petakan rencana pengembangan','DevelopmentModelCanvas.dc.html','LM'),assessmentLink('GROW Canvas','Tujuan awal dan milestone tiga bulanan','GrowCanvas.dc.html','GR'),assessmentLink('Catat Mentoring','Pembelajaran, action dan tenggat','Mentoring.dc.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','Raport.dc.html','RP','#EEFFB8')] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'BerandaMentee.dc.html' }]),
       asmen: [
         { key: 'beranda', label: 'Beranda', href: 'BerandaAsmen.dc.html' },

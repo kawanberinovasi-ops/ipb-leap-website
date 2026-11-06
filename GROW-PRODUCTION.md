@@ -48,7 +48,7 @@ Asmen dan Mentor memiliki route Beranda terpisah: `app/beranda-asmen.html` dan `
 
 Jika pendamping membuka URL Beranda role lain, frontend memakai role pendamping yang benar-benar dimiliki akun dan menormalkan alamat ke Beranda role tersebut tanpa menghapus parameter batch/kelompok. Akun selain Asmen/Mentor tetap ditolak. Ini hanya pemilihan tampilan; cakupan data tetap diperiksa oleh API penugasan.
 
-## Pratinjau Development Model Canvas dan ganti email
+## Pratinjau Leadership Model Canvas dan ganti email
 
 Jalankan `npm ci`, `npm run build`, lalu `node tools/preview-dmc.mjs`. Buka
 `http://127.0.0.1:8793/` untuk versi kosong dan contoh terisi. Setiap versi

@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Development Model Canvas · IPB LEAP</title>
+<title>Leadership Model Canvas · IPB LEAP</title>
 <meta name="description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
 <meta name="robots" content="noindex">
-<meta property="og:title" content="Development Model Canvas · IPB LEAP">
+<meta property="og:title" content="Leadership Model Canvas · IPB LEAP">
 <meta property="og:description" content="Prototype IPB Leap Management System — platform mentoring IPB LEAP untuk mentee, asmen, mentor, pengurus, dan bendahara.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kawanberinovasi-ops.github.io/ipb-leap-website/app/development-model-canvas.html">
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,800;1,900&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/grow/app.css">
-<link rel="stylesheet" href="../assets/dmc/app.css">
+<link rel="stylesheet" href="../assets/dmc/app.css?v=20261106-layout">
 <link rel="stylesheet" href="../assets/navigation/mobile.css?v=20261105">
 <style>
 [data-dc-host]{display:contents}
@@ -118,7 +118,7 @@ body{margin:0}
   </div>
 </header>
 </template>
-<script type="text/x-dc" data-dc="DevelopmentModelCanvas" data-props='{}'>class Component extends DCLogic {componentDidMount(){import(new URL('../assets/dmc/app.mjs?v=20261106',location.href).href).then(m=>m.mount()).catch(e=>{const main=document.querySelector('#dmc-app');if(main)main.textContent='Halaman belum dapat dimuat: '+e.message;console.error(e);});}renderVals(){return {};}}</script>
+<script type="text/x-dc" data-dc="DevelopmentModelCanvas" data-props='{}'>class Component extends DCLogic {componentDidMount(){import(new URL('../assets/dmc/app.mjs?v=20261106-layout',location.href).href).then(m=>m.mount()).catch(e=>{const main=document.querySelector('#dmc-app');if(main)main.textContent='Halaman belum dapat dimuat: '+e.message;console.error(e);});}renderVals(){return {};}}</script>
 <script type="text/x-dc" data-dc="Navbar" data-props='{}'>
 class Component extends DCLogic {
   constructor(props) {
@@ -197,7 +197,7 @@ class Component extends DCLogic {
     ];
     kel.pop();
     const assessmentLink=(label,desc,href,short,tint='#E4EBF8')=>({label,desc,href,short,tint});
-    const asmenFlow=[assessmentLink('Kelompok','Kelompok dan sesi mentoring','kelompok.html','KL'),assessmentLink('Development Model Canvas','Pemetaan mentee yang sudah dibagikan','development-model-canvas.html','DM'),assessmentLink('Review GROW','Tujuan dan milestone mentee','grow-canvas.html','GR'),assessmentLink('Review Catatan Mentee','Pembelajaran dan tindak lanjut mentee','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP')];
+    const asmenFlow=[assessmentLink('Kelompok','Kelompok dan sesi mentoring','kelompok.html','KL'),assessmentLink('Leadership Model Canvas','Pemetaan mentee yang sudah dibagikan','development-model-canvas.html','LM'),assessmentLink('Review GROW','Tujuan dan milestone mentee','grow-canvas.html','GR'),assessmentLink('Review Catatan Mentee','Pembelajaran dan tindak lanjut mentee','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP')];
     const mentorFlow=asmenFlow;
     const programP = { key: 'program', label: 'Program', children: [
       ...(role==='pengurus'?[{ label: 'Scan Absensi', desc: 'Scan QR dan rekap kehadiran per mentee', href: 'absensi-pengurus.html', short: 'QR', tint: '#EEFFB8' },{ label: 'Kelola Akun & Progres', desc: 'Akun, kelompok dan perjalanan tiap mentee', href: 'kelola-program.html', short: 'AK', tint: '#E7E6F3' }]:[]),
@@ -219,7 +219,7 @@ class Component extends DCLogic {
     const menus = {
       mentee: [
         { key: 'beranda', label: 'Beranda', href: 'beranda-mentee.html' },
-        { key: 'program', label: 'Program', children: [assessmentLink('Development Model Canvas','Petakan rencana pengembangan','development-model-canvas.html','DM'),assessmentLink('GROW Canvas','Tujuan awal dan milestone tiga bulanan','grow-canvas.html','GR'),assessmentLink('Catat Mentoring','Pembelajaran, action dan tenggat','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP','#EEFFB8')] }
+        { key: 'program', label: 'Program', children: [assessmentLink('Leadership Model Canvas','Petakan rencana pengembangan','development-model-canvas.html','LM'),assessmentLink('GROW Canvas','Tujuan awal dan milestone tiga bulanan','grow-canvas.html','GR'),assessmentLink('Catat Mentoring','Pembelajaran, action dan tenggat','mentoring.html','MT'),assessmentLink('Raport','Progres, bukti, penilaian dan hasil terbit','raport.html','RP','#EEFFB8')] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'beranda-mentee.html' }]),
       asmen: [
         { key: 'beranda', label: 'Beranda', href: 'beranda-asmen.html' },

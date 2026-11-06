@@ -5,6 +5,10 @@ import {blocks, blockLimit} from './blocks.mjs';
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, char =>
   ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'})[char]);
 const page = 'development-model-canvas.html';
+const canvasBlocks = [
+  'partners','activities','value','engagement','audience',
+  'resources','channels','costs','outcomes',
+].map(id => blocks.find(block => block.id === id));
 
 function picker(name, label, options, selected) {
   return `<label>${label}<select name="${name}">${options.map(({id, name}) =>
@@ -12,11 +16,11 @@ function picker(name, label, options, selected) {
 }
 
 function cards(values, editable) {
-  return `<div class="dmc-grid">${blocks.map(({id,label,prompt}, index) => {
-    const title = `<span><span class="step-label">${index+1}</span>${label}</span>`;
+  return `<div class="dmc-grid">${canvasBlocks.map(({id,label,prompt}, index) => {
+    const title = `<span class="dmc-block-title"><span class="step-label" aria-hidden="true">${index+1}</span><span>${label}</span></span>`;
     return editable
-      ? `<div class="card"><label>${title}<span class="help" id="dmc-help-${id}">${prompt}</span><textarea name="${id}" aria-describedby="dmc-help-${id}" maxlength="${blockLimit}">${esc(values[id])}</textarea></label></div>`
-      : `<article class="card"><h3>${title}</h3><dl class="facts"><div><dt class="help">${prompt}</dt><dd>${esc(values[id] || 'Belum diisi')}</dd></div></dl></article>`;
+      ? `<div class="card" data-block="${id}"><label>${title}<span class="help" id="dmc-help-${id}">${prompt}</span><textarea name="${id}" aria-describedby="dmc-help-${id}" maxlength="${blockLimit}">${esc(values[id])}</textarea></label></div>`
+      : `<article class="card" data-block="${id}"><h3>${title}</h3><dl class="facts"><div><dt class="help">${prompt}</dt><dd>${esc(values[id] || 'Belum diisi')}</dd></div></dl></article>`;
   }).join('')}</div>`;
 }
 
@@ -37,7 +41,7 @@ export async function mount() {
   root.innerHTML = `
     <header class="rise">
       <p class="eyebrow">${heading} · ${esc(scope.cohort.name)}</p>
-      <h1>Development Model Canvas</h1>
+      <h1>Leadership Model Canvas</h1>
       <p class="sub">Petakan rencana pengembangan dalam sembilan blok sebagai bekal mengisi GROW Canvas.</p>
       <p class="sub">${esc(people?.name)}${scope.enrolment?.field ? ' · '+esc(scope.enrolment.field) : ''}</p>
     </header>

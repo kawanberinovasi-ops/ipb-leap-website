@@ -88,7 +88,7 @@ const launch=`<!doctype html><html lang="id"><meta charset="utf-8"><meta name="v
  img{width:86px}h1,h2{color:#32306f;margin:0}h1{font-size:clamp(28px,5vw,48px);line-height:1.1}
  section{margin-top:26px;background:white;border:1px solid #dce2f2;border-radius:18px;padding:20px}
  .links{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}a{background:#32306f;border-radius:12px;color:white;text-decoration:none;padding:10px 14px;font-weight:700}a:focus-visible{outline:3px solid #3157a5;outline-offset:3px}
-</style><main><img src="/assets/logo-color.png" alt="IPB LEAP"><p>IPB LEAP · Pratinjau lokal</p><h1>Development Model Canvas</h1>
+</style><main><img src="/assets/logo-color.png" alt="IPB LEAP"><p>IPB LEAP · Pratinjau lokal</p><h1>Leadership Model Canvas</h1>
 <p>Buka akun uji dalam tab terpisah. Tab dari versi yang sama berbagi data contoh.</p>
 ${Object.entries(cases).map(([key,{label}])=>`<section><h2>${label}</h2><div class="links">${roles.map(role=>`<a href="${dmcPath}?kasus=${key}&amp;akun-lokal=${role}" target="_blank" rel="noopener">${labels[role]}</a>`).join('')}</div></section>`).join('')}
 </main></html>`;
