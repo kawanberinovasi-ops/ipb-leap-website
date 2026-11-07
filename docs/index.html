@@ -73,7 +73,6 @@ a{color:#3157A5}a:hover{color:#32306F}
  .leap-welcomes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 32px;max-width:1200px}
  .leap-welcomes img{display:block;width:100%;height:100%;object-fit:cover}
  .leap-welcomes .welcome-message{margin:12px 0 0;font-size:15px;line-height:1.65;font-style:italic;color:rgba(255,255,255,.88)}
- .leap-welcomes .welcome-note{margin:12px 0 0;font-size:12px;font-weight:700;color:#A3D6E6}
  .leap-welcomes .welcome-theme{margin:12px 0 0;color:#FFFFFF;font-size:17px;line-height:1.4}
  .leap-welcomes .welcome-tagline{margin:6px 0 0;color:rgba(255,255,255,.88);font-size:14px;line-height:1.5}
  @media(min-width:621px) and (max-width:900px){.leap-welcomes{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -216,8 +215,7 @@ body{margin:0}
             <div style="padding-top: 8px">
               <strong style="display:block;font-size:21px;color:#FFFFFF">{{w.name}}</strong>
               <span style="font-size:13.5px;color:rgba(255,255,255,.78)">{{w.org}}</span>
-              <sc-if value="{{w.editorial}}">
-                <p class="welcome-note">Pesan editorial IPB LEAP</p>
+              <sc-if value="{{w.message}}">
                 <sc-if value="{{w.theme}}">
                   <h3 class="welcome-theme">{{w.theme}}</h3>
                   <p class="welcome-tagline" lang="en">{{w.tagline}}</p>
@@ -547,8 +545,8 @@ class Component extends DCLogic {
       teasers: teasers, gallery: gallery,
       sparks: this.sparks,
       welcomes: [
-        {"role": "REKTOR", "name": "Dr. Alim Setiawan Slamet, S.TP., M.Si.", "org": "Rektor IPB University", "photo": "assets/photos/sambutan/alim-setiawan-slamet.webp", "position": "50% 28%", "ring": "linear-gradient(135deg,#A3D6E6,#FFFFFF,#3157A5,#A3D6E6)", "tagBg": "#FFFFFF", "tagInk": "#32306F", "r": "1.5", "d": "d1", "editorial": true, "message": "Keberhasilan seorang pemimpin bukan hanya tentang seberapa banyak orang yang dipimpinnya, tetapi seberapa banyak pemimpin baru yang berhasil ia lahirkan."},
-        {"role": "KETUA UMUM", "name": "H. Fauzi H. Amro, S.Pt., M.Si.", "org": "Ketua Umum DPP Himpunan Alumni IPB", "photo": "assets/photos/sambutan/fauzi-amro.webp", "position": "50% 30%", "ring": "linear-gradient(135deg,#D4FF3A,#A3D6E6,#6E5AE6,#D4FF3A)", "tagBg": "#D4FF3A", "tagInk": "#0D0D1A", "r": "-2", "d": "d2", "editorial": true, "theme": "Sinergi, Tumbuh Bersama, dan Berdampak.", "tagline": "Leadership is about collective growth and lasting impact.", "message": "Kepemimpinan bukan tentang seberapa tinggi posisi yang kita duduki, tetapi seberapa besar organisasi yang kita bangun, seberapa banyak orang yang kita tumbuhkan, dan seberapa luas manfaat yang kita tinggalkan."},
+        {"role": "REKTOR", "name": "Dr. Alim Setiawan Slamet, S.TP., M.Si.", "org": "Rektor IPB University", "photo": "assets/photos/sambutan/alim-setiawan-slamet.webp", "position": "50% 28%", "ring": "linear-gradient(135deg,#A3D6E6,#FFFFFF,#3157A5,#A3D6E6)", "tagBg": "#FFFFFF", "tagInk": "#32306F", "r": "1.5", "d": "d1", "directQuote": "Keberhasilan seorang pemimpin bukan hanya tentang seberapa banyak orang yang dipimpinnya, tetapi seberapa banyak pemimpin baru yang berhasil ia lahirkan."},
+        {"role": "KETUA UMUM", "name": "H. Fauzi H. Amro, S.Pt., M.Si.", "org": "Ketua Umum DPP Himpunan Alumni IPB", "photo": "assets/photos/sambutan/fauzi-amro.webp", "position": "50% 30%", "ring": "linear-gradient(135deg,#D4FF3A,#A3D6E6,#6E5AE6,#D4FF3A)", "tagBg": "#D4FF3A", "tagInk": "#0D0D1A", "r": "-2", "d": "d2", "theme": "Sinergi, Tumbuh Bersama, dan Berdampak.", "tagline": "Leadership is about collective growth and lasting impact.", "message": "Kepemimpinan bukan tentang seberapa tinggi posisi yang kita duduki, tetapi seberapa besar organisasi yang kita bangun, seberapa banyak orang yang kita tumbuhkan, dan seberapa luas manfaat yang kita tinggalkan."},
         {"role": "SEKJEN", "name": "Dr. Anggawira, M.M., M.H.", "org": "Sekretaris Jenderal DPP HA IPB", "photo": "assets/photos/sambutan/anggawira.webp", "position": "50% 32%", "directQuote": "Naik kelas bersama IPB bukan sekadar slogan, melainkan tekad kolektif untuk terus bertumbuh, memperluas dampak, dan menghadirkan kontribusi yang lebih tinggi.", "ring": "linear-gradient(135deg,#A3D6E6,#6E5AE6,#FFFFFF,#A3D6E6)", "tagBg": "#A3D6E6", "tagInk": "#32306F", "r": "1.5", "d": "d3"}
       ],
       people: [
