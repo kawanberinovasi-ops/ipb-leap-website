@@ -8,8 +8,9 @@ const scores={3:{asmen:25,mentor:52.5,total:77.5,checked:1,eligible:1,waiting:0}
 function state(){return{today:'2026-11-04',revision:5,canvas:{status:'Disepakati',version:1,data:{goal:'TEST GOAL',why:'TEST WHY',reality:'TEST REALITY',options:'TEST OPTIONS',wayForward:'TEST WAY',mentorNeed:'Tidak ada',kpis:[{id:'socialBeneficiaries',baseline:'0',measurement:'VERIFIED RECORDS',milestones:{3:'100',6:'250',9:'375',12:'500'}}]}},canvasHistory:[],supportReplies:{},sessions:[],notes:[{id:'NOTE',period:3,status:'Diajukan',data:{date:'2026-11-02',due:'2026-11-04',learning:'TEST LEARNING',action:'TEST ACTION'},outcome:{status:'Selesai',result:'TEST RESULT',completed:'2026-11-04'},outcomeRevision:1}],reviews:{},scores:structuredClone(scores),publications:[{period:3,canvasVersion:1,canvas:{data:{kpis:[{id:'socialBeneficiaries',milestones:{3:'100'}}]}},review:{items:[{id:'socialBeneficiaries',actual:'75',level:75,reason:'75 of 100'}]},score:{asmen:25,mentor:52.5,total:77.5},at:'2026-11-04T10:00:00+07:00'}]};}
 async function ui(role,view='report',initial=state()){
  const dom=new JSDOM('<main id="grow-app" data-view="'+view+'"></main>',{url:'https://example.test/app/raport.html?role=system&demo=assessment&period=3',runScripts:'outside-only'}),context=dom.getInternalVMContext();dom.window.Element.prototype.scrollIntoView=()=>{};dom.window.structuredClone=structuredClone;let sent=[],failure=false;
- const deps={'roster.mjs':roster,'phases.mjs':phases,'context.mjs':{boot:async()=>true,href:(file,extra={})=>file+'?'+new URLSearchParams({cohort:'C',mentee:'M',...extra}),role,track:'social',currentTrack:track,scope:{cohort:{starts_on:'2026-11-01'},people:[{id:'M',name:'ACTUAL ASSIGNED NAME'}],mentee:'M'},loadWorkspace:async()=>structuredClone(initial),sendCommand:async(action,data,expected)=>{sent.push({action,data,expected});if(failure)throw Error('TEST CONFLICT');return structuredClone(initial);}}};
- const app=await module(await read('app.mjs'),context,deps);await app.mount();return{dom,d:dom.window.document,sent,fail:()=>failure=true};
+ const downloads=[];
+ const deps={'pdf.mjs':{downloadGrowPdf:async info=>{downloads.push(info);}},'roster.mjs':roster,'phases.mjs':phases,'context.mjs':{boot:async()=>true,href:(file,extra={})=>file+'?'+new URLSearchParams({cohort:'C',mentee:'M',...extra}),role,track:'social',currentTrack:track,scope:{cohort:{starts_on:'2026-11-01'},people:[{id:'M',name:'ACTUAL ASSIGNED NAME'}],mentee:'M'},loadWorkspace:async()=>structuredClone(initial),sendCommand:async(action,data,expected)=>{sent.push({action,data,expected});if(failure)throw Error('TEST CONFLICT');return structuredClone(initial);}}};
+ const app=await module(await read('app.mjs'),context,deps);await app.mount();return{dom,d:dom.window.document,sent,downloads,fail:()=>failure=true};
 }
 test('production GROW renders no preview controls, duplicate navigation or fake role from query',async()=>{
  const v=await ui('mentee');assert.equal(v.d.querySelector('nav.tabs'),null);assert.deepEqual([...v.d.querySelectorAll('[aria-label="Periode raport"] a')].map(a=>a.firstChild.textContent),['Foundation','Action','Acceleration','Sustainable Impact']);assert.deepEqual([...v.d.querySelectorAll('.phase-button small')].map(el=>el.textContent),['November 2026–Januari 2027','Februari–April 2027','Mei–Juli 2027','Agustus–Oktober 2027']);assert.equal(v.d.querySelector('#local-preview-controls'),null);assert.equal(v.d.querySelector('.practice-guide'),null);assert.equal(v.d.querySelector('#review-form button'),null);assert.ok(v.d.querySelector('.outcome-form'));assert.equal(v.d.querySelectorAll('#hasil-terbit .score').length,1);assert.equal(v.d.querySelector('#hasil-terbit .score').textContent,'77,5');assert.ok(!v.d.querySelector('#hasil-terbit').textContent.includes('Mentor /70'));v.dom.window.close();
@@ -127,4 +128,27 @@ test('Review Mentee keeps the selected mentee on all three review links for both
   assert.ok(links.every(a=>new URL(a.href).searchParams.get('mentee')==='M'));
   v.dom.window.close();
  }
+});
+
+test('PDF download uses the saved authorized canvas and blocks exporting unsaved mentee edits',async()=>{
+ const v=await ui('mentee','canvas');
+ v.d.querySelector('[data-action=download-canvas]').click();
+ for(let i=0;i<5;i++)await new Promise(setImmediate);
+ assert.equal(v.downloads.length,1);
+ assert.equal(v.downloads[0].canvas.data.goal,'TEST GOAL');
+ assert.equal(v.downloads[0].name,'ACTUAL ASSIGNED NAME');
+ assert.deepEqual(v.downloads[0].canvas.data.kpis,state().canvas.data.kpis);
+ v.dom.window.close();
+ const draft=state();draft.canvas.status='Draft';
+ const editing=await ui('mentee','canvas',draft);
+ editing.d.querySelector('[name=goal]').value='UNSAVED GOAL';
+ editing.d.querySelector('[name=goal]').dispatchEvent(new editing.dom.window.Event('input',{bubbles:true}));
+ editing.d.querySelector('[data-action=download-canvas]').click();
+ assert.equal(editing.downloads.length,0);
+ assert.match(editing.d.querySelector('#grow-message').textContent,/Simpan draf/);
+ editing.dom.window.close();
+ const empty=state();empty.canvas=null;
+ const fresh=await ui('mentee','canvas',empty);
+ assert.equal(fresh.d.querySelector('[data-action=download-canvas]').disabled,true);
+ fresh.dom.window.close();
 });
