@@ -1,3 +1,4 @@
+import {downloadGrowPdf} from '../grow/pdf.mjs';
 import {validateRoster,provisionRoster,activationCSV} from './import.mjs';
 import {openRepository} from './repository.mjs?v=20261107-grow-draft';
 import {periods,phaseName,phaseDates} from '../grow/phases.mjs';
@@ -68,9 +69,9 @@ export async function mount(){
     if(current!==request||!panel.isConnected)return;
     if(!draft){content.textContent='Belum ada draf GROW yang tersimpan.';return;}
     const data=draft.data;
-    let labels=new Map();
+    let labels=new Map(),catalog=[];
     if(data.kpis?.length){
-     const catalog=await fetch(new URL('../grow/catalog.json',import.meta.url)).then(r=>r.ok?r.json():[]).catch(()=>[]);
+     catalog=await fetch(new URL('../grow/catalog.json',import.meta.url)).then(r=>r.ok?r.json():[]).catch(()=>[]);
      labels=new Map(catalog.flatMap(track=>track.kpis.map(kpi=>[kpi.id,kpi.label])));
     }
     if(current!==request||!panel.isConnected)return;
@@ -84,6 +85,24 @@ export async function mount(){
       ...periods.map(period=>[phaseName(period)+' · '+phaseDates(period,cohort.starts_on),kpi.milestones?.[period]])])}
     </section>`).join('');
     if(!data.kpis?.length)content.insertAdjacentHTML('beforeend','<p class="mg-sub">Belum ada KPI yang ditambahkan.</p>');
+    const download=document.createElement('button');
+    download.type='button';download.className='mg-button secondary';download.textContent='Unduh PDF';
+    download.onclick=async()=>{
+     download.disabled=true;
+     try{
+      const enrolment=people().find(e=>e.user_id===mentee);
+      const track=catalog.find(t=>t.track===enrolment?.field);
+      await downloadGrowPdf({
+       canvas:{...draft,status:'Draft'},name:profile(mentee).display_name,
+       batch:cohort.name,startsOn:cohort.starts_on,group:groupOf(mentee)?.name,
+       track:enrolment?.field,northStar:track?.northStar,kpiLabels:Object.fromEntries(labels)
+      });
+      if(panel.isConnected)message('PDF draf GROW siap diunduh.');
+     }catch(error){if(panel.isConnected)message(error.message||'PDF belum dapat dibuat. Coba lagi.',true);}
+     finally{if(download.isConnected)download.disabled=false;}
+    };
+    content.append(download);
+
    }catch(e){
     if(current===request&&panel.isConnected)content.textContent=e.message||'Draf belum dapat dimuat.';
    }

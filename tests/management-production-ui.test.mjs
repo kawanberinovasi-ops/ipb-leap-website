@@ -12,7 +12,7 @@ test('production management creates shared-auth activation, has no local rehears
  group:async data=>{groupSaved=data;state.groups.push({...data,id:id(70)});},
  archiveGroup:async (id,cohort)=>{archived={id,cohort};state.groups[0].archived_at='2026-11-07';},
  account:async data=>{if(conflict)throw Error('Data berubah. Muat ulang.');saved=data;state.profiles.push({id:id(30),display_name:data.display_name,email:data.email,roles:['mentee'],active:false});state.enrolments.push({user_id:id(30),cohort_id:id(20),role:'mentee',field:data.field,pathway:data.pathway,active:true});return data.initial_password?{mustChangePassword:true}:{url:'https://example.test/app/index.html#activate=TEST_ONLY'};}};
- const values={...phases,...bulkImport,...metadata,openRepository:async()=>({store,actor,local:false}),attendanceState:async()=>({events:[],participants:[],attendance:[],history:[]}),menteeAttendance:()=>[]};
+ const values={downloadGrowPdf:async()=>{},...phases,...bulkImport,...metadata,openRepository:async()=>({store,actor,local:false}),attendanceState:async()=>({events:[],participants:[],attendance:[],history:[]}),menteeAttendance:()=>[]};
  const context=dom.getInternalVMContext();const m=new vm.SourceTextModule(await readFile(new URL('../src/assets/management/app.mjs',import.meta.url),'utf8'),{context});await m.link(()=>new vm.SyntheticModule(Object.keys(values),function(){for(const[k,v]of Object.entries(values))this.setExport(k,v);},{context}));await m.evaluate();await m.namespace.mount();
  assert.match(d.body.textContent,/Terhubung ke Supabase/);assert.ok(!d.body.textContent.includes('Coba alur peserta'));assert.equal(d.querySelector('[data-action=cohort]'),null);
  for(const [n,pending,enrolled]of[[40,true,true],[41,false,true],[42,true,false]]){state.profiles.push({id:id(n),display_name:'TEST STAFF '+n,email:n+'@example.test',roles:['asmen'],active:false,pending_activation:pending});state.enrolments.push({user_id:id(n),cohort_id:id(20),role:'asmen',active:enrolled});}
@@ -29,7 +29,8 @@ test('production management creates shared-auth activation, has no local rehears
  await opened;await tick();
  assert.deepEqual(reads,[[id(20),id(51)]]);
  assert.match(content.textContent,/<img src=x> Private goal/);
- assert.equal(content.querySelector('img,input,textarea,button'),null);
+ assert.equal(content.querySelector('img,input,textarea'),null);
+ assert.equal(content.querySelector('button').textContent,'Unduh PDF');
  const closed=new Promise(resolve=>panel.addEventListener('toggle',resolve,{once:true}));
  panel.open=false;
  await closed;await tick();
