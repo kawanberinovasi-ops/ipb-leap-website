@@ -61,9 +61,13 @@ a{color:#3157A5}a:hover{color:#32306F}
 .gtile{transition:transform .25s}.gtile:hover{transform:scale(1.03)}
 @media (max-width: 1000px){.gal{grid-template-columns:repeat(2,minmax(0,1fr)) !important;grid-auto-rows:120px !important}.gal>.gtile{grid-column:auto !important;grid-row:auto !important}}
 @keyframes ringFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
- .leap-welcomes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 32px;max-width:940px}
+ .leap-welcomes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 32px;max-width:1200px}
  .leap-welcomes img{display:block;width:100%;height:100%;object-fit:cover}
- .leap-welcomes blockquote{margin:12px 0 0;font-size:15px;line-height:1.65;font-style:italic;color:rgba(255,255,255,.88)}
+ .leap-welcomes .welcome-message{margin:12px 0 0;font-size:15px;line-height:1.65;font-style:italic;color:rgba(255,255,255,.88)}
+ .leap-welcomes .welcome-note{margin:12px 0 0;font-size:12px;font-weight:700;color:#A3D6E6}
+ .leap-welcomes .welcome-theme{margin:12px 0 0;color:#FFFFFF;font-size:17px;line-height:1.4}
+ .leap-welcomes .welcome-tagline{margin:6px 0 0;color:rgba(255,255,255,.88);font-size:14px;line-height:1.5}
+ @media(min-width:621px) and (max-width:900px){.leap-welcomes{grid-template-columns:repeat(2,minmax(0,1fr))}}
  @media(max-width:620px){.leap-welcomes{grid-template-columns:minmax(0,1fr);gap:36px}}
 .kpframe{animation:ringFlow 6s ease-in-out infinite;transition:transform .35s cubic-bezier(.2,.9,.3,1.3)}.kpframe:hover{transform:rotate(0deg) scale(1.03) !important}
 .bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:56px 56px}
@@ -167,7 +171,7 @@ a{color:#3157A5}a:hover{color:#32306F}
         
       </div>
       <div class="leap-welcomes">
-        <sc-for list="{{welcomes}}" as="w" hint-placeholder-count="2">
+        <sc-for list="{{welcomes}}" as="w" hint-placeholder-count="3">
           <article class="rise {{w.d}}" style="display: flex; flex-direction: column; gap: 18px">
             <div class="kpframe" style="position: relative; aspect-ratio: 4 / 5; border-radius: 30px; padding: 3px; background: {{w.ring}}; background-size: 200% 200%; transform: rotate({{w.r}}deg)">
               <div style="width:100%;height:100%;border-radius:27px;overflow:hidden;background:#15143A">
@@ -178,7 +182,17 @@ a{color:#3157A5}a:hover{color:#32306F}
             <div style="padding-top: 8px">
               <strong style="display:block;font-size:21px;color:#FFFFFF">{{w.name}}</strong>
               <span style="font-size:13.5px;color:rgba(255,255,255,.78)">{{w.org}}</span>
-              <blockquote>“{{w.quote}}”</blockquote>
+              <sc-if value="{{w.editorial}}">
+                <p class="welcome-note">Pesan editorial IPB LEAP</p>
+                <sc-if value="{{w.theme}}">
+                  <h3 class="welcome-theme">{{w.theme}}</h3>
+                  <p class="welcome-tagline" lang="en">{{w.tagline}}</p>
+                </sc-if>
+                <p class="welcome-message">{{w.message}}</p>
+              </sc-if>
+              <sc-if value="{{w.directQuote}}">
+                <blockquote class="welcome-message">“{{w.directQuote}}”</blockquote>
+              </sc-if>
             </div>
           </article>
         </sc-for>
@@ -419,8 +433,9 @@ class Component extends DCLogic {
       teasers: teasers, gallery: gallery,
       sparks: this.sparks,
       welcomes: [
-        {"role": "REKTOR", "name": "Dr. Alim Setiawan Slamet, S.TP., M.Si.", "org": "Rektor IPB University", "photo": "assets/photos/sambutan/alim-setiawan-slamet.webp", "position": "50% 28%", "quote": "Mudah-mudahan itu semuanya nanti bisa dimanfaatkan untuk belajar di IPB, untuk organisasi, untuk menempa diri, untuk bisa menjadi pemimpin yang hebat.", "ring": "linear-gradient(135deg,#A3D6E6,#FFFFFF,#3157A5,#A3D6E6)", "tagBg": "#FFFFFF", "tagInk": "#32306F", "r": "1.5", "d": "d1"},
-        {"role": "KETUA UMUM", "name": "H. Fauzi H. Amro, S.Pt., M.Si.", "org": "Ketua Umum DPP Himpunan Alumni IPB", "photo": "assets/photos/sambutan/fauzi-amro.webp", "position": "50% 30%", "quote": "Yang sudah baik akan kami lanjutkan, yang kurang akan kami tambahkan. HA IPB harus menjadi penghubung yang kuat antara alumni dan kampus.", "ring": "linear-gradient(135deg,#D4FF3A,#A3D6E6,#6E5AE6,#D4FF3A)", "tagBg": "#D4FF3A", "tagInk": "#0D0D1A", "r": "-2", "d": "d2"}
+        {"role": "REKTOR", "name": "Dr. Alim Setiawan Slamet, S.TP., M.Si.", "org": "Rektor IPB University", "photo": "assets/photos/sambutan/alim-setiawan-slamet.webp", "position": "50% 28%", "ring": "linear-gradient(135deg,#A3D6E6,#FFFFFF,#3157A5,#A3D6E6)", "tagBg": "#FFFFFF", "tagInk": "#32306F", "r": "1.5", "d": "d1", "editorial": true, "message": "Keberhasilan seorang pemimpin bukan hanya tentang seberapa banyak orang yang dipimpinnya, tetapi seberapa banyak pemimpin baru yang berhasil ia lahirkan."},
+        {"role": "KETUA UMUM", "name": "H. Fauzi H. Amro, S.Pt., M.Si.", "org": "Ketua Umum DPP Himpunan Alumni IPB", "photo": "assets/photos/sambutan/fauzi-amro.webp", "position": "50% 30%", "ring": "linear-gradient(135deg,#D4FF3A,#A3D6E6,#6E5AE6,#D4FF3A)", "tagBg": "#D4FF3A", "tagInk": "#0D0D1A", "r": "-2", "d": "d2", "editorial": true, "theme": "Sinergi, Tumbuh Bersama, dan Berdampak.", "tagline": "Leadership is about collective growth and lasting impact.", "message": "Kepemimpinan bukan tentang seberapa tinggi posisi yang kita duduki, tetapi seberapa besar organisasi yang kita bangun, seberapa banyak orang yang kita tumbuhkan, dan seberapa luas manfaat yang kita tinggalkan."},
+        {"role": "SEKJEN", "name": "Dr. Anggawira, M.M., M.H.", "org": "Sekretaris Jenderal DPP HA IPB", "photo": "assets/photos/sambutan/anggawira.webp", "position": "50% 32%", "directQuote": "Naik kelas bersama IPB bukan sekadar slogan, melainkan tekad kolektif untuk terus bertumbuh, memperluas dampak, dan menghadirkan kontribusi yang lebih tinggi.", "ring": "linear-gradient(135deg,#A3D6E6,#6E5AE6,#FFFFFF,#A3D6E6)", "tagBg": "#A3D6E6", "tagInk": "#32306F", "r": "1.5", "d": "d3"}
       ],
       people: [
         { role: 'Mentor', desc: 'Alumni IPB yang sudah lebih dulu sampai', href: 'PubMentor.dc.html', faces: ['linear-gradient(135deg,#32306F,#3157A5)', 'linear-gradient(135deg,#3157A5,#A3D6E6)', 'linear-gradient(135deg,#0E0D2B,#32306F)', 'linear-gradient(135deg,#A3D6E6,#E3F3F8)'], tagBg: '#32306F', tagInk: '#FFFFFF', delay: '0' },
