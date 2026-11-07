@@ -1,6 +1,6 @@
 import {menteeRoster} from './roster.mjs';
 import {periods,phaseName,phaseDates,phaseEnd} from './phases.mjs';
-import{boot,href,track,role,loadWorkspace,sendCommand,scope,currentTrack as t}from './context.mjs?v=20261107-group-review';
+import{boot,href,track,role,loadWorkspace,sendCommand,scope,currentTrack as t}from './context.mjs?v=20261107-perf';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateLabel=date=>date?new Intl.DateTimeFormat('id-ID',{dateStyle:'long',timeZone:'UTC'}).format(new Date(date+'T00:00:00Z')):'Tanggal belum diisi';
 const fmt=n=>typeof n==='number'?n.toLocaleString('id-ID',{maximumFractionDigits:2}):'—';

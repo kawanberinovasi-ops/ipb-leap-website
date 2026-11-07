@@ -1,6 +1,6 @@
 import {menteeRoster} from '../grow/roster.mjs';
 import {rpc} from '../assessment/api.mjs';
-import {boot, href, role, scope} from '../grow/context.mjs?v=20261107-group-review';
+import {boot, href, role, scope} from '../grow/context.mjs?v=20261107-perf';
 import {blocks, blockLimit} from './blocks.mjs';
 
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, char =>

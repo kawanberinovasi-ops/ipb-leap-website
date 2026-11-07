@@ -1,4 +1,4 @@
-import {workspace,rpc} from '../assessment/api.mjs';
+import {rpc} from '../assessment/api.mjs';
 import {mountSession} from '../assessment/session.mjs';
 export const catalog=await fetch(new URL('./catalog.json',import.meta.url)).then(r=>{if(!r.ok)throw Error('Katalog KPI belum dapat dimuat.');return r.json();});
 export let role='mentee',track,currentTrack,scope={};
@@ -12,7 +12,7 @@ export function href(file,extra={}){
 export async function boot({requireTrack=true,allowRoster=false}={}){
  const actor=await mountSession();if(!actor)return false;
  const preferred=sessionStorage.getItem('ipbleap.ui.role'),candidate=actor.roles.includes(preferred)?preferred:actor.roles[0];
- const base=await workspace(query.get('cohort'),null);
+ const base=await rpc('erp_grow_context',{p_cohort:query.get('cohort')});
  const cohort=base.cohorts.find(c=>c.id===base.selectedCohort)||base.cohorts[0];if(!cohort)throw Error('Belum ada batch aktif untuk akun ini.');
  const enrolled=base.enrolments.filter(e=>e.cohort_id===cohort.id&&e.active);
  const own=enrolled.some(e=>e.user_id===actor.id&&e.role==='mentee');
