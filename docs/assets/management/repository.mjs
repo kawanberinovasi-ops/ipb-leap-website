@@ -28,6 +28,7 @@ export async function openRepository({cohort=null,management=true}={}){
   },
   group:(data,expected)=>api.rpc('erp_management_command',{p_payload:{...data,action:'group',cohort:data.cohort_id},p_expected:expected}),
   archiveGroup:(id,cohort,expected)=>api.rpc('erp_management_command',{p_payload:{action:'group_archive',cohort,id},p_expected:expected}),
+  growDraft:(cohort,mentee)=>api.rpc('erp_pengurus_grow_draft',{p_cohort:cohort,p_mentee:mentee}),
   reissue:(user,c)=>api.accountCommand({action:'reissue',user,cohort:c})
  };
  return {store,actor,local:false};
