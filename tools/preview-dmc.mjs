@@ -15,6 +15,8 @@ async function createCase(){
  await database.exec(growSql);
  await database.exec(canvasSql);
  await database.exec(profileSql);
+ await database.exec('alter table erp_groups add column archived_at timestamptz');
+ await database.exec(await fs.readFile('supabase/migrations/'+migrations.find(name=>name.endsWith('_grow_context_performance.sql')),'utf8'));
  await database.query("update erp_enrolments set field='Social & Community / Social Impact' where user_id=$1",[id(1)]);
  return database;
 }
@@ -160,6 +162,7 @@ const operations={
  erp_group_session_command:['select erp_group_session_command($1,$2::jsonb) result',a=>[a.p_action,JSON.stringify(a.p_payload)]],
  erp_dmc_state:['select erp_dmc_state($1,$2,$3) result',a=>[a.p_cohort,a.p_mentee,a.p_role]],
  erp_dmc_save:['select erp_dmc_save($1,$2,$3::jsonb,$4,$5) result',a=>[a.p_cohort,a.p_mentee,JSON.stringify(a.p_blocks),a.p_share,a.p_expected]],
+ erp_grow_context:['select erp_grow_context($1) result',a=>[a.p_cohort]],
  erp_workspace:['select erp_workspace($1,$2) result',a=>[a.p_cohort,a.p_mentee]],
  erp_grow_state:['select erp_grow_state($1,$2,$3) result',a=>[a.p_cohort,a.p_mentee,a.p_role]],
  erp_grow_command:['select erp_grow_command($1,$2,$3,$4::jsonb,$5) result',a=>[a.p_cohort,a.p_mentee,a.p_action,JSON.stringify(a.p_data),a.p_expected]],
