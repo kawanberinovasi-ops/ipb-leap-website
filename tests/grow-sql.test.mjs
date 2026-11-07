@@ -59,3 +59,38 @@ test('multiple KPIs persist through agreement and every KPI is required for the 
   await as(db,'mentee');s=await state(db);assert.equal(s.publications.at(-1).canvas.data.kpis.length,2);assert.equal(s.scores['3'].total,86.25);
  }finally{await db.close();}
 });
+
+test('only the assigned Pengurus can read the current saved GROW draft for their batch',async t=>{
+ const db=await setup();t.after(()=>db.close());
+ const folder=new URL('../supabase/migrations/',import.meta.url);
+ const migration=(await readdir(folder)).find(f=>f.endsWith('_pengurus_grow_draft.sql'));
+ await db.exec(await readFile(new URL(migration,folder),'utf8'));
+ await db.query("insert into erp_cohorts(id,name,starts_on,ends_on,created_by) values($1,'OTHER BATCH','2025-01-01','2026-01-01',$2)",[id(31),id(6)]);
+ const readDraft=async(c=id(20))=>(await db.query('select erp_pengurus_grow_draft($1,$2) d',[c,id(1)])).rows[0].d;
+ await as(db,'manager');
+ assert.equal(await readDraft(),null);
+ await assert.rejects(readDraft(id(31)),/hanya tersedia untuk Pengurus/);
+ await cmd(db,'mentee','canvas_save',{...canvas(),goal:'PRIVATE GROW DRAFT'});
+ await cmd(db,'mentee','note_save',{data:{date:'2025-01-02',learning:'PRIVATE MENTORING NOTE'}});
+ for(const role of ['asmen','mentor','assessor','mentee','system','finance','stranger']){
+  await as(db,role);
+  await assert.rejects(readDraft(),/hanya tersedia untuk Pengurus/);
+  if(['asmen','mentor'].includes(role))assert.equal((await state(db,role)).canvas,null);
+ }
+ await as(db,'manager','anon');
+ await assert.rejects(readDraft(),/permission denied/);
+ await as(db,'manager');
+ const draft=await readDraft();
+ assert.deepEqual(Object.keys(draft).sort(),['data','savedAt']);
+ assert.equal(draft.data.goal,'PRIVATE GROW DRAFT');
+ assert.ok(draft.savedAt);
+ await assert.rejects(db.query('select * from erp_private.grow_workspaces'),/permission denied/);
+ await assert.rejects(db.query("select erp_grow_command($1,$2,'canvas_save','{}',1)",[id(20),id(1)]),/penugasan/);
+ await cmd(db,'mentee','canvas_submit',canvas());
+ await as(db,'manager');
+ assert.equal(await readDraft(),null);
+ for(const role of ['asmen','mentor']){
+  await as(db,role);
+  assert.equal((await state(db,role)).canvas.status,'Diajukan');
+ }
+});

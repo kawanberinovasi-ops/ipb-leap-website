@@ -1,3 +1,4 @@
+import * as phases from '../src/assets/grow/phases.mjs';
 import * as bulkImport from '../src/assets/management/import.mjs';
 import {test} from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import vm from 'node:vm';import {JSDOM} from 'jsdom';import * as metadata from '../src/assets/management/store.mjs';
 const id=n=>'00000000-0000-4000-8000-'+String(n).padStart(12,'0');
@@ -5,12 +6,13 @@ const tick=()=>new Promise(r=>setImmediate(r));
 test('production management creates shared-auth activation, has no local rehearsal, and retains input on server conflicts',async()=>{
  const dom=new JSDOM('<html><body><main id="management"></main></body></html>',{url:'https://example.test/app/kelola-program.html',runScripts:'outside-only'});const d=dom.window.document;
  dom.window.HTMLDialogElement.prototype.showModal=function(){this.open=true;};dom.window.HTMLDialogElement.prototype.close=function(){this.open=false;};
- const actor={id:id(9),roles:['program'],active:true};const state={revision:0,cohorts:[{id:id(20),name:'TEST',starts_on:'2026-01-01',ends_on:'2026-12-31'}],profiles:[],enrolments:[],groups:[],members:[],records:[],staff:[{user_id:actor.id,can_manage:true}],audit:[]};let saved,groupSaved,archived,conflict=false;
+ const actor={id:id(9),roles:['program'],active:true};const state={revision:0,cohorts:[{id:id(20),name:'TEST',starts_on:'2026-01-01',ends_on:'2026-12-31'}],profiles:[],enrolments:[],groups:[],members:[],records:[],staff:[{user_id:actor.id,cohort_id:id(20),can_manage:true}],audit:[]};let saved,groupSaved,archived,conflict=false;const reads=[];
  const store={read:()=>state,reload:async()=>state,
+ growDraft:async (cohort,mentee)=>{reads.push([cohort,mentee]);return{savedAt:'2026-11-07T02:00:00Z',data:{goal:'<img src=x> Private goal',kpis:[]}};},
  group:async data=>{groupSaved=data;state.groups.push({...data,id:id(70)});},
  archiveGroup:async (id,cohort)=>{archived={id,cohort};state.groups[0].archived_at='2026-11-07';},
  account:async data=>{if(conflict)throw Error('Data berubah. Muat ulang.');saved=data;state.profiles.push({id:id(30),display_name:data.display_name,email:data.email,roles:['mentee'],active:false});state.enrolments.push({user_id:id(30),cohort_id:id(20),role:'mentee',field:data.field,pathway:data.pathway,active:true});return data.initial_password?{mustChangePassword:true}:{url:'https://example.test/app/index.html#activate=TEST_ONLY'};}};
- const values={...bulkImport,...metadata,openRepository:async()=>({store,actor,local:false}),attendanceState:async()=>({events:[],participants:[],attendance:[],history:[]}),menteeAttendance:()=>[]};
+ const values={...phases,...bulkImport,...metadata,openRepository:async()=>({store,actor,local:false}),attendanceState:async()=>({events:[],participants:[],attendance:[],history:[]}),menteeAttendance:()=>[]};
  const context=dom.getInternalVMContext();const m=new vm.SourceTextModule(await readFile(new URL('../src/assets/management/app.mjs',import.meta.url),'utf8'),{context});await m.link(()=>new vm.SyntheticModule(Object.keys(values),function(){for(const[k,v]of Object.entries(values))this.setExport(k,v);},{context}));await m.evaluate();await m.namespace.mount();
  assert.match(d.body.textContent,/Terhubung ke Supabase/);assert.ok(!d.body.textContent.includes('Coba alur peserta'));assert.equal(d.querySelector('[data-action=cohort]'),null);
  for(const [n,pending,enrolled]of[[40,true,true],[41,false,true],[42,true,false]]){state.profiles.push({id:id(n),display_name:'TEST STAFF '+n,email:n+'@example.test',roles:['asmen'],active:false,pending_activation:pending});state.enrolments.push({user_id:id(n),cohort_id:id(20),role:'asmen',active:enrolled});}
@@ -18,6 +20,21 @@ test('production management creates shared-auth activation, has no local rehears
   state.profiles.push({id:id(n),display_name:'TEST MENTEE '+n,email:n+'@example.test',roles:['mentee'],active:false,pending_activation:true});
   state.enrolments.push({user_id:id(n),cohort_id:id(20),role:'mentee',active:true,field:metadata.TRACKS[track].field});
  }
+ d.querySelector('[data-tab=accounts]').click();
+ d.querySelector('[data-action="detail:'+id(51)+'"]').click();
+ const panel=d.querySelector('#mg-grow-draft'),content=panel.querySelector('[data-grow-draft-content]');
+ assert.deepEqual(reads,[]);
+ const opened=new Promise(resolve=>panel.addEventListener('toggle',resolve,{once:true}));
+ panel.open=true;
+ await opened;await tick();
+ assert.deepEqual(reads,[[id(20),id(51)]]);
+ assert.match(content.textContent,/<img src=x> Private goal/);
+ assert.equal(content.querySelector('img,input,textarea,button'),null);
+ const closed=new Promise(resolve=>panel.addEventListener('toggle',resolve,{once:true}));
+ panel.open=false;
+ await closed;await tick();
+ assert.equal(content.textContent,'');
+ d.querySelector('[data-action=back]').click();
  d.querySelector('[data-tab=groups]').click();d.querySelector('[data-action=group]').click();const groupForm=d.querySelector('form');assert.deepEqual([...groupForm.elements.asmen_id.options].map(o=>o.value),['',id(40)]);assert.match(groupForm.elements.asmen_id.options[1].textContent,/belum aktivasi/);assert.match(groupForm.textContent,/Peserta yang menunggu aktivasi dapat dipilih/);groupForm.elements.name.value='TEST CREATED';
  groupForm.elements.field.value=metadata.TRACKS[0].field;
  groupForm.elements.field.dispatchEvent(new dom.window.Event('change'));
